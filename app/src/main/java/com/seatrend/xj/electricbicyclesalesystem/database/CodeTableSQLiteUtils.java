@@ -281,6 +281,7 @@ public class CodeTableSQLiteUtils {
         cv.put(Constants.Companion.getS_XH(), entity.getXh());
         cv.put(Constants.Companion.getS_ZPZL(), entity.getZpzl());
         cv.put(Constants.Companion.getS_ZPDZ(), entity.getZpdz());
+        cv.put(Constants.Companion.getS_ZPPATH(), entity.getZpPath());
         cv.put(Constants.Companion.getS_LRR(), entity.getLrr());
         cv.put(Constants.Companion.getS_LRBM(), entity.getLrbm());
         cv.put(Constants.Companion.getS_ZPSM(), entity.getZpsm());
@@ -365,6 +366,7 @@ public class CodeTableSQLiteUtils {
         cv.put(Constants.Companion.getS_XH(), entity.getXh());
         cv.put(Constants.Companion.getS_ZPZL(), entity.getZpzl());
         cv.put(Constants.Companion.getS_ZPDZ(), entity.getZpdz());
+        cv.put(Constants.Companion.getS_ZPPATH(), entity.getZpPath());
         cv.put(Constants.Companion.getS_LRR(), entity.getLrr());
         cv.put(Constants.Companion.getS_LRBM(), entity.getLrbm());
         cv.put(Constants.Companion.getS_ZPSM(), entity.getZpsm());

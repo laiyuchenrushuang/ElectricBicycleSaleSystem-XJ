@@ -199,17 +199,19 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
 //                                    mapP["lrr"] = UserInfo.XM
 //                                    mapP["lrbm"] = UserInfo.GLBM
 //                                    mCarPhotoPersenter!!.doNetworkTask(mapP, Constants.PHOTO_MSG_SAVE)
-                                    var enity = PhotoEntity()
-                                    enity.lsh = CarInfoActivity.mDataZcbm!!.data.lsh
-                                    enity.xh = CarInfoActivity.mDataZcbm!!.data.xh
-                                    enity.zpzl = db.zplx
-                                    enity.zpPath = db.zpPath
-                                    enity.zpdz = db.zplj
-                                    enity.zpsm = db.zmmc
-                                    enity.cffs = UserInfo.GlobalParameter.CFBJ
-                                    enity.lrr = UserInfo.XM
-                                    enity.lrbm = UserInfo.GLBM
-                                    CodeTableSQLiteUtils.addPhoto(enity)
+                                    if (db.zpPath != null && !TextUtils.isEmpty(db.zpPath)) {
+                                        var enity = PhotoEntity()
+                                        enity.lsh = CarInfoActivity.mDataZcbm!!.data.lsh
+                                        enity.xh = CarInfoActivity.mDataZcbm!!.data.xh
+                                        enity.zpzl = db.zplx
+                                        enity.zpPath = db.zpPath
+                                        enity.zpdz = db.zplj
+                                        enity.zpsm = db.zmmc
+                                        enity.cffs = UserInfo.GlobalParameter.CFBJ
+                                        enity.lrr = UserInfo.XM
+                                        enity.lrbm = UserInfo.GLBM
+                                        CodeTableSQLiteUtils.addPhoto(enity)
+                                    }
                                 }
                             } else {  //除开业务注册
 
@@ -385,6 +387,11 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
 //                    showToast("确保图片上传到服务器，请稍后提交信息...")
 //                    return false
 //                } else {
+//                    showToast("【" + cb.zmmc + "】后台数据为空，请拍摄或再次拍摄")
+//                    return false
+//                }
+
+
             if ((cb.zpPath == null || cb.zpPath.isEmpty()) && "B4" != cb.zplx) {
                 showToast("【" + cb.zmmc + "】后台数据为空，请拍摄或再次拍摄")
                 return false

@@ -96,8 +96,7 @@ public class PhotoUploadService extends Service {
             String zpdz = entity.getZpdz();
 
             if (!file.exists()) {
-                //如果改照片 不存在了，如 人为去本地删除，则不需要上传了 ，
-                // 如果不删除，这条数据始终无法删除，就会累积，虽然发生几率很小，但还是做了一下判定
+
                 if (!TextUtils.isEmpty(entity.getLsh()) && !TextUtils.isEmpty(entity.getZpzl())) {
                     CodeTableSQLiteUtils.deleteByLshAndDmz(entity.getLsh(), entity.getZpzl());
                 }
@@ -148,6 +147,7 @@ public class PhotoUploadService extends Service {
                     if (Constants.Companion.getPHOTO_INSERT().equals(commonResponse.getUrl())) {
                         PhotoIdEnity enity = GsonUtils.gson(commonResponse.getResponseString(), PhotoIdEnity.class);
                         // 证明已经获取到id
+
                         if (!ObjectNullUtil.checknull(enity.getData(), enity.getData().getType(), enity.getData().getId())) {
                             Log.d("lylog", "[Service]  获取照片id异常");
                             return;

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.seatrend.xj.electricbicyclesalesystem.ExitLoginActivity"
+    android:orientation="vertical">
+    <include layout="@layout/common_title"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="60dp">
+        <EditText
+            android:id="@+id/et_sfzhm"
+            android:layout_width="240dp"
+            android:layout_height="40dp"
+            android:background="@drawable/edit_text_bg"
+            android:digits="@string/number_and_letter"
+            android:textSize="@dimen/text_normal_14sp"
+            android:textColor="@color/textcolor"
+            style="@style/editTextStyle"
+            android:paddingStart="6dp"
+            android:hint="请输入登录人姓名" />
+            <!--android:hint="请输入身份证明号码或读取身份证明号码"-->
+
+
+
+        <!--<ImageView-->
+            <!--android:id="@+id/iv_read"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:padding="10dp"-->
+            <!--android:src="@drawable/scan_bule_icon"-->
+            <!--android:layout_marginStart="24dp"/>-->
+    </LinearLayout>
+    <Button
+        android:id="@+id/btn_exit"
+        android:layout_width="240dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/btn_orange_bg1"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_large_16sp"
+        android:layout_gravity="center_horizontal"
+        android:text="退出登录"/>
+
+</LinearLayout>

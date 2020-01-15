@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:gravity="center_horizontal">
+
+    <Button
+        android:id="@+id/bt_next"
+        style="@style/car_message_clcy"
+        android:layout_width="240dp"
+        android:layout_height="42dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/btn_orange_bg1"
+        android:text="下一步" />
+</LinearLayout>

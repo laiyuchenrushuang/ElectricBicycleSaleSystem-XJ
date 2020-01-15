@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_title" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/login_bg" />
+
+    <!--<RelativeLayout-->
+        <!--android:layout_width="240dp"-->
+        <!--android:layout_height="42dp"-->
+        <!--android:layout_gravity="center_horizontal"-->
+        <!--android:background="@drawable/login_username">-->
+
+        <!--<EditText-->
+            <!--android:id="@+id/ed_username"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="@null"-->
+            <!--android:digits="0123456789Xx"-->
+            <!--android:hint="请输入二代身份证号"-->
+            <!--android:text="511365199411210351"-->
+            <!--android:textSize="@dimen/text_large_16sp" />-->
+
+        <!--<ImageView-->
+            <!--android:id="@+id/iv_sfzh_scan"-->
+            <!--android:layout_alignParentEnd="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:src="@drawable/scan_bule_icon" />-->
+    <!--</RelativeLayout>-->
+
+    <RelativeLayout
+        android:id="@+id/btn_next"
+        android:layout_width="240dp"
+        android:layout_height="42dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/btn_orange_bg1"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:drawablePadding="6dp"
+            android:text="账号密码登录"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_large_16sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/btn_system"
+        android:layout_width="240dp"
+        android:layout_height="42dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/btn_orange_bg1"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:drawablePadding="6dp"
+            android:text="人脸识别登录"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_large_16sp" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_setting"
+        android:layout_width="240dp"
+        android:layout_height="42dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/btn_orange_bg2"
+        android:text="@string/setting"
+        android:textColor="@color/text_style_2" />
+
+    <android.support.v4.widget.Space
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/tv_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="12dp"
+        android:text="当前版本 1.20"
+        android:textSize="@dimen/text_normal_12sp" />
+
+</LinearLayout>

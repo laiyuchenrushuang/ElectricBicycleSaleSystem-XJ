@@ -1,0 +1,437 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="33dp"
+            android:layout_marginEnd="33dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_zcbm"
+                android:layout_width="match_parent"
+                android:layout_height="44dp">
+
+                <TextView
+                    style="@style/carcy_info_jscs_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="整车编码" />
+                <android.support.v4.widget.Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/carinfo_jscs_zcbm"
+                    style="@style/carcy_info_jscs_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="/"/>
+            </LinearLayout>
+            <View
+                android:id="@+id/zcbm_v"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/linecolor" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp">
+
+                <TextView
+                    style="@style/carcy_info_jscs_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="车架上整车\n编码的位置" />
+                <android.support.v4.widget.Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/carinfo_jscs_cjszcbmdwz"
+                    style="@style/carcy_info_jscs_right"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_height="match_parent"
+                    android:text="/"/>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/linecolor" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp">
+
+                <TextView
+                    style="@style/carcy_info_jscs_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="车辆中文商标" />
+                <android.support.v4.widget.Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/carinfo_jscs_clzwsb"
+                    style="@style/carcy_info_jscs_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="/"/>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/linecolor" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp">
+
+                <TextView
+                    style="@style/carcy_info_jscs_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="产品型号" />
+                <android.support.v4.widget.Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/carinfo_jscs_cpxh"
+                    style="@style/carcy_info_jscs_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="/"/>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/linecolor" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp">
+
+                <TextView
+                    style="@style/carcy_info_jscs_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="产品合格证证书编号" />
+                <android.support.v4.widget.Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:id="@+id/carinfo_jscs_cphgzbh"
+                    style="@style/carcy_info_jscs_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="/" />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/linecolor" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp">
+
+                <TextView
+                    style="@style/carcy_info_jscs_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="CCC证书编号" />
+                <android.support.v4.widget.Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/carinfo_jscs_ccczsbh"
+                    style="@style/carcy_info_jscs_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="/"/>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/linecolor" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp">
+
+                <TextView
+                    style="@style/carcy_info_jscs_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="CCC证书状态" />
+                <android.support.v4.widget.Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/carinfo_jscs_ccczszt"
+                    style="@style/carcy_info_jscs_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="/"/>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/linecolor" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp">
+
+                <TextView
+                    style="@style/carcy_info_jscs_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="CCC证书有效期止日期" />
+                <android.support.v4.widget.Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/carinfo_jscs_ccczsfzrq"
+                    style="@style/carcy_info_jscs_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="/"/>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/linecolor" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp">
+
+                <TextView
+                    style="@style/carcy_info_jscs_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="车身颜色" />
+                <android.support.v4.widget.Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:id="@+id/carinfo_jscs_csys"
+                    style="@style/carcy_info_jscs_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="/" />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/linecolor" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp">
+
+                <TextView
+                    style="@style/carcy_info_jscs_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="长×宽×高(mm×mm×mm)" />
+                <android.support.v4.widget.Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/carinfo_jscs_c"
+                    style="@style/carcy_info_jscs_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="/"/>
+                <TextView
+                    style="@style/carcy_info_jscs_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                  
+                    android:text="×"/>
+                <TextView
+                    android:id="@+id/carinfo_jscs_k"
+                    style="@style/carcy_info_jscs_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="/"/>
+                <TextView
+                    style="@style/carcy_info_jscs_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="×"/>
+                <TextView
+                    android:id="@+id/carinfo_jscs_g"
+                    style="@style/carcy_info_jscs_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="/"/>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/linecolor" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp">
+
+                <TextView
+                    style="@style/carcy_info_jscs_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="整车质量(kg)" />
+                <android.support.v4.widget.Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/carinfo_jscs_zbzl"
+                    style="@style/carcy_info_jscs_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="/"/>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/linecolor" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp">
+
+                <TextView
+                    style="@style/carcy_info_jscs_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="最高设计车速（km/h）" />
+                <android.support.v4.widget.Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/carinfo_jscs_zgsjcs"
+                    style="@style/carcy_info_jscs_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="/"/>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/linecolor" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp">
+
+                <TextView
+                    style="@style/carcy_info_jscs_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="车辆制造商" />
+                <android.support.v4.widget.Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/carinfo_jscs_clzzs"
+                    style="@style/carcy_info_jscs_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="/"/>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/linecolor" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp">
+
+                <TextView
+                    style="@style/carcy_info_jscs_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="铭牌固定位置" />
+                <android.support.v4.widget.Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/carinfo_jscs_mpgdwz"
+                    style="@style/carcy_info_jscs_right"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_height="match_parent"
+                    android:text="/"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/linecolor" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp">
+
+                <TextView
+                    style="@style/carcy_info_jscs_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="续航里程" />
+                <android.support.v4.widget.Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/carinfo_jscs_xhlc"
+                    style="@style/carcy_info_jscs_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="/"/>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/linecolor" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp">
+
+                <TextView
+                    style="@style/carcy_info_jscs_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="制造日期" />
+                <android.support.v4.widget.Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/carinfo_jscs_zzrq"
+                    style="@style/carcy_info_jscs_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="/"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/linecolor" />
+        </LinearLayout>
+    </ScrollView>
+
+</FrameLayout>

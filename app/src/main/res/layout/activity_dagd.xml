@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.seatrend.xj.electricbicyclesalesystem.activity.DagdActivity"
+    android:orientation="vertical">
+    <include layout="@layout/common_title"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center_vertical">
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:layout_weight="1"
+            android:layout_marginStart="12dp"
+            android:background="@drawable/edit_text_bg"
+            android:textSize="@dimen/text_normal_14sp"
+            android:textColor="@color/textcolor"
+            android:paddingStart="6dp"
+            android:hint="@string/cxclhphzcbm"/>
+        <ImageButton
+            android:id="@+id/iv_btn_search"
+            android:layout_width="42dp"
+            android:layout_height="36dp"
+            android:background="@drawable/btn_bule_bg1"
+            android:layout_marginEnd="12dp"
+            android:gravity="center"
+            android:src="@drawable/search_icon"/>
+    </LinearLayout>
+    <include layout="@layout/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center_vertical">
+
+        <CheckBox
+            android:id="@+id/cb_select_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textcolor"
+            android:layout_marginStart="24dp"
+            android:textSize="@dimen/text_large_16sp"
+            android:paddingStart="4dp"
+            android:text="全选"/>
+        <android.support.v4.widget.Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"/>
+        <Button
+            android:id="@+id/btn_ok"
+            android:layout_width="140dp"
+            android:layout_height="42dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/btn_orange_bg1"
+            android:textSize="@dimen/text_large_16sp"
+            android:textColor="@color/white"
+            android:text="归档"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/rl_parent"
+        android:background="@color/theme_color">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:src="@drawable/back_icon"/>
+
+        <TextView
+            android:id="@+id/tv_titile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_super_20sp"
+            android:textColor="@color/white"
+            android:layout_centerInParent="true"/>
+
+        <TextView
+            android:id="@+id/tv_right"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/text_large_16sp"
+            android:gravity="end|center_vertical"
+            android:textColor="@color/white"
+            android:text="管理"
+            android:layout_marginEnd="12dp"
+            android:padding="6dp"/>
+
+    </RelativeLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="33dp"
+            android:layout_marginEnd="33dp"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/carcy_info_title"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:text="员工备案" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp">
+
+                <TextView
+                    style="@style/carcy_info_jscs_left"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|left"
+                    android:text="姓名/名称" />
+                <TextView
+                    android:id="@+id/tv_xm"
+                    style="@style/carcy_info_jscs_center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:layout_marginStart="12dp"
+                    android:gravity="center_vertical"
+                    android:text="张三"/>
+                <TextView
+                    android:id="@+id/tv_zt"
+                    style="@style/carcy_info_jscs_center"
+                    android:layout_width="0dp"
+                    android:layout_height="28dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/theme_color"
+                    android:gravity="end|center_vertical"
+                    android:text="待审核"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp">
+
+                <TextView
+                    style="@style/carcy_info_jscs_left"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|left"
+                    android:text="身份证明名称" />
+
+                <TextView
+                    android:id="@+id/tv_sfzmc"
+                    style="@style/carcy_info_jscs_center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:layout_marginStart="12dp"
+                    android:gravity="center_vertical"
+                    android:text="居民身份证"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp">
+
+                <TextView
+                    style="@style/carcy_info_jscs_left"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|left"
+                    android:text="身份证明号码" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="12dp">
+
+                    <TextView
+                        android:id="@+id/tv_sfz"
+                        style="@style/carcy_info_jscs_center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="28dp"
+                        android:gravity="center_vertical"
+                        android:text="55511002200212312"/>
+                </LinearLayout>
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp">
+
+                <TextView
+                    style="@style/carcy_info_jscs_left"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|left"
+                    android:text="联系电话" />
+
+                <TextView
+                    android:id="@+id/tv_lxdh"
+                    style="@style/carcy_info_jscs_center"
+                    android:layout_height="28dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_width="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="0281121511"/>
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp">
+
+                <TextView
+                    style="@style/carcy_info_jscs_left"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|left"
+                    android:text="角色类型" />
+
+                <TextView
+                    android:id="@+id/tv_jslx"
+                    style="@style/carcy_info_jscs_center"
+                    android:layout_height="28dp"
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:gravity="center_vertical"
+                    android:text="1"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_alignParentStart="true">
+
+                <TextView
+                    style="@style/carcy_info_jscs_left"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|left"
+                    android:text="管理部门" />
+
+                <TextView
+                    android:id="@+id/tv_glbm"
+                    style="@style/carcy_info_jscs_center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="12dp"
+                    android:gravity="center_vertical" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_fwz"
+                android:layout_width="match_parent"
+                android:layout_height="44dp">
+
+                <TextView
+                    style="@style/carcy_info_jscs_left"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|left"
+                    android:text="服务站名称" />
+
+                <TextView
+                    android:id="@+id/tv_fwzmc"
+                    style="@style/carcy_info_jscs_center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="12dp"
+                    android:gravity="center_vertical" />
+            </LinearLayout>
+
+            <TextView
+                style="@style/carcy_info_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:text="资料照片:" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:descendantFocusability="blocksDescendants"
+                android:layout_marginBottom="40dp">
+                <include layout="@layout/recyclerview" />
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

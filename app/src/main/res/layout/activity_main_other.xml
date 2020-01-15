@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:background="@color/theme_color"
+       android:layout_height="50dp">
+       <ImageView
+           android:id="@+id/iv_head"
+           android:layout_width="30dp"
+           android:layout_height="30dp"
+           android:layout_centerVertical="true"
+           android:layout_marginStart="12dp"/>
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:textSize="@dimen/text_super_20sp"
+           android:textColor="@color/white"
+           android:layout_centerInParent="true"
+           android:text="电动自行车登记管理系统"/>
+   </RelativeLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        app:tabIndicatorHeight="0dp"
+        app:tabIndicatorColor="@color/theme_color"
+        app:tabTextAppearance="@style/tabLayoutTextStyle"
+        app:tabSelectedTextColor="@color/theme_color" />
+</LinearLayout>

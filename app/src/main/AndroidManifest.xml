@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.seatrend.xj.electricbicyclesalesystem"
+    tools:ignore="ExtraText">
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.NFC" />
+    <uses-feature android:name="android.hardware.nfc" android:required="true" />
+
+    <application
+        android:name=".common.MyApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/app_logo"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:largeHeap="true"
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.MainOtherActivity" />
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.LoginLoadingActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.SettingActivity" />
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.ServiceSettingActivity" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="@string/authority"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.ShowPhotoActivity" />
+        <activity android:name=".zxing.activity.CaptureActivity" />
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.LoginActivity" />
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.LoginByUserPasswordActivity" />
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.HelpActivity"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.ArchiveFileActivity"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.YWEntranceActivity"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.ChaYanEntranceActivity"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.CarInfoActivity"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.ChaYanActivity"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.CollectPhotoActivity"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.RemindDZPZactivity"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.RemindHPBFActivity"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.CarInfoByCyActivity"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.Yw3CzActivity"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.YwRegisterActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.AutographActivity"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.InsuranceActivity"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.YwChangeActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.YwTransferActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.YwCancelActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.YwReplaceActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.YwOldCarReplaceHPHMActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.YwLsOfferHPHMActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.UserInfoActivity"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.YWCheckActivity"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.RemindCYActivity"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.PayActivity"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.WarningMessageActivity"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.BusinessDetailsActivity"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.YwTBSearchActivity"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.EmployeeRemindActivity"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.EmployeeDetailActivity"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.EmployeeActivity"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.YwTbEditActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.EmployeeChangePasswordActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.EmployeeEditActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.RemindCommonActivity"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.YwfhEditActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.YwFhSearchActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.Archive2FileActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.A2FSearchActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.VideoActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+        <service android:name=".service.PhotoUploadService"/>
+    </application>
+</manifest>

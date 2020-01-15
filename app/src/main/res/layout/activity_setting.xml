@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_title"/>
+    <Button
+        android:id="@+id/btn_server_setting"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/item_white_bg"
+        android:gravity="start|center_vertical"
+        android:paddingStart="12dp"
+        android:text="服务器设置"
+        tools:ignore="RtlSymmetry" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/linecolor"/>
+    <Button
+        android:id="@+id/btn_code_syn"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/item_white_bg"
+        android:gravity="start|center_vertical"
+        android:paddingStart="12dp"
+        android:text="代码同步"
+        tools:ignore="RtlSymmetry" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/linecolor"/>
+    <Button
+        android:id="@+id/btn_video"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/item_white_bg"
+        android:gravity="start|center_vertical"
+        android:paddingStart="12dp"
+        android:text="视频"
+        tools:ignore="RtlSymmetry"
+        android:visibility="gone"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/linecolor"
+        android:visibility="gone"/>
+
+    <android.support.v4.widget.Space
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+    <TextView
+        android:id="@+id/tv_update_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_normal_14sp"
+        android:textColor="@color/textcolor3"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="12dp"/>
+
+</LinearLayout>

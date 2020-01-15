@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_title" />
+
+    <RadioGroup
+        android:id="@+id/carmsg_rg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_jscs"
+            style="@style/car_message_rb"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@drawable/carmsg_rb"
+            android:button="@null"
+            android:text="登记信息" />
+
+        <RadioButton
+            android:id="@+id/rb_ggxx"
+            style="@style/car_message_rb"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@drawable/carmsg_rb"
+            android:button="@null"
+            android:text="技术参数" />
+        <RadioButton
+            android:id="@+id/rb_cyxx"
+            style="@style/car_message_rb"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@drawable/carmsg_rb"
+            android:button="@null"
+            android:text="查验信息" />
+    </RadioGroup>
+
+    <FrameLayout
+        android:id="@+id/carmsg_fl"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+    </FrameLayout>
+    <Button
+        android:id="@+id/bt_next"
+        style="@style/car_message_clcy"
+        android:layout_width="240dp"
+        android:layout_height="42dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/btn_orange_bg1"
+        android:text="业务复核"
+        android:visibility="gone"/>
+    <LinearLayout
+        android:id="@+id/ll_fhjg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="33dp"
+        android:layout_marginEnd="33dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:divider="@drawable/item_diliver"
+        android:showDividers="middle"
+        android:orientation="vertical">
+        <TextView
+            style="@style/carcy_info_title"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="复核结果"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/gray"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/pay_info"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="复核人" />
+
+            <TextView
+                android:id="@+id/tv_fhr"
+                style="@style/pay_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="XX" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/pay_info"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="复核状态" />
+
+            <TextView
+                android:id="@+id/tv_fhzt"
+                style="@style/pay_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="XX" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/pay_info"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="原因" />
+
+            <TextView
+                android:id="@+id/tv_yy"
+                style="@style/pay_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/red"
+                android:text="XX" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/pay_info"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="复核时间" />
+
+            <TextView
+                android:id="@+id/tv_fhsj"
+                style="@style/pay_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="XX" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/pay_info"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="复核意见" />
+
+            <TextView
+                android:id="@+id/tv_fhyj"
+                style="@style/pay_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:scrollbars="vertical"
+                android:text="XXXXXXXXXXXXXXX" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

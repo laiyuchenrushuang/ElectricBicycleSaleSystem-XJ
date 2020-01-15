@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="2dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:layout_marginTop="12dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:text="流水号:"
+                    android:textColor="@color/textcolor"
+                    android:textSize="@dimen/text_large_16sp" />
+
+                <TextView
+                    android:id="@+id/tv_lsh"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12121212"
+                    android:textColor="@color/textcolor"
+                    android:textSize="@dimen/text_large_16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:text="车辆类型:"
+                    android:textColor="@color/textcolor"
+                    android:textSize="@dimen/text_large_16sp" />
+
+                <TextView
+                    android:id="@+id/tv_cllx"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="标准电动自行车"
+                    android:textColor="@color/textcolor"
+                    android:textSize="@dimen/text_large_16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:text="车牌号码:"
+                    android:textColor="@color/textcolor"
+                    android:textSize="@dimen/text_large_16sp" />
+
+                <TextView
+                    android:id="@+id/tv_cphm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="新A123456"
+                    android:textColor="@color/textcolor"
+                    android:textSize="@dimen/text_large_16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:text="预警类型:"
+                    android:textColor="@color/textcolor"
+                    android:textSize="@dimen/text_large_16sp" />
+
+                <TextView
+                    android:id="@+id/tv_yjlx"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="查验不通过"
+                    android:textColor="@color/textcolor"
+                    android:textSize="@dimen/text_large_16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+               android:paddingTop="6dp"
+                android:minHeight="32dp">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:text="预警描述:"
+                    android:textColor="@color/textcolor"
+                    android:gravity="top"
+                    android:textSize="@dimen/text_large_16sp" />
+
+                <TextView
+                    android:id="@+id/tv_yjms"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
+                    android:ellipsize="end"
+                    android:text="卡卡卡卡是的卡卡是的卡卡"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/text_large_16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:text="预警时间:"
+                    android:textColor="@color/textcolor"
+                    android:textSize="@dimen/text_large_16sp" />
+
+                <TextView
+                    android:id="@+id/tv_yjsj"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="2019-12-26 00:00:00"
+                    android:textColor="@color/textcolor"
+                    android:textSize="@dimen/text_large_16sp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/bt_next"
+                style="@style/car_message_clcy"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="15dp"
+                android:background="@drawable/btn_bule_bg1"
+                android:text="签收" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

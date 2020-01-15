@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/archive_file_search_style"
+            android:orientation="horizontal"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp">
+
+            <RelativeLayout
+                android:id="@+id/ll_back"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginLeft="12dp"
+                    android:src="@drawable/back_icon" />
+            </RelativeLayout>
+
+            <android.support.v7.widget.SearchView
+                android:id="@+id/searchview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/btn_bule_bg2"
+                android:focusable="false"
+                app:searchIcon="@null">
+
+            </android.support.v7.widget.SearchView>
+
+            <RelativeLayout
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:paddingBottom="3dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/iv_btn_search"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="14dp"
+                    android:background="@drawable/search_icon" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            app:cardCornerRadius="5dp"
+            app:cardMaxElevation="5dp">
+
+            <RelativeLayout
+                android:id="@+id/rl_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/ll_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="12dp"
+                    android:divider="@drawable/item_diliver"
+                    android:orientation="vertical"
+                    android:showDividers="middle">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            style="@style/pay_info"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:text="整车编码" />
+
+                        <TextView
+                            android:id="@+id/tv_zcbm"
+                            style="@style/pay_info"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="XX" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            style="@style/pay_info"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:text="车牌号码" />
+
+                        <TextView
+                            android:id="@+id/tv_cphm"
+                            style="@style/pay_info"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="XX" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_fhzt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/pay_info"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:text="复核状态" />
+
+                        <TextView
+                            android:id="@+id/tv_fhzt"
+                            style="@style/pay_info"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="XX" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_gd"
+                    android:layout_width="60dp"
+                    android:layout_height="30dp"
+                    android:layout_alignBottom="@id/ll_item"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/btn_orange_bg1"
+                    android:text="归档" />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+</LinearLayout>

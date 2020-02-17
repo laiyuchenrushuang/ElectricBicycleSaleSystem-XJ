@@ -81,12 +81,14 @@
         <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.YWCheckActivity"/>
         <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.RemindCYActivity"/>
         <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.PayActivity"/>
-        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.WarningMessageActivity"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.WarningMessageActivity"
+                  android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.BusinessDetailsActivity"/>
         <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.YwTBSearchActivity"/>
         <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.EmployeeRemindActivity"/>
         <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.EmployeeDetailActivity"/>
-        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.EmployeeActivity"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.EmployeeActivity"
+                  android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.YwTbEditActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.EmployeeChangePasswordActivity"
@@ -103,6 +105,8 @@
         <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.A2FSearchActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.VideoActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.YwCarCheckActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <service android:name=".service.PhotoUploadService"/>
     </application>

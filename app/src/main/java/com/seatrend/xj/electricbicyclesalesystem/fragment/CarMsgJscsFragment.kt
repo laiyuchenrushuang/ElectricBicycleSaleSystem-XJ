@@ -9,12 +9,14 @@ import android.view.ViewGroup
 import com.seatrend.xj.electricbicyclesalesystem.R
 import com.seatrend.xj.electricbicyclesalesystem.activity.CarInfoActivity
 import com.seatrend.xj.electricbicyclesalesystem.activity.CarInfoByCyActivity
+import com.seatrend.xj.electricbicyclesalesystem.activity.Yw3CzActivity
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseFragment
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants
 import com.seatrend.xj.electricbicyclesalesystem.entity.AllBikeMsgEnity
 import com.seatrend.xj.electricbicyclesalesystem.entity.CYEntranceEnity
 import com.seatrend.xj.electricbicyclesalesystem.entity.CYEntranceEnity3C
 import com.seatrend.xj.electricbicyclesalesystem.util.CarUtils
+import com.seatrend.xj.electricbicyclesalesystem.util.OtherUtils
 import com.seatrend.xj.electricbicyclesalesystem.util.StringUtils
 import kotlinx.android.synthetic.main.fragment_jscs.*
 
@@ -47,7 +49,7 @@ class CarMsgJscsFragment : BaseFragment() {
                 if ("A" == activity.intent.getStringExtra("ywlx")) {
                     var data3c = CarInfoActivity.mData3C //注册登记专用
                     //注册登记3c走互联网获取的3c信息
-                    if (data3c == null || data3c!!.data == null||data3c.data.threeCertificates == null) {
+                    if (data3c == null || data3c!!.data == null || data3c.data.threeCertificates == null) {
                         showToast("获取3C技术参数失败")
                         return
                     }
@@ -71,10 +73,10 @@ class CarMsgJscsFragment : BaseFragment() {
                     carinfo_jscs_xhlc.text = if (TextUtils.isEmpty(data3c.data.threeCertificates.data.continuousMileage)) "/" else data3c.data.threeCertificates.data.continuousMileage//续航里程
                     carinfo_jscs_ccczszt.text = if (TextUtils.isEmpty(data3c.data.threeCertificates.data.certState)) "/" else data3c.data.threeCertificates.data.certState    //证书状态
                     carinfo_jscs_zzrq.text = if (TextUtils.isEmpty(data3c.data.threeCertificates.data.manufacturingDate)) "/" else data3c.data.threeCertificates.data.manufacturingDate //制造日期
-                }else{
+                } else {
                     //其他的登记 走服务器上存储的3c信息
                     var data1 = CarInfoActivity.mDataZcbm
-                    if (data1 == null || data1.data == null||data1.data.threeCertificates == null) {
+                    if (data1 == null || data1.data == null || data1.data.threeCertificates == null) {
                         showToast("获取3C技术参数失败")
                         return
                     }
@@ -98,30 +100,55 @@ class CarMsgJscsFragment : BaseFragment() {
                     carinfo_jscs_zzrq.text = if (TextUtils.isEmpty(data1.data.threeCertificates.zzrq)) "/" else data1.data.threeCertificates.zzrq //制造日期
                 }
             } else {
-                if (enity == null || enity!!.data == null || enity!!.data.cccData == null || enity!!.data.cccData == null) {
-                    showToast("获取技术参数失败")
-                    return
-                }
-                carinfo_jscs_zcbm.text = if(null == enity!!.data.checkData || TextUtils.isEmpty(enity!!.data.checkData.zcbm)) enity!!.data.fjdcBusiness.zcbm else enity!!.data.checkData.zcbm //zcbm
-                carinfo_jscs_cjszcbmdwz.text = enity!!.data.cccData.cjszcbmwz.trim() //wz
-                carinfo_jscs_clzwsb.text = enity!!.data.cccData.clzwsb //
-                carinfo_jscs_cpxh.text = enity!!.data.cccData.cpxh //
-                carinfo_jscs_mpgdwz.text = enity!!.data.cccData.mpgdwz //
-                carinfo_jscs_cphgzbh.text = enity!!.data.cccData.cphgzbh //
-                carinfo_jscs_ccczsbh.text = enity!!.data.cccData.cccbh //
-                carinfo_jscs_ccczsfzrq.text = enity!!.data.cccData.cccyxq
-                carinfo_jscs_csys.text = enity!!.data.cccData.csys
-                carinfo_jscs_c.text = enity!!.data.cccData.cwkc
-                carinfo_jscs_k.text = enity!!.data.cccData.cwkk
-                carinfo_jscs_g.text = enity!!.data.cccData.cwkg
+
+                if (activity is Yw3CzActivity && "3" == activity.intent.getStringExtra(Constants.UI_TYPE)) { //证明是车辆查询来的
+                    carinfo_jscs_zcbm.text = Yw3CzActivity.mAllCXData!!.data.jscs.cphgzbh //zcbm
+                    carinfo_jscs_cjszcbmdwz.text = Yw3CzActivity.mAllCXData!!.data.jscs.cjszcbhwz.trim() //wz
+                    carinfo_jscs_clzwsb.text = Yw3CzActivity.mAllCXData!!.data.jscs.clzwsb //
+                    carinfo_jscs_cpxh.text = Yw3CzActivity.mAllCXData!!.data.jscs.cpxh //
+                    carinfo_jscs_mpgdwz.text = Yw3CzActivity.mAllCXData!!.data.jscs.mpgdwz //
+                    carinfo_jscs_cphgzbh.text = Yw3CzActivity.mAllCXData!!.data.jscs.cphgzbh //
+                    carinfo_jscs_ccczsbh.text = Yw3CzActivity.mAllCXData!!.data.jscs.cccbh //
+                    carinfo_jscs_ccczsfzrq.text = Yw3CzActivity.mAllCXData!!.data.cccdata.cccyxq
+                    carinfo_jscs_csys.text = Yw3CzActivity.mAllCXData!!.data.cccdata.csys
+                    carinfo_jscs_c.text = Yw3CzActivity.mAllCXData!!.data.jscs.cwkc
+                    carinfo_jscs_k.text = Yw3CzActivity.mAllCXData!!.data.jscs.cwkk
+                    carinfo_jscs_g.text = Yw3CzActivity.mAllCXData!!.data.jscs.cwkg
 //                carinfo_jscs_qhlzxj.text = enity!!.data.checkData.scqhlzxj  //前后中心距
-                carinfo_jscs_zbzl.text = enity!!.data.cccData.zbzl
-                carinfo_jscs_zgsjcs.text = enity!!.data.cccData.zgcs
-                //        carinfo_jscs_ddjxh.text = enity.data.cccData.ddjxs // 电动机序号
-                carinfo_jscs_clzzs.text = enity!!.data.cccData.clzzs//车辆制造商
-                carinfo_jscs_xhlc.text = enity!!.data.cccData.xhlc //续航里程
-                carinfo_jscs_zzrq.text = enity!!.data.cccData.zzrq//制造日期
-                carinfo_jscs_ccczszt.text =enity!!.data.cccData.ccczt//ccc状态
+                    carinfo_jscs_zbzl.text = Yw3CzActivity.mAllCXData!!.data.cccdata.zbzl
+                    carinfo_jscs_zgsjcs.text = Yw3CzActivity.mAllCXData!!.data.jscs.zgcs
+                    //        carinfo_jscs_ddjxh.text = enity.data.cccData.ddjxs // 电动机序号
+                    carinfo_jscs_clzzs.text = Yw3CzActivity.mAllCXData!!.data.jscs.clzzs//车辆制造商
+                    carinfo_jscs_xhlc.text = Yw3CzActivity.mAllCXData!!.data.cccdata.xhlc //续航里程  张月说不展示
+                    carinfo_jscs_zzrq.text = Yw3CzActivity.mAllCXData!!.data.cccdata.zzrq//制造日期
+                    carinfo_jscs_ccczszt.text =Yw3CzActivity.mAllCXData!!.data.cccdata.ccczt//ccc状态
+                } else { //原来的逻辑不变
+
+                    if (enity == null || enity!!.data == null || enity!!.data.cccData == null || enity!!.data.cccData == null) {
+                        showToast("获取技术参数失败")
+                        return
+                    }
+                    carinfo_jscs_zcbm.text = if (null == enity!!.data.checkData || TextUtils.isEmpty(enity!!.data.checkData.zcbm)) enity!!.data.fjdcBusiness.zcbm else enity!!.data.checkData.zcbm //zcbm
+                    carinfo_jscs_cjszcbmdwz.text = enity!!.data.cccData.cjszcbmwz.trim() //wz
+                    carinfo_jscs_clzwsb.text = enity!!.data.cccData.clzwsb //
+                    carinfo_jscs_cpxh.text = enity!!.data.cccData.cpxh //
+                    carinfo_jscs_mpgdwz.text = enity!!.data.cccData.mpgdwz //
+                    carinfo_jscs_cphgzbh.text = enity!!.data.cccData.cphgzbh //
+                    carinfo_jscs_ccczsbh.text = enity!!.data.cccData.cccbh //
+                    carinfo_jscs_ccczsfzrq.text = enity!!.data.cccData.cccyxq
+                    carinfo_jscs_csys.text = enity!!.data.cccData.csys
+                    carinfo_jscs_c.text = enity!!.data.cccData.cwkc
+                    carinfo_jscs_k.text = enity!!.data.cccData.cwkk
+                    carinfo_jscs_g.text = enity!!.data.cccData.cwkg
+//                carinfo_jscs_qhlzxj.text = enity!!.data.checkData.scqhlzxj  //前后中心距
+                    carinfo_jscs_zbzl.text = enity!!.data.cccData.zbzl
+                    carinfo_jscs_zgsjcs.text = enity!!.data.cccData.zgcs
+                    //        carinfo_jscs_ddjxh.text = enity.data.cccData.ddjxs // 电动机序号
+                    carinfo_jscs_clzzs.text = enity!!.data.cccData.clzzs//车辆制造商
+                    carinfo_jscs_xhlc.text = enity!!.data.cccData.xhlc //续航里程
+                    carinfo_jscs_zzrq.text = enity!!.data.cccData.zzrq//制造日期
+                    carinfo_jscs_ccczszt.text = enity!!.data.cccData.ccczt//ccc状态
+                }
             }
         } catch (e: Exception) {
             showToast(e.message.toString())
@@ -129,12 +156,12 @@ class CarMsgJscsFragment : BaseFragment() {
 
     }
 
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        if (context is CarInfoActivity) {
-            mActivity = context
-        } else if (context is CarInfoActivity) {
-            mActivity = context
-        }
-    }
+//    override fun onAttach(context: Context?) {
+//        super.onAttach(context)
+//        if (context is CarInfoActivity) {
+//            mActivity = context
+//        } else if (context is CarInfoActivity) {
+//            mActivity = context
+//        }
+//    }
 }

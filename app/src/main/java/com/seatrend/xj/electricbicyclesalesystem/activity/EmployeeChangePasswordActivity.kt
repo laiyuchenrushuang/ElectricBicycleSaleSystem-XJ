@@ -37,13 +37,18 @@ class EmployeeChangePasswordActivity : BaseActivity(), NormalView {
     }
 
     private fun getData() {
-        tv_xm.text = if(null == intent.getStringExtra("xm")) "" else intent.getStringExtra("xm")
-        tv_sfz.text = if(null == intent.getStringExtra("sfz")) "" else intent.getStringExtra("sfz")
+        tv_xm.text = if (null == intent.getStringExtra("xm")) "" else intent.getStringExtra("xm")
+        tv_sfz.text = if (null == intent.getStringExtra("sfz")) "" else intent.getStringExtra("sfz")
     }
 
     private fun bindEvent() {
+        //屏蔽表情
+        et_old_psw.filters = arrayOf(inputEmojiFilter)
+        et_psw1.filters = arrayOf(inputEmojiFilter)
+        et_psw2.filters = arrayOf(inputEmojiFilter)
+
         bt_next.setOnClickListener {
-            if(!CheckEditTxetUtils.checkEditextValuable(et_old_psw)){
+            if (!CheckEditTxetUtils.checkEditextValuable(et_old_psw)) {
                 showToast("原密码不为空")
                 return@setOnClickListener
             }
@@ -61,7 +66,7 @@ class EmployeeChangePasswordActivity : BaseActivity(), NormalView {
             map["yhdh"] = intent.getStringExtra("yhdh")
             map["oldPass"] = et_old_psw.text.toString()
             map["newPass"] = et_psw1.text.toString()
-            mNormalPresenter!!.doNetworkTask(map,Constants.USER_PSW_UPDATE)
+            mNormalPresenter!!.doNetworkTask(map, Constants.USER_PSW_UPDATE)
         }
     }
 

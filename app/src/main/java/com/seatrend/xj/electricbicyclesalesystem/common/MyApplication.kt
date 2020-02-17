@@ -20,8 +20,8 @@ class MyApplication : Application(), Application.ActivityLifecycleCallbacks {
         super.onCreate()
         myApplicationContext = this
 //        CrashHandler.getInstance().init(this)
-        CodeTableSQLiteUtils.deleteAll(CodeTableSQLiteOpenHelper.PHOTO_TABLE_NAME)
-        startService(Intent(this, PhotoUploadService::class.java))
+//        CodeTableSQLiteUtils.deleteAll(CodeTableSQLiteOpenHelper.PHOTO_TABLE_NAME)
+//        startService(Intent(this, PhotoUploadService::class.java))
     }
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle) {

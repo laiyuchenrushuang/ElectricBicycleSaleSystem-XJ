@@ -12,20 +12,18 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
-import com.google.gson.annotations.Until
 import com.seatrend.xj.electricbicyclesalesystem.R
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants
 import com.seatrend.xj.electricbicyclesalesystem.database.CodeTableSQLiteUtils
-import com.seatrend.xj.electricbicyclesalesystem.entity.*
+import com.seatrend.xj.electricbicyclesalesystem.entity.AllBikeMsgEnity
+import com.seatrend.xj.electricbicyclesalesystem.entity.CommonResponse
 import com.seatrend.xj.electricbicyclesalesystem.persenter.NormalPresenter
 import com.seatrend.xj.electricbicyclesalesystem.util.*
 import com.seatrend.xj.electricbicyclesalesystem.view.NormalView
 import com.seatrend.xj.electricbicyclesalesystem.zxing.activity.CaptureActivity
 import kotlinx.android.synthetic.main.activity_yw.*
-import kotlinx.android.synthetic.main.activity_yw.iv_scan
-import kotlinx.android.synthetic.main.activity_yw.ll_cphm
-import java.util.HashMap
+import java.util.*
 
 class YWEntranceActivity : BaseActivity(), NormalView {
 
@@ -169,6 +167,7 @@ class YWEntranceActivity : BaseActivity(), NormalView {
             }
         }
         et_yw_cphm.transformationMethod = CarHphmUtils.TransInformation()
+        et_yw_cphm.filters = arrayOf(inputFilter)
     }
 
     /**

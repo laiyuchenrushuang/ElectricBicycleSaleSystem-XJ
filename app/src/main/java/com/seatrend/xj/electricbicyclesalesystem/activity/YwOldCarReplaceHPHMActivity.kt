@@ -132,6 +132,15 @@ class YwOldCarReplaceHPHMActivity : BaseActivity(),NormalView{
             map["lybm"] = UserInfo.GLBM
             mNormalPresenter!!.doNetworkTask(map, Constants.SYSTEM_PRODUCT_HPHM)
         }
+
+        //限制名称只能输入中文和字母和数字
+//        et_xsqy.filters = arrayOf(inputFilter)
+        ed_syr_xm.filters = arrayOf(inputFilter)
+        et_syr_yj_xxdz.filters = arrayOf(inputFilter)
+        et_syr_xxdz.filters = arrayOf(inputFilter)
+        ed_dlr_xm.filters = arrayOf(inputFilter)
+        ed_yj_xm.filters = arrayOf(inputFilter)
+        et_yj_xxdz.filters = arrayOf(inputFilter)
     }
 
     private fun initData() {

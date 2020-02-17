@@ -89,7 +89,6 @@
                 android:layout_weight="1"
                 android:background="@drawable/edit_text_bg"
                 android:hint="请输入原密码"
-                android:digits="@string/number_and_letter"
                 />
         </LinearLayout>
 

@@ -4,22 +4,30 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.StaggeredGridLayoutManager
-import android.text.TextUtils
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.ListView
+import android.widget.PopupWindow
 import com.seatrend.xj.electricbicyclesalesystem.R
 import com.seatrend.xj.electricbicyclesalesystem.adpater.CyxxPhotoAdapter
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants
-import com.seatrend.xj.electricbicyclesalesystem.database.CodeTableSQLiteUtils
-import com.seatrend.xj.electricbicyclesalesystem.entity.*
+import com.seatrend.xj.electricbicyclesalesystem.entity.AllBikeMsgEnity
+import com.seatrend.xj.electricbicyclesalesystem.entity.CommonResponse
+import com.seatrend.xj.electricbicyclesalesystem.entity.EmployeeBean
 import com.seatrend.xj.electricbicyclesalesystem.persenter.NormalPresenter
-import com.seatrend.xj.electricbicyclesalesystem.util.*
+import com.seatrend.xj.electricbicyclesalesystem.util.DMZUtils
+import com.seatrend.xj.electricbicyclesalesystem.util.JslxUtils
+import com.seatrend.xj.electricbicyclesalesystem.util.ViewShowUtils
 import com.seatrend.xj.electricbicyclesalesystem.view.NormalView
 import kotlinx.android.synthetic.main.activty_employee_detail.*
 import kotlinx.android.synthetic.main.recyclerview.*
-import java.lang.Exception
-import java.util.ArrayList
+import java.util.*
+import kotlin.collections.HashMap
+import kotlin.collections.set
+
+
 
 
 /**
@@ -108,6 +116,7 @@ class EmployeeDetailActivity : BaseActivity(), NormalView, BaseActivity.DialogLi
             tv_glbm.text = mEmployeeListBean!!.sjbmmc
 
             tv_fwzmc.text = mEmployeeListBean!!.bmmc
+//            showLog(GsonUtils.toJson(mEmployeeListBean))
 
             listData.clear()
             if ("停用".equals(mEmployeeListBean!!.zhzt)) {
@@ -141,7 +150,7 @@ class EmployeeDetailActivity : BaseActivity(), NormalView, BaseActivity.DialogLi
         tv_right.setOnClickListener {
             initSelectYwztPopup()
             if (pop != null && !pop!!.isShowing) {
-                pop!!.animationStyle = R.style.pop_animation
+                pop!!.animationStyle = com.seatrend.xj.electricbicyclesalesystem.R.style.pop_animation
                 pop!!.showAsDropDown(tv_right)
             }
         }
@@ -154,9 +163,9 @@ class EmployeeDetailActivity : BaseActivity(), NormalView, BaseActivity.DialogLi
     private fun initSelectYwztPopup() {
 
         mTypeLv = ListView(this)
-        mTypeLv!!.background = ContextCompat.getDrawable(this, R.color.white)
+        mTypeLv!!.background = ContextCompat.getDrawable(this, com.seatrend.xj.electricbicyclesalesystem.R.color.white)
         // 设置适配器
-        testDataAdapter = ArrayAdapter(this, R.layout.popup_text_item, listData)
+        testDataAdapter = ArrayAdapter(this, com.seatrend.xj.electricbicyclesalesystem.R.layout.popup_text_item, listData)
         mTypeLv!!.adapter = testDataAdapter
         mTypeLv!!.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             when (listData[position]) {
@@ -194,7 +203,8 @@ class EmployeeDetailActivity : BaseActivity(), NormalView, BaseActivity.DialogLi
             pop!!.dismiss()
         }
         pop = PopupWindow(mTypeLv, tv_right.width, ViewGroup.LayoutParams.WRAP_CONTENT, true)
-        pop!!.isFocusable = true
+        pop!!.setBackgroundDrawable(resources.getDrawable(R.color.white))
+        pop!!.isFocusable = false
         pop!!.isOutsideTouchable = true
         pop!!.setOnDismissListener {
             // 关闭popup窗口

@@ -1,46 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="33dp"
         android:layout_marginEnd="33dp"
         android:orientation="vertical">
 
-        <TextView
-            style="@style/carcy_info_title"
-            android:layout_width="wrap_content"
-            android:layout_height="44dp"
-            android:text="业务信息" />
-
         <LinearLayout
+            android:id="@+id/ll_ywxx"
             android:layout_width="match_parent"
-            android:layout_height="44dp">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
-                style="@style/carcy_info_jscs_left"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:text="业务类型" />
-
-            <android.support.v4.widget.Space
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-
-            <TextView
-                android:id="@+id/tv_ywlx"
-                style="@style/carcy_info_jscs_right"
+                style="@style/carcy_info_title"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="44dp"
+                android:text="业务信息" />
 
-                android:text="/" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
+
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:text="业务类型" />
+
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/tv_ywlx"
+                        style="@style/carcy_info_jscs_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:text="/" />
+                </LinearLayout>
+
+                <include layout="@layout/my_view3" />
+            </LinearLayout>
         </LinearLayout>
-
-        <include layout="@layout/my_view3" />
         //注册业务信息
 
         <LinearLayout
@@ -52,220 +65,268 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="44dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
 
-                    android:text="车辆类型" />
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
 
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                        android:text="车辆类型" />
 
-                <TextView
-                    android:id="@+id/tv_cllx"
-                    style="@style/carcy_info_jscs_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
 
-                    android:text="/" />
+                    <TextView
+                        android:id="@+id/tv_cllx"
+                        style="@style/carcy_info_jscs_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:text="/" />
+                </LinearLayout>
+
+                <include layout="@layout/my_view3" />
             </LinearLayout>
-
-            <include layout="@layout/my_view3" />
-
-            <LinearLayout
-                android:id="@+id/ll_zc_cphm"
-                android:layout_width="match_parent"
-                android:layout_height="44dp">
-
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-
-                    android:text="车辆号牌" />
-
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/tv_cphm"
-                    style="@style/carcy_info_jscs_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-
-                    android:text="/" />
-            </LinearLayout>
-
-            <include layout="@layout/my_view3" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="44dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                <LinearLayout
+                    android:id="@+id/ll_zc_cphm"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
 
-                    android:text="车身颜色" />
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
 
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                        android:text="车辆号牌" />
 
-                <TextView
-                    android:id="@+id/tv_csys"
-                    style="@style/carcy_info_jscs_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
 
-                    android:text="/" />
+                    <TextView
+                        android:id="@+id/tv_cphm"
+                        style="@style/carcy_info_jscs_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:text="/" />
+                </LinearLayout>
+
+                <include layout="@layout/my_view3" />
             </LinearLayout>
-
-            <include layout="@layout/my_view3" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="44dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
 
-                    android:text="获得方式" />
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
 
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                        android:text="车身颜色" />
 
-                <TextView
-                    android:id="@+id/tv_hdfs"
-                    style="@style/carcy_info_jscs_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
 
-                    android:text="/" />
+                    <TextView
+                        android:id="@+id/tv_csys"
+                        style="@style/carcy_info_jscs_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:text="/" />
+                </LinearLayout>
+
+                <include layout="@layout/my_view3" />
             </LinearLayout>
-
-            <include layout="@layout/my_view3" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="44dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
 
-                    android:text="来历证明" />
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
 
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                        android:text="获得方式" />
 
-                <TextView
-                    android:id="@+id/tv_llzm"
-                    style="@style/carcy_info_jscs_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
 
-                    android:text="/" />
+                    <TextView
+                        android:id="@+id/tv_hdfs"
+                        style="@style/carcy_info_jscs_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:text="/" />
+                </LinearLayout>
+
+                <include layout="@layout/my_view3" />
             </LinearLayout>
-
-            <include layout="@layout/my_view3" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="44dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
 
-                    android:text="使用性质" />
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
 
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                        android:text="来历证明" />
 
-                <TextView
-                    android:id="@+id/tv_syxz"
-                    style="@style/carcy_info_jscs_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
 
-                    android:text="/" />
+                    <TextView
+                        android:id="@+id/tv_llzm"
+                        style="@style/carcy_info_jscs_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:text="/" />
+                </LinearLayout>
+
+                <include layout="@layout/my_view3" />
             </LinearLayout>
-
-            <include layout="@layout/my_view3" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="44dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
 
-                    android:text="车辆用途" />
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
 
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                        android:text="使用性质" />
 
-                <TextView
-                    android:id="@+id/tv_clyt"
-                    style="@style/carcy_info_jscs_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
 
-                    android:text="/" />
+                    <TextView
+                        android:id="@+id/tv_syxz"
+                        style="@style/carcy_info_jscs_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:text="/" />
+                </LinearLayout>
+
+                <include layout="@layout/my_view3" />
             </LinearLayout>
-
-            <include layout="@layout/my_view3" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="44dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
 
-                    android:text="获取日期" />
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
 
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                        android:text="车辆用途" />
 
-                <TextView
-                    android:id="@+id/tv_hqrq"
-                    style="@style/carcy_info_jscs_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
 
-                    android:text="/" />
+                    <TextView
+                        android:id="@+id/tv_clyt"
+                        style="@style/carcy_info_jscs_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:text="/" />
+                </LinearLayout>
+
+                <include layout="@layout/my_view3" />
             </LinearLayout>
 
-            <include layout="@layout/my_view3" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
+
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:text="获取日期" />
+
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/tv_hqrq"
+                        style="@style/carcy_info_jscs_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:text="/" />
+                </LinearLayout>
+
+                <include layout="@layout/my_view3" />
+            </LinearLayout>
         </LinearLayout>
         //变更业务信息
 
@@ -278,137 +339,167 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="44dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
 
-                    android:text="业务原因" />
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
 
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                        android:text="业务原因" />
 
-                <TextView
-                    android:id="@+id/tv_bg_ywyy"
-                    style="@style/carcy_info_jscs_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
 
-                    android:text="/" />
+                    <TextView
+                        android:id="@+id/tv_bg_ywyy"
+                        style="@style/carcy_info_jscs_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:text="/" />
+                </LinearLayout>
+
+                <include layout="@layout/my_view3" />
             </LinearLayout>
-
-            <include layout="@layout/my_view3" />
-
-            <LinearLayout
-                android:id="@+id/ll_bg_zrd"
-                android:layout_width="match_parent"
-                android:layout_height="44dp">
-
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="转入地" />
-
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/tv_bg_zrd"
-                    style="@style/carcy_info_jscs_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="/" />
-            </LinearLayout>
-
-            <include layout="@layout/my_view3" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="44dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="使用性质" />
+                <LinearLayout
+                    android:id="@+id/ll_bg_zrd"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
 
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="转入地" />
 
-                <TextView
-                    android:id="@+id/tv_bg_syxz"
-                    style="@style/carcy_info_jscs_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
 
-                    android:text="/" />
+                    <TextView
+                        android:id="@+id/tv_bg_zrd"
+                        style="@style/carcy_info_jscs_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="/" />
+                </LinearLayout>
+
+                <include layout="@layout/my_view3" />
             </LinearLayout>
-
-            <include layout="@layout/my_view3" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="44dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
 
-                    android:text="车辆用途" />
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="使用性质" />
 
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
 
-                <TextView
-                    android:id="@+id/tv_bg_clyt"
-                    style="@style/carcy_info_jscs_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    <TextView
+                        android:id="@+id/tv_bg_syxz"
+                        style="@style/carcy_info_jscs_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
 
-                    android:text="/" />
+                        android:text="/" />
+                </LinearLayout>
+
+                <include layout="@layout/my_view3" />
             </LinearLayout>
-
-            <include layout="@layout/my_view3" />
 
             <LinearLayout
-                android:id="@+id/ll_bg_cphm"
                 android:layout_width="match_parent"
-                android:layout_height="44dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
 
-                    android:text="新车牌号码" />
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
 
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                        android:text="车辆用途" />
 
-                <TextView
-                    android:id="@+id/tv_bg_cph"
-                    style="@style/carcy_info_jscs_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
 
-                    android:text="/" />
+                    <TextView
+                        android:id="@+id/tv_bg_clyt"
+                        style="@style/carcy_info_jscs_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:text="/" />
+                </LinearLayout>
+
+                <include layout="@layout/my_view3" />
             </LinearLayout>
 
-            <include layout="@layout/my_view3" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/ll_bg_cphm"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
+
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:text="新车牌号码" />
+
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/tv_bg_cph"
+                        style="@style/carcy_info_jscs_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:text="/" />
+                </LinearLayout>
+
+                <include layout="@layout/my_view3" />
+            </LinearLayout>
         </LinearLayout>
         //转移业务信息
 
@@ -421,140 +512,170 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="44dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
 
-                    android:text="业务原因" />
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
 
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                        android:text="业务原因" />
 
-                <TextView
-                    android:id="@+id/tv_zy_ywyy"
-                    style="@style/carcy_info_jscs_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
 
-                    android:text="/" />
+                    <TextView
+                        android:id="@+id/tv_zy_ywyy"
+                        style="@style/carcy_info_jscs_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:text="/" />
+                </LinearLayout>
+
+                <include layout="@layout/my_view3" />
             </LinearLayout>
-
-            <include layout="@layout/my_view3" />
-
-            <LinearLayout
-                android:id="@+id/ll_zy_zrd"
-                android:layout_width="match_parent"
-                android:layout_height="44dp">
-
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-
-                    android:text="转入地" />
-
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/tv_zy_zrd"
-                    style="@style/carcy_info_jscs_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-
-                    android:text="/" />
-            </LinearLayout>
-
-            <include layout="@layout/my_view3" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="44dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                <LinearLayout
+                    android:id="@+id/ll_zy_zrd"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
 
-                    android:text="使用性质" />
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
 
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                        android:text="转入地" />
 
-                <TextView
-                    android:id="@+id/tv_zy_syxz"
-                    style="@style/carcy_info_jscs_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
 
-                    android:text="/" />
+                    <TextView
+                        android:id="@+id/tv_zy_zrd"
+                        style="@style/carcy_info_jscs_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:text="/" />
+                </LinearLayout>
+
+                <include layout="@layout/my_view3" />
             </LinearLayout>
-
-            <include layout="@layout/my_view3" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="44dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
 
-                    android:text="车辆用途" />
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
 
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                        android:text="使用性质" />
 
-                <TextView
-                    android:id="@+id/tv_zy_clyt"
-                    style="@style/carcy_info_jscs_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
 
-                    android:text="/" />
+                    <TextView
+                        android:id="@+id/tv_zy_syxz"
+                        style="@style/carcy_info_jscs_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:text="/" />
+                </LinearLayout>
+
+                <include layout="@layout/my_view3" />
             </LinearLayout>
-
-            <include layout="@layout/my_view3" />
 
             <LinearLayout
-                android:id="@+id/ll_zy_cphm"
                 android:layout_width="match_parent"
-                android:layout_height="44dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
 
-                    android:text="新车牌号码" />
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
 
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                        android:text="车辆用途" />
 
-                <TextView
-                    android:id="@+id/tv_zy_cph"
-                    style="@style/carcy_info_jscs_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
 
-                    android:text="/" />
+                    <TextView
+                        android:id="@+id/tv_zy_clyt"
+                        style="@style/carcy_info_jscs_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:text="/" />
+                </LinearLayout>
+
+                <include layout="@layout/my_view3" />
             </LinearLayout>
 
-            <include layout="@layout/my_view3" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/ll_zy_cphm"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
+
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:text="新车牌号码" />
+
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/tv_zy_cph"
+                        style="@style/carcy_info_jscs_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:text="/" />
+                </LinearLayout>
+
+                <include layout="@layout/my_view3" />
+            </LinearLayout>
         </LinearLayout>
         //补换业务信息
 
@@ -567,61 +688,73 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:layout_gravity="center_vertical">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="业务原因" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:layout_gravity="center_vertical">
 
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="业务原因" />
 
-                <TextView
-                    android:id="@+id/tv_bh_ywyy"
-                    android:maxLines="1"
-                    android:scrollbars="none"
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:text="/"
-                    android:gravity="center_vertical"
-                    android:textColor="#333333"
-                    android:textSize="14sp" />
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/tv_bh_ywyy"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:scrollbars="none"
+                        android:text="/"
+                        android:textColor="#333333"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <include layout="@layout/my_view3" />
             </LinearLayout>
-
-            <include layout="@layout/my_view3" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="44dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
 
-                    android:text="新车牌号码" />
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
 
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                        android:text="新车牌号码" />
 
-                <TextView
-                    android:id="@+id/tv_bh_cph"
-                    style="@style/carcy_info_jscs_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
 
-                    android:text="/" />
+                    <TextView
+                        android:id="@+id/tv_bh_cph"
+                        style="@style/carcy_info_jscs_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:text="/" />
+                </LinearLayout>
+
+                <include layout="@layout/my_view3" />
             </LinearLayout>
-
-            <include layout="@layout/my_view3" />
         </LinearLayout>
         //注销业务信息
 
@@ -632,33 +765,38 @@
             android:orientation="vertical"
             android:visibility="gone">
 
-
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="44dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
 
-                    android:text="业务原因" />
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
 
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                        android:text="业务原因" />
 
-                <TextView
-                    android:id="@+id/tv_zx_ywyy"
-                    style="@style/carcy_info_jscs_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
 
-                    android:text="/" />
+                    <TextView
+                        android:id="@+id/tv_zx_ywyy"
+                        style="@style/carcy_info_jscs_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:text="/" />
+                </LinearLayout>
+
+                <include layout="@layout/my_view3" />
             </LinearLayout>
-
-            <include layout="@layout/my_view3" />
         </LinearLayout>
         //所有人信息
 
@@ -676,265 +814,325 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="44dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
-                    android:text="身份证明名称" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
 
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:text="身份证明名称" />
 
-                <TextView
-                    android:id="@+id/tv_syr_sfzmc"
-                    style="@style/carcy_info_jscs_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
 
-                    android:text="/" />
+                    <TextView
+                        android:id="@+id/tv_syr_sfzmc"
+                        style="@style/carcy_info_jscs_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:text="/" />
+                </LinearLayout>
+
+                <include layout="@layout/my_view3" />
             </LinearLayout>
-
-            <include layout="@layout/my_view3" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="44dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
-                    android:text="身份证明号码" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
 
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:text="身份证明号码" />
 
-                <TextView
-                    android:id="@+id/tv_syr_sfz"
-                    style="@style/carcy_info_jscs_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
 
-                    android:text="/" />
+                    <TextView
+                        android:id="@+id/tv_syr_sfz"
+                        style="@style/carcy_info_jscs_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:text="/" />
+                </LinearLayout>
+
+                <include layout="@layout/my_view3" />
             </LinearLayout>
-
-            <include layout="@layout/my_view3" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="44dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
 
-                    android:text="姓名/名称" />
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
 
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                        android:text="姓名/名称" />
 
-                <TextView
-                    android:id="@+id/tv_syr_xm"
-                    style="@style/carcy_info_jscs_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
 
-                    android:text="/" />
+                    <TextView
+                        android:id="@+id/tv_syr_xm"
+                        style="@style/carcy_info_jscs_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:text="/" />
+                </LinearLayout>
+
+                <include layout="@layout/my_view3" />
             </LinearLayout>
-
-            <include layout="@layout/my_view3" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="44dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
 
-                    android:text="联系电话" />
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
 
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                        android:text="联系电话" />
 
-                <TextView
-                    android:id="@+id/tv_syr_lxdh"
-                    style="@style/carcy_info_jscs_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
 
-                    android:text="/" />
+                    <TextView
+                        android:id="@+id/tv_syr_lxdh"
+                        style="@style/carcy_info_jscs_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:text="/" />
+                </LinearLayout>
+
+                <include layout="@layout/my_view3" />
             </LinearLayout>
-
-            <include layout="@layout/my_view3" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="44dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
 
-                    android:text="行政区划" />
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
 
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                        android:text="行政区划" />
 
-                <TextView
-                    android:id="@+id/tv_syr_xzqh"
-                    style="@style/carcy_info_jscs_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
 
-                    android:text="/" />
+                    <TextView
+                        android:id="@+id/tv_syr_xzqh"
+                        style="@style/carcy_info_jscs_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:text="/" />
+                </LinearLayout>
+
+                <include layout="@layout/my_view3" />
             </LinearLayout>
-
-            <include layout="@layout/my_view3" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="44dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
-                    android:text="详细地址" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
 
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:text="详细地址" />
 
-                <TextView
-                    android:id="@+id/tv_syr_xxdz"
-                    style="@style/carcy_info_jscs_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
 
-                    android:text="/" />
+                    <TextView
+                        android:id="@+id/tv_syr_xxdz"
+                        style="@style/carcy_info_jscs_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:text="/" />
+                </LinearLayout>
+
+                <include layout="@layout/my_view3" />
             </LinearLayout>
-
-            <include layout="@layout/my_view3" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="44dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
-                    android:text="邮寄行政区划" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
 
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:text="邮寄行政区划" />
 
-                <TextView
-                    android:id="@+id/tv_syr_yj_xzqh"
-                    style="@style/carcy_info_jscs_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
 
-                    android:text="/" />
+                    <TextView
+                        android:id="@+id/tv_syr_yj_xzqh"
+                        style="@style/carcy_info_jscs_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:text="/" />
+                </LinearLayout>
+
+                <include layout="@layout/my_view3" />
             </LinearLayout>
-
-            <include layout="@layout/my_view3" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="44dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
-                    android:text="邮寄详细地址" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
 
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:text="邮寄详细地址" />
 
-                <TextView
-                    android:id="@+id/tv_syr_yj_xxdz"
-                    style="@style/carcy_info_jscs_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
 
-                    android:text="/" />
+                    <TextView
+                        android:id="@+id/tv_syr_yj_xxdz"
+                        style="@style/carcy_info_jscs_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:text="/" />
+                </LinearLayout>
+
+                <include layout="@layout/my_view3" />
             </LinearLayout>
-
-            <include layout="@layout/my_view3" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="44dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
-                    android:text="邮政编码" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
 
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:text="邮政编码" />
 
-                <TextView
-                    android:id="@+id/tv_syr_yj_yzbm"
-                    style="@style/carcy_info_jscs_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="/" />
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/tv_syr_yj_yzbm"
+                        style="@style/carcy_info_jscs_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="/" />
+                </LinearLayout>
+
+                <include layout="@layout/my_view3" />
             </LinearLayout>
-
-            <include layout="@layout/my_view3" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="44dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="邮箱地址" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
 
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="邮箱地址" />
 
-                <TextView
-                    android:id="@+id/tv_syr_yxdz"
-                    style="@style/carcy_info_jscs_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
 
-                    android:text="/" />
+                    <TextView
+                        android:id="@+id/tv_syr_yxdz"
+                        style="@style/carcy_info_jscs_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:text="/" />
+                </LinearLayout>
+
+                <include layout="@layout/my_view3" />
             </LinearLayout>
-
-            <include layout="@layout/my_view3" />
         </LinearLayout>
         //代理人信息
 
@@ -952,109 +1150,133 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="44dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="身份证明名称" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
 
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="身份证明名称" />
 
-                <TextView
-                    android:id="@+id/tv_dlr_sfzmc"
-                    style="@style/carcy_info_jscs_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
 
-                    android:text="/" />
+                    <TextView
+                        android:id="@+id/tv_dlr_sfzmc"
+                        style="@style/carcy_info_jscs_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:text="/" />
+                </LinearLayout>
+
+                <include layout="@layout/my_view3" />
             </LinearLayout>
-
-            <include layout="@layout/my_view3" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="44dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
-                    android:text="身份证明号码" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
 
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:text="身份证明号码" />
 
-                <TextView
-                    android:id="@+id/tv_dlr_sfz"
-                    style="@style/carcy_info_jscs_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
 
-                    android:text="/" />
+                    <TextView
+                        android:id="@+id/tv_dlr_sfz"
+                        style="@style/carcy_info_jscs_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:text="/" />
+                </LinearLayout>
+
+                <include layout="@layout/my_view3" />
             </LinearLayout>
-
-            <include layout="@layout/my_view3" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="44dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
 
-                    android:text="姓名/名称" />
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
 
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                        android:text="姓名/名称" />
 
-                <TextView
-                    android:id="@+id/tv_dlr_xm"
-                    style="@style/carcy_info_jscs_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
 
-                    android:text="/" />
+                    <TextView
+                        android:id="@+id/tv_dlr_xm"
+                        style="@style/carcy_info_jscs_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:text="/" />
+                </LinearLayout>
+
+                <include layout="@layout/my_view3" />
             </LinearLayout>
-
-            <include layout="@layout/my_view3" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="44dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
 
-                    android:text="联系电话" />
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
 
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                        android:text="联系电话" />
 
-                <TextView
-                    android:id="@+id/tv_dlr_lxdh"
-                    style="@style/carcy_info_jscs_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
 
-                    android:text="/" />
+                    <TextView
+                        android:id="@+id/tv_dlr_lxdh"
+                        style="@style/carcy_info_jscs_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:text="/" />
+                </LinearLayout>
+
+                <include layout="@layout/my_view3" />
             </LinearLayout>
-
-            <include layout="@layout/my_view3" />
 
         </LinearLayout>
         //寄递信息
@@ -1065,277 +1287,345 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:visibility="gone">
-        <LinearLayout
-            android:id="@+id/ll_jdxx1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                style="@style/carcy_info_title"
-                android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:text="寄递信息" />
 
             <LinearLayout
+                android:id="@+id/ll_jdxx1"
                 android:layout_width="match_parent"
-                android:layout_height="44dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    style="@style/carcy_info_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:text="寄递信息" />
 
-                    android:text="纸质行驶证" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp">
 
-                <TextView
-                    android:id="@+id/tv_zzxsz"
-                    style="@style/carcy_info_jscs_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                        <TextView
+                            style="@style/carcy_info_jscs_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
 
-                    android:text="/" />
+                            android:text="纸质行驶证" />
+
+                        <android.support.v4.widget.Space
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:id="@+id/tv_zzxsz"
+                            style="@style/carcy_info_jscs_right"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+
+                            android:text="/" />
+                    </LinearLayout>
+
+                    <include layout="@layout/my_view3" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/ll_lqfs"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp">
+
+                        <TextView
+                            style="@style/carcy_info_jscs_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+
+                            android:text="领取方式" />
+
+                        <android.support.v4.widget.Space
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:id="@+id/tv_lqfs"
+                            style="@style/carcy_info_jscs_right"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+
+                            android:text="/" />
+                    </LinearLayout>
+
+                    <include layout="@layout/my_view3" />
+                </LinearLayout>
+
             </LinearLayout>
-
-            <include layout="@layout/my_view3" />
+            //寄递地址
 
             <LinearLayout
-                android:id="@+id/ll_lqfs"
+                android:id="@+id/ll_jdxx2"
                 android:layout_width="match_parent"
-                android:layout_height="44dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-                    android:text="领取方式" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp">
 
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                        <TextView
+                            style="@style/carcy_info_jscs_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
 
-                <TextView
-                    android:id="@+id/tv_lqfs"
-                    style="@style/carcy_info_jscs_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                            android:text="身份证明名称" />
 
-                    android:text="/" />
+                        <android.support.v4.widget.Space
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:id="@+id/tv_yj_sfzmc"
+                            style="@style/carcy_info_jscs_right"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+
+                            android:text="/" />
+                    </LinearLayout>
+
+                    <include layout="@layout/my_view3" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp">
+
+                        <TextView
+                            style="@style/carcy_info_jscs_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+
+                            android:text="身份证明号码" />
+
+                        <android.support.v4.widget.Space
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:id="@+id/tv_yj_sfz"
+                            style="@style/carcy_info_jscs_right"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+
+                            android:text="/" />
+                    </LinearLayout>
+
+                    <include layout="@layout/my_view3" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp">
+
+                        <TextView
+                            style="@style/carcy_info_jscs_left"
+                            android:layout_width="100dp"
+                            android:layout_height="match_parent"
+
+                            android:text="姓名/名称" />
+
+                        <android.support.v4.widget.Space
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:id="@+id/tv_yj_xm"
+                            style="@style/carcy_info_jscs_right"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+
+                            android:text="/" />
+                    </LinearLayout>
+
+                    <include layout="@layout/my_view3" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp">
+
+                        <TextView
+                            style="@style/carcy_info_jscs_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+
+                            android:text="联系电话" />
+
+                        <android.support.v4.widget.Space
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:id="@+id/tv_yj_lxdh"
+                            style="@style/carcy_info_jscs_right"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+
+                            android:text="/" />
+                    </LinearLayout>
+
+                    <include layout="@layout/my_view3" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp">
+
+                        <TextView
+                            style="@style/carcy_info_jscs_left"
+                            android:layout_width="100dp"
+                            android:layout_height="match_parent"
+
+                            android:text="邮寄行政区划" />
+
+                        <android.support.v4.widget.Space
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:id="@+id/tv_yj_xzqh"
+                            style="@style/carcy_info_jscs_right"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+
+                            android:text="/" />
+                    </LinearLayout>
+
+                    <include layout="@layout/my_view3" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp">
+
+                        <TextView
+                            style="@style/carcy_info_jscs_left"
+                            android:layout_width="100dp"
+                            android:layout_height="match_parent"
+
+                            android:text="邮寄详细地址" />
+
+                        <android.support.v4.widget.Space
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:id="@+id/tv_yj_xxdz"
+                            style="@style/carcy_info_jscs_right"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+
+                            android:text="/" />
+                    </LinearLayout>
+
+                    <include layout="@layout/my_view3" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp">
+
+                        <TextView
+                            style="@style/carcy_info_jscs_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+
+                            android:text="邮政编码" />
+
+                        <android.support.v4.widget.Space
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:id="@+id/tv_yj_yzbm"
+                            style="@style/carcy_info_jscs_right"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+
+                            android:text="/" />
+
+                        <include layout="@layout/my_view3" />
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
-
-            <include layout="@layout/my_view3" />
-
         </LinearLayout>
-        //寄递地址
 
-        <LinearLayout
-            android:id="@+id/ll_jdxx2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="44dp">
-
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-
-                    android:text="身份证明名称" />
-
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/tv_yj_sfzmc"
-                    style="@style/carcy_info_jscs_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-
-                    android:text="/" />
-            </LinearLayout>
-
-            <include layout="@layout/my_view3" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="44dp">
-
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-
-                    android:text="身份证明号码" />
-
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/tv_yj_sfz"
-                    style="@style/carcy_info_jscs_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-
-                    android:text="/" />
-            </LinearLayout>
-
-            <include layout="@layout/my_view3" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="44dp">
-
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
-
-                    android:text="姓名/名称" />
-
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/tv_yj_xm"
-                    style="@style/carcy_info_jscs_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-
-                    android:text="/" />
-            </LinearLayout>
-
-            <include layout="@layout/my_view3" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="44dp">
-
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-
-                    android:text="联系电话" />
-
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/tv_yj_lxdh"
-                    style="@style/carcy_info_jscs_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-
-                    android:text="/" />
-            </LinearLayout>
-
-            <include layout="@layout/my_view3" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="44dp">
-
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
-
-                    android:text="邮寄行政区划" />
-
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/tv_yj_xzqh"
-                    style="@style/carcy_info_jscs_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-
-                    android:text="/" />
-            </LinearLayout>
-
-            <include layout="@layout/my_view3" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="44dp">
-
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
-
-                    android:text="邮寄详细地址" />
-
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/tv_yj_xxdz"
-                    style="@style/carcy_info_jscs_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-
-                    android:text="/" />
-            </LinearLayout>
-
-            <include layout="@layout/my_view3" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="44dp">
-
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-
-                    android:text="邮政编码" />
-
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/tv_yj_yzbm"
-                    style="@style/carcy_info_jscs_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-
-                    android:text="/" />
-            </LinearLayout>
-        </LinearLayout>
-        </LinearLayout>
         <TextView
             style="@style/carcy_info_title"
             android:layout_width="wrap_content"
             android:layout_height="44dp"
             android:text="登记照片" />
 
-        <include layout="@layout/recyclerview" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/m_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:focusableInTouchMode="false"
+            android:background="@color/white"
+            android:focusable="false"
+            android:overScrollMode="never">
+
+        </android.support.v7.widget.RecyclerView>
 
     </LinearLayout>
 </ScrollView>

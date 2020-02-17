@@ -16,6 +16,8 @@ import android.support.annotation.RequiresApi
 import android.support.v4.content.FileProvider
 import android.support.v4.view.ViewCompat
 import android.support.v7.app.AppCompatActivity
+import android.text.InputFilter
+import android.text.Spanned
 import android.text.TextUtils
 import android.text.method.ScrollingMovementMethod
 import android.util.Log
@@ -23,19 +25,17 @@ import android.view.*
 import android.widget.*
 import com.joyusing.ocr.OCR
 import com.joyusing.ocr.OcrResult
-
 import com.seatrend.xj.electricbicyclesalesystem.R
 import com.seatrend.xj.electricbicyclesalesystem.activity.LoginLoadingActivity
 import com.seatrend.xj.electricbicyclesalesystem.activity.MainOtherActivity
 import com.seatrend.xj.electricbicyclesalesystem.entity.MessageEntity
-
 import com.seatrend.xj.electricbicyclesalesystem.util.GsonUtils
 import com.seatrend.xj.electricbicyclesalesystem.util.LoadingDialog
 import com.seatrend.xj.electricbicyclesalesystem.util.StringUtils
-import kotlinx.android.synthetic.main.dialog_idcard_picker.*
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.File
+import java.util.regex.Pattern
 
 /**
  * Created by seatrend on 2018/8/20.
@@ -45,10 +45,10 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
 
     protected var mDialogListenr: DialogListener? = null
     private val CAMERA_REQUEST_CODE = 12
-    protected val IDCARDIMAGEPATH = Environment.getExternalStorageDirectory().path +"/"+ Constants.IMAGE_PATH +"/photo/scanManger"
-    protected val FACEPATH = Environment.getExternalStorageDirectory().path +"/"+ Constants.IMAGE_PATH + "/photo/facePath"  //人脸
+    protected val IDCARDIMAGEPATH = Environment.getExternalStorageDirectory().path + "/" + Constants.IMAGE_PATH + "/photo/scanManger"
+    protected val FACEPATH = Environment.getExternalStorageDirectory().path + "/" + Constants.IMAGE_PATH + "/photo/facePath"  //人脸
 
-    protected val headSfzPath = Environment.getExternalStorageDirectory().path +"/"+ Constants.IMAGE_PATH + "/photo/ocr.jpg"
+    protected val headSfzPath = Environment.getExternalStorageDirectory().path + "/" + Constants.IMAGE_PATH + "/photo/ocr.jpg"
     protected var imgOCRFile: File? = null   // OCR的图片
     protected var imgFaceFile: File? = null  //人脸识别的图片
     var ivBack: ImageView? = null
@@ -61,6 +61,48 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
     val LIMIT_TIME: Int = 30 * 60 * 1000
     var currentTime: Long = 0
     private var mOcr: OCR? = null
+
+
+    //输入进行过滤 只能输入汉字，字母，英文
+
+    val inputFilter = object : InputFilter {
+
+//        var pattern = Pattern.compile("[^a-zA-Z0-9\\u4E00-\\u9FA5_]")
+//        override fun filter(charSequence: CharSequence, i: Int, i1: Int, spanned: Spanned, i2: Int, i3: Int): CharSequence? {
+//            val matcher = pattern.matcher(charSequence)
+//            if (!matcher.find()) {
+//                return null
+//            } else {
+//                showToast("只能输入汉字,英文，数字")
+//                return ""
+//            }
+//        }
+
+        //保留“-“ 方便门牌输入
+        override fun filter(source: CharSequence, start: Int, end: Int, dest: Spanned, dstart: Int, dend: Int): CharSequence? {
+            for (i in start until end) {
+                if (!Character.isLetterOrDigit(source[i])
+                        && Character.toString(source[i]) != "_"
+                        && Character.toString(source[i]) != "-") {
+                    return ""
+                }
+            }
+            return null
+        }
+    }
+
+    val inputEmojiFilter = object : InputFilter {
+        val emoji = Pattern.compile("[\ud83c\udc00-\ud83c\udfff]|[\ud83d\udc00-\ud83d\udfff]|[\u2600-\u27ff]",
+                Pattern.UNICODE_CASE or Pattern.CASE_INSENSITIVE)
+
+        override fun filter(source: CharSequence, start: Int, end: Int, dest: Spanned?, dstart: Int, dend: Int): CharSequence? {
+            var emojiMatcher = emoji.matcher(source)
+            if (emojiMatcher.find()) {
+                return ""
+            }
+            return null
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -367,7 +409,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
         }
     }
 
-    fun showTipDialog(titleS: String?, contentS: String,flag:Int) {
+    fun showTipDialog(titleS: String?, contentS: String, flag: Int) {
         val dialog = Dialog(this)
         // MAlertDialog dialog=new MAlertDialog(this);
         dialog.setContentView(R.layout.dialog_tip_picker)
@@ -472,7 +514,6 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
     }
 
     interface DialogListener {
-        fun tipDialogOKListener(flag:Int)
+        fun tipDialogOKListener(flag: Int)
     }
-
 }

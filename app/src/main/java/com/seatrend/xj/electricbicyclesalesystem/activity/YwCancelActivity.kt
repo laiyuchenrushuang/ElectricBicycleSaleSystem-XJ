@@ -17,7 +17,6 @@ import com.seatrend.xj.electricbicyclesalesystem.persenter.NormalPresenter
 import com.seatrend.xj.electricbicyclesalesystem.util.*
 import com.seatrend.xj.electricbicyclesalesystem.view.NormalView
 import kotlinx.android.synthetic.main.activity_cancel.*
-import kotlinx.android.synthetic.main.activity_chayan_entrance.*
 import kotlinx.android.synthetic.main.bottom_button.*
 
 /**
@@ -116,6 +115,15 @@ class YwCancelActivity : BaseActivity(), NormalView {
             //进行人脸识别
             getFaceCamera(Constants.FACE)
         }
+
+        //限制名称只能输入中文和字母和数字
+//        et_xsqy.filters = arrayOf(inputFilter)
+//        ed_syr_xm.filters = arrayOf(inputFilter)
+//        et_syr_yj_xxdz.filters = arrayOf(inputFilter)
+//        et_syr_xxdz.filters = arrayOf(inputFilter)
+        ed_dlr_xm.filters = arrayOf(inputFilter)
+//        ed_yj_xm.filters = arrayOf(inputFilter)
+//        et_yj_xxdz.filters = arrayOf(inputFilter)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Handler
-import android.os.Looper
 import android.os.Message
 import android.text.Editable
 import android.text.TextUtils
@@ -25,6 +24,8 @@ import com.seatrend.xj.electricbicyclesalesystem.util.*
 import com.seatrend.xj.electricbicyclesalesystem.view.NormalView
 import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.bottom_button.*
+
+
 
 class YwRegisterActivity : BaseActivity(), NormalView {
 
@@ -137,6 +138,15 @@ class YwRegisterActivity : BaseActivity(), NormalView {
                 startThreadUpdateSp(provinceDmz, sp_syr_yj_qh2)
             }
         }
+
+        //限制名称只能输入中文和字母和数字
+        et_xsqy.filters = arrayOf(inputFilter)
+        ed_syr_xm.filters = arrayOf(inputFilter)
+        et_syr_yj_xxdz.filters = arrayOf(inputFilter)
+        et_syr_xxdz.filters = arrayOf(inputFilter)
+        ed_dlr_xm.filters = arrayOf(inputFilter)
+        ed_yj_xm.filters = arrayOf(inputFilter)
+        et_yj_xxdz.filters = arrayOf(inputFilter)
 
     }
 

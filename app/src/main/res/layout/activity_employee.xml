@@ -12,27 +12,40 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="@color/white"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="12dp"
             android:background="@drawable/btn_bule_bg2"
             android:orientation="horizontal">
 
-            <android.support.v7.widget.SearchView
+            <!--<android.support.v7.widget.SearchView-->
+                <!--android:id="@+id/searchview"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1"-->
+                <!--android:focusable="false"-->
+                <!--app:searchIcon="@null">-->
+
+            <!--</android.support.v7.widget.SearchView>-->
+
+
+            <EditText
                 android:id="@+id/searchview"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:focusable="false"
-                app:searchIcon="@null">
-
-            </android.support.v7.widget.SearchView>
+                android:background="@null"
+                android:paddingLeft="10dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:digits="@string/number_and_letter"
+                android:hint="请用身份证明号码查询"
+                />
 
             <ImageButton
                 android:id="@+id/iv_btn_search"

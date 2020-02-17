@@ -2,10 +2,7 @@ package com.seatrend.xj.electricbicyclesalesystem.activity
 
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
-import android.widget.ArrayAdapter
-import android.widget.SimpleAdapter
 import com.seatrend.xj.electricbicyclesalesystem.R
-import com.seatrend.xj.electricbicyclesalesystem.adpater.GridViewAdapter
 import com.seatrend.xj.electricbicyclesalesystem.adpater.SelectorAdapter
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants
@@ -14,7 +11,6 @@ import com.seatrend.xj.electricbicyclesalesystem.entity.UserInfo
 import com.seatrend.xj.electricbicyclesalesystem.manager.MyRecycleManager
 import com.seatrend.xj.electricbicyclesalesystem.persenter.NormalPresenter
 import com.seatrend.xj.electricbicyclesalesystem.util.CheckBoxUtils
-import com.seatrend.xj.electricbicyclesalesystem.util.ViewShowUtils
 import com.seatrend.xj.electricbicyclesalesystem.view.NormalView
 import kotlinx.android.synthetic.main.activity_ywfh_edit.*
 import kotlinx.android.synthetic.main.bottom_button.*
@@ -124,6 +120,7 @@ class YwfhEditActivity : BaseActivity(), SelectorAdapter.CheckState, NormalView 
                 mNormalPresenter!!.doNetworkTask(map, Constants.FH_COMMIT)
             }
         }
+        et_fhbz.filters = arrayOf(inputFilter)
     }
 
     override fun getLayout(): Int {

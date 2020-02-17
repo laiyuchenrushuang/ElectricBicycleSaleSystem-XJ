@@ -17,7 +17,10 @@ import com.seatrend.xj.electricbicyclesalesystem.adpater.CheckDataPhotoAdapter
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants
 import com.seatrend.xj.electricbicyclesalesystem.database.CodeTableSQLiteUtils
-import com.seatrend.xj.electricbicyclesalesystem.entity.*
+import com.seatrend.xj.electricbicyclesalesystem.entity.CommonResponse
+import com.seatrend.xj.electricbicyclesalesystem.entity.PhotoIdEnity
+import com.seatrend.xj.electricbicyclesalesystem.entity.PhotoTypeEntity
+import com.seatrend.xj.electricbicyclesalesystem.entity.UserInfo
 import com.seatrend.xj.electricbicyclesalesystem.persenter.CarPhotoPersenter
 import com.seatrend.xj.electricbicyclesalesystem.util.*
 import com.seatrend.xj.electricbicyclesalesystem.view.CarPhotoView
@@ -188,30 +191,30 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
                                 }
                                 mCarPhotoPersenter!!.doNetworkTask(map, Constants.SAVE_CY_MSG)
                                 for (db in allPhoto) {
-//                                    val mapP = HashMap<String, String?>()
-//                                    mapP["lsh"] = CarInfoActivity.mDataZcbm!!.data.lsh
-//                                    mapP["xh"] = CarInfoActivity.mDataZcbm!!.data.xh
-//                                    mapP["zpzl"] = db.zplx
-//                                    mapP["zpdz"] = db.zplj
-//                                    mapP["zpsm"] = db.zmmc
-//
-//                                    mapP["cffs"] = UserInfo.GlobalParameter.CFBJ
-//                                    mapP["lrr"] = UserInfo.XM
-//                                    mapP["lrbm"] = UserInfo.GLBM
-//                                    mCarPhotoPersenter!!.doNetworkTask(mapP, Constants.PHOTO_MSG_SAVE)
-                                    if (db.zpPath != null && !TextUtils.isEmpty(db.zpPath)) {
-                                        var enity = PhotoEntity()
-                                        enity.lsh = CarInfoActivity.mDataZcbm!!.data.lsh
-                                        enity.xh = CarInfoActivity.mDataZcbm!!.data.xh
-                                        enity.zpzl = db.zplx
-                                        enity.zpPath = db.zpPath
-                                        enity.zpdz = db.zplj
-                                        enity.zpsm = db.zmmc
-                                        enity.cffs = UserInfo.GlobalParameter.CFBJ
-                                        enity.lrr = UserInfo.XM
-                                        enity.lrbm = UserInfo.GLBM
-                                        CodeTableSQLiteUtils.addPhoto(enity)
-                                    }
+                                    val mapP = HashMap<String, String?>()
+                                    mapP["lsh"] = CarInfoActivity.mDataZcbm!!.data.lsh
+                                    mapP["xh"] = CarInfoActivity.mDataZcbm!!.data.xh
+                                    mapP["zpzl"] = db.zplx
+                                    mapP["zpdz"] = db.zplj
+                                    mapP["zpsm"] = db.zmmc
+
+                                    mapP["cffs"] = UserInfo.GlobalParameter.CFBJ
+                                    mapP["lrr"] = UserInfo.XM
+                                    mapP["lrbm"] = UserInfo.GLBM
+                                    mCarPhotoPersenter!!.doNetworkTask(mapP, Constants.PHOTO_MSG_SAVE)
+//                                    if (db.zpPath != null && !TextUtils.isEmpty(db.zpPath)) {
+//                                        var enity = PhotoEntity()
+//                                        enity.lsh = CarInfoActivity.mDataZcbm!!.data.lsh
+//                                        enity.xh = CarInfoActivity.mDataZcbm!!.data.xh
+//                                        enity.zpzl = db.zplx
+//                                        enity.zpPath = db.zpPath
+//                                        enity.zpdz = db.zplj
+//                                        enity.zpsm = db.zmmc
+//                                        enity.cffs = UserInfo.GlobalParameter.CFBJ
+//                                        enity.lrr = UserInfo.XM
+//                                        enity.lrbm = UserInfo.GLBM
+//                                        CodeTableSQLiteUtils.addPhoto(enity)
+//                                    }
                                 }
                             } else {  //除开业务注册
 
@@ -301,6 +304,7 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
                 }
             }
         }
+        ed_bhgyy.filters = arrayOf(inputFilter)
     }
 
     private fun savePhoto() { //其他业务类
@@ -367,9 +371,9 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
                 BitmapUtils.saveBitmap(bitmap, imgFile!!.name.replace(".jpg", ""))
                 bitmap?.recycle()
                 val zplx = allPhoto[photoPosition].zplx
-//                val map = HashMap<String, String?>()
-//                map["type"] = zplx
-//                mCarPhotoPersenter!!.uploadFile(imgFile!!, map, Constants.PHOTO_INSERT)
+                val map = HashMap<String, String?>()
+                map["type"] = zplx
+                mCarPhotoPersenter!!.uploadFile(imgFile!!, map, Constants.PHOTO_INSERT)
             }).start()
 
             runOnUiThread {
@@ -381,21 +385,21 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
 
     private fun checkPhoto(data: ArrayList<PhotoTypeEntity.DataBean.ConfigBean>): Boolean {
         for (cb in data) {
-//            if ((cb.zplj == null || cb.zplj.isEmpty()) && !"B4".equals(cb.zplx)) {
-//                if (cb.zpPath != null) {
-//                    photoComplete(cb)
-//                    showToast("确保图片上传到服务器，请稍后提交信息...")
-//                    return false
-//                } else {
-//                    showToast("【" + cb.zmmc + "】后台数据为空，请拍摄或再次拍摄")
-//                    return false
-//                }
-
-
-            if ((cb.zpPath == null || cb.zpPath.isEmpty()) && "B4" != cb.zplx) {
-                showToast("【" + cb.zmmc + "】后台数据为空，请拍摄或再次拍摄")
-                return false
+            if ((cb.zplj == null || cb.zplj.isEmpty()) && !"B4".equals(cb.zplx)) {
+                if (cb.zpPath != null) {
+                    photoComplete(cb)
+                    showToast("确保图片上传到服务器，请稍后提交信息...")
+                    return false
+                } else {
+                    showToast("【" + cb.zmmc + "】后台数据为空，请拍摄或再次拍摄")
+                    return false
+                }
             }
+
+//            if ((cb.zpPath == null || cb.zpPath.isEmpty()) && "B4" != cb.zplx) {
+//                showToast("【" + cb.zmmc + "】后台数据为空，请拍摄或再次拍摄")
+//                return false
+//            }
         }
         return true
     }
@@ -523,6 +527,9 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
         super.onDestroy()
         resetNumbers()
         requested = false
+        if (allPhoto != null) {
+            allPhoto.clear()
+        }
     }
 
     // 成功数复原

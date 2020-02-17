@@ -3,19 +3,25 @@ package com.seatrend.xj.electricbicyclesalesystem.activity
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Build
+import android.support.annotation.RequiresApi
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.ListView
+import android.widget.PopupWindow
 import com.seatrend.xj.electricbicyclesalesystem.R
 import com.seatrend.xj.electricbicyclesalesystem.adpater.YwGdAdapter
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants
 import com.seatrend.xj.electricbicyclesalesystem.database.CodeTableSQLiteUtils
-import com.seatrend.xj.electricbicyclesalesystem.entity.*
+import com.seatrend.xj.electricbicyclesalesystem.entity.AllBikeMsgEnity
+import com.seatrend.xj.electricbicyclesalesystem.entity.CommonResponse
+import com.seatrend.xj.electricbicyclesalesystem.entity.GDEnity
+import com.seatrend.xj.electricbicyclesalesystem.entity.UserInfo
 import com.seatrend.xj.electricbicyclesalesystem.persenter.NormalPresenter
 import com.seatrend.xj.electricbicyclesalesystem.util.GsonUtils
-import com.seatrend.xj.electricbicyclesalesystem.util.ObjectNullUtil
 import com.seatrend.xj.electricbicyclesalesystem.view.NormalView
 import kotlinx.android.synthetic.main.activity_dagd2.*
 import kotlinx.android.synthetic.main.bottom_button.*
@@ -148,6 +154,7 @@ class Archive2FileActivity : BaseActivity(), YwGdAdapter.itemOnclickListener, Ba
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun initSelectYwztPopup() {
         val listData = ArrayList<String>()
         listData.add(this.getString(R.string.all))
@@ -176,7 +183,8 @@ class Archive2FileActivity : BaseActivity(), YwGdAdapter.itemOnclickListener, Ba
             typeSelectYwztPopup!!.dismiss()
         }
         typeSelectYwztPopup = PopupWindow(mTypeLv, ll_ywlx.width, ViewGroup.LayoutParams.WRAP_CONTENT, true)
-        typeSelectYwztPopup!!.isFocusable = true
+        typeSelectYwztPopup!!.setBackgroundDrawable(resources.getDrawable(R.color.white))
+        typeSelectYwztPopup!!.isFocusable = false
         typeSelectYwztPopup!!.isOutsideTouchable = true
         typeSelectYwztPopup!!.setOnDismissListener {
             // 关闭popup窗口

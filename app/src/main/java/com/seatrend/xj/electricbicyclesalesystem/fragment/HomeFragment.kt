@@ -10,6 +10,7 @@ import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseFragment
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants
 import com.seatrend.xj.electricbicyclesalesystem.util.CheckViewUtil
+import com.seatrend.xj.electricbicyclesalesystem.util.GsonUtils
 import com.seatrend.xj.electricbicyclesalesystem.util.ViewShowUtils
 import kotlinx.android.synthetic.main.activity_main_other.*
 import kotlinx.android.synthetic.main.common_no_data.*
@@ -34,7 +35,8 @@ class HomeFragment : BaseFragment() {
 
     //需要展示的内容
     private fun getShowData() {
-        ViewShowUtils.showGoneView(rl_clcy, rl_ywdj, rl_ywfh, rl_dagd, rl_ywtb,ll_no_data)
+        ViewShowUtils.showGoneView(rl_clcy, rl_ywdj, rl_ywfh, rl_dagd, rl_ywtb,ll_no_data,rl_clhy)
+//        ViewShowUtils.showGoneView(rl_clcy, rl_ywdj, rl_ywfh, rl_dagd,ll_no_data,rl_ywtb)
         var enity = MainOtherActivity.mLoginEnity
         if (enity != null && enity.data != null && enity.data.seaPrograms != null && enity.data.seaPrograms.size > 0) {
             for (db in enity.data.seaPrograms) {
@@ -53,9 +55,12 @@ class HomeFragment : BaseFragment() {
                 if (Constants.PMS_TB.equals(db.qxdm)) {
                     ViewShowUtils.showVisibleView(rl_ywtb)
                 }
+                if (Constants.PMS_CX.equals(db.qxdm)) {
+                    ViewShowUtils.showVisibleView(rl_clhy)
+                }
             }
         }
-        if(!CheckViewUtil.isShow(rl_clcy, rl_ywdj, rl_ywfh, rl_dagd, rl_ywtb)){ //false都不可见
+        if(!CheckViewUtil.isShow(rl_clcy, rl_ywdj, rl_ywfh, rl_dagd, rl_ywtb,rl_clhy)){ //false都不可见
             ll_no_data.visibility =View.VISIBLE
             tv_msg.text = "当前账号无权限使用该功能！"
         }
@@ -82,5 +87,10 @@ class HomeFragment : BaseFragment() {
         rl_ywtb.setOnClickListener {
             startActivity(Intent(context, YwTBSearchActivity::class.java))
         }
+        //车辆核验（车辆查询）
+        rl_clhy.setOnClickListener {
+            startActivity(Intent(context, YwCarCheckActivity::class.java))
+        }
+
     }
 }

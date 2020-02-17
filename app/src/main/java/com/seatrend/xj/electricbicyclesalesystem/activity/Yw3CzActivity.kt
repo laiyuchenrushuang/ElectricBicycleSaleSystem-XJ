@@ -38,7 +38,9 @@ class Yw3CzActivity : BaseActivity(), NormalView {
     companion object {
         var fhzt: String? = null  //复核状态  复核标记 9-无需复核，0-待复核，1-复核通过，2-复核未通过
         var zcbm: String? = null  //通过整车编码查询或者修改复核状态
-        var mAllBikeMsgEnity: AllBikeMsgEnity?=null  //所有的data
+        var mAllBikeMsgEnity: AllBikeMsgEnity? = null  //所有的data
+
+        var mAllCXData: CarMsgEnity? = null  //所有的查询车辆data
     }
 
 
@@ -97,7 +99,7 @@ class Yw3CzActivity : BaseActivity(), NormalView {
                         tv_fhzt.setTextColor(Color.GREEN)
                         ll_fhyy.visibility = View.GONE
                         tv_fhsj.text = StringUtils.longToStringData(intent.getStringExtra("fhsj").toLong())
-                        if (TextUtils.isEmpty(intent.getStringExtra("fhbz"))) tv_fhbz.text="/" else tv_fhbz.text = intent.getStringExtra("fhbz")
+                        if (TextUtils.isEmpty(intent.getStringExtra("fhbz"))) tv_fhbz.text = "/" else tv_fhbz.text = intent.getStringExtra("fhbz")
                     } else if ("2" == result) {
                         tv_fhzt.text = FHUtil.getDMSM(result)
                         tv_fhzt.setTextColor(Color.RED)
@@ -105,7 +107,7 @@ class Yw3CzActivity : BaseActivity(), NormalView {
                         tv_fhyy.setTextColor(Color.RED)
                         tv_fhsj.text = StringUtils.longToStringData(intent.getStringExtra("fhsj").toLong())
                         tv_fhbz.text = intent.getStringExtra("fhbz")
-                        if (TextUtils.isEmpty(intent.getStringExtra("fhbz"))) tv_fhbz.text="/" else tv_fhbz.text = intent.getStringExtra("fhbz")
+                        if (TextUtils.isEmpty(intent.getStringExtra("fhbz"))) tv_fhbz.text = "/" else tv_fhbz.text = intent.getStringExtra("fhbz")
                     } else {
                         ViewShowUtils.showVisibleView(bt_next)
                         ViewShowUtils.showGoneView(ll_fhjg)
@@ -204,6 +206,12 @@ class Yw3CzActivity : BaseActivity(), NormalView {
                 }
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mAllCXData = null
+        mAllBikeMsgEnity = null
     }
 
     override fun getLayout(): Int {

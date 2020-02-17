@@ -20,161 +20,161 @@
         <item name="android:background">@color/black</item>
     </style>
 
-    <style name="system_login">
+    <style name="system_login" parent="android:Theme">
         <item name="android:textColor">#333333</item>
         <item name="android:textSize">18sp</item>
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="system_login_next">
+    <style name="system_login_next"  parent="android:Theme">
         <item name="android:textColor">#ffffff</item>
         <item name="android:textSize">18sp</item>
         <item name="android:gravity">left</item>
     </style>
 
-    <style name="car_message_rb">
+    <style name="car_message_rb"  parent="android:Theme">
         <item name="android:textColor">#333333</item>
         <item name="android:textSize">15sp</item>
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="car_message_clcy">
+    <style name="car_message_clcy"  parent="android:Theme">
         <item name="android:textColor">#ffffff</item>
         <item name="android:textSize">18sp</item>
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="car_cy">
+    <style name="car_cy"  parent="android:Theme">
         <item name="android:textColor">#333333</item>
         <item name="android:textSize">14sp</item>
         <item name="android:gravity">left</item>
     </style>
 
-    <style name="car_cy_bt">
+    <style name="car_cy_bt"  parent="android:Theme">
         <item name="android:textColor">#ffffff</item>
         <item name="android:textSize">13sp</item>
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="car_cy_bt_ok">
+    <style name="car_cy_bt_ok"  parent="android:Theme">
         <item name="android:textColor">#ffffff</item>
         <item name="android:textSize">13sp</item>
         <item name="android:paddingLeft">11dp</item>
     </style>
 
-    <style name="car_cy_bt_no">
+    <style name="car_cy_bt_no"  parent="android:Theme">
         <item name="android:textColor">#ffffff</item>
         <item name="android:textSize">13sp</item>
         <item name="android:paddingEnd">3dp</item>
         <item name="android:layout_gravity">right</item>
     </style>
 
-    <style name="remind">
+    <style name="remind"  parent="android:Theme">
         <item name="android:textColor">#666666</item>
         <item name="android:textSize">12sp</item>
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="system_remind_next">
+    <style name="system_remind_next"  parent="android:Theme">
         <item name="android:textColor">#2a88ff</item>
         <item name="android:textSize">15sp</item>
         <item name="android:gravity">left</item>
     </style>
 
-    <style name="carbasedata_item">
+    <style name="carbasedata_item"  parent="android:Theme">
         <item name="android:textColor">#aeaeae</item>
         <item name="android:textSize">15sp</item>
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="carbasedata_item_show">
+    <style name="carbasedata_item_show"  parent="android:Theme">
         <item name="android:textColor">#333333</item>
         <item name="android:textSize">14sp</item>
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="carbasedata_item_hightshow">
+    <style name="carbasedata_item_hightshow"  parent="android:Theme">
         <item name="android:textColor">#2a88ff</item>
         <item name="android:textSize">14sp</item>
         <item name="android:gravity">right</item>
     </style>
 
-    <style name="spinnerItemStyle">
+    <style name="spinnerItemStyle"  parent="android:Theme">
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">14sp</item>
         <item name="android:gravity">right|center_vertical</item>
     </style>
 
-    <style name="car_cy_r">
+    <style name="car_cy_r"  parent="android:Theme">
         <item name="android:textColor">#333333</item>
         <item name="android:textSize">14sp</item>
         <item name="android:gravity">right</item>
     </style>
 
-    <style name="car_change_dj_left">
+    <style name="car_change_dj_left"  parent="android:Theme">
         <item name="android:textColor">#999999</item>
         <item name="android:textSize">14sp</item>
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="carcy_info_title">
+    <style name="carcy_info_title"  parent="android:Theme">
         <item name="android:textColor">@color/theme_color</item>
         <item name="android:textSize">16sp</item>
         <item name="android:gravity">center_vertical|left</item>
     </style>
-    <style name="carcy_info_jscs_left">
+    <style name="carcy_info_jscs_left"  parent="android:Theme">
         <item name="android:textColor">#333333</item>
         <item name="android:textSize">14sp</item>
         <item name="android:paddingLeft">5dp</item>
         <item name="android:gravity">left|center_vertical</item>
     </style>
-    <style name="carcy_info_jscs_center">
+    <style name="carcy_info_jscs_center"  parent="android:Theme">
         <item name="android:textColor">#333333</item>
         <item name="android:textSize">14sp</item>
         <item name="android:gravity">center|center_vertical</item>
     </style>
 
-    <style name="carcy_info_jscs_right">
+    <style name="carcy_info_jscs_right"  parent="android:Theme">
         <item name="android:textColor">#333333</item>
         <item name="android:textSize">14sp</item>
         <item name="android:gravity">right|center_vertical</item>
     </style>
-    <style name="login_loading">
+    <style name="login_loading"  parent="android:Theme">
         <item name="android:textColor">@color/theme_color</item>
         <item name="android:textSize">25sp</item>
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="cy_et_style">
+    <style name="cy_et_style"  parent="android:Theme">
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">16sp</item>
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="cy_et_style_1">
+    <style name="cy_et_style_1"  parent="android:Theme">
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">16sp</item>
         <item name="android:gravity">left</item>
     </style>
 
-    <style name="cy_et_style1">
+    <style name="cy_et_style1"  parent="android:Theme">
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">16sp</item>
         <item name="android:paddingLeft">5dp</item>
         <item name="android:gravity">left|center_vertical</item>
     </style>
-    <style name="cy_et_style2">
+    <style name="cy_et_style2"  parent="android:Theme">
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">16sp</item>
         <item name="android:gravity">left|center_vertical</item>
     </style>
 
-    <style name="iv_sfz">
+    <style name="iv_sfz"  parent="android:Theme">
         <item name="android:layout_marginEnd">2dp</item>
         <item name="android:layout_gravity">center_vertical</item>
     </style>
 
-    <style name="pay_info">
+    <style name="pay_info"  parent="android:Theme">
         <item name="android:textColor">#333333</item>
         <item name="android:textSize">14sp</item>
         <item name="android:gravity">left</item>

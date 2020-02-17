@@ -1,5 +1,7 @@
 package com.seatrend.xj.electricbicyclesalesystem.activity
 
+import android.os.Build
+import android.support.annotation.RequiresApi
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
@@ -17,6 +19,7 @@ import com.seatrend.xj.electricbicyclesalesystem.entity.CommonResponse
 import com.seatrend.xj.electricbicyclesalesystem.entity.UserInfo
 import com.seatrend.xj.electricbicyclesalesystem.entity.WarningMessageEntity
 import com.seatrend.xj.electricbicyclesalesystem.persenter.WarningMessagePersenter
+import com.seatrend.xj.electricbicyclesalesystem.util.CarHphmUtils
 import com.seatrend.xj.electricbicyclesalesystem.util.GsonUtils
 import com.seatrend.xj.electricbicyclesalesystem.util.LoadingDialog
 import com.seatrend.xj.electricbicyclesalesystem.view.WarningMessageView
@@ -64,26 +67,31 @@ class WarningMessageActivity : BaseActivity(), WarningMessageView {
      */
     private fun initEvent() {
         shuaxin.isEnableRefresh = false
-        var searchString: String? = null
+//        var searchString: String? = null
+//
+//        //搜索框不自动缩小为一个搜索图标，而是match_parent
+//        searchview.setIconifiedByDefault(false)
+//        //显示搜索按钮
+//        searchview.isSubmitButtonEnabled = false
+//        //设置提示hint
+//        searchview.queryHint = "请用号牌号码或整车编码查询"
+//        searchview!!.setOnQueryTextListener(object : android.support.v7.widget.SearchView.OnQueryTextListener {
+//            override fun onQueryTextSubmit(pSubmit: String?): Boolean {
+//                return false
+//            }
+//
+//            override fun onQueryTextChange(pChange: String?): Boolean {
+//                searchString = pChange
+//                return false
+//            }
+//
+//        })
 
-        //搜索框不自动缩小为一个搜索图标，而是match_parent
-        searchview.setIconifiedByDefault(false)
-        //显示搜索按钮
-        searchview.isSubmitButtonEnabled = false
-        //设置提示hint
-        searchview.queryHint = "请用号牌号码或整车编码查询"
-        searchview!!.setOnQueryTextListener(object : android.support.v7.widget.SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(pSubmit: String?): Boolean {
-                return false
-            }
+        searchview.transformationMethod = CarHphmUtils.TransInformation()
+        searchview.filters = arrayOf(inputFilter)
 
-            override fun onQueryTextChange(pChange: String?): Boolean {
-                searchString = pChange
-                return false
-            }
-
-        })
         iv_btn_search.setOnClickListener {
+            var searchString: String? = searchview.text.toString()
             pageNum = 1
             searchFlag = false
             searchview.clearFocus()
@@ -206,6 +214,7 @@ class WarningMessageActivity : BaseActivity(), WarningMessageView {
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun initSelectYwztPopup() {
         mTypeLv = ListView(this)
         mTypeLv!!.background = ContextCompat.getDrawable(this, R.color.white)
@@ -232,7 +241,8 @@ class WarningMessageActivity : BaseActivity(), WarningMessageView {
             pop!!.dismiss()
         }
         pop = PopupWindow(mTypeLv, tv_right.width, ViewGroup.LayoutParams.WRAP_CONTENT, true)
-        pop!!.isFocusable = true
+        pop!!.setBackgroundDrawable(resources.getDrawable(R.color.white))
+        pop!!.isFocusable = false
         pop!!.isOutsideTouchable = true
         pop!!.setOnDismissListener {
             // 关闭popup窗口

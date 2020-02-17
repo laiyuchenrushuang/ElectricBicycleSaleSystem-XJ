@@ -3,7 +3,6 @@ package com.seatrend.xj.electricbicyclesalesystem.activity
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import com.seatrend.xj.electricbicyclesalesystem.R
-import com.seatrend.xj.electricbicyclesalesystem.adpater.GridViewAdapter
 import com.seatrend.xj.electricbicyclesalesystem.adpater.SelectorAdapter
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants
@@ -93,6 +92,7 @@ class YwTbEditActivity: BaseActivity(), SelectorAdapter.CheckState,NormalView {
             map["bz"] = ed_tbbz.text.toString()
             mNormalPresenter!!.doNetworkTask(map, Constants.TB_COMMIT)
         }
+        ed_tbbz.filters = arrayOf(inputFilter)
     }
 
     override fun getLayout(): Int {

@@ -39,6 +39,7 @@ class Constants {
         var PMS_YJ = "980201" //预警
         var PMS_TJ = "980202" //统计
         var PMS_BA = "980203" //备案
+        var PMS_CX = "980204" //查询
 
 
         //登录
@@ -105,6 +106,9 @@ class Constants {
         //预警
         var WARNING_MESSAGE = "/config/getBuinessWarningList"//列表
         var WARNING_QS = "/config/signForBuinessWarning" //签收
+
+        //查询车辆信息
+        var CAR_MSG_SEARCH = "/fjdcJscs/getBikeInfo" //车辆信息查询
 
         var GET_CAR_MSG = "/remote/getBikeCccInfo"   //远程接口
         var FACTOTY_GET_CAR_MSG = "/businessHandling/getVehFlowMainsByZcbm"  //业务接口
@@ -208,7 +212,7 @@ class Constants {
         val SFZ_YJ: Int = 0x103  //邮寄身份证
         val FACE: Int = 0x104  //人脸识别
 
-        val UI_TYPE: String = "UI_TYPE" // 0是业务复核，1是档案归档,2是业务退办
+        val UI_TYPE: String = "UI_TYPE" // 0是业务复核，1是档案归档,2是业务退办 3 车辆查询
         val FORBIDDEN: String = "type_forbidden"  // 1 禁用显示，0 正常显示
 
         //service Phtoto

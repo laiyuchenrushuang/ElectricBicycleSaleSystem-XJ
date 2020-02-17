@@ -35,13 +35,13 @@ class BusinessDetailsActivity : BaseActivity(), BusinessDetailsView {
         LoadingDialog.getInstance().dismissLoadDialog()
         try {
             val businessEntity = GsonUtils.gson(commonResponse.getResponseString(), BusinessEntity::class.java)
-
-            tv_ywzs.text = businessEntity.data.ywzs.toString()
-            tv_dgd.text = businessEntity.data.dgd.toString()
-            tv_dfh.text = businessEntity.data.dfh.toString()
-            tv_ytb.text = businessEntity.data.ytb.toString()
-            tv_ygd.text = businessEntity.data.ygd.toString()
-
+            runOnUiThread {
+                tv_ywzs.text = businessEntity.data.ywzs.toString()
+                tv_dgd.text = businessEntity.data.dgd.toString()
+                tv_dfh.text = businessEntity.data.dfh.toString()
+                tv_ytb.text = businessEntity.data.ytb.toString()
+                tv_ygd.text = businessEntity.data.ygd.toString()
+            }
         } catch (e: Exception) {
             showToast(e.message.toString())
         }

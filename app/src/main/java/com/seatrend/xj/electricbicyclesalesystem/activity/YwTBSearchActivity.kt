@@ -7,7 +7,10 @@ import android.view.View
 import com.seatrend.xj.electricbicyclesalesystem.R
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants
-import com.seatrend.xj.electricbicyclesalesystem.entity.*
+import com.seatrend.xj.electricbicyclesalesystem.entity.AllBikeMsgEnity
+import com.seatrend.xj.electricbicyclesalesystem.entity.CommonResponse
+import com.seatrend.xj.electricbicyclesalesystem.entity.TBEnity
+import com.seatrend.xj.electricbicyclesalesystem.entity.UserInfo
 import com.seatrend.xj.electricbicyclesalesystem.persenter.NormalPresenter
 import com.seatrend.xj.electricbicyclesalesystem.util.*
 import com.seatrend.xj.electricbicyclesalesystem.view.NormalView
@@ -96,26 +99,29 @@ class YwTBSearchActivity : BaseActivity(), NormalView {
 
     private fun initEvent() {
 
-        var searchString: String? = null
-
-        //搜索框不自动缩小为一个搜索图标，而是match_parent
-        searchview.setIconifiedByDefault(false)
-        //显示搜索按钮
-        searchview.isSubmitButtonEnabled = false
+//        //搜索框不自动缩小为一个搜索图标，而是match_parent
+//        searchview.setIconifiedByDefault(false)
+//        //显示搜索按钮
+//        searchview.isSubmitButtonEnabled = false
         //设置提示hint
-        searchview.queryHint = "查询车辆号牌或整车编码"
-        searchview!!.setOnQueryTextListener(object : android.support.v7.widget.SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(pSubmit: String?): Boolean {
-                return true
-            }
+//        searchview.queryHint = "查询车辆号牌或整车编码"
+//        searchview!!.setOnQueryTextListener(object : android.support.v7.widget.SearchView.OnQueryTextListener {
+//            override fun onQueryTextSubmit(pSubmit: String?): Boolean {
+//                return true
+//            }
+//
+//            override fun onQueryTextChange(pChange: String?): Boolean {
+//                searchString = pChange!!.toUpperCase()
+//                return false
+//            }
+//        })
 
-            override fun onQueryTextChange(pChange: String?): Boolean {
-                searchString = pChange
-                return false
-            }
-        })
+        searchview.transformationMethod = CarHphmUtils.TransInformation()
+        searchview.filters = arrayOf(inputFilter)
 
         iv_btn_search.setOnClickListener {
+            var searchString: String? = searchview.text.toString()
+
             if (TextUtils.isEmpty(searchString)) {
                 showToast("搜索的内容为空")
                 return@setOnClickListener
@@ -123,7 +129,7 @@ class YwTBSearchActivity : BaseActivity(), NormalView {
             searchview.clearFocus()
             if (searchString!!.trim().length > 10) {
                 val map = HashMap<String, String?>()
-                map["zcbm"] = searchString!!.trim().toUpperCase()
+                map["zcbm"] = searchString.trim().toUpperCase()
                 map["curPage"] = "1"
                 map["pageSize"] = "1"
                 map["glbm"] = UserInfo.GLBM
@@ -131,7 +137,7 @@ class YwTBSearchActivity : BaseActivity(), NormalView {
                 mNormalPresenter!!.doNetworkTask(map, Constants.TB_GET_LIST)
             } else {
                 val map = HashMap<String, String?>()
-                map["hphm"] = searchString!!.trim().toUpperCase()
+                map["hphm"] = searchString.trim().toUpperCase()
                 map["curPage"] = "1"
                 map["pageSize"] = "1"
                 map["glbm"] = UserInfo.GLBM

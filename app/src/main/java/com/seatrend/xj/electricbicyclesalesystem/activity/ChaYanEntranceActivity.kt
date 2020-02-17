@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
-import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.text.TextUtils
@@ -17,16 +16,17 @@ import com.seatrend.xj.electricbicyclesalesystem.R
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants
 import com.seatrend.xj.electricbicyclesalesystem.database.CodeTableSQLiteUtils
-import com.seatrend.xj.electricbicyclesalesystem.entity.*
+import com.seatrend.xj.electricbicyclesalesystem.entity.CYEntranceEnity
+import com.seatrend.xj.electricbicyclesalesystem.entity.CommonResponse
+import com.seatrend.xj.electricbicyclesalesystem.entity.ThreeCEnity
+import com.seatrend.xj.electricbicyclesalesystem.entity.UserInfo
 import com.seatrend.xj.electricbicyclesalesystem.persenter.NormalPresenter
 import com.seatrend.xj.electricbicyclesalesystem.util.*
 import com.seatrend.xj.electricbicyclesalesystem.view.NormalView
 import com.seatrend.xj.electricbicyclesalesystem.zxing.activity.CaptureActivity
-import kotlinx.android.synthetic.main.activity_chayan.*
 import kotlinx.android.synthetic.main.activity_chayan_entrance.*
-import kotlinx.android.synthetic.main.activity_chayan_entrance.ll_cphm
 import kotlinx.android.synthetic.main.bottom_button.*
-import java.util.HashMap
+import java.util.*
 
 /**
  * 查验入口界面
@@ -194,6 +194,8 @@ class ChaYanEntranceActivity : BaseActivity(), NormalView {
             showQcodeModeDialog()
         }
         et_cy_cphm.transformationMethod = CarHphmUtils.TransInformation()
+        et_cy_cphm.filters = arrayOf(inputFilter)
+        et_cy_zcbm.transformationMethod = CarHphmUtils.TransInformation()
     }
 
     /**

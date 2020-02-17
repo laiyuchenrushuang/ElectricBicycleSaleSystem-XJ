@@ -1,9 +1,10 @@
 package com.seatrend.xj.electricbicyclesalesystem.activity;
 
-import com.seatrend.xj.electricbicyclesalesystem.entity.FHEnity;
-import com.seatrend.xj.electricbicyclesalesystem.util.PhotoFileUtils;
+import android.text.InputFilter;
+import android.text.Spanned;
 
-import java.io.File;
+import com.seatrend.xj.electricbicyclesalesystem.entity.FHEnity;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.regex.Matcher;
@@ -25,6 +26,9 @@ public class JavaTest {
     public static void main(String[] args) {
 //        String result = "http://mv.cqccms.com.cn/incoc/GSViewEbike!viewCocEbike.action?vinCode=117321900000243mn1112222111412541";
 //
+        Pattern emoji = Pattern.compile("[\ud83c\udc00-\ud83c\udfff]|[\ud83d\udc00-\ud83d\udfff]|[\u2600-\u27ff]",
+                Pattern.UNICODE_CASE | Pattern.CASE_INSENSITIVE);
+
        String regEx = "(\\d+\\.\\d+\\.\\d+\\.\\d+)\\:(\\d+)";
         String result = "http://192.168.0.221:8099/electricVehicleSalePlatformXinjiang";
         Pattern p = Pattern.compile(regEx);
@@ -33,6 +37,22 @@ public class JavaTest {
             System.out.println("ip:"+m.group(1));
             System.out.println("port:"+m.group(2));
         }
+
+        InputFilter inputFilter=new InputFilter() {
+
+            Pattern pattern = Pattern.compile("[^a-zA-Z0-9\\u4E00-\\u9FA5_]");
+            @Override
+            public CharSequence filter(CharSequence charSequence, int i, int i1, Spanned spanned, int i2, int i3) {
+                Matcher matcher=  pattern.matcher(charSequence);
+                if(!matcher.find()){
+                    return null;
+                }else{
+                    return "";
+                }
+
+            }
+        };
+
 
 //        macherString(regEx,result);
 //        ArrayList<String> s = new ArrayList<>();

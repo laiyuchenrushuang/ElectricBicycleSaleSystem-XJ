@@ -9,6 +9,7 @@ import com.seatrend.xj.electricbicyclesalesystem.R
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants
 import kotlinx.android.synthetic.main.activity_show_photo.*
+import kotlinx.android.synthetic.main.common_title.*
 
 class ShowPhotoActivity : BaseActivity() {
 
@@ -17,6 +18,13 @@ class ShowPhotoActivity : BaseActivity() {
         setPageTitle("图片详情")
         Glide.with(this).load(intent.getStringExtra(Constants.PATH)).placeholder(R.drawable.image_loading)
                 .error(R.drawable.error_image).into(iv_photo)
+        bindEvent()
+    }
+
+    private fun bindEvent() {
+        iv_back.setOnClickListener {
+            finish()
+        }
     }
 
     override fun getLayout(): Int {

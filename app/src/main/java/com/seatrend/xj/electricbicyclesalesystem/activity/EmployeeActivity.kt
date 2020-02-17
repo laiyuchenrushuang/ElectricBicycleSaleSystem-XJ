@@ -1,12 +1,8 @@
 package com.seatrend.xj.electricbicyclesalesystem.activity
 
-import android.annotation.SuppressLint
 import android.content.Intent
-import android.os.Handler
-import android.os.Message
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
-import android.view.View
 import com.seatrend.xj.electricbicyclesalesystem.R
 import com.seatrend.xj.electricbicyclesalesystem.adpater.YgAdapter
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
@@ -15,6 +11,7 @@ import com.seatrend.xj.electricbicyclesalesystem.entity.CommonResponse
 import com.seatrend.xj.electricbicyclesalesystem.entity.EmployeeBean
 import com.seatrend.xj.electricbicyclesalesystem.entity.UserInfo
 import com.seatrend.xj.electricbicyclesalesystem.persenter.NormalPresenter
+import com.seatrend.xj.electricbicyclesalesystem.util.CarHphmUtils
 import com.seatrend.xj.electricbicyclesalesystem.util.GsonUtils
 import com.seatrend.xj.electricbicyclesalesystem.view.NormalView
 import kotlinx.android.synthetic.main.activity_employee.*
@@ -117,26 +114,33 @@ class EmployeeActivity : BaseActivity(), NormalView, YgAdapter.onItemListener {
      */
     private fun initEvent() {
         shuaxin.isEnableRefresh = false
-        var searchString: String? = null
+//        var searchString: String? = null
+//
+//        //搜索框不自动缩小为一个搜索图标，而是match_parent
+//        searchview.setIconifiedByDefault(false)
+//        //显示搜索按钮
+//        searchview.isSubmitButtonEnabled = false
+//        //设置提示hint
+//        searchview.queryHint = "请用身份证明号码查询"
+//        searchview!!.setOnQueryTextListener(object : android.support.v7.widget.SearchView.OnQueryTextListener {
+//            override fun onQueryTextSubmit(pSubmit: String?): Boolean {
+//                return false
+//            }
+//
+//            override fun onQueryTextChange(pChange: String?): Boolean {
+//                searchString = pChange
+//                return false
+//            }
+//
+//        })
 
-        //搜索框不自动缩小为一个搜索图标，而是match_parent
-        searchview.setIconifiedByDefault(false)
-        //显示搜索按钮
-        searchview.isSubmitButtonEnabled = false
-        //设置提示hint
-        searchview.queryHint = "请用身份证明号码查询"
-        searchview!!.setOnQueryTextListener(object : android.support.v7.widget.SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(pSubmit: String?): Boolean {
-                return false
-            }
 
-            override fun onQueryTextChange(pChange: String?): Boolean {
-                searchString = pChange
-                return false
-            }
+        searchview.transformationMethod = CarHphmUtils.TransInformation()
+        searchview.filters = arrayOf(inputFilter)
 
-        })
         iv_btn_search.setOnClickListener {
+            var searchString: String? = searchview.text.toString()
+
             searchFlag = false
             showLoadingDialog()
             if(TextUtils.isEmpty(searchString)||TextUtils.isEmpty(searchString!!.trim())){

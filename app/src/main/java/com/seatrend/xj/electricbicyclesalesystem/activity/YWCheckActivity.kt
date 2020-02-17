@@ -1,26 +1,32 @@
 package com.seatrend.xj.electricbicyclesalesystem.activity
 
-import android.graphics.BitmapFactory
-import com.seatrend.xj.electricbicyclesalesystem.R
-import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
-import kotlinx.android.synthetic.main.activity_yw_check.*
-import kotlinx.android.synthetic.main.common_title.*
-import android.support.v4.content.ContextCompat
 import android.content.Intent
+import android.graphics.BitmapFactory
+import android.os.Build
+import android.support.annotation.RequiresApi
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.ListView
+import android.widget.PopupWindow
+import com.seatrend.xj.electricbicyclesalesystem.R
 import com.seatrend.xj.electricbicyclesalesystem.adpater.YwFhAdapter
+import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants
 import com.seatrend.xj.electricbicyclesalesystem.database.CodeTableSQLiteUtils
-import com.seatrend.xj.electricbicyclesalesystem.entity.*
+import com.seatrend.xj.electricbicyclesalesystem.entity.AllBikeMsgEnity
+import com.seatrend.xj.electricbicyclesalesystem.entity.CommonResponse
+import com.seatrend.xj.electricbicyclesalesystem.entity.FHEnity
+import com.seatrend.xj.electricbicyclesalesystem.entity.UserInfo
 import com.seatrend.xj.electricbicyclesalesystem.persenter.NormalPresenter
 import com.seatrend.xj.electricbicyclesalesystem.util.FHUtil
 import com.seatrend.xj.electricbicyclesalesystem.util.GsonUtils
-import com.seatrend.xj.electricbicyclesalesystem.util.ObjectNullUtil
 import com.seatrend.xj.electricbicyclesalesystem.view.NormalView
-import kotlinx.android.synthetic.main.activity_yw_check.shuaxin
-import kotlinx.android.synthetic.main.recyclerview.m_recycler_view
+import kotlinx.android.synthetic.main.activity_yw_check.*
+import kotlinx.android.synthetic.main.common_title.*
+import kotlinx.android.synthetic.main.recyclerview.*
 
 
 /**
@@ -147,6 +153,7 @@ class YWCheckActivity : BaseActivity(), NormalView, YwFhAdapter.onItemListener {
         mNormalPresenter!!.doNetworkTask(map, Constants.FH_GET_LIST)
     }
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun initSelectYwztPopup() {
         val listData = ArrayList<String>()
         listData.add(this.getString(R.string.all))
@@ -174,7 +181,8 @@ class YWCheckActivity : BaseActivity(), NormalView, YwFhAdapter.onItemListener {
             searchList(tv_ywlx.text.toString(), tv_fhzt.text.toString())
         }
         typeSelectYwztPopup = PopupWindow(mTypeLv, ll_state.width, ViewGroup.LayoutParams.WRAP_CONTENT, true)
-        typeSelectYwztPopup!!.isFocusable = true
+        typeSelectYwztPopup!!.setBackgroundDrawable(resources.getDrawable(R.color.white))
+        typeSelectYwztPopup!!.isFocusable = false
         typeSelectYwztPopup!!.isOutsideTouchable = true
         typeSelectYwztPopup!!.setOnDismissListener {
             // 关闭popup窗口
@@ -196,6 +204,7 @@ class YWCheckActivity : BaseActivity(), NormalView, YwFhAdapter.onItemListener {
         mNormalPresenter!!.doNetworkTask(map, Constants.FH_GET_LIST)
     }
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun initSelectFhztPopup() {
         val listData = ArrayList<String>()
         listData.add(this.getString(R.string.all))
@@ -217,7 +226,8 @@ class YWCheckActivity : BaseActivity(), NormalView, YwFhAdapter.onItemListener {
             searchList(tv_ywlx.text.toString(), tv_fhzt.text.toString())
         }
         typeSelectFhztPopup = PopupWindow(mTypeLv, ll_state.width, ViewGroup.LayoutParams.WRAP_CONTENT, true)
-        typeSelectFhztPopup!!.isFocusable = true
+        typeSelectFhztPopup!!.setBackgroundDrawable(resources.getDrawable(R.color.white))
+        typeSelectFhztPopup!!.isFocusable = false
         typeSelectFhztPopup!!.isOutsideTouchable = true
         typeSelectFhztPopup!!.setOnDismissListener {
             // 关闭popup窗口

@@ -2,16 +2,13 @@ package com.seatrend.xj.electricbicyclesalesystem.activity
 
 import android.app.Activity
 import android.app.Dialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
-import android.os.Debug
 import android.provider.MediaStore
 import android.support.v4.content.FileProvider
 import android.text.TextUtils
-import android.view.KeyEvent
 import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
@@ -27,10 +24,6 @@ import com.seatrend.xj.electricbicyclesalesystem.util.*
 import com.seatrend.xj.electricbicyclesalesystem.view.CarPhotoView
 import com.seatrend.xj.electricbicyclesalesystem.view.LoginView
 import kotlinx.android.synthetic.main.activity_user_password.*
-import kotlinx.android.synthetic.main.activity_user_password.btn_login
-import kotlinx.android.synthetic.main.activity_user_password.btn_setting
-import kotlinx.android.synthetic.main.activity_user_password.iv_delete
-import kotlinx.android.synthetic.main.activity_user_password.tv_version
 import java.io.File
 
 class LoginByUserPasswordActivity : BaseActivity(), LoginView, CarPhotoView {
@@ -280,7 +273,7 @@ class LoginByUserPasswordActivity : BaseActivity(), LoginView, CarPhotoView {
             val map = HashMap<String, String?>()
             map.put("username", et_user.text.toString())
             map.put("password", et_pwd.text.toString())
-            map.put("appVersion", tv_version.text.toString())
+            map.put("appVersion",  AppUtils.getVersionName(this))
             map.put("ly", Constants.CZPT) // app的登录
             mLoginPersenter!!.doNetworkTask(map, Constants.USER_LOGIN)
 
@@ -323,6 +316,8 @@ class LoginByUserPasswordActivity : BaseActivity(), LoginView, CarPhotoView {
                 }
             }
             pcThread.start()
+        }else{
+            imgFile = null
         }
     }
 

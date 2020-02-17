@@ -4,23 +4,22 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.BitmapFactory
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.Editable
 import com.seatrend.xj.electricbicyclesalesystem.R
 import com.seatrend.xj.electricbicyclesalesystem.adpater.SelectorAdapter
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants
-import com.seatrend.xj.electricbicyclesalesystem.entity.*
+import com.seatrend.xj.electricbicyclesalesystem.entity.CommonResponse
+import com.seatrend.xj.electricbicyclesalesystem.entity.UserInfo
+import com.seatrend.xj.electricbicyclesalesystem.entity.YGPostEnity
+import com.seatrend.xj.electricbicyclesalesystem.entity.YgJsqxEnity
 import com.seatrend.xj.electricbicyclesalesystem.manager.MyRecycleManager
 import com.seatrend.xj.electricbicyclesalesystem.persenter.NormalPresenter
 import com.seatrend.xj.electricbicyclesalesystem.util.*
 import com.seatrend.xj.electricbicyclesalesystem.view.NormalView
 import kotlinx.android.synthetic.main.activity_employee_edit.*
 import kotlinx.android.synthetic.main.bottom_button.*
-import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 class EmployeeEditActivity : BaseActivity(), NormalView, SelectorAdapter.CheckState {
 
@@ -198,6 +197,7 @@ class EmployeeEditActivity : BaseActivity(), NormalView, SelectorAdapter.CheckSt
         iv_syr_scan.setOnClickListener {
             showIcCardReadModeDialog(Constants.SFZ_SYR)
         }
+        ed_xm.filters = arrayOf(inputFilter)
 
     }
 

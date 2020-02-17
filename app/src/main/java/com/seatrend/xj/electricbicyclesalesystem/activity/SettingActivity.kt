@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
-import android.text.TextUtils
 import com.seatrend.xj.electricbicyclesalesystem.R
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants
@@ -15,7 +14,6 @@ import com.seatrend.xj.electricbicyclesalesystem.entity.CodeEntity
 import com.seatrend.xj.electricbicyclesalesystem.entity.CommonResponse
 import com.seatrend.xj.electricbicyclesalesystem.persenter.SettingPersenter
 import com.seatrend.xj.electricbicyclesalesystem.util.GsonUtils
-import com.seatrend.xj.electricbicyclesalesystem.util.LoadingDialog
 import com.seatrend.xj.electricbicyclesalesystem.util.PermissionEnity
 import com.seatrend.xj.electricbicyclesalesystem.util.SharedPreferencesUtils
 import com.seatrend.xj.electricbicyclesalesystem.view.SettingView
@@ -24,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_setting.*
 class SettingActivity : BaseActivity(), SettingView {
 
     private val SUCCESS: Int = 2
-    private val REQUEST: Int = 1;
+    private val REQUEST: Int = 1
     private var codeShengEntity: CodeEntity? = null  //省区划信息  单独拿出来去获取，整体获取
     private var codeAllEntity: CodeEntity? = null
     private var codePermissionEntity: PermissionEnity? = null //权限
@@ -46,14 +44,22 @@ class SettingActivity : BaseActivity(), SettingView {
 //            }
 
             if (null != codeShengEntity && null != codeAllEntity) {
-                CodeTableSQLiteUtils.deleteAll(CodeTableSQLiteOpenHelper.TABLE_NAME)
-                CodeTableSQLiteUtils.insertQhToDB(codeShengEntity!!.data)
-                CodeTableSQLiteUtils.insert(codeAllEntity!!.data)
+                Thread {
+                    try {
+                        Looper.prepare()
+                        CodeTableSQLiteUtils.deleteAll(CodeTableSQLiteOpenHelper.TABLE_NAME)
+                        CodeTableSQLiteUtils.insertQhToDB(codeShengEntity!!.data)
+                        CodeTableSQLiteUtils.insert(codeAllEntity!!.data)
 //                CodeTableSQLiteUtils.insertPermmisionToDB(codePermissionEntity!!.data)
-                SharedPreferencesUtils.setIsFirst(false)
-                val msg = Message.obtain()
-                msg.what = SUCCESS
-                mHandler.sendMessage(msg)
+                        SharedPreferencesUtils.setIsFirst(false)
+                        val msg = Message.obtain()
+                        msg.what = SUCCESS
+                        mHandler.sendMessage(msg)
+                        Looper.loop()
+                    } catch (e: Exception) {
+                        showToast(e.message.toString())
+                    }
+                }.start()
             }
         } catch (e: Exception) {
             showToast("同步失败")
@@ -77,11 +83,11 @@ class SettingActivity : BaseActivity(), SettingView {
         override fun handleMessage(msg: Message) {
             when (msg.what) {
                 REQUEST -> {
-                    Thread {
-                        Looper.prepare()
+//                    Thread {
+//                        Looper.prepare()
                         getAllCode()
-                        Looper.loop()
-                    }.start()
+//                        Looper.loop()
+//                    }.start()
                 }
                 SUCCESS -> {
                     dismissLoadingDialog()

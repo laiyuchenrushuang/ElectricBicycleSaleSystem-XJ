@@ -173,10 +173,19 @@ class YwTransferActivity : BaseActivity(), NormalView {
         sp_zrd1.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {}
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
-                var provinceDmz = sp_syr_qh1.selectedItem.toString()
+                var provinceDmz = sp_zrd1.selectedItem.toString()
                 startThreadUpdateSp(provinceDmz, sp_zrd2)
             }
         }
+
+        //限制名称只能输入中文和字母和数字
+//        et_xsqy.filters = arrayOf(inputFilter)
+        ed_syr_xm.filters = arrayOf(inputFilter)
+        et_syr_yj_xxdz.filters = arrayOf(inputFilter)
+        et_syr_xxdz.filters = arrayOf(inputFilter)
+        ed_dlr_xm.filters = arrayOf(inputFilter)
+        ed_yj_xm.filters = arrayOf(inputFilter)
+        et_yj_xxdz.filters = arrayOf(inputFilter)
     }
 
     private fun startThreadUpdateSp(dmsm: String, spinner: Spinner?) {

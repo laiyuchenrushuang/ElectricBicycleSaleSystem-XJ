@@ -10,7 +10,10 @@ import com.seatrend.xj.electricbicyclesalesystem.R
 import com.seatrend.xj.electricbicyclesalesystem.adpater.YwFhAdapter
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants
-import com.seatrend.xj.electricbicyclesalesystem.entity.*
+import com.seatrend.xj.electricbicyclesalesystem.entity.AllBikeMsgEnity
+import com.seatrend.xj.electricbicyclesalesystem.entity.CommonResponse
+import com.seatrend.xj.electricbicyclesalesystem.entity.FHEnity
+import com.seatrend.xj.electricbicyclesalesystem.entity.UserInfo
 import com.seatrend.xj.electricbicyclesalesystem.persenter.NormalPresenter
 import com.seatrend.xj.electricbicyclesalesystem.util.*
 import com.seatrend.xj.electricbicyclesalesystem.view.NormalView
@@ -117,26 +120,31 @@ class YwFhSearchActivity : BaseActivity(), NormalView {
      */
     private fun initEvent() {
 
-        var searchString: String? = null
+//        var searchString: String? = null
+//
+//        //搜索框不自动缩小为一个搜索图标，而是match_parent
+//        searchview.setIconifiedByDefault(false)
+//        //显示搜索按钮
+//        searchview.isSubmitButtonEnabled = false
+//        //设置提示hint
+//        searchview.queryHint = "查询车辆号牌或整车编码"
+//        searchview!!.setOnQueryTextListener(object : android.support.v7.widget.SearchView.OnQueryTextListener {
+//            override fun onQueryTextSubmit(pSubmit: String?): Boolean {
+//                return false
+//            }
+//
+//            override fun onQueryTextChange(pChange: String?): Boolean {
+//                searchString = pChange
+//                return false
+//            }
+//
+//        })
+        searchview.transformationMethod = CarHphmUtils.TransInformation()
+        searchview.filters = arrayOf(inputFilter)
 
-        //搜索框不自动缩小为一个搜索图标，而是match_parent
-        searchview.setIconifiedByDefault(false)
-        //显示搜索按钮
-        searchview.isSubmitButtonEnabled = false
-        //设置提示hint
-        searchview.queryHint = "查询车辆号牌或整车编码"
-        searchview!!.setOnQueryTextListener(object : android.support.v7.widget.SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(pSubmit: String?): Boolean {
-                return false
-            }
-
-            override fun onQueryTextChange(pChange: String?): Boolean {
-                searchString = pChange
-                return false
-            }
-
-        })
         iv_btn_search.setOnClickListener {
+            var searchString: String? = searchview.text.toString()
+
             if (TextUtils.isEmpty(searchString)) {
                 showToast("搜索的内容为空")
                 return@setOnClickListener

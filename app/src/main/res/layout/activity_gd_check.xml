@@ -33,16 +33,15 @@
                     android:src="@drawable/back_icon" />
             </RelativeLayout>
 
-            <android.support.v7.widget.SearchView
+            <EditText
                 android:id="@+id/searchview"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/btn_bule_bg2"
-                android:focusable="false"
-                app:searchIcon="@null">
-
-            </android.support.v7.widget.SearchView>
+                android:background="@color/white"
+                android:paddingLeft="10dp"
+                android:hint="查询车辆号牌或整车编码"
+                />
 
             <RelativeLayout
                 android:layout_width="50dp"

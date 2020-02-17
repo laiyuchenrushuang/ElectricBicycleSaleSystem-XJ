@@ -63,21 +63,26 @@ class CarCYxxFragment : BaseFragment() {
                 ViewShowUtils.showVisibleView(tv_cyxx)
             }
         } else if (activity is Yw3CzActivity) {
-            if (null == enity || null == enity!!.data || null == enity!!.data.fjdcBusiness) {
-                showToast("查询查验信息为空")
-                return
-            }
-
-            if ("A".equals(enity!!.data.fjdcBusiness.ywlx) ||
-                    "B".equals(enity!!.data.fjdcBusiness.ywlx) ||
-                    "D".equals(enity!!.data.fjdcBusiness.ywlx)) { //A注册 D变更 B转移 7旧车换牌
-                getData()
+            if (activity is Yw3CzActivity && "3" == activity.intent.getStringExtra(Constants.UI_TYPE)) {
+                    getCxCarData()
             } else {
-                ViewShowUtils.showGoneView(ll_cyxx)
-                ViewShowUtils.showVisibleView(tv_cyxx)
+                if (null == enity || null == enity!!.data || null == enity!!.data.fjdcBusiness) {
+                    showToast("查询查验信息为空")
+                    return
+                }
+
+                if ("A".equals(enity!!.data.fjdcBusiness.ywlx) ||
+                        "B".equals(enity!!.data.fjdcBusiness.ywlx) ||
+                        "D".equals(enity!!.data.fjdcBusiness.ywlx)) { //A注册 D变更 B转移 7旧车换牌
+                    getData()
+                } else {
+                    ViewShowUtils.showGoneView(ll_cyxx)
+                    ViewShowUtils.showVisibleView(tv_cyxx)
+                }
             }
         }
     }
+
 
     private fun initUI() {
         m_recycler_view.layoutManager = StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
@@ -130,6 +135,52 @@ class CarCYxxFragment : BaseFragment() {
         } catch (e: Exception) {
             showToast(e.message.toString())
         }
+    }
+
+
+    private fun getCxCarData() {
+        try {
+            if ("A".equals(Yw3CzActivity.mAllCXData!!.data.checkData.ywlx)) {
+                ll_item_cyxx.visibility = View.VISIBLE
+                tv_csys.text = CsysUtils.getCsysMc(Yw3CzActivity.mAllCXData!!.data.checkData.csys)
+                tv_ckg.text = Yw3CzActivity.mAllCXData!!.data.checkData.scc + "*" + Yw3CzActivity.mAllCXData!!.data.checkData.sck + "*" + Yw3CzActivity.mAllCXData!!.data.checkData.scg
+                tv_zczl.text = Yw3CzActivity.mAllCXData!!.data.checkData.sczbzl
+                tv_zgss.text = Yw3CzActivity.mAllCXData!!.data.checkData.sczgcs
+                tv_zxj.text = Yw3CzActivity.mAllCXData!!.data.checkData.scqhlzxj  //中心距
+                tv_jtxs.text = if ("1".equals(Yw3CzActivity.mAllCXData!!.data.checkData.jtgn)) "有" else "否"
+                tv_dpxs.text = if ("1".equals(Yw3CzActivity.mAllCXData!!.data.checkData.shdp)) "是" else "否"
+                tv_cphm.text = if (ObjectNullUtil.checknull(Yw3CzActivity.mAllCXData!!.data.checkData.cph)) Yw3CzActivity.mAllCXData!!.data.checkData.cph else "/"
+            } else {
+                ll_item_cyxx.visibility = View.GONE
+            }
+
+            tv_cyjl.text = if ("1".equals(Yw3CzActivity.mAllCXData!!.data.checkData.cyjl)) "合格" else "不合格"
+            tv_cyr.text = if (TextUtils.isEmpty(Yw3CzActivity.mAllCXData!!.data.checkData.cyr)) "无" else Yw3CzActivity.mAllCXData!!.data.checkData.cyr
+            tv_cysj.text = StringUtils.longToStringData(Yw3CzActivity.mAllCXData!!.data.checkData.cyrq)
+//        tv_glbm.text = Yw3CzActivity.mAllCXData!!.data.checkData.cybm
+            tv_glbm.text = UserInfo.NewUserInfo.BMMC
+            tv_zxj.text = Yw3CzActivity.mAllCXData!!.data.checkData.scqhlzxj
+            val cyList = CodeTableSQLiteUtils.queryByDMLB(Constants.CYZP)
+            //只获取查验的照片
+            photoList.clear()
+
+            for (db in Yw3CzActivity.mAllCXData!!.data.syrzpxx) {
+                for (enity in cyList) {
+                    if (db.zpzl.equals(enity.dmz)) {
+                        var data = AllBikeMsgEnity.Data.PhotoList()
+                        data.zpzl = db.zpzl
+                        data.zpsm = db.zpsm
+                        data.zpdz = db.zpdz
+                        photoList.add(data)
+                        break
+                    }
+                }
+            }
+
+        } catch (e: Exception) {
+            showToast(e.message.toString())
+        }
+
     }
 
     private fun bindEvent() {

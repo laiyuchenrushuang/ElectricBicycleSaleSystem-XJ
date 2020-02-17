@@ -155,7 +155,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/edit_text_bg"
                         android:digits="@string/number_text"
-                        android:maxLength="6"
+                        android:maxLength="4"
                         android:paddingLeft="5dp"
                         android:textColor="@color/black"
                         android:textSize="14sp" />
@@ -192,7 +192,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/edit_text_bg"
                         android:digits="@string/number_text"
-                        android:maxLength="6"
+                        android:maxLength="4"
                         android:paddingLeft="5dp"
                         android:textColor="@color/black"
                         android:textSize="14sp" />

@@ -21,7 +21,6 @@ import kotlinx.android.synthetic.main.activity_fh_check.*
 
 class YwFhSearchActivity : BaseActivity(), NormalView {
 
-    private var mTextTouchListener: View.OnTouchListener? = null
     private var mFhdata: FHEnity? = null
     override fun netWorkTaskSuccess(commonResponse: CommonResponse) {
         dismissLoadingDialog()
@@ -111,8 +110,8 @@ class YwFhSearchActivity : BaseActivity(), NormalView {
     private fun viewChangeByState() {
         tv_fh_yy!!.movementMethod = ScrollingMovementMethod.getInstance()
         tv_fh_fhyj!!.movementMethod = ScrollingMovementMethod.getInstance()
-        tv_fh_yy!!.setOnTouchListener(mTextTouchListener)
-        tv_fh_fhyj!!.setOnTouchListener(mTextTouchListener)
+        tv_fh_yy!!.setOnTouchListener(onTouchListener)
+        tv_fh_fhyj!!.setOnTouchListener(onTouchListener)
     }
 
     /**

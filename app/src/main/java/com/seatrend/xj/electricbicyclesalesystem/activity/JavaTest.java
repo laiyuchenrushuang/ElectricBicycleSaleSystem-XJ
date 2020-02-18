@@ -28,30 +28,31 @@ public class JavaTest {
 //
         Pattern emoji = Pattern.compile("[\ud83c\udc00-\ud83c\udfff]|[\ud83d\udc00-\ud83d\udfff]|[\u2600-\u27ff]",
                 Pattern.UNICODE_CASE | Pattern.CASE_INSENSITIVE);
+//
+//       String regEx = "(\\d+\\.\\d+\\.\\d+\\.\\d+)\\:(\\d+)";
+//        String result = "http://192.168.0.221:8099/electricVehicleSalePlatformXinjiang";
+//        Pattern p = Pattern.compile(regEx);
+//        Matcher m = p.matcher(result);
+//        if(m.find()) {
+//            System.out.println("ip:"+m.group(1));
+//            System.out.println("port:"+m.group(2));
+//        }
+//
+//        InputFilter inputFilter=new InputFilter() {
+//
+//            Pattern pattern = Pattern.compile("[^a-zA-Z0-9\\u4E00-\\u9FA5_]");
+//            @Override
+//            public CharSequence filter(CharSequence charSequence, int i, int i1, Spanned spanned, int i2, int i3) {
+//                Matcher matcher=  pattern.matcher(charSequence);
+//                if(!matcher.find()){
+//                    return null;
+//                }else{
+//                    return "";
+//                }
+//
+//            }
+//        };
 
-       String regEx = "(\\d+\\.\\d+\\.\\d+\\.\\d+)\\:(\\d+)";
-        String result = "http://192.168.0.221:8099/electricVehicleSalePlatformXinjiang";
-        Pattern p = Pattern.compile(regEx);
-        Matcher m = p.matcher(result);
-        if(m.find()) {
-            System.out.println("ip:"+m.group(1));
-            System.out.println("port:"+m.group(2));
-        }
-
-        InputFilter inputFilter=new InputFilter() {
-
-            Pattern pattern = Pattern.compile("[^a-zA-Z0-9\\u4E00-\\u9FA5_]");
-            @Override
-            public CharSequence filter(CharSequence charSequence, int i, int i1, Spanned spanned, int i2, int i3) {
-                Matcher matcher=  pattern.matcher(charSequence);
-                if(!matcher.find()){
-                    return null;
-                }else{
-                    return "";
-                }
-
-            }
-        };
 
 
 //        macherString(regEx,result);

@@ -86,7 +86,7 @@ public class EmployeeBean extends BaseEntity {
             private String gdip1;
             private String gdip2;
             private String gdip3;
-            private String listRole;
+            private List<ListRole> listRole;
             private List<Photos> photos;
             private String zb;
 
@@ -247,11 +247,11 @@ public class EmployeeBean extends BaseEntity {
                 return gdip3;
             }
 
-            public void setListRole(String listRole) {
+            public void setListRole(List<ListRole> listRole) {
                 this.listRole = listRole;
             }
 
-            public String getListRole() {
+            public List<ListRole> getListRole() {
                 return listRole;
             }
 
@@ -308,6 +308,34 @@ public class EmployeeBean extends BaseEntity {
 
                 public String getZpzl() {
                     return zpzl;
+                }
+
+            }
+
+            public class ListRole {
+
+                private String jsdh;
+                private String jsmc;
+                private String yhdh;
+                public void setJsdh(String jsdh) {
+                    this.jsdh = jsdh;
+                }
+                public String getJsdh() {
+                    return jsdh;
+                }
+
+                public void setjsmc(String jsdhmc) {
+                    this.jsmc = jsdhmc;
+                }
+                public String getjsmc() {
+                    return jsmc;
+                }
+
+                public void setYhdh(String yhdh) {
+                    this.yhdh = yhdh;
+                }
+                public String getYhdh() {
+                    return yhdh;
                 }
 
             }

@@ -62,6 +62,20 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
     var currentTime: Long = 0
     private var mOcr: OCR? = null
 
+    //TextView 和 ScollView 冲突监听器
+    val onTouchListener = View.OnTouchListener { v, event ->
+        if (event.action == MotionEvent.ACTION_DOWN) {
+            //父节点不拦截子节点
+            v.parent.requestDisallowInterceptTouchEvent(true)
+        } else if (event.action == MotionEvent.ACTION_MOVE) {
+            //父节点不拦截子节点
+            v.parent.requestDisallowInterceptTouchEvent(true)
+        } else if (event.action == MotionEvent.ACTION_UP) {
+            //父节点拦截子节点
+            v.parent.requestDisallowInterceptTouchEvent(false)
+        }
+        false
+    }
 
     //输入进行过滤 只能输入汉字，字母，英文
 
@@ -369,7 +383,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
                 if (System.currentTimeMillis() - currentTime > LIMIT_TIME) {
                     ActivityCollector.finishAll()
                     var intent: Intent = Intent(this, LoginLoadingActivity::class.java)
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)
                     currentTime = System.currentTimeMillis()
                     finish()
@@ -487,7 +501,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
                             showToast("解析错误")
                         }
                     } else {
-                        showToast("识别失败:" + ocrResult.getReasonStr())
+                        showToast("识别失败:" + ocrResult.reasonStr)
                     }
                 }
             }
@@ -510,7 +524,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
     //显示不完全的Textview 处理
     fun setLongTextview(text: TextView?) {
         text!!.movementMethod = ScrollingMovementMethod.getInstance()
-        text!!.setHorizontallyScrolling(true)
+        text.setHorizontallyScrolling(true)
     }
 
     interface DialogListener {

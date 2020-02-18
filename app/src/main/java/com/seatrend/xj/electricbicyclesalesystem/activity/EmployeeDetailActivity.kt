@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.StaggeredGridLayoutManager
+import android.text.method.ScrollingMovementMethod
+import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -18,6 +20,7 @@ import com.seatrend.xj.electricbicyclesalesystem.entity.CommonResponse
 import com.seatrend.xj.electricbicyclesalesystem.entity.EmployeeBean
 import com.seatrend.xj.electricbicyclesalesystem.persenter.NormalPresenter
 import com.seatrend.xj.electricbicyclesalesystem.util.DMZUtils
+import com.seatrend.xj.electricbicyclesalesystem.util.GsonUtils
 import com.seatrend.xj.electricbicyclesalesystem.util.JslxUtils
 import com.seatrend.xj.electricbicyclesalesystem.util.ViewShowUtils
 import com.seatrend.xj.electricbicyclesalesystem.view.NormalView
@@ -26,8 +29,6 @@ import kotlinx.android.synthetic.main.recyclerview.*
 import java.util.*
 import kotlin.collections.HashMap
 import kotlin.collections.set
-
-
 
 
 /**
@@ -41,15 +42,19 @@ class EmployeeDetailActivity : BaseActivity(), NormalView, BaseActivity.DialogLi
     override fun tipDialogOKListener(flag: Int) {
         when (flag) {
             1 -> {
+                showLoadingDialog()
                 val map = HashMap<String, String?>()
                 map["id"] = if (null == mEmployeeListBean) "" else mEmployeeListBean!!.id
                 map["type"] = "2" // 用户管理 1删除 2停用 3重置密码 4启用
+                clickFlag = "1"
                 mNormalPresenter!!.doNetworkTask(map, Constants.FORBIDDEN_COMMIT)
             }
             2 -> {
+                showLoadingDialog()
                 val map = HashMap<String, String?>()
                 map["id"] = if (null == mEmployeeListBean) "" else mEmployeeListBean!!.id
                 map["type"] = "4" // 用户管理 1删除 2停用 3重置密码 4启用
+                clickFlag = "2"
                 mNormalPresenter!!.doNetworkTask(map, Constants.FORBIDDEN_COMMIT)
             }
         }
@@ -62,12 +67,13 @@ class EmployeeDetailActivity : BaseActivity(), NormalView, BaseActivity.DialogLi
 
     var glbmDmz = ""  // glbm的dmz
     var fwzDmz = ""  //服务站的dmz
+    private var clickFlag: String? = null //1 停用 2  启用
 
     override fun netWorkTaskSuccess(commonResponse: CommonResponse) {
         dismissLoadingDialog()
         if (Constants.FORBIDDEN_COMMIT.equals(commonResponse.url)) {
             val intent = Intent(this@EmployeeDetailActivity, RemindCommonActivity::class.java)
-            intent.putExtra(Constants.FORBIDDEN, "1")
+            intent.putExtra(Constants.FORBIDDEN, clickFlag)
             startActivity(intent)
         }
     }
@@ -116,7 +122,19 @@ class EmployeeDetailActivity : BaseActivity(), NormalView, BaseActivity.DialogLi
             tv_glbm.text = mEmployeeListBean!!.sjbmmc
 
             tv_fwzmc.text = mEmployeeListBean!!.bmmc
-//            showLog(GsonUtils.toJson(mEmployeeListBean))
+
+            val sb = StringBuffer()
+
+            showLog(GsonUtils.toJson(mEmployeeListBean))
+
+            for (i in mEmployeeListBean!!.listRole.indices) {
+                if (i == mEmployeeListBean!!.listRole.size - 1) {
+                    sb.append(mEmployeeListBean!!.listRole[i].jsdhmc)
+                    break
+                }
+                sb.append(mEmployeeListBean!!.listRole[i].jsdhmc).append(",")
+            }
+            tv_jsqx.text = sb.toString()
 
             listData.clear()
             if ("停用".equals(mEmployeeListBean!!.zhzt)) {
@@ -145,6 +163,7 @@ class EmployeeDetailActivity : BaseActivity(), NormalView, BaseActivity.DialogLi
         mNormalPresenter!!.doNetworkTask(map, Constants.YG_SEE_GLBM)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun bindEvent() {
 
         tv_right.setOnClickListener {
@@ -158,6 +177,10 @@ class EmployeeDetailActivity : BaseActivity(), NormalView, BaseActivity.DialogLi
         iv_back.setOnClickListener {
             finish()
         }
+
+
+        tv_jsqx!!.movementMethod = ScrollingMovementMethod.getInstance()
+        tv_jsqx!!.setOnTouchListener(onTouchListener)
     }
 
     private fun initSelectYwztPopup() {
@@ -192,11 +215,9 @@ class EmployeeDetailActivity : BaseActivity(), NormalView, BaseActivity.DialogLi
                     startActivity(intent)
                 }
                 "账号禁用" -> {
-                    showLoadingDialog()
                     showTipDialog("提示", "确定需要禁用此账号吗？", 1)
                 }
                 "账号启用" -> {
-                    showLoadingDialog()
                     showTipDialog("提示", "确定需要启用此账号吗？", 2)
                 }
             }

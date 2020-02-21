@@ -26,6 +26,10 @@ android {
     }
 }
 
+repositories {
+    jcenter(){ url 'http://jcenter.bintray.com/'}
+}
+
 configurations.all {
     resolutionStrategy.eachDependency { DependencyResolveDetails details ->
         def requested = details.requested

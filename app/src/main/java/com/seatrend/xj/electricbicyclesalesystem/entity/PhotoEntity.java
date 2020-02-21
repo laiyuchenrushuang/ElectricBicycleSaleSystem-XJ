@@ -15,6 +15,16 @@ public class PhotoEntity {
     private String lrbm; // 部门
     private String zpPath; //照片加载路径
 
+    private String sfz; // 方便员工备案 增加身份识别标记
+
+
+    public String getSfz() {
+        return sfz;
+    }
+
+    public void setSfz(String sfz) {
+        this.sfz = sfz;
+    }
     public String getLsh() {
         return lsh;
     }

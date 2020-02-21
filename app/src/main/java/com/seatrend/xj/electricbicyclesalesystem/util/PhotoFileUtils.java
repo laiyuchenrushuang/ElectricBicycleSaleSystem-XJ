@@ -14,7 +14,7 @@ import java.io.File;
  */
 public class PhotoFileUtils {
     /**
-     * 删除拍照文件
+     * 删除拍照文件 （查验 业务 员工 签名 登录现场）
      */
     public static void deleteCaptruePhotoFile() {
         File file = new File(Constants.Companion.getIMAGE_PATH());
@@ -37,6 +37,18 @@ public class PhotoFileUtils {
                 }
                 file.delete();//清理目录
             }
+        }
+    }
+
+    /**
+     * 删除单个文件
+     * @param   filePath    被删除文件的文件名
+     * @return 文件删除成功返回true，否则返回false
+     */
+    public static void deleteFile(String filePath) {
+        File file = new File(filePath);
+        if (file.isFile() && file.exists()) {
+             file.delete();
         }
     }
 }

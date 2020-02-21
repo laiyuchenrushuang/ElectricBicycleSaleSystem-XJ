@@ -63,7 +63,7 @@ class LoginActivity : BaseActivity(), LoginView {
     }
 
     private fun goSavePhoto() {
-        RoundHeadImageViewUtil.imagePath = File(ByteToFileUtil.getLpginPhotoPath())
+//        RoundHeadImageViewUtil.imagePath = File(ByteToFileUtil.getLpginPhotoPath())
     }
 
     override fun netWorkTaskfailed(commonResponse: CommonResponse) {

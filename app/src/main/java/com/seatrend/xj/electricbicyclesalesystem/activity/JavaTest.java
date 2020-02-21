@@ -4,6 +4,7 @@ import android.text.InputFilter;
 import android.text.Spanned;
 
 import com.seatrend.xj.electricbicyclesalesystem.entity.FHEnity;
+import com.seatrend.xj.electricbicyclesalesystem.util.CheckPawUtil;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -54,7 +55,6 @@ public class JavaTest {
 //        };
 
 
-
 //        macherString(regEx,result);
 //        ArrayList<String> s = new ArrayList<>();
 //        s.add("1");
@@ -98,6 +98,10 @@ public class JavaTest {
 //            PhotoFileUtils.deleteFile(new File(path));
 //            System.out.print("删除成功");
 //        }
+
+
+        String s = "SS11111s";
+        System.out.println(CheckPawUtil.isSixPaw(s));
     }
 
     public static boolean isCorrect(String sfz){

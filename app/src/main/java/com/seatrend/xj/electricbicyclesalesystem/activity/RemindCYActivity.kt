@@ -34,13 +34,13 @@ class RemindCYActivity: BaseActivity() {
             val intent= Intent(this, YWEntranceActivity::class.java)
             intent.flags= Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(intent)
-            PhotoFileUtils.deleteCaptruePhotoFile()
+//            PhotoFileUtils.deleteCaptruePhotoFile()
         }
         btn_back_home.setOnClickListener {
             val intent= Intent(this, MainOtherActivity::class.java)
             intent.flags= Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(intent)
-            PhotoFileUtils.deleteCaptruePhotoFile()
+//            PhotoFileUtils.deleteCaptruePhotoFile()
             finish()
         }
     }

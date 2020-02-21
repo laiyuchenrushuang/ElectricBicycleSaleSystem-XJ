@@ -468,12 +468,12 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_bg_cphm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:id="@+id/ll_bg_cphm"
                     android:layout_width="match_parent"
                     android:layout_height="44dp">
 

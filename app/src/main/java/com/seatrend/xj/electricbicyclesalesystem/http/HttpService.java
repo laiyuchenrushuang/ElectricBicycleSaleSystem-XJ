@@ -567,15 +567,16 @@ public class HttpService {
                 Message message = Message.obtain();
 
                 String resp = response.body().string();
+                Log.i("HttpService", "result1 解码前【文件】 = " + resp);
                 if (Constants.Companion.getAES_ENABLE()){
                     resp=AESUtils.decrypt(resp);
                 }
-                Log.i("HttpService", "result = " + resp);
+                Log.i("HttpService", "result2 解码后 【文件】 = " + resp);
                 if (TextUtils.isEmpty(resp)) {
                     message.what = FAILED_CODE;
                     CommonResponse commonResponse = new CommonResponse();
                     commonResponse.setUrl(url);
-                    commonResponse.setResponseString("服务器响应内容为空");
+                    commonResponse.setResponseString("【PHOTO】服务器响应内容为空");
                     message.obj = commonResponse;
                     mHandler.sendMessage(message);
                     return;

@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 public class CheckPawUtil {
 
     /**
-     *  长度是 6-16
+     *  长度是 8-16  数字+字母+特殊
      * @param s
      * @return
      */

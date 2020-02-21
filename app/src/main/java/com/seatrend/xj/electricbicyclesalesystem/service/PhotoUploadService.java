@@ -13,12 +13,16 @@ import android.util.Log;
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseModule;
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants;
 import com.seatrend.xj.electricbicyclesalesystem.database.CodeTableSQLiteUtils;
+import com.seatrend.xj.electricbicyclesalesystem.entity.CodeEntity;
 import com.seatrend.xj.electricbicyclesalesystem.entity.CommonResponse;
 import com.seatrend.xj.electricbicyclesalesystem.entity.PhotoEntity;
 import com.seatrend.xj.electricbicyclesalesystem.entity.PhotoIdEnity;
+import com.seatrend.xj.electricbicyclesalesystem.entity.PhotoSaveEntity;
 import com.seatrend.xj.electricbicyclesalesystem.http.HttpService;
+import com.seatrend.xj.electricbicyclesalesystem.util.FileMgUtils;
 import com.seatrend.xj.electricbicyclesalesystem.util.GsonUtils;
 import com.seatrend.xj.electricbicyclesalesystem.util.ObjectNullUtil;
+import com.seatrend.xj.electricbicyclesalesystem.util.PhotoFileUtils;
 
 import java.io.File;
 import java.util.HashMap;
@@ -90,33 +94,71 @@ public class PhotoUploadService extends Service {
 
         for (PhotoEntity entity : list) {
 
-            Map<String, String> map = new HashMap();
 
             File file = new File(entity.getZpPath());
             String zpdz = entity.getZpdz();
 
             if (!file.exists()) {
 
-                if (!TextUtils.isEmpty(entity.getLsh()) && !TextUtils.isEmpty(entity.getZpzl())) {
-                    CodeTableSQLiteUtils.deleteByLshAndDmz(entity.getLsh(), entity.getZpzl());
+                if(checkIsYgPicture(entity.getZpzl())){
+                    if (!TextUtils.isEmpty(entity.getSfz()) && !TextUtils.isEmpty(entity.getZpzl())) {
+                        CodeTableSQLiteUtils.deleteBySfzAndDmz(entity.getSfz(), entity.getZpzl());
+                    }
+                }else {
+                    if (!TextUtils.isEmpty(entity.getLsh()) && !TextUtils.isEmpty(entity.getZpzl())) {
+                        CodeTableSQLiteUtils.deleteByLshAndDmz(entity.getLsh(), entity.getZpzl());
+                    }
                 }
                 continue;
             }
 
             if (!TextUtils.isEmpty(entity.getZpPath())) {
-                if (TextUtils.isEmpty(zpdz) || zpdz == "") {
-                    map.put("type", entity.getLsh() + ":" + entity.getZpzl());
-                    mUploadModule.uploadPhoto(map, file, Constants.Companion.getPHOTO_INSERT());
-                } else { //不为空 就是参数完全
-                    map.put(Constants.Companion.getS_LSH(), entity.getLsh());
-                    map.put(Constants.Companion.getS_XH(), entity.getXh());
-                    map.put(Constants.Companion.getS_ZPZL(), entity.getZpzl());
-                    map.put(Constants.Companion.getS_ZPDZ(), entity.getZpdz());
-                    map.put(Constants.Companion.getS_LRR(), entity.getLrr());
-                    map.put(Constants.Companion.getS_LRBM(), entity.getLrbm());
-                    map.put(Constants.Companion.getS_ZPSM(), entity.getZpsm());
-                    map.put(Constants.Companion.getS_CFFS(), entity.getCffs());
-                    mUploadModule.uploadPhoto(map, Constants.Companion.getPHOTO_MSG_SAVE());
+                if (TextUtils.isEmpty(zpdz) || zpdz.equals("")) {
+
+                    if (checkIsYgPicture(entity.getZpzl())) {
+
+                        // 员工备案的照片
+                        Map<String, String> map = new HashMap();
+
+                        map.put("type", entity.getSfz() + ":" + entity.getZpzl() +":"+entity.getZpPath());  //返回身份证和照片种类 + 照片path 方便删除
+                        mUploadModule.uploadPhoto(map, file, Constants.Companion.getPHOTO_INSERT());
+                    } else {
+
+                        // 查验业务类照片
+                        Map<String, String> map = new HashMap();
+
+                        map.put("type", entity.getLsh() + ":" + entity.getZpzl()+":"+entity.getZpPath());  //返回流水号和照片种类 + 照片path 方便删除
+                        mUploadModule.uploadPhoto(map, file, Constants.Companion.getPHOTO_INSERT());
+                    }
+
+                } else { //不为空 就是参数完全 上传保存
+
+                    if (checkIsYgPicture(entity.getZpzl())) {
+
+                        // 存储员工备案的照片
+                        Map<String, String> map = new HashMap();
+                        map.put(Constants.Companion.getS_SFZ(), entity.getSfz());
+                        map.put(Constants.Companion.getS_ZPZL(), entity.getZpzl());
+                        map.put(Constants.Companion.getS_ZPDZ(), entity.getZpdz());
+                        map.put(Constants.Companion.getS_LRR(), entity.getLrr());
+                        map.put(Constants.Companion.getS_LRBM(), entity.getLrbm());
+                        map.put(Constants.Companion.getS_ZPSM(), entity.getZpsm());
+                        map.put(Constants.Companion.getS_CFFS(), entity.getCffs());
+                        mUploadModule.uploadPhoto(map, Constants.Companion.getYG_PHOTO_SAVE()); // YG
+                    } else {
+                        // 存储查验业务类照片
+                        Map<String, String> map = new HashMap();
+                        map.put(Constants.Companion.getS_LSH(), entity.getLsh());
+                        map.put(Constants.Companion.getS_XH(), entity.getXh());
+                        map.put(Constants.Companion.getS_ZPZL(), entity.getZpzl());
+                        map.put(Constants.Companion.getS_ZPDZ(), entity.getZpdz());
+                        map.put(Constants.Companion.getS_LRR(), entity.getLrr());
+                        map.put(Constants.Companion.getS_LRBM(), entity.getLrbm());
+                        map.put(Constants.Companion.getS_ZPSM(), entity.getZpsm());
+                        map.put(Constants.Companion.getS_CFFS(), entity.getCffs());
+                        mUploadModule.uploadPhoto(map, Constants.Companion.getPHOTO_MSG_SAVE()); // YW &  CY
+                    }
+
                 }
             }
         }
@@ -132,6 +174,17 @@ public class PhotoUploadService extends Service {
         sendBroadcast(intent);
     }
 
+    //根据照片类型判断是否是员工照片
+    private Boolean checkIsYgPicture(String zplx) {
+        List<CodeEntity.DataBean> list = CodeTableSQLiteUtils.queryByDMLB(Constants.Companion.getYGZP());
+        for (CodeEntity.DataBean db : list) {
+            if (zplx != null && zplx.equals(db.getDmz())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public class UploadModule extends BaseModule {
         @Override
         public void doWork(Map<String, String> map, String url) {
@@ -140,7 +193,7 @@ public class PhotoUploadService extends Service {
 
         @Override
         public void doWorkResults(CommonResponse commonResponse, boolean isSuccess) {
-            Log.i(PUS_TAG, "uploadResult " + isSuccess + "    " + commonResponse.getResponseString());
+            Log.i(PUS_TAG, "uploadResult " + isSuccess + "    "+" URL = "+commonResponse.getUrl()+ "    result = " + commonResponse.getResponseString());
             if (isSuccess)
                 try {
 
@@ -153,15 +206,46 @@ public class PhotoUploadService extends Service {
                             return;
                         }
                         String id = enity.getData().getId();
-                        if (enity.getData().getType() != null && enity.getData().getType().split(":").length == 2) {
-                            CodeTableSQLiteUtils.updateByLshAndDmz(enity.getData().getType().split(":")[0], enity.getData().getType().split(":")[1], id);
+
+                        if (enity.getData().getType() != null && enity.getData().getType().split(":").length == 3) {
+                            String s1 = enity.getData().getType().split(":")[0]; // ( sfz or lsh)
+                            String s2 = enity.getData().getType().split(":")[1]; // 照片种类
+                            String s3 = enity.getData().getType().split(":")[2]; // 照片path
+                            if(checkIsYgPicture(s2)){ // 员工照片存储
+                                CodeTableSQLiteUtils.updateBySfzAndDmz(s1, s2, id);
+                            }else {  // 查验和业务
+                                CodeTableSQLiteUtils.updateByLshAndDmz(s1, s2, id);
+                            }
+
+                            //服务器的id已经获取，删除本地照片 防止oom
+//                            PhotoFileUtils.deleteFile(new File(s3));
+
                         }
+
+
                     }
 
                     if (Constants.Companion.getPHOTO_MSG_SAVE().equals(commonResponse.getUrl())) {
-                        //上传图片保存信息成功 要删除本地的zpPath
-                        Log.d("lylog", "[Service]  result = " + commonResponse.getResponseString());
+                        //查验和注册保存成功返回
+                        PhotoSaveEntity entity = GsonUtils.gson(commonResponse.getResponseString(),PhotoSaveEntity.class);
 
+
+                        //删除本地文件
+                        PhotoFileUtils.deleteFile(CodeTableSQLiteUtils.queryLshAndDmz(entity.getData().getLsh(),entity.getData().getZplx()));
+
+                        //删除数据库
+                        CodeTableSQLiteUtils.deleteByLshAndDmz(entity.getData().getLsh(), entity.getData().getZplx());
+
+                    }
+                    if (Constants.Companion.getYG_PHOTO_SAVE().equals(commonResponse.getUrl())) {
+                        // 员工备案保存成功返回
+                        PhotoSaveEntity entity = GsonUtils.gson(commonResponse.getResponseString(),PhotoSaveEntity.class);
+
+                        //删除本地文件
+                        PhotoFileUtils.deleteFile(CodeTableSQLiteUtils.querySfzAndDmz(entity.getData().getSfzhm(),entity.getData().getZplx()));
+
+                        //删除数据库
+                        CodeTableSQLiteUtils.deleteBySfzAndDmz(entity.getData().getSfzhm(), entity.getData().getZplx());
                     }
 
                 } catch (Exception e) {

@@ -10,7 +10,7 @@ class RemindHPBFActivity : BaseActivity(){
     override fun initView() {
        setPageTitle("提示信息")
         btn_back_home.setOnClickListener {
-            PhotoFileUtils.deleteCaptruePhotoFile()
+//            PhotoFileUtils.deleteCaptruePhotoFile()
             val intent= Intent(this, MainOtherActivity::class.java)
             intent.flags= Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(intent)

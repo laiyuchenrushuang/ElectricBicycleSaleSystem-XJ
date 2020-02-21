@@ -18,15 +18,21 @@ class RemindCommonActivity : BaseActivity() {
     override fun initView() {
         setPageTitle("操作详情")
         when {
-            "1" == intent.getStringExtra(Constants.FORBIDDEN) -> tv_cz.text = "禁用成功"
-            "2" == intent.getStringExtra(Constants.FORBIDDEN) -> tv_cz.text = "启用成功"
+            "1" == intent.getStringExtra(Constants.FORBIDDEN) -> {
+                tv_cz.text = "禁用成功"
+                btn_back_home.text = "返回上一页"
+            }
+            "2" == intent.getStringExtra(Constants.FORBIDDEN) -> {
+                tv_cz.text = "启用成功"
+                btn_back_home.text = "返回上一页"
+            }
             else -> tv_cz.text = "操作成功"
         }
         btn_back_home.setOnClickListener {
             val intent = Intent(this, EmployeeActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(intent)
-            PhotoFileUtils.deleteCaptruePhotoFile()
+//            PhotoFileUtils.deleteCaptruePhotoFile()
             finish()
         }
     }

@@ -17,10 +17,7 @@ import com.seatrend.xj.electricbicyclesalesystem.adpater.CheckDataPhotoAdapter
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants
 import com.seatrend.xj.electricbicyclesalesystem.database.CodeTableSQLiteUtils
-import com.seatrend.xj.electricbicyclesalesystem.entity.CommonResponse
-import com.seatrend.xj.electricbicyclesalesystem.entity.PhotoIdEnity
-import com.seatrend.xj.electricbicyclesalesystem.entity.PhotoTypeEntity
-import com.seatrend.xj.electricbicyclesalesystem.entity.UserInfo
+import com.seatrend.xj.electricbicyclesalesystem.entity.*
 import com.seatrend.xj.electricbicyclesalesystem.persenter.CarPhotoPersenter
 import com.seatrend.xj.electricbicyclesalesystem.util.*
 import com.seatrend.xj.electricbicyclesalesystem.view.CarPhotoView
@@ -81,7 +78,6 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
         mCheckDataPhotoAdapter!!.setItemdeleteClick(this)
         m_recycler_view.adapter = mCheckDataPhotoAdapter
         initData()
-//        getPhotoType()
     }
 
     private fun initData() {
@@ -189,35 +185,16 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
                                 } else {
                                     map["cyjl"] = "1"
                                 }
-                                mCarPhotoPersenter!!.doNetworkTask(map, Constants.SAVE_CY_MSG)
+
                                 for (db in allPhoto) {
-                                    val mapP = HashMap<String, String?>()
-                                    mapP["lsh"] = CarInfoActivity.mDataZcbm!!.data.lsh
-                                    mapP["xh"] = CarInfoActivity.mDataZcbm!!.data.xh
-                                    mapP["zpzl"] = db.zplx
-                                    mapP["zpdz"] = db.zplj
-                                    mapP["zpsm"] = db.zmmc
-
-                                    mapP["cffs"] = UserInfo.GlobalParameter.CFBJ
-                                    mapP["lrr"] = UserInfo.XM
-                                    mapP["lrbm"] = UserInfo.GLBM
-                                    mCarPhotoPersenter!!.doNetworkTask(mapP, Constants.PHOTO_MSG_SAVE)
-//                                    if (db.zpPath != null && !TextUtils.isEmpty(db.zpPath)) {
-//                                        var enity = PhotoEntity()
-//                                        enity.lsh = CarInfoActivity.mDataZcbm!!.data.lsh
-//                                        enity.xh = CarInfoActivity.mDataZcbm!!.data.xh
-//                                        enity.zpzl = db.zplx
-//                                        enity.zpPath = db.zpPath
-//                                        enity.zpdz = db.zplj
-//                                        enity.zpsm = db.zmmc
-//                                        enity.cffs = UserInfo.GlobalParameter.CFBJ
-//                                        enity.lrr = UserInfo.XM
-//                                        enity.lrbm = UserInfo.GLBM
-//                                        CodeTableSQLiteUtils.addPhoto(enity)
-//                                    }
+                                    if (db.zpPath != null && !TextUtils.isEmpty(db.zpPath)) {
+                                        savePhotoDataToSql(db, Constants.CAR_CY)
+                                    }
                                 }
+                                //为什么放这里，要保证数据库保存完毕
+                                mCarPhotoPersenter!!.doNetworkTask(map, Constants.SAVE_CY_MSG)
                             } else {  //除开业务注册
-
+                                showLoadingDialog()
                                 val map = HashMap<String, String?>()
                                 map["zcbm"] = CarInfoActivity.mDataZcbm!!.data.threeCertificates.zcbm
                                 map["lsh"] = CarInfoActivity.mDataZcbm!!.data.lsh
@@ -258,42 +235,42 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
                                 } else {
                                     map["cyjl"] = "1"
                                 }
-                                mCarPhotoPersenter!!.doNetworkTask(map, Constants.SAVE_CY_MSG)
-                                showLoadingDialog()
                                 for (db in allPhoto) {
+                                    if (db.zpPath != null && !TextUtils.isEmpty(db.zpPath)) {
+                                        savePhotoDataToSql(db, Constants.CAR_CY)
+                                    }
 
-
-                                    val mapP = HashMap<String, String?>()
-                                    mapP["lsh"] = CarInfoActivity.mDataZcbm!!.data.lsh
-                                    mapP["xh"] = CarInfoActivity.mDataZcbm!!.data.xh
-                                    mapP["zpzl"] = db.zplx
-                                    mapP["zpdz"] = db.zplj
-                                    mapP["zpsm"] = db.zmmc
-
-                                    mapP["cffs"] = UserInfo.GlobalParameter.CFBJ
-                                    mapP["lrr"] = UserInfo.XM
-                                    mapP["lrbm"] = UserInfo.GLBM
-                                    mCarPhotoPersenter!!.doNetworkTask(mapP, Constants.PHOTO_MSG_SAVE)
                                 }
+
+                                //为什么放这里，要保证数据库保存完毕
+                                mCarPhotoPersenter!!.doNetworkTask(map, Constants.SAVE_CY_MSG)
+
                             }
+
                         } catch (e: Exception) {
                             showToast(e.message.toString())
                         }
                     }
                     Constants.YGBA -> {
-                        showLoadingDialog()
+//                        showLoadingDialog()
                         try {
                             for (db in allPhoto) {
-                                val mapP = HashMap<String, String?>()
-                                mapP["zpzl"] = db.zplx
-                                mapP["zpdz"] = db.zplj
-                                mapP["sfzmhm"] = intent.getStringExtra("yg_sfz")
-
-                                mapP["cffs"] = UserInfo.GlobalParameter.CFBJ
-                                mapP["lrr"] = UserInfo.XM
-                                mapP["lrbm"] = UserInfo.GLBM
-                                mCarPhotoPersenter!!.doNetworkTask(mapP, Constants.YG_PHOTO_SAVE)
+                                // ----
+//                                val mapP = HashMap<String, String?>()
+//                                mapP["zpzl"] = db.zplx
+//                                mapP["zpdz"] = db.zplj
+//                                mapP["sfzmhm"] = intent.getStringExtra("yg_sfz")
+//
+//                                mapP["cffs"] = UserInfo.GlobalParameter.CFBJ
+//                                mapP["lrr"] = UserInfo.XM
+//                                mapP["lrbm"] = UserInfo.GLBM
+//                                mCarPhotoPersenter!!.doNetworkTask(mapP, Constants.YG_PHOTO_SAVE)
+                                // ----
+                                if (db.zpPath != null && !TextUtils.isEmpty(db.zpPath)) {
+                                    savePhotoDataToSql(db, Constants.YGBA)
+                                }
                             }
+                            sendActivityEvent(EmployeeRemindActivity::class.java)
                         } catch (e: Exception) {
                             showToast(e.message.toString())
                         }
@@ -307,33 +284,70 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
         ed_bhgyy.filters = arrayOf(inputFilter)
     }
 
+    //业务流水
+    private fun savePhotoDataToSql(db: PhotoTypeEntity.DataBean.ConfigBean, flag: String) {
+
+        when (flag) {
+            Constants.CAR_CY -> {  //查验照片存储
+                var enity = PhotoEntity()
+                enity.lsh = CarInfoActivity.mDataZcbm!!.data.lsh
+                enity.xh = CarInfoActivity.mDataZcbm!!.data.xh
+                enity.zpzl = db.zplx
+                enity.zpPath = db.zpPath
+                enity.zpdz = db.zplj
+                enity.zpsm = db.zmmc
+                enity.cffs = UserInfo.GlobalParameter.CFBJ
+                enity.lrr = UserInfo.XM
+                enity.lrbm = UserInfo.GLBM
+                CodeTableSQLiteUtils.addPhoto(enity)
+            }
+            Constants.CAR_YW -> { //业务照片存储
+                var enity = PhotoEntity()
+                enity.lsh = mLsh
+                enity.xh = mXh
+                enity.zpzl = db.zplx
+                enity.zpPath = db.zpPath
+                enity.zpdz = db.zplj
+                enity.zpsm = db.zmmc
+                enity.cffs = UserInfo.GlobalParameter.CFBJ
+                enity.lrr = UserInfo.XM
+                enity.lrbm = UserInfo.GLBM
+                CodeTableSQLiteUtils.addPhoto(enity)
+            }
+            Constants.YGBA -> {//员工照片存储
+                var enity = PhotoEntity()
+                enity.zpzl = db.zplx
+                enity.zpPath = db.zpPath
+                enity.zpdz = db.zplj
+                enity.zpsm = db.zmmc
+                enity.sfz = intent.getStringExtra("yg_sfz")
+                enity.cffs = UserInfo.GlobalParameter.CFBJ
+                enity.lrr = UserInfo.XM
+                enity.lrbm = UserInfo.GLBM
+                CodeTableSQLiteUtils.addPhoto(enity)
+            }
+        }
+
+    }
+
     private fun savePhoto() { //其他业务类
         if (Constants.CAR_ZC.equals(photoEntranceFlag) || Constants.CAR_BG.equals(photoEntranceFlag) || Constants.CAR_ZY.equals(photoEntranceFlag)) {
             mLsh = CarInfoByCyActivity.mAllBikeMsgEnity!!.data.checkData.lsh
             mXh = CarInfoByCyActivity.mAllBikeMsgEnity!!.data.checkData.xh
         }
 
-        showLoadingDialog()
         //保存图片
         try {
             for (db in allPhoto) {
-                if (null != db.zplj) {
-                    val mapP = HashMap<String, String?>()
-                    mapP["lsh"] = mLsh!!
-                    mapP["xh"] = mXh!!
-                    mapP["zpzl"] = db.zplx
-                    mapP["zpsm"] = db.zmmc
-                    mapP["zpdz"] = db.zplj
-
-                    mapP["cffs"] = UserInfo.GlobalParameter.CFBJ
-                    mapP["lrr"] = UserInfo.XM
-                    mapP["lrbm"] = UserInfo.GLBM
-
-                    mCarPhotoPersenter!!.doNetworkTask(mapP, Constants.PHOTO_MSG_SAVE)
-                } else {
-                    count++
+                if (db.zpPath != null && !TextUtils.isEmpty(db.zpPath)) {
+                    savePhotoDataToSql(db, Constants.CAR_YW)
                 }
+            }
 
+            if ("1" == UserInfo.GlobalParameter.BXBJ) {
+                sendActivityEvent(InsuranceActivity::class.java)
+            } else {
+                sendActivityEventAddState()
             }
         } catch (e: Exception) {
             showToast(e.message.toString())
@@ -370,139 +384,57 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
                 bitmap = BitmapUtils.compressImage(bitmap)
                 BitmapUtils.saveBitmap(bitmap, imgFile!!.name.replace(".jpg", ""))
                 bitmap?.recycle()
-                val zplx = allPhoto[photoPosition].zplx
-                val map = HashMap<String, String?>()
-                map["type"] = zplx
-                mCarPhotoPersenter!!.uploadFile(imgFile!!, map, Constants.PHOTO_INSERT)
-            }).start()
 
-            runOnUiThread {
-                allPhoto[photoPosition].zpPath = imgFile!!.path
-                mCheckDataPhotoAdapter!!.setPhoto(photoPosition, imgFile!!.path)
-            }
+                //为什么放进来，因为文件太大，服务器会报错 保证图片储存是过滤后的图片
+                runOnUiThread {
+                    allPhoto[photoPosition].zpPath = imgFile!!.path
+                    mCheckDataPhotoAdapter!!.setPhoto(photoPosition, imgFile!!.path)
+                }
+            }).start()
         }
     }
 
     private fun checkPhoto(data: ArrayList<PhotoTypeEntity.DataBean.ConfigBean>): Boolean {
         for (cb in data) {
-            if ((cb.zplj == null || cb.zplj.isEmpty()) && !"B4".equals(cb.zplx)) {
-                if (cb.zpPath != null) {
-                    photoComplete(cb)
-                    showToast("确保图片上传到服务器，请稍后提交信息...")
-                    return false
-                } else {
-                    showToast("【" + cb.zmmc + "】后台数据为空，请拍摄或再次拍摄")
-                    return false
-                }
+            if ((cb.zpPath == null || cb.zpPath.isEmpty()) && "B4" != cb.zplx) {
+                showToast("【" + cb.zmmc + "】后台数据为空，请拍摄或再次拍摄")
+                return false
             }
-
-//            if ((cb.zpPath == null || cb.zpPath.isEmpty()) && "B4" != cb.zplx) {
-//                showToast("【" + cb.zmmc + "】后台数据为空，请拍摄或再次拍摄")
-//                return false
-//            }
         }
         return true
     }
 
-    private fun photoComplete(db: PhotoTypeEntity.DataBean.ConfigBean) {
-        val map = HashMap<String, String?>()
-        map["type"] = db.zplx
-        mCarPhotoPersenter!!.uploadFile(imgFile!!, map, Constants.PHOTO_INSERT)
-    }
 
     override fun netWorkTaskSuccess(commonResponse: CommonResponse) {
         dismissLoadingDialog()
-        if (!Constants.UPDATA_LS_ZT.equals(commonResponse.getUrl()) && !Constants.YG_PHOTO_SAVE.equals(commonResponse.getUrl())) {
-            if (commonResponse.getUrl() == Constants.PHOTO_INSERT) {
-
-                var enity = GsonUtils.gson(commonResponse.getResponseString(), PhotoIdEnity::class.java)
-                if (!ObjectNullUtil.checknull(enity.data, enity.data.type, enity.data.id)) {
-                    showToast("获取照片id异常")
-                    return
-                }
-                for (db in allPhoto) {
-                    if (db.zplx.equals(enity.data.type)) {
-                        db.zplj = enity.data.id
-                        break
-                    }
-                }
-            }
+        if (!Constants.UPDATA_LS_ZT.equals(commonResponse.getUrl())) {
             //提交结论不合格的数据
             if (commonResponse.getUrl() == Constants.SAVE_CY_MSG) {
-                requested = true
-            }
-
-            if (commonResponse.getUrl() == Constants.PHOTO_MSG_SAVE) {
-                uploadPhotoSuccessNumber++
-            }
-
-            when (photoEntranceFlag) {
-
-
-                Constants.CAR_CY -> {
-                    showLog("  [LX1] = " + photoEntranceFlag + " requested = " + requested + "  url = " + commonResponse.getUrl())
-                    if (Constants.PHOTO_MSG_SAVE.equals(commonResponse.getUrl()) && requested) {
-                        sendActivityEvent(RemindCYActivity::class.java)
-                    }
-                }
-                Constants.CAR_ZC -> {
-                    showLog("  [LX2] = " + photoEntranceFlag)
-                    if (Constants.PHOTO_MSG_SAVE.equals(commonResponse.getUrl())) {
-                        if ("1".equals(UserInfo.GlobalParameter.BXBJ)) {
-                            sendActivityEvent(InsuranceActivity::class.java)
-                        } else {
-                            sendActivityEventAddState()
-                        }
-
-                    }
-                }
-                Constants.CAR_BG, Constants.CAR_ZY, Constants.CAR_ZX, Constants.CAR_BH, Constants.CAR_JCHP, Constants.CAR_LSHP -> {
-                    showLog("  [LX3] = " + photoEntranceFlag)
-                    if (Constants.PHOTO_MSG_SAVE.equals(commonResponse.getUrl())) {
-                        sendActivityEventAddState()
-                    }
-                }
+                sendActivityEvent(RemindCYActivity::class.java)
             }
         } else if (Constants.UPDATA_LS_ZT.equals(commonResponse.getUrl())) {
             //状态传成功才跳转
             LoadingDialog.getInstance().dismissLoadDialog()
             intent.setClass(this, RemindHPBFActivity::class.java)
             startActivity(intent)
-        } else if (Constants.YG_PHOTO_SAVE.equals(commonResponse.getUrl())) {
-            uploadPhotoSuccessNumber++  //成功次数
-            sendActivityEvent(EmployeeRemindActivity::class.java)
         }
     }
 
     private fun sendActivityEventAddState() {
-        if ((uploadPhotoFileadNumber + uploadPhotoSuccessNumber) + count == allPhoto.size) {
-            showToast("成功上传" + uploadPhotoSuccessNumber + "张，失败" + uploadPhotoFileadNumber + "张")
-            val map = HashMap<String, String?>()
-            map["lsh"] = mLsh
-            map["xh"] = mXh
-            map["glbm "] = UserInfo.GLBM
-            map["zt"] = "2" //流程状态 0-查验未通过，1-已查验，2-已登记，3-已制证，E-已归档，Q-已退办
-            map["cyrsfzmhm"] = UserInfo.SFZMHM//查验人身份证明号码
-            map["czpt"] = Constants.CZPT //查验平台
-            mCarPhotoPersenter!!.doNetworkTask(map, Constants.UPDATA_LS_ZT)
-        }
+        val map = HashMap<String, String?>()
+        map["lsh"] = mLsh
+        map["xh"] = mXh
+        map["glbm "] = UserInfo.GLBM
+        map["zt"] = "2" //流程状态 0-查验未通过，1-已查验，2-已登记，3-已制证，E-已归档，Q-已退办
+        map["cyrsfzmhm"] = UserInfo.SFZMHM//查验人身份证明号码
+        map["czpt"] = Constants.CZPT //查验平台
+        mCarPhotoPersenter!!.doNetworkTask(map, Constants.UPDATA_LS_ZT)
     }
 
     override fun netWorkTaskfailed(commonResponse: CommonResponse) {
         LoadingDialog.getInstance().dismissLoadDialog()
 
-        if (!Constants.PHOTO_INSERT.equals(commonResponse.getUrl())) {
-            showErrorDialog(commonResponse.getResponseString())
-        }
-
-        if (commonResponse.getUrl() == Constants.PHOTO_MSG_SAVE) {
-            uploadPhotoFileadNumber++
-        }
-
-        if (commonResponse.getUrl() == Constants.YG_PHOTO_SAVE) {
-
-            uploadPhotoFileadNumber++
-        }
+        showErrorDialog(commonResponse.getResponseString())
     }
 
     override fun itemOnClick(position: Int) {
@@ -549,19 +481,13 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
     }
 
     private fun sendActivityEvent(activity: Class<*>) {
-        showLog("uploadPhotoSuccessNumber = " + uploadPhotoSuccessNumber)
-        showLog("uploadPhotoFileadNumber = " + uploadPhotoFileadNumber)
-        showLog(" allPhoto.size = " + allPhoto.size)
-        if ((uploadPhotoFileadNumber + uploadPhotoSuccessNumber) + count == allPhoto.size) {
-            showToast("成功上传" + (uploadPhotoSuccessNumber) + "张，失败" + uploadPhotoFileadNumber + "张")
-            if (rb_cy_no.isChecked) { //不合格，那么就不能点业务登记
-                intent.putExtra("cyjlBj", "1") //１为不合格
-            } else {
-                intent.putExtra("cyjlBj", "0") //０为合格
-            }
-            intent.setClass(this, activity)
-            startActivity(intent)
+        if (rb_cy_no.isChecked) { //不合格，那么就不能点业务登记
+            intent.putExtra("cyjlBj", "1") //１为不合格
+        } else {
+            intent.putExtra("cyjlBj", "0") //０为合格
         }
+        intent.setClass(this, activity)
+        startActivity(intent)
     }
 
     override fun getLayout(): Int {

@@ -252,24 +252,40 @@ public class CodeTableSQLiteUtils {
     public static void addPhoto(PhotoEntity entity) {
         String lsh = entity.getLsh();
         String zpzl = entity.getZpzl();
+        String sfz = entity.getSfz();
+
 
         // 数据库已经存在 该车辆类型的照片 执行更新，不存在执行 插入
-        if (!TextUtils.isEmpty(lsh)) {
-            List<PhotoEntity> list = queryByLshAndDmzRList(lsh, zpzl);
-            if (list.size() > 0) {
-                updateByLshAndDmz(entity);
-            } else {
-                insert(entity);
+        if(checkIsYgPicture(zpzl)){ // 员工备案的照片用sfz做标记
+            if (!TextUtils.isEmpty(sfz)) {
+                List<PhotoEntity> list = queryBySfzAndDmzRList(sfz, zpzl);
+                if (list.size() > 0) {
+                    updateBySfzAndDmz(entity);
+                } else {
+                    insert(entity);
+                }
             }
-        } else if (!TextUtils.isEmpty(lsh)) {
-            List<PhotoEntity> list = queryByLshAndDmzRList(lsh, zpzl);
-            if (list.size() > 0) {
-                updateByLshAndDmz(entity);
-            } else {
-                insert(entity);
+        }else {// 查验业务的照片用lsh做标记
+            if (!TextUtils.isEmpty(lsh)) {
+                List<PhotoEntity> list = queryByLshAndDmzRList(lsh, zpzl);
+                if (list.size() > 0) {
+                    updateByLshAndDmz(entity);
+                } else {
+                    insert(entity);
+                }
             }
         }
+    }
 
+    //根据照片类型判断是否是员工照片
+    private static Boolean checkIsYgPicture(String zplx) {
+        List<CodeEntity.DataBean> list = CodeTableSQLiteUtils.queryByDMLB(Constants.Companion.getYGZP());
+        for (CodeEntity.DataBean db : list) {
+            if (zplx != null && zplx.equals(db.getDmz())) {
+                return true;
+            }
+        }
+        return false;
     }
 
 
@@ -307,6 +323,7 @@ public class CodeTableSQLiteUtils {
             String lrr = query.getString(query.getColumnIndex(Constants.Companion.getS_LRR()));
             String lrbm = query.getString(query.getColumnIndex(Constants.Companion.getS_LRBM()));
             String zpPath = query.getString(query.getColumnIndex(Constants.Companion.getS_ZPPATH()));
+            String sfz = query.getString(query.getColumnIndex(Constants.Companion.getS_SFZ()));
 
             PhotoEntity photoEntity = new PhotoEntity();
             photoEntity.setLsh(lsh);
@@ -318,6 +335,7 @@ public class CodeTableSQLiteUtils {
             photoEntity.setLrr(lrr);
             photoEntity.setLrbm(lrbm);
             photoEntity.setZpPath(zpPath);
+            photoEntity.setSfz(sfz);
             list.add(photoEntity);
         }
         return list;
@@ -338,7 +356,21 @@ public class CodeTableSQLiteUtils {
     }
 
     /**
-     * 增加元素
+     * 用sfz，代码值 删除数据
+     *
+     * @param sfz
+     * @param zpzl
+     */
+    public static void deleteBySfzAndDmz(String sfz, String zpzl) {
+        CodeTableSQLiteOpenHelper dbHelper = CodeTableSQLiteOpenHelper.getInstance();
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        String sql = String.format("delete from %s where sfzmhm='" + sfz + "' and " + "zpzl='" + zpzl + "'", CodeTableSQLiteOpenHelper.PHOTO_TABLE_NAME);
+        db.execSQL(sql);
+        db.close();
+    }
+
+    /**
+     * 增加元素 （查验业务）
      *
      * @param id   照片地址
      * @param lsh  流水号
@@ -354,7 +386,23 @@ public class CodeTableSQLiteUtils {
     }
 
     /**
-     * 增加元素
+     * 增加元素 (员工备案)
+     *
+     * @param id   照片地址
+     * @param sfz  流水号
+     * @param zplx 照片类型
+     */
+    public static void updateBySfzAndDmz(String sfz, String zplx, String id) {
+        CodeTableSQLiteOpenHelper dbHelper = CodeTableSQLiteOpenHelper.getInstance();
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(Constants.Companion.getS_ZPDZ(), id);
+        db.update(CodeTableSQLiteOpenHelper.PHOTO_TABLE_NAME, cv, "sfz=? and zpzl=?", new String[]{sfz, zplx});
+        db.close();
+    }
+
+    /**
+     * 增加元素  查验和业务
      *
      * @param entity 实体
      */
@@ -372,6 +420,27 @@ public class CodeTableSQLiteUtils {
         cv.put(Constants.Companion.getS_ZPSM(), entity.getZpsm());
         cv.put(Constants.Companion.getS_CFFS(), entity.getCffs());
         db.update(CodeTableSQLiteOpenHelper.PHOTO_TABLE_NAME, cv, "lsh=? and zpzl=?", new String[]{entity.getLsh(), entity.getZpzl()});
+        db.close();
+    }
+
+    /**
+     * 增加元素  为员工备案而来
+     *
+     * @param entity 实体
+     */
+    public static void updateBySfzAndDmz(PhotoEntity entity) {
+        CodeTableSQLiteOpenHelper dbHelper = CodeTableSQLiteOpenHelper.getInstance();
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(Constants.Companion.getS_SFZ(), entity.getSfz());
+        cv.put(Constants.Companion.getS_ZPZL(), entity.getZpzl());
+        cv.put(Constants.Companion.getS_ZPDZ(), entity.getZpdz());
+        cv.put(Constants.Companion.getS_ZPPATH(), entity.getZpPath());
+        cv.put(Constants.Companion.getS_LRR(), entity.getLrr());
+        cv.put(Constants.Companion.getS_LRBM(), entity.getLrbm());
+        cv.put(Constants.Companion.getS_ZPSM(), entity.getZpsm());
+        cv.put(Constants.Companion.getS_CFFS(), entity.getCffs());
+        db.update(CodeTableSQLiteOpenHelper.PHOTO_TABLE_NAME, cv, "sfzmhm=? and zpzl=?", new String[]{entity.getSfz(), entity.getZpzl()});
         db.close();
     }
 
@@ -414,7 +483,7 @@ public class CodeTableSQLiteUtils {
 
 
     /**
-     * 查询元素
+     * 查询元素 根据流水号和zplx (查验和业务类的照片)
      */
     public static List<PhotoEntity> queryByLshAndDmzRList(String lsh, String zplx) {
         CodeTableSQLiteOpenHelper dbHelper = CodeTableSQLiteOpenHelper.getInstance();
@@ -449,6 +518,88 @@ public class CodeTableSQLiteUtils {
             }
         }
         return list;
-        // ===============================service  图片的相关SQL ===========================================
     }
+    /**
+     * 查询元素 根据身份证和zplx (员工备案照片)
+     */
+    public static List<PhotoEntity> queryBySfzAndDmzRList(String sfz, String zplx) {
+        CodeTableSQLiteOpenHelper dbHelper = CodeTableSQLiteOpenHelper.getInstance();
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        Cursor query = db.query(CodeTableSQLiteOpenHelper.PHOTO_TABLE_NAME, new String[]{}, null,
+                null, null, null, null, null);
+        List<PhotoEntity> list = new ArrayList<>();
+        while (query.moveToNext()) {
+            String lsfz = query.getString(query.getColumnIndex(Constants.Companion.getS_SFZ()));
+            String zpzl = query.getString(query.getColumnIndex(Constants.Companion.getS_ZPZL()));
+
+            if (sfz.equals(lsfz) && zplx.equals(zpzl)) {
+                String zpdz = query.getString(query.getColumnIndex(Constants.Companion.getS_ZPDZ()));
+                String zpsm = query.getString(query.getColumnIndex(Constants.Companion.getS_ZPSM()));
+                String cffs = query.getString(query.getColumnIndex(Constants.Companion.getS_CFFS()));
+                String lrr = query.getString(query.getColumnIndex(Constants.Companion.getS_LRR()));
+                String lrbm = query.getString(query.getColumnIndex(Constants.Companion.getS_LRBM()));
+                String zpPath = query.getString(query.getColumnIndex(Constants.Companion.getS_ZPPATH()));
+
+                PhotoEntity photoEntity = new PhotoEntity();
+                photoEntity.setSfz(lsfz);
+                photoEntity.setZpzl(zpzl);
+                photoEntity.setZpdz(zpdz);
+                photoEntity.setZpsm(zpsm);
+                photoEntity.setCffs(cffs);
+                photoEntity.setLrr(lrr);
+                photoEntity.setLrbm(lrbm);
+                photoEntity.setZpPath(zpPath);
+                list.add(photoEntity);
+            }
+        }
+        return list;
+    }
+
+    /**
+     * 返回数据库对应的照片路径(业务查验)
+     * @param lsh
+     * @param dmz
+     * @return
+     */
+    public static String queryLshAndDmz(String lsh,String dmz){
+
+        CodeTableSQLiteOpenHelper dbHelper = CodeTableSQLiteOpenHelper.getInstance();
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        Cursor query = db.query(CodeTableSQLiteOpenHelper.PHOTO_TABLE_NAME, new String[]{}, null,
+                null, null, null, null, null);
+        String zpPath = "";
+        while (query.moveToNext()) {
+            String lsfz = query.getString(query.getColumnIndex(Constants.Companion.getLSH()));
+            String zpzl = query.getString(query.getColumnIndex(Constants.Companion.getS_ZPZL()));
+            if (lsh.equals(lsfz) && dmz.equals(zpzl)) {
+                 zpPath = query.getString(query.getColumnIndex(Constants.Companion.getS_ZPPATH()));
+            }
+        }
+        return zpPath;
+    }
+
+    /**
+     * 返回数据库对应的照片路径（员工）
+     * @param sfz
+     * @param dmz
+     * @return
+     */
+    public static String querySfzAndDmz(String sfz,String dmz){
+
+        CodeTableSQLiteOpenHelper dbHelper = CodeTableSQLiteOpenHelper.getInstance();
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        Cursor query = db.query(CodeTableSQLiteOpenHelper.PHOTO_TABLE_NAME, new String[]{}, null,
+                null, null, null, null, null);
+        String zpPath = "";
+        while (query.moveToNext()) {
+            String sfzz = query.getString(query.getColumnIndex(Constants.Companion.getS_SFZ()));
+            String zpzl = query.getString(query.getColumnIndex(Constants.Companion.getS_ZPZL()));
+            if (sfz.equals(sfzz) && dmz.equals(zpzl)) {
+                 zpPath = query.getString(query.getColumnIndex(Constants.Companion.getS_ZPPATH()));
+            }
+        }
+        return zpPath;
+    }
+
+    // ===============================service  图片的相关SQL ===========================================
 }

@@ -49,7 +49,7 @@ class LoginByUserPasswordActivity : BaseActivity(), LoginView, CarPhotoView {
 
         if (AppUtils.isApkInDebug(this)) {
             et_user.setText("513822198909298761")
-            et_pwd.setText("Yjc85235228")
+            et_pwd.setText("1q2w3e4r.")
         }
 
         tv_version.text = getString(R.string.cur_version, AppUtils.getVersionName(this))
@@ -133,6 +133,9 @@ class LoginByUserPasswordActivity : BaseActivity(), LoginView, CarPhotoView {
             LoadingDialog.getInstance().dismissLoadDialog()
             startActivity(Intent(this, MainOtherActivity::class.java))
             SharedPreferencesUtils.setAdmain(et_user.text.toString())
+            if( imgFile != null && !TextUtils.isEmpty(imgFile!!.path)){
+                PhotoFileUtils.deleteFile(imgFile!!.path)
+            }
             finish()
         }
 
@@ -152,6 +155,12 @@ class LoginByUserPasswordActivity : BaseActivity(), LoginView, CarPhotoView {
             map["czpt"] = Constants.CZPT
             map["zpdz"] = enity.data.id
             mLoginPersenter!!.doNetworkTask(map, Constants.USER_POST_IMAGE)
+        }
+
+        //增加这个判断的目的删除本地的图片
+
+        if(Constants.USER_POST_IMAGE.equals(commonResponse.getUrl()) && imgFile != null && !TextUtils.isEmpty(imgFile!!.path)){
+            PhotoFileUtils.deleteFile(imgFile!!.path)
         }
     }
 
@@ -176,11 +185,14 @@ class LoginByUserPasswordActivity : BaseActivity(), LoginView, CarPhotoView {
                     showToast(e.message.toString())
                 }
             }
-
             showErrorDialog(commonResponse.getResponseString())
         }
 
+        //增加这个判断的目的删除本地的图片
 
+        if(Constants.USER_POST_IMAGE.equals(commonResponse.getUrl()) && imgFile != null && !TextUtils.isEmpty(imgFile!!.path)){
+            PhotoFileUtils.deleteFile(imgFile!!.path)
+        }
     }
 
     override fun downloadProgress(commonProgress: CommonProgress) {

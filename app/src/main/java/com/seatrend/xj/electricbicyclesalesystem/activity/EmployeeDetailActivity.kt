@@ -129,10 +129,10 @@ class EmployeeDetailActivity : BaseActivity(), NormalView, BaseActivity.DialogLi
 
             for (i in mEmployeeListBean!!.listRole.indices) {
                 if (i == mEmployeeListBean!!.listRole.size - 1) {
-                    sb.append(mEmployeeListBean!!.listRole[i].jsdhmc)
+                    sb.append(mEmployeeListBean!!.listRole[i].getjsmc())
                     break
                 }
-                sb.append(mEmployeeListBean!!.listRole[i].jsdhmc).append(",")
+                sb.append(mEmployeeListBean!!.listRole[i].getjsmc()).append(",")
             }
             tv_jsqx.text = sb.toString()
 
@@ -169,7 +169,7 @@ class EmployeeDetailActivity : BaseActivity(), NormalView, BaseActivity.DialogLi
         tv_right.setOnClickListener {
             initSelectYwztPopup()
             if (pop != null && !pop!!.isShowing) {
-                pop!!.animationStyle = com.seatrend.xj.electricbicyclesalesystem.R.style.pop_animation
+                pop!!.animationStyle = R.style.pop_animation
                 pop!!.showAsDropDown(tv_right)
             }
         }
@@ -186,9 +186,9 @@ class EmployeeDetailActivity : BaseActivity(), NormalView, BaseActivity.DialogLi
     private fun initSelectYwztPopup() {
 
         mTypeLv = ListView(this)
-        mTypeLv!!.background = ContextCompat.getDrawable(this, com.seatrend.xj.electricbicyclesalesystem.R.color.white)
+        mTypeLv!!.background = ContextCompat.getDrawable(this, R.color.white)
         // 设置适配器
-        testDataAdapter = ArrayAdapter(this, com.seatrend.xj.electricbicyclesalesystem.R.layout.popup_text_item, listData)
+        testDataAdapter = ArrayAdapter(this, R.layout.popup_text_item, listData)
         mTypeLv!!.adapter = testDataAdapter
         mTypeLv!!.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             when (listData[position]) {

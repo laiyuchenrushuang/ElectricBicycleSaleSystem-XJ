@@ -69,9 +69,10 @@ class MainOtherActivity : BaseActivity(), NormalView {
 
     override fun netWorkTaskfailed(commonResponse: CommonResponse) {
         dismissLoadingDialog()
-        showErrorDialog(commonResponse.getResponseString())
+
         if(Constants.YG_PHOTO_SEARCH.equals(commonResponse.url)){
             RoundHeadImageViewUtil.loadImage(this, iv_head)
+            showErrorDialog(commonResponse.getResponseString())
         }
     }
 

@@ -58,7 +58,7 @@ class EmployeeChangePasswordActivity : BaseActivity(), NormalView {
             }
 
             if (!CheckPawUtil.isSixPaw(et_psw1.text.toString()) || !CheckPawUtil.isSixPaw(et_psw2.text.toString())) {
-                showToast("新密码是否是6~16位的字母、数字以及特殊符号？")
+                showToast("请输入8-16位包含大写字母、小写字母、数字或特殊字符其中3种组合的密码")
                 return@setOnClickListener
             }
             showLoadingDialog()

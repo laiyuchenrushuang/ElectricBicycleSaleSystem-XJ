@@ -193,7 +193,8 @@ class Constants {
 
         // 0是VIN，1是查验，2注册，3变更 ，4转移， 5补换，6注销，7旧车换牌， 8临时号牌申请 9车辆归档
 
-        val CAR_VIN: String = "0" //车辆VIN
+        val CAR_YW: String = "A" //车辆业务
+
         val CAR_CY: String = "1" //车辆查验
         val CAR_ZC: String = "2" //车辆注册
         val CAR_BG: String = "3" //车辆变更
@@ -226,6 +227,7 @@ class Constants {
         val S_LRR: String? = "lrr" // 人
         val S_LRBM: String? = "lrbm" // 部门
         val S_ZPPATH: String? = "zpPath" //照片加载路径
+        val S_SFZ: String? = "sfzmhm" //身份证
         var PTOTO_UPLOAD_ACTION = "photo_upload_action"
         var DATA = "data"
     }

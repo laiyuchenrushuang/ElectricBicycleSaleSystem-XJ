@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.text.TextUtils
 import android.text.method.ScrollingMovementMethod
 import android.view.View
@@ -173,11 +174,11 @@ class Yw3CzActivity : BaseActivity(), NormalView {
     }
 
     private fun changeColor(which: RadioButton) {
-        rb_jscs!!.setTextColor(resources.getColor(R.color.black))
-        rb_djxx!!.setTextColor(resources.getColor(R.color.black))
-        rb_cyxx!!.setTextColor(resources.getColor(R.color.black))
+        rb_jscs!!.setTextColor(ContextCompat.getColor(this,R.color.black))
+        rb_djxx!!.setTextColor(ContextCompat.getColor(this,R.color.black))
+        rb_cyxx!!.setTextColor(ContextCompat.getColor(this,R.color.black))
         carmsg_rg.check(which.id)
-        which.setTextColor(resources.getColor(R.color.theme_color))
+        which.setTextColor(ContextCompat.getColor(this,R.color.theme_color))
     }
 
     private fun switchFragment(fragment: Fragment?) {

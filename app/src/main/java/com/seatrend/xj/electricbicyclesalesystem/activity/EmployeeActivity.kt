@@ -13,6 +13,7 @@ import com.seatrend.xj.electricbicyclesalesystem.entity.UserInfo
 import com.seatrend.xj.electricbicyclesalesystem.persenter.NormalPresenter
 import com.seatrend.xj.electricbicyclesalesystem.util.CarHphmUtils
 import com.seatrend.xj.electricbicyclesalesystem.util.GsonUtils
+import com.seatrend.xj.electricbicyclesalesystem.util.SFZCheckUtil
 import com.seatrend.xj.electricbicyclesalesystem.view.NormalView
 import kotlinx.android.synthetic.main.activity_employee.*
 import kotlinx.android.synthetic.main.activity_yw.*
@@ -152,7 +153,14 @@ class EmployeeActivity : BaseActivity(), NormalView, YgAdapter.onItemListener {
             }else{
                 searchFlag = true
                 val map = HashMap<String, String?>()
-                map["sfzmhm"] = searchString!!.trim()
+                val searchStr  = searchString.trim()
+
+                if(SFZCheckUtil.isCorrect(searchStr)){
+                    map["sfzmhm"] =searchStr //身份证查询
+                }else{
+                    map["xm"] =searchStr  //姓名查询
+                }
+
                 map["glbm"] = UserInfo.GLBM
                 map["curPage"] = "1"
                 map["pageSize"] = "1"
@@ -176,7 +184,7 @@ class EmployeeActivity : BaseActivity(), NormalView, YgAdapter.onItemListener {
         }
     }
 
-    override fun itemClick(sfzhm: String?, position: Int) {
+    override fun itemClick(sfz: String?, position: Int) {
         if (position >= 0 && position <= mData.size) {
             intent.setClass(this, EmployeeDetailActivity::class.java)
             EmployeeDetailActivity.mEmployeeListBean = mData.get(position)

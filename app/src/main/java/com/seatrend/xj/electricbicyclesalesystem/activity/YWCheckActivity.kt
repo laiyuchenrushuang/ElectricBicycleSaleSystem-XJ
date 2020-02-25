@@ -181,7 +181,7 @@ class YWCheckActivity : BaseActivity(), NormalView, YwFhAdapter.onItemListener {
             searchList(tv_ywlx.text.toString(), tv_fhzt.text.toString())
         }
         typeSelectYwztPopup = PopupWindow(mTypeLv, ll_state.width, ViewGroup.LayoutParams.WRAP_CONTENT, true)
-        typeSelectYwztPopup!!.setBackgroundDrawable(resources.getDrawable(R.color.white))
+        typeSelectYwztPopup!!.setBackgroundDrawable(ContextCompat.getDrawable(this,R.color.white))
         typeSelectYwztPopup!!.isFocusable = false
         typeSelectYwztPopup!!.isOutsideTouchable = true
         typeSelectYwztPopup!!.setOnDismissListener {
@@ -226,7 +226,7 @@ class YWCheckActivity : BaseActivity(), NormalView, YwFhAdapter.onItemListener {
             searchList(tv_ywlx.text.toString(), tv_fhzt.text.toString())
         }
         typeSelectFhztPopup = PopupWindow(mTypeLv, ll_state.width, ViewGroup.LayoutParams.WRAP_CONTENT, true)
-        typeSelectFhztPopup!!.setBackgroundDrawable(resources.getDrawable(R.color.white))
+        typeSelectFhztPopup!!.setBackgroundDrawable(ContextCompat.getDrawable(this,R.color.white))
         typeSelectFhztPopup!!.isFocusable = false
         typeSelectFhztPopup!!.isOutsideTouchable = true
         typeSelectFhztPopup!!.setOnDismissListener {

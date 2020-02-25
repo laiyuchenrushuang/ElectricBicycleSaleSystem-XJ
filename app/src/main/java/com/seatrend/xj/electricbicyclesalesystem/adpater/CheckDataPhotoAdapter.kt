@@ -79,6 +79,7 @@ class CheckDataPhotoAdapter(private var mContext: Context? = null) : RecyclerVie
                 } else if (data[adapterPosition].zpPath != null) {
                     val intent = Intent(mContext, ShowPhotoActivity::class.java)
                     intent.putExtra(Constants.PATH, data[adapterPosition].zpPath)
+                    intent.putExtra(Constants.ZPLX, data[adapterPosition].zmmc)
                     mContext!!.startActivity(intent)
 
                     (mContext as BaseActivity).startRotateAlphaAcaleAnimation()

@@ -27,8 +27,6 @@ import com.seatrend.xj.electricbicyclesalesystem.view.NormalView
 import kotlinx.android.synthetic.main.activty_employee_detail.*
 import kotlinx.android.synthetic.main.recyclerview.*
 import java.util.*
-import kotlin.collections.HashMap
-import kotlin.collections.set
 
 
 /**
@@ -224,7 +222,7 @@ class EmployeeDetailActivity : BaseActivity(), NormalView, BaseActivity.DialogLi
             pop!!.dismiss()
         }
         pop = PopupWindow(mTypeLv, tv_right.width, ViewGroup.LayoutParams.WRAP_CONTENT, true)
-        pop!!.setBackgroundDrawable(resources.getDrawable(R.color.white))
+        pop!!.setBackgroundDrawable(ContextCompat.getDrawable(this,R.color.white))
         pop!!.isFocusable = false
         pop!!.isOutsideTouchable = true
         pop!!.setOnDismissListener {

@@ -109,7 +109,7 @@ class WarningMessageActivity : BaseActivity(), WarningMessageView {
             } else {  //号牌号码查询
                 showLoadingDialog()
                 val map = HashMap<String, String?>()
-                map["hphm"] = searchString!!.trim().toUpperCase()
+                map["hphm"] = searchString.trim().toUpperCase()
                 map["curPage"] = "1"
                 map["pageSize"] = "20"
                 map["glbm"] = UserInfo.GLBM
@@ -169,7 +169,7 @@ class WarningMessageActivity : BaseActivity(), WarningMessageView {
                             ll_no_data.visibility = View.GONE
                         }
                     } else {
-                        showToast("size is 0")
+                        showLog(" 预警 list size is 0")
                     }
                 }
 
@@ -241,7 +241,7 @@ class WarningMessageActivity : BaseActivity(), WarningMessageView {
             pop!!.dismiss()
         }
         pop = PopupWindow(mTypeLv, tv_right.width, ViewGroup.LayoutParams.WRAP_CONTENT, true)
-        pop!!.setBackgroundDrawable(resources.getDrawable(R.color.white))
+        pop!!.setBackgroundDrawable(ContextCompat.getDrawable(this,R.color.white))
         pop!!.isFocusable = false
         pop!!.isOutsideTouchable = true
         pop!!.setOnDismissListener {

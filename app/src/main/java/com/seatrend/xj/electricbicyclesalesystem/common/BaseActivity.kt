@@ -13,6 +13,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.support.annotation.RequiresApi
+import android.support.v4.content.ContextCompat
 import android.support.v4.content.FileProvider
 import android.support.v4.view.ViewCompat
 import android.support.v7.app.AppCompatActivity
@@ -131,7 +132,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
         initView()
 
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
-            setStatusBarColor(resources.getColor(R.color.theme_color))
+            setStatusBarColor(ContextCompat.getColor(this,R.color.theme_color))
         }
     }
 

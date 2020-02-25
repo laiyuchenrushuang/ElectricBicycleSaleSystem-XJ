@@ -302,6 +302,7 @@ public class CodeTableSQLiteUtils {
         cv.put(Constants.Companion.getS_LRBM(), entity.getLrbm());
         cv.put(Constants.Companion.getS_ZPSM(), entity.getZpsm());
         cv.put(Constants.Companion.getS_CFFS(), entity.getCffs());
+        cv.put(Constants.Companion.getS_SFZ(), entity.getSfz());
         db.insert(CodeTableSQLiteOpenHelper.PHOTO_TABLE_NAME, null, cv);
         db.close();
     }
@@ -397,7 +398,7 @@ public class CodeTableSQLiteUtils {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(Constants.Companion.getS_ZPDZ(), id);
-        db.update(CodeTableSQLiteOpenHelper.PHOTO_TABLE_NAME, cv, "sfz=? and zpzl=?", new String[]{sfz, zplx});
+        db.update(CodeTableSQLiteOpenHelper.PHOTO_TABLE_NAME, cv, "sfzmhm=? and zpzl=?", new String[]{sfz, zplx});
         db.close();
     }
 
@@ -594,7 +595,7 @@ public class CodeTableSQLiteUtils {
         while (query.moveToNext()) {
             String sfzz = query.getString(query.getColumnIndex(Constants.Companion.getS_SFZ()));
             String zpzl = query.getString(query.getColumnIndex(Constants.Companion.getS_ZPZL()));
-            if (sfz.equals(sfzz) && dmz.equals(zpzl)) {
+            if (sfz != null && dmz!= null && sfz.equals(sfzz) && dmz.equals(zpzl)) {
                  zpPath = query.getString(query.getColumnIndex(Constants.Companion.getS_ZPPATH()));
             }
         }

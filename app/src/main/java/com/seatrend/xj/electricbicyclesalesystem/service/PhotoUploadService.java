@@ -17,6 +17,7 @@ import com.seatrend.xj.electricbicyclesalesystem.entity.CodeEntity;
 import com.seatrend.xj.electricbicyclesalesystem.entity.CommonResponse;
 import com.seatrend.xj.electricbicyclesalesystem.entity.PhotoEntity;
 import com.seatrend.xj.electricbicyclesalesystem.entity.PhotoIdEnity;
+import com.seatrend.xj.electricbicyclesalesystem.entity.PhotoSaveEmployeeEntity;
 import com.seatrend.xj.electricbicyclesalesystem.entity.PhotoSaveEntity;
 import com.seatrend.xj.electricbicyclesalesystem.http.HttpService;
 import com.seatrend.xj.electricbicyclesalesystem.util.FileMgUtils;
@@ -227,7 +228,7 @@ public class PhotoUploadService extends Service {
 
                     if (Constants.Companion.getPHOTO_MSG_SAVE().equals(commonResponse.getUrl())) {
                         //查验和注册保存成功返回
-                        PhotoSaveEntity entity = GsonUtils.gson(commonResponse.getResponseString(),PhotoSaveEntity.class);
+                        PhotoSaveEntity entity = GsonUtils.gson(commonResponse.getResponseString(),PhotoSaveEntity.class);//业务查验实体类
 
 
                         //删除本地文件
@@ -239,8 +240,10 @@ public class PhotoUploadService extends Service {
                     }
                     if (Constants.Companion.getYG_PHOTO_SAVE().equals(commonResponse.getUrl())) {
                         // 员工备案保存成功返回
-                        PhotoSaveEntity entity = GsonUtils.gson(commonResponse.getResponseString(),PhotoSaveEntity.class);
+                        PhotoSaveEmployeeEntity entity = GsonUtils.gson(commonResponse.getResponseString(), PhotoSaveEmployeeEntity.class); //员工实体类
 
+                        Log.d(PUS_TAG," sfzhm = "+entity.getData().getSfzhm());
+                        Log.d(PUS_TAG," zplx = "+entity.getData().getZplx());
                         //删除本地文件
                         PhotoFileUtils.deleteFile(CodeTableSQLiteUtils.querySfzAndDmz(entity.getData().getSfzhm(),entity.getData().getZplx()));
 

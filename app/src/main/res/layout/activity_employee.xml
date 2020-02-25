@@ -43,8 +43,7 @@
                 android:paddingLeft="10dp"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:digits="@string/number_and_letter"
-                android:hint="请用身份证明号码查询"
+                android:hint="请用姓名或身份证号查询"
                 />
 
             <ImageButton

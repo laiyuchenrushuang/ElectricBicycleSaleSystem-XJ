@@ -15,7 +15,13 @@ class ShowPhotoActivity : BaseActivity() {
 
     override fun initView() {
 //        val mPhotoView=findViewById<PhotoView>(R.id.iv_photo)
-        setPageTitle("图片详情")
+
+        if(null != intent.getStringExtra(Constants.ZPLX)){
+            setPageTitle(intent.getStringExtra(Constants.ZPLX))
+        }else{
+            setPageTitle("图片详情")
+        }
+
         Glide.with(this).load(intent.getStringExtra(Constants.PATH)).placeholder(R.drawable.image_loading)
                 .error(R.drawable.error_image).into(iv_photo)
         bindEvent()

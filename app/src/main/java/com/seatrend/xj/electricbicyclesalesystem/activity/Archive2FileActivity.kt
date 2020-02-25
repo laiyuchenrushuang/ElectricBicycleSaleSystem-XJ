@@ -183,7 +183,7 @@ class Archive2FileActivity : BaseActivity(), YwGdAdapter.itemOnclickListener, Ba
             typeSelectYwztPopup!!.dismiss()
         }
         typeSelectYwztPopup = PopupWindow(mTypeLv, ll_ywlx.width, ViewGroup.LayoutParams.WRAP_CONTENT, true)
-        typeSelectYwztPopup!!.setBackgroundDrawable(resources.getDrawable(R.color.white))
+        typeSelectYwztPopup!!.setBackgroundDrawable(ContextCompat.getDrawable(this,R.color.white))
         typeSelectYwztPopup!!.isFocusable = false
         typeSelectYwztPopup!!.isOutsideTouchable = true
         typeSelectYwztPopup!!.setOnDismissListener {
@@ -201,9 +201,9 @@ class Archive2FileActivity : BaseActivity(), YwGdAdapter.itemOnclickListener, Ba
         }
     }
 
-    override fun itemOnclick(zcbm: String?, ywlx: String?, lsh: String?, position: Int) {
+    override fun itemOnclick(zcbm: String?, ywlx: String?, lsh: String?, posion: Int) {
         showLoadingDialog()
-        itemPosition = position
+        itemPosition = posion
         val map = HashMap<String, String?>()
         map["lsh"] = lsh!!
         mNormalPresenter!!.doNetworkTask(map, Constants.YW_GET_YWCZ_BIKE_DATA)

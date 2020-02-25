@@ -128,7 +128,7 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
     fun bindEvent() {
 
         CheckBoxUtils.setListener(rb_cy_ok, rb_cy_no)
-        rb_cy_no.setOnCheckedChangeListener { compoundButton, checked ->
+        rb_cy_no.setOnCheckedChangeListener { _, checked ->
             if (checked) {
                 rb_cy_no.isChecked = true
                 rb_cy_ok.isChecked = false

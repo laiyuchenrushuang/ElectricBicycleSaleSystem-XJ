@@ -1,6 +1,7 @@
 package com.seatrend.xj.electricbicyclesalesystem.activity
 
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.widget.CompoundButton
 import com.seatrend.xj.electricbicyclesalesystem.R
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
@@ -46,14 +47,14 @@ class CarInfoActivity : BaseActivity(), NormalView {
 
     private fun bindEvent() {
 
-        rb_jscs.setOnCheckedChangeListener { compoundButton: CompoundButton, check: Boolean ->
+        rb_jscs.setOnCheckedChangeListener { _: CompoundButton, check: Boolean ->
             if (check) {
-                rb_jscs!!.setTextColor(resources.getColor(R.color.theme_color))
-                rb_ggxx!!.setTextColor(resources.getColor(R.color.black))
+                rb_jscs!!.setTextColor(ContextCompat.getColor(this,R.color.theme_color))
+                rb_ggxx!!.setTextColor(ContextCompat.getColor(this,R.color.black))
                 switchFragment(mCarMsgJscsFG)
             } else {
-                rb_ggxx!!.setTextColor(resources.getColor(R.color.theme_color))
-                rb_jscs!!.setTextColor(resources.getColor(R.color.black))
+                rb_ggxx!!.setTextColor(ContextCompat.getColor(this,R.color.theme_color))
+                rb_jscs!!.setTextColor(ContextCompat.getColor(this,R.color.black))
                 switchFragment(mCarMsgggxxFG)
             }
         }

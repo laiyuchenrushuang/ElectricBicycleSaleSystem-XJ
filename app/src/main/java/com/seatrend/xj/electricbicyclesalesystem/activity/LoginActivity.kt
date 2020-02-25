@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.support.annotation.RequiresApi
 import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.view.View
 import com.seatrend.xj.electricbicyclesalesystem.R
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
@@ -110,12 +111,12 @@ class LoginActivity : BaseActivity(), LoginView {
     private fun intNFC() {
 
 //        if ("HC" != AppUtils.getSystemProperty()) {
-//            btn_system.setBackgroundColor(resources.getColor(R.color.black_50))
+//            btn_system.setBackgroundColor(ContextCompat.getColor(this,R.color.black_50))
 //            btn_system.isEnabled = false
 //        }
         val pm = packageManager
         if(!pm.hasSystemFeature(PackageManager.FEATURE_NFC)){
-            btn_system.setBackgroundColor(resources.getColor(R.color.black_50))
+            btn_system.setBackgroundColor(ContextCompat.getColor(this,R.color.black_50))
             btn_system.isEnabled = false
         }
     }

@@ -109,6 +109,7 @@
                     <TextView
                         android:id="@+id/tv_zcbm"
                         style="@style/pay_info"
+                        android:textIsSelectable="true"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="XX" />
@@ -129,6 +130,7 @@
                         style="@style/pay_info"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textIsSelectable="true"
                         android:text="XX" />
                 </LinearLayout>
 

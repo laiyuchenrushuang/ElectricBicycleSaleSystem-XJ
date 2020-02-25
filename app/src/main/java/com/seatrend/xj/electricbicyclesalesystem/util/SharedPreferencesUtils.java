@@ -77,7 +77,7 @@ public class SharedPreferencesUtils{
     }
     public static String getTjqssj(){
         return Objects.requireNonNull(MyApplication.Companion.getMyApplicationContext()).getSharedPreferences(Constants.Companion.getSETTING(), Context.MODE_PRIVATE)
-                .getString(Constants.Companion.getTJQSSJ(),"2019-01-01");
+                .getString(Constants.Companion.getTJQSSJ(),StringUtils.longToStringDataNoHour(System.currentTimeMillis()));
     }
 
     public static void setTjzzsj(String time){
@@ -86,7 +86,7 @@ public class SharedPreferencesUtils{
     }
     public static String getTjzzsj(){
         return Objects.requireNonNull(MyApplication.Companion.getMyApplicationContext()).getSharedPreferences(Constants.Companion.getSETTING(), Context.MODE_PRIVATE)
-                .getString(Constants.Companion.getTJZZSJ(),"2019-12-31");
+                .getString(Constants.Companion.getTJZZSJ(),StringUtils.longToStringDataNoHour(System.currentTimeMillis()));
     }
 
     public static void  setVesionTime(String time){

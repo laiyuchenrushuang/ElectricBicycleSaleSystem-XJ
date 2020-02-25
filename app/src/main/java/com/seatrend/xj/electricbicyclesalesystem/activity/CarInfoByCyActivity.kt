@@ -2,6 +2,7 @@ package com.seatrend.xj.electricbicyclesalesystem.activity
 
 import android.content.Intent
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import com.seatrend.xj.electricbicyclesalesystem.R
@@ -62,7 +63,7 @@ class CarInfoByCyActivity : BaseActivity(), NormalView {
     }
 
     private fun bindEvent() {
-        carmsg_rg.setOnCheckedChangeListener { p0, position ->
+        carmsg_rg.setOnCheckedChangeListener { p0, _ ->
             when (p0!!.checkedRadioButtonId) {
                 R.id.rb_jscs -> {
                     changeColor(rb_jscs)
@@ -118,11 +119,11 @@ class CarInfoByCyActivity : BaseActivity(), NormalView {
     }
 
     private fun changeColor(which: RadioButton) {
-        rb_jscs!!.setTextColor(resources.getColor(R.color.black))
-        rb_ggxx!!.setTextColor(resources.getColor(R.color.black))
-        rb_cyxx!!.setTextColor(resources.getColor(R.color.black))
+        rb_jscs!!.setTextColor(ContextCompat.getColor(this,R.color.black))
+        rb_ggxx!!.setTextColor(ContextCompat.getColor(this,R.color.black))
+        rb_cyxx!!.setTextColor(ContextCompat.getColor(this,R.color.black))
         carmsg_rg.check(which.id)
-        which.setTextColor(resources.getColor(R.color.theme_color))
+        which.setTextColor(ContextCompat.getColor(this,R.color.theme_color))
     }
 
     private fun switchFragment(fragment: Fragment?) {
@@ -139,16 +140,12 @@ class CarInfoByCyActivity : BaseActivity(), NormalView {
                 if (from != null) {
                     ft.hide(from)
                 }
-                if (to != null) {
-                    ft.add(R.id.carmsg_fl, to).commit()
-                }
+                ft.add(R.id.carmsg_fl, to).commit()
             } else {
                 if (from != null) {
                     ft.hide(from)
                 }
-                if (to != null) {
-                    ft.show(to).commit()
-                }
+                ft.show(to).commit()
             }
         }
     }

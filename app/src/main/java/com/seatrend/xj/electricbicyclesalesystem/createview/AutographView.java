@@ -172,9 +172,12 @@ public class AutographView extends View {
         if (cacheCanvas != null) {
             isTouched = false;
             //更新画板信息
-            mGesturePaint.setColor(mPenColor);
-            cacheCanvas.drawColor(mBackColor, PorterDuff.Mode.CLEAR);
-            mGesturePaint.setColor(mPenColor);
+//            mGesturePaint.setColor(mPenColor);
+//            cacheCanvas.drawColor(mBackColor, PorterDuff.Mode.CLEAR);
+//            mGesturePaint.setColor(mPenColor);
+            cachebBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+            cacheCanvas = new Canvas(cachebBitmap);
+            cacheCanvas.drawColor(mBackColor);
             invalidate();
         }
     }

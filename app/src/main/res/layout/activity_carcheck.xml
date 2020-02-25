@@ -101,6 +101,7 @@
                         style="@style/pay_info"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textIsSelectable="true"
                         android:text="XX" />
                 </LinearLayout>
 
@@ -119,6 +120,7 @@
                         style="@style/pay_info"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textIsSelectable="true"
                         android:text="XX" />
                 </LinearLayout>
 

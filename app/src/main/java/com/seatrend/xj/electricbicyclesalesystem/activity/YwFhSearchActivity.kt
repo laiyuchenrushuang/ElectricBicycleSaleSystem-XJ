@@ -149,9 +149,9 @@ class YwFhSearchActivity : BaseActivity(), NormalView {
                 return@setOnClickListener
             }
             searchview.clearFocus()
-            if(searchString!!.trim().length>10){
+            if(ParseQcodeUtil.isZcbmString(searchString!!.trim())){
                 val map = HashMap<String, String?>()
-                map["zcbm"] = searchString!!.trim().toUpperCase()
+                map["zcbm"] = searchString.trim().toUpperCase()
                 map["curPage"] = "1"
                 map["pageSize"] = "1"
                 map["djbm"] = UserInfo.GLBM
@@ -159,7 +159,7 @@ class YwFhSearchActivity : BaseActivity(), NormalView {
                 mNormalPresenter!!.doNetworkTask(map, Constants.FH_GET_LIST)
             }else{
                 val map = HashMap<String, String?>()
-                map["hphm"] = searchString!!.trim().toUpperCase()
+                map["hphm"] = searchString.trim().toUpperCase()
                 map["curPage"] = "1"
                 map["pageSize"] = "1"
                 map["djbm"] = UserInfo.GLBM

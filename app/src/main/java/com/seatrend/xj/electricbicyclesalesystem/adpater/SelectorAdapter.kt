@@ -60,7 +60,7 @@ class SelectorAdapter(private var mContext: Context? = null, private var mData: 
         }
 
         private fun bindEvent() {
-            cb_yy_item!!.setOnCheckedChangeListener { compoundButton, b ->
+            cb_yy_item!!.setOnCheckedChangeListener { _, b ->
                 if (b) {
                     checkList.add(mData!!.get(adapterPosition))
                     listener!!.getCheckState(checkList)

@@ -268,7 +268,7 @@ class YwReplaceActivity : BaseActivity(), NormalView {
 
     private fun initBuHuanSp(cb1: CheckBox, cb2: CheckBox, spinner: Spinner) {
         spinner.visibility = View.INVISIBLE
-        cb1.setOnCheckedChangeListener { compoundButton, checked ->
+        cb1.setOnCheckedChangeListener { _, checked ->
             if (checked) {
                 cb1.isChecked = true
                 cb2.isChecked = false
@@ -280,7 +280,7 @@ class YwReplaceActivity : BaseActivity(), NormalView {
                 spinner.visibility = View.INVISIBLE
             }
         }
-        cb2.setOnCheckedChangeListener { compoundButton, checked ->
+        cb2.setOnCheckedChangeListener { _, checked ->
             if (checked) {
                 cb2.isChecked = true
                 cb1.isChecked = false

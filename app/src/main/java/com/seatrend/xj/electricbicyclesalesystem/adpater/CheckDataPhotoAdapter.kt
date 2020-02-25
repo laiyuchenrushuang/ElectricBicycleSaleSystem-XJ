@@ -25,7 +25,7 @@ class CheckDataPhotoAdapter(private var mContext: Context? = null) : RecyclerVie
 
     private var data = ArrayList<PhotoTypeEntity.DataBean.ConfigBean>()
     val mCompareR: Comparator<PhotoTypeEntity.DataBean.ConfigBean> =
-            Comparator { p0, p1 ->
+            Comparator { p0, _ ->
                 if ("B4" == p0!!.zplx) { //其他
                     0
                 } else {

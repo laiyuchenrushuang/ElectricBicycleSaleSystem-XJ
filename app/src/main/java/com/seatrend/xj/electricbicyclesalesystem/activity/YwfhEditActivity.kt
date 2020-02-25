@@ -28,7 +28,7 @@ class YwfhEditActivity : BaseActivity(), SelectorAdapter.CheckState, NormalView 
 
             if ("1" == UserInfo.GlobalParameter.SFBJ && !rb_fh_no.isChecked  ) {//不通过不收费
                 val intent = Intent(this, PayActivity::class.java)
-                val enity = Yw3CzActivity.mAllBikeMsgEnity!!.data.fjdcBusiness
+                Yw3CzActivity.mAllBikeMsgEnity!!.data.fjdcBusiness
 
                 intent.putExtra("syr", Yw3CzActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.syrmc)
                 intent.putExtra("sfz", Yw3CzActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.sfzmhm)

@@ -195,16 +195,12 @@ class Yw3CzActivity : BaseActivity(), NormalView {
                 if (from != null) {
                     ft.hide(from)
                 }
-                if (to != null) {
-                    ft.add(R.id.carmsg_fl, to).commit()
-                }
+                ft.add(R.id.carmsg_fl, to).commit()
             } else {
                 if (from != null) {
                     ft.hide(from)
                 }
-                if (to != null) {
-                    ft.show(to).commit()
-                }
+                ft.show(to).commit()
             }
         }
     }

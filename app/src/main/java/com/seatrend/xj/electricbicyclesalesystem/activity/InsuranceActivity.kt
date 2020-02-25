@@ -140,7 +140,7 @@ class InsuranceActivity : BaseActivity(), CollectBicycleView {
             mCollectBicyclePersenter!!.doNetworkTask(map, Constants.UPDATA_LS_ZT)
 
         }
-        rb_buy.setOnCheckedChangeListener { p0, position ->
+        rb_buy.setOnCheckedChangeListener { _, position ->
             when (position) {
                 R.id.rb_bgm -> {
                     sv_bdxx.visibility = View.INVISIBLE

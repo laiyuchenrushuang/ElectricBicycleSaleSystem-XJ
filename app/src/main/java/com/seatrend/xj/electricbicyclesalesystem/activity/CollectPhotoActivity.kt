@@ -439,7 +439,15 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
 
     override fun itemOnClick(position: Int) {
         photoPosition = position
-        getPicFromCamera()
+        if (TextUtils.isEmpty(allPhoto[position].zpPath)) {
+            getPicFromCamera()
+        } else {
+            val intent = Intent(this, ShowPhotoActivity::class.java)
+            intent.putExtra(Constants.PATH, imgFile!!.path)
+            intent.putExtra(Constants.ZPLX, allPhoto[position].zmmc)
+            startActivity(intent)
+            startRotateAlphaAcaleAnimation()
+        }
     }
 
     //删除，连带本地数据库也删除
@@ -452,6 +460,7 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
 
     override fun itemdelete(position: Int) {
         deletePosition = position
+        allPhoto[position].zpPath=null
         uploadPhotoSuccessNumber--
     }
 
@@ -459,9 +468,7 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
         super.onDestroy()
         resetNumbers()
         requested = false
-        if (allPhoto != null) {
-            allPhoto.clear()
-        }
+        allPhoto.clear()
     }
 
     // 成功数复原

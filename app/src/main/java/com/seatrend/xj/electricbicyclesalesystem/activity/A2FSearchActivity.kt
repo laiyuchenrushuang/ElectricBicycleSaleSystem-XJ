@@ -15,10 +15,7 @@ import com.seatrend.xj.electricbicyclesalesystem.entity.CommonResponse
 import com.seatrend.xj.electricbicyclesalesystem.entity.GDEnity
 import com.seatrend.xj.electricbicyclesalesystem.entity.UserInfo
 import com.seatrend.xj.electricbicyclesalesystem.persenter.NormalPresenter
-import com.seatrend.xj.electricbicyclesalesystem.util.CarHphmUtils
-import com.seatrend.xj.electricbicyclesalesystem.util.FHUtil
-import com.seatrend.xj.electricbicyclesalesystem.util.GsonUtils
-import com.seatrend.xj.electricbicyclesalesystem.util.LoadingDialog
+import com.seatrend.xj.electricbicyclesalesystem.util.*
 import com.seatrend.xj.electricbicyclesalesystem.view.NormalView
 import kotlinx.android.synthetic.main.activity_gd_check.*
 
@@ -130,7 +127,7 @@ class A2FSearchActivity: BaseActivity(), NormalView {
                 return@setOnClickListener
             }
             searchview.clearFocus()
-            if(searchString!!.trim().length>10){
+            if(ParseQcodeUtil.isZcbmString(searchString!!.trim())){
                 val map = HashMap<String, String?>()
                 map["curPage"] = "1"
                 map["pageSize"] = "1"

@@ -39,7 +39,7 @@ class GridViewAdapter(private val mContext: Context, private val mData: ArrayLis
         viewholder.checkbox.text = mData[position]
 
         //选择器的状态
-        viewholder.checkbox.setOnCheckedChangeListener { compoundButton, b ->
+        viewholder.checkbox.setOnCheckedChangeListener { _, b ->
             if (b) {
                 checkList.add(mData[position])
                 listener!!.getCheckState(checkList)

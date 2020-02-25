@@ -252,6 +252,7 @@ class LoginByUserPasswordActivity : BaseActivity(), LoginView, CarPhotoView {
             } else {
                 val intent = Intent(this, ShowPhotoActivity::class.java)
                 intent.putExtra(Constants.PATH, imgFile!!.path)
+                intent.putExtra(Constants.ZPLX, "现场照片")
                 startActivity(intent)
                 startRotateAlphaAcaleAnimation()
             }
@@ -350,7 +351,7 @@ class LoginByUserPasswordActivity : BaseActivity(), LoginView, CarPhotoView {
         }
         btnCancel.setOnClickListener { mDialog.dismiss() }
         mDialog.show()
-        mDialog.setOnKeyListener { dialog, keyCode, event -> true }
+        mDialog.setOnKeyListener { _, _, _ -> true }
     }
 
     private fun downloadApk() {

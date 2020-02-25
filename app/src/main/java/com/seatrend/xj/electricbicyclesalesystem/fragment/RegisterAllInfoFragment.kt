@@ -35,7 +35,7 @@ class RegisterAllInfoFragment : BaseFragment(), View.OnTouchListener {
     var photoList = ArrayList<AllBikeMsgEnity.Data.PhotoList>()
 
     override fun getLayoutView(inflater: LayoutInflater?, container: ViewGroup?): View {
-        return return inflater!!.inflate(R.layout.fragment_register_all_info, container, false)
+         return inflater!!.inflate(R.layout.fragment_register_all_info, container, false)
     }
 
     override fun initView() {

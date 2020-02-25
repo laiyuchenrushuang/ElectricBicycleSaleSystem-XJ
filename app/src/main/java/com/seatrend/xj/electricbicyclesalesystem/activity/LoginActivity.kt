@@ -26,7 +26,7 @@ import java.util.ArrayList
 
 
 
-@Suppress("PLUGIN_WARNING")
+@Suppress("PLUGIN_WARNING", "DEPRECATED_IDENTITY_EQUALS")
 class LoginActivity : BaseActivity(), LoginView {
     override fun downloadProgress(commonProgress: CommonProgress) {
 
@@ -118,6 +118,7 @@ class LoginActivity : BaseActivity(), LoginView {
         if(!pm.hasSystemFeature(PackageManager.FEATURE_NFC)){
             btn_system.setBackgroundColor(ContextCompat.getColor(this,R.color.black_50))
             btn_system.isEnabled = false
+            btn_system.visibility =View.GONE
         }
     }
 

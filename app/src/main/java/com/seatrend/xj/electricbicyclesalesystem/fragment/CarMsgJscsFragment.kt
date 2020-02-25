@@ -49,7 +49,7 @@ class CarMsgJscsFragment : BaseFragment() {
                 if ("A" == activity.intent.getStringExtra("ywlx")) {
                     var data3c = CarInfoActivity.mData3C //注册登记专用
                     //注册登记3c走互联网获取的3c信息
-                    if (data3c == null || data3c!!.data == null || data3c.data.threeCertificates == null) {
+                    if (data3c == null || data3c.data == null || data3c.data.threeCertificates == null) {
                         showToast("获取3C技术参数失败")
                         return
                     }

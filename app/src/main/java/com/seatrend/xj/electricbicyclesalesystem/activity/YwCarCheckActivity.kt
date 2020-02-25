@@ -42,8 +42,8 @@ class YwCarCheckActivity : BaseActivity(), NormalView {
         try {
             ll_item.visibility = View.VISIBLE
             tv_syr.text = mEnity!!.data.syrjbxx.syrmc
-            tv_zcbm.text = mEnity!!.data.syrjbxx.zcbm
-            tv_hphm.text = mEnity!!.data.syrjbxx.cph
+            tv_zcbm.text = mEnity.data.syrjbxx.zcbm
+            tv_hphm.text = mEnity.data.syrjbxx.cph
         } catch (e: Exception) {
             showToast(e.message.toString())
             ll_item.visibility = View.GONE

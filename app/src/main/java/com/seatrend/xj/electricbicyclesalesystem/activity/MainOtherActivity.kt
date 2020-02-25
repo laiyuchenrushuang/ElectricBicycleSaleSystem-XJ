@@ -103,10 +103,10 @@ class MainOtherActivity : BaseActivity(), NormalView {
             }
 
             override fun onPageSelected(position: Int) {
-                when (position) {
-//                    0 -> setPageTitle(getString(R.string.electric_bicycle_register))
+                //                    0 -> setPageTitle(getString(R.string.electric_bicycle_register))
 //                    1 -> setPageTitle(getString(R.string.yjxx))
 //                    else -> setPageTitle("")
+                when {
                 }
             }
 

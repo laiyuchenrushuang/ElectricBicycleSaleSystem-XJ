@@ -27,7 +27,7 @@ class RegisterInfoFragment : BaseFragment() {
     }
 
     override fun getLayoutView(inflater: LayoutInflater?, container: ViewGroup?): View {
-        return return inflater!!.inflate(R.layout.fragment_register_info, container, false)
+         return inflater!!.inflate(R.layout.fragment_register_info, container, false)
     }
 
     override fun initView() {

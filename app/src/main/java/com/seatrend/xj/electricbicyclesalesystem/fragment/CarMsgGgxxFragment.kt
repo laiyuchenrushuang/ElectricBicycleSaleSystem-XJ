@@ -51,6 +51,13 @@ class CarMsgGgxxFragment : BaseFragment() {
 
     override fun initView() {
         initData()
+        bindEvent()
+    }
+
+
+    private fun bindEvent() {
+        //字段过长的处理
+        setScollTextView(carinfo_jscs_kzqscqy, carinfo_jscs_ddjscqy, carinfo_jscs_clzzs, carinfo_jscs_xdcscqy, carinfo_jscs_scqymc, carinfo_jscs_scqydz, carinfo_jscs_mpgdwz,carinfo_jscs_cjszcbmdwz)
     }
 
     private fun initData() {
@@ -62,12 +69,11 @@ class CarMsgGgxxFragment : BaseFragment() {
         }
 
 
-
 //        carinfo_jscs_zcbm.text = if (TextUtils.isEmpty(data3c.data.threeCertificates.data.vehicleCode)) "/" else data1.data.threeCertificates.vehicleCode//zcbm
 
         if ("A".equals(activity.intent.getStringExtra("ywlx"))) {
 
-            if (data3c == null || data3c.data == null || data3c.data == null || data3c.data.threeCertificates == null || data3c.data.threeCertificates.data== null) {
+            if (data3c == null || data3c.data == null || data3c.data == null || data3c.data.threeCertificates == null || data3c.data.threeCertificates.data == null) {
                 showToast("获取3C技术参数失败")
                 return
             }
@@ -93,7 +99,7 @@ class CarMsgGgxxFragment : BaseFragment() {
             carinfo_jscs_ccczszt.text = if (TextUtils.isEmpty(data3c.data.threeCertificates.data.certState)) "/" else data3c.data.threeCertificates.data.certState    //证书状态
             carinfo_jscs_zzrq.text = if (TextUtils.isEmpty(data3c.data.threeCertificates.data.manufacturingDate)) "/" else data3c.data.threeCertificates.data.manufacturingDate //制造日期
 
-        }else{
+        } else {
 
             carinfo_jscs_cjszcbmdwz.text = if (TextUtils.isEmpty(data1.data.threeCertificates.cjszcbmwz)) "/" else data1.data.threeCertificates.cjszcbmwz.trim()//车架上整车编码的位置
             carinfo_jscs_clzwsb.text = if (TextUtils.isEmpty(data1.data.threeCertificates.clzwsb)) "/" else data1.data.threeCertificates.clzwsb //车辆中文商标

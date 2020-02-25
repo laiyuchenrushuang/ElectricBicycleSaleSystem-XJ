@@ -1,13 +1,16 @@
 package com.seatrend.xj.electricbicyclesalesystem.common
 
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.ComponentName
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
@@ -31,6 +34,22 @@ abstract class BaseFragment : Fragment(), BaseView {
     private var tvNoDataMsg: TextView? = null
     private var rootView: View? = null
     val ID_CARD_READ_CODE = 10
+
+    //TextView 和 ScollView 冲突监听器
+    val onTouchListener = View.OnTouchListener { v, event ->
+        if (event.action == MotionEvent.ACTION_DOWN) {
+            //父节点不拦截子节点
+            v.parent.requestDisallowInterceptTouchEvent(true)
+        } else if (event.action == MotionEvent.ACTION_MOVE) {
+            //父节点不拦截子节点
+            v.parent.requestDisallowInterceptTouchEvent(true)
+        } else if (event.action == MotionEvent.ACTION_UP) {
+            //父节点拦截子节点
+            v.parent.requestDisallowInterceptTouchEvent(false)
+        }
+        false
+    }
+
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -134,5 +153,13 @@ abstract class BaseFragment : Fragment(), BaseView {
     }
 
     open fun getSYRXXCommitData() {
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    fun setScollTextView(vararg viewList :TextView){
+        for (view in viewList) {
+            view.movementMethod = ScrollingMovementMethod.getInstance()
+            view.setOnTouchListener(onTouchListener)
+        }
     }
 }

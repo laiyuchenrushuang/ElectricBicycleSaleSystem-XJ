@@ -48,7 +48,7 @@
                     style="@style/carcy_info_jscs_left"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="车架上整车\n编码的位置" />
+                    android:text="车架上整车编码\n的位置" />
                 <android.support.v4.widget.Space
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -57,8 +57,8 @@
                     android:id="@+id/carinfo_jscs_cjszcbmdwz"
                     style="@style/carcy_info_jscs_right"
                     android:layout_width="wrap_content"
-                    android:layout_marginLeft="15dp"
                     android:layout_height="match_parent"
+                    android:maxWidth="180dp"
                     android:text="/"/>
             </LinearLayout>
             <View
@@ -348,6 +348,7 @@
                     style="@style/carcy_info_jscs_right"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:maxWidth="180dp"
                     android:text="/"/>
             </LinearLayout>
             <View
@@ -371,7 +372,7 @@
                     android:id="@+id/carinfo_jscs_mpgdwz"
                     style="@style/carcy_info_jscs_right"
                     android:layout_width="wrap_content"
-                    android:layout_marginLeft="15dp"
+                    android:maxWidth="180dp"
                     android:layout_height="match_parent"
                     android:text="/"/>
             </LinearLayout>

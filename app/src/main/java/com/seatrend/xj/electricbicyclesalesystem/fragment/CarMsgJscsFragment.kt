@@ -40,6 +40,11 @@ class CarMsgJscsFragment : BaseFragment() {
 
     override fun initView() {
         initData()
+        bindEvent()
+    }
+
+    private fun bindEvent() {
+        setScollTextView( carinfo_jscs_clzzs, carinfo_jscs_mpgdwz,carinfo_jscs_cjszcbmdwz)
     }
 
     private fun initData() {

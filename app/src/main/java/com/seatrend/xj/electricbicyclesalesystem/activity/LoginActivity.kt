@@ -153,7 +153,7 @@ class LoginActivity : BaseActivity(), LoginView {
     }
 
     private fun doLogin(sfzhm: String) {
-        LoadingDialog.getInstance().showLoadDialog(this)
+        showLoadingDialog()
         val map = HashMap<String, String?>()
         map.put("sfzmhm", sfzhm)
         mLoginPersenter!!.doNetworkTask(map, Constants.USER_LOGIN)

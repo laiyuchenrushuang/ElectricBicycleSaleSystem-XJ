@@ -34,7 +34,7 @@ class ExitLoginActivity : BaseActivity() {
     }
 
     private fun exitLogin(){
-        LoadingDialog.getInstance().showLoadDialog(this)
+        showLoadingDialog()
         val map=HashMap<String,String>()
         map.put("username", et_sfzhm.text.toString())
         HttpService.getInstance().getDataFromServer(map, Constants.EXIT_LOGIN, Constants.GET,object : BaseModule() {

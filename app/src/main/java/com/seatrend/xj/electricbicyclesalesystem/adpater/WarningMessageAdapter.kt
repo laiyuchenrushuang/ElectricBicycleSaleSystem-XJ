@@ -21,18 +21,28 @@ import com.seatrend.xj.electricbicyclesalesystem.util.StringUtils
 class WarningMessageAdapter(private val mContext: Context) : RecyclerView.Adapter<WarningMessageAdapter.MyViewHolder>() {
 
 
-    private val mCompare: Comparator<in WarningMessageEntity.Data.WList> = Comparator { o1, o2 ->
-        if(o1.qs == o2.qs){
-             o1.yjsj.compareTo(o2.yjsj)
-        }else{
-            o1.qs.compareTo(o2.qs)
+    private val mCompare: Comparator<in WarningMessageEntity.Data.WList> = object : Comparator<WarningMessageEntity.Data.WList> {
+        override fun compare(p0: WarningMessageEntity.Data.WList?, p1: WarningMessageEntity.Data.WList?): Int {
+            if (p0!!.qs == null) {  //zhangyue 说的
+                if (p0.qs == p1!!.qs) {
+                    return p1.yjsj.toInt() - p0.yjsj.toInt()
+                }
+                return -1
+            }
+            if (p0.qs == p1!!.qs) {
+                return p1.yjsj.toInt() - p0.yjsj.toInt()
+            } else {
+                return 1
+            }
         }
+
     }
-    private var listData = ArrayList<WarningMessageEntity.Data.WList>()
+
+    var listData = ArrayList<WarningMessageEntity.Data.WList>()
 
     fun addData(data: ArrayList<WarningMessageEntity.Data.WList>) {
         listData.addAll(data)
-//        listData.sortWith(mCompare)
+        listData.sortWith(mCompare)
         notifyDataSetChanged()
     }
 
@@ -57,6 +67,7 @@ class WarningMessageAdapter(private val mContext: Context) : RecyclerView.Adapte
         var tvLsh: TextView? = null
         var tvCllx: TextView? = null
         var tvCphm: TextView? = null
+        var tvZcbm: TextView? = null
         var tvYjlx: TextView? = null
         var tvYjms: TextView? = null
         var tvYjsj: TextView? = null
@@ -67,6 +78,7 @@ class WarningMessageAdapter(private val mContext: Context) : RecyclerView.Adapte
             tvLsh = itemView.findViewById(R.id.tv_lsh)
             tvCllx = itemView.findViewById(R.id.tv_cllx)
             tvCphm = itemView.findViewById(R.id.tv_cphm)
+            tvZcbm = itemView.findViewById(R.id.tv_zcbm)
             tvYjlx = itemView.findViewById(R.id.tv_yjlx)
             tvYjms = itemView.findViewById(R.id.tv_yjms)
             tvYjsj = itemView.findViewById(R.id.tv_yjsj)
@@ -87,6 +99,7 @@ class WarningMessageAdapter(private val mContext: Context) : RecyclerView.Adapte
                 tvLsh!!.text = dataBean.lsh
                 tvCllx!!.text = CllxUtils.getCllxDMSM(dataBean.cllx)
                 tvCphm!!.text = dataBean.hphm
+                tvZcbm!!.text = dataBean.zcbm
                 tvYjlx!!.text = dataBean.yjlx
                 tvYjms!!.text = dataBean.yjyy
                 tvYjsj!!.text = StringUtils.longToStringData(dataBean.yjsj)

@@ -20,6 +20,7 @@ import com.seatrend.xj.electricbicyclesalesystem.common.Constants
 import com.seatrend.xj.electricbicyclesalesystem.entity.*
 import com.seatrend.xj.electricbicyclesalesystem.persenter.CarPhotoPersenter
 import com.seatrend.xj.electricbicyclesalesystem.persenter.LoginPersenter
+import com.seatrend.xj.electricbicyclesalesystem.service.PhotoUploadService
 import com.seatrend.xj.electricbicyclesalesystem.util.*
 import com.seatrend.xj.electricbicyclesalesystem.view.CarPhotoView
 import com.seatrend.xj.electricbicyclesalesystem.view.LoginView
@@ -282,7 +283,7 @@ class LoginByUserPasswordActivity : BaseActivity(), LoginView, CarPhotoView {
             }
 
             loginEntity = null //reset
-            LoadingDialog.getInstance().showLoadDialog(this)
+            showLoadingDialog()
             val map = HashMap<String, String?>()
             map.put("username", et_user.text.toString())
             map.put("password", et_pwd.text.toString())
@@ -314,7 +315,7 @@ class LoginByUserPasswordActivity : BaseActivity(), LoginView, CarPhotoView {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            LoadingDialog.getInstance().showLoadDialog(this)
+            showLoadingDialog()
             showLog(imgFile!!.path)
             val pcThread = Thread {
                 val bt: Bitmap = BitmapUtils.getSmallBitmap(imgFile!!.path)

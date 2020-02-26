@@ -107,6 +107,7 @@ class YwRegisterActivity : BaseActivity(), NormalView {
         }
 
         btn_hqhphm.setOnClickListener {
+            showLoadingDialog()
             val map = HashMap<String, String>()
             map["lybm"] = UserInfo.GLBM
             mNormalPresenter!!.doNetworkTask(map, Constants.SYSTEM_PRODUCT_HPHM)
@@ -327,21 +328,21 @@ class YwRegisterActivity : BaseActivity(), NormalView {
 
                 //OCR
                 Integer.toHexString(Constants.SFZ_SYR).toInt() -> {
-                    LoadingDialog.getInstance().showLoadDialog(this)
+                    showLoadingDialog()
                     Thread(Runnable {
                         val bitmap = BitmapFactory.decodeFile(imgOCRFile!!.path) //父类的fileimage
                         onStartOCRSFZ(bitmap, ed_syr_xm, ed_syr_sfz)
                     }).start()
                 }
                 Integer.toHexString(Constants.SFZ_DLR).toInt() -> {
-                    LoadingDialog.getInstance().showLoadDialog(this)
+                    showLoadingDialog()
                     Thread(Runnable {
                         val bitmap = BitmapFactory.decodeFile(imgOCRFile!!.path) //父类的fileimage
                         onStartOCRSFZ(bitmap, ed_dlr_xm, ed_dlr_sfz)
                     }).start()
                 }
                 Integer.toHexString(Constants.SFZ_YJ).toInt() -> {
-                    LoadingDialog.getInstance().showLoadDialog(this)
+                    showLoadingDialog()
                     Thread(Runnable {
                         val bitmap = BitmapFactory.decodeFile(imgOCRFile!!.path) //父类的fileimage
                         onStartOCRSFZ(bitmap, ed_yj_xm, ed_yj_sfz)

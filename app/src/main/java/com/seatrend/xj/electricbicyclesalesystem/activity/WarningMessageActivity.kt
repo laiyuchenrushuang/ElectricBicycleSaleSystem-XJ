@@ -1,5 +1,6 @@
 package com.seatrend.xj.electricbicyclesalesystem.activity
 
+import android.app.Dialog
 import android.os.Build
 import android.support.annotation.RequiresApi
 import android.support.v4.content.ContextCompat
@@ -7,10 +8,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.ListView
-import android.widget.PopupWindow
+import android.widget.*
 import com.seatrend.xj.electricbicyclesalesystem.R
 import com.seatrend.xj.electricbicyclesalesystem.adpater.WarningMessageAdapter
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
@@ -22,6 +20,7 @@ import com.seatrend.xj.electricbicyclesalesystem.persenter.WarningMessagePersent
 import com.seatrend.xj.electricbicyclesalesystem.util.CarHphmUtils
 import com.seatrend.xj.electricbicyclesalesystem.util.GsonUtils
 import com.seatrend.xj.electricbicyclesalesystem.util.LoadingDialog
+import com.seatrend.xj.electricbicyclesalesystem.util.ParseQcodeUtil
 import com.seatrend.xj.electricbicyclesalesystem.view.WarningMessageView
 import kotlinx.android.synthetic.main.activity_warning.*
 import kotlinx.android.synthetic.main.common_no_data.*
@@ -36,6 +35,7 @@ import kotlinx.android.synthetic.main.recyclerview.*
  */
 class WarningMessageActivity : BaseActivity(), WarningMessageView {
 
+    private var mLsh: String = ""  // 签收的流水号
     private var mWarningMessagePersenter: WarningMessagePersenter? = null
 
     private var pageNum = 1
@@ -98,7 +98,7 @@ class WarningMessageActivity : BaseActivity(), WarningMessageView {
             if (TextUtils.isEmpty(searchString)) { //查询条件为空，默认今天查询
                 tv_right!!.text = "今天"
                 getData(true)
-            } else if (searchString!!.trim().length > 10) { //整车编码查询
+            } else if (ParseQcodeUtil.isZcbmString(searchString!!.trim())) { //整车编码查询
                 showLoadingDialog()
                 val map = HashMap<String, String?>()
                 map["curPage"] = "1"
@@ -163,6 +163,7 @@ class WarningMessageActivity : BaseActivity(), WarningMessageView {
                 } else {
                     var enity = GsonUtils.gson(commonResponse.getResponseString(), WarningMessageEntity::class.java)
                     if (enity != null && enity.data != null && enity.data.list != null && enity.data.list.size > 0) {
+                        showLog(" 预警 list size is  > 0")
                         mWarningMessageAdapter!!.clearData()
                         mWarningMessageAdapter!!.addData(enity.data.list as ArrayList<WarningMessageEntity.Data.WList>)
                         runOnUiThread {
@@ -172,11 +173,20 @@ class WarningMessageActivity : BaseActivity(), WarningMessageView {
                         showLog(" 预警 list size is 0")
                     }
                 }
+        }
+        if (commonResponse.getUrl() == Constants.WARNING_QS) {
+            for (db in mWarningMessageAdapter!!.listData) {
+                if (db.lsh == mLsh) {
+                    db.qs = "1" //
+                    break
+                }
+            }
+            runOnUiThread {
+                mWarningMessageAdapter!!.notifyDataSetChanged()
+            }
 
-            }
-            if (commonResponse.getUrl() == Constants.WARNING_QS) {
-                showToast("签收成功")
-            }
+            showToast("签收成功")
+        }
         } catch (e: Exception) {
             showToast(e.message.toString())
         }
@@ -206,11 +216,30 @@ class WarningMessageActivity : BaseActivity(), WarningMessageView {
     }
 
     fun qsQuest(lsh: String) {
-        val map = HashMap<String, String>()
-        map.put("lsh", lsh)
-        map.put("qsr", UserInfo.XM)
-        LoadingDialog.getInstance().showLoadDialog(this)
-        mWarningMessagePersenter!!.doNetworkTask(map, Constants.WARNING_QS)
+
+        val dialog = Dialog(this)
+        // MAlertDialog dialog=new MAlertDialog(this);
+        dialog.setContentView(R.layout.dialog_tip_picker)
+        dialog.setCanceledOnTouchOutside(false)
+
+        val btnCancel = dialog.findViewById<Button>(R.id.btn_cancel)
+        val btnOk = dialog.findViewById<Button>(R.id.btn_ok)
+        val content = dialog.findViewById<TextView>(R.id.content)
+
+        content.text = "是否签收当前条目？"
+        dialog.show()
+        btnCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+        btnOk.setOnClickListener {
+            dialog.dismiss()
+            mLsh = lsh
+            val map = HashMap<String, String>()
+            map.put("lsh", lsh)
+            map.put("qsr", UserInfo.XM)
+            showLoadingDialog()
+            mWarningMessagePersenter!!.doNetworkTask(map, Constants.WARNING_QS)
+        }
     }
 
 
@@ -224,14 +253,14 @@ class WarningMessageActivity : BaseActivity(), WarningMessageView {
         mTypeLv!!.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             when (listData[position]) {
                 "今天" -> {
-                    showToast("今天")
+                    showToast("查询今天")
                     tv_right.text = "今天"
                     ifToday = true
                     pageNum = 1
                     getData(ifToday)
                 }
                 "全部" -> {
-                    showToast("全部")
+                    showToast("查询全部")
                     tv_right.text = "全部"
                     ifToday = false
                     pageNum = 1
@@ -241,7 +270,7 @@ class WarningMessageActivity : BaseActivity(), WarningMessageView {
             pop!!.dismiss()
         }
         pop = PopupWindow(mTypeLv, tv_right.width, ViewGroup.LayoutParams.WRAP_CONTENT, true)
-        pop!!.setBackgroundDrawable(ContextCompat.getDrawable(this,R.color.white))
+        pop!!.setBackgroundDrawable(ContextCompat.getDrawable(this, R.color.white))
         pop!!.isFocusable = false
         pop!!.isOutsideTouchable = true
         pop!!.setOnDismissListener {

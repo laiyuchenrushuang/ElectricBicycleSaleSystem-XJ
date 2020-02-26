@@ -42,26 +42,27 @@ public class FHUtil {
     }
 
     public static ArrayList<FHEnity.Data.FHList> getSortList(ArrayList<FHEnity.Data.FHList> data) {
-        Collections.sort(data, mMyTimeCompare);
         Collections.sort(data, mMyFhztCompare);
         return data;
     }
 
-    private static Comparator<? super FHEnity.Data.FHList> mMyTimeCompare = new Comparator<FHEnity.Data.FHList>() {
-        @Override
-        public int compare(FHEnity.Data.FHList t1, FHEnity.Data.FHList t2) {
-
-            return (int) (t2.getFhsj() - t1.getFhsj());
-        }
-    };
+    //    private static Comparator<? super FHEnity.Data.FHList> mMyTimeCompare = new Comparator<FHEnity.Data.FHList>() {
+//        @Override
+//        public int compare(FHEnity.Data.FHList t1, FHEnity.Data.FHList t2) {
+//
+//            return (int) (t2.getFhsj() - t1.getFhsj());
+//        }
+//    };
     private static Comparator<? super FHEnity.Data.FHList> mMyFhztCompare = new Comparator<FHEnity.Data.FHList>() {
         @Override
         public int compare(FHEnity.Data.FHList t1, FHEnity.Data.FHList t2) {
 
-            if ("0".equals(t1.getFhbj())) {
+            if ((Integer.valueOf(t1.getFhbj()) - Integer.valueOf(t2.getFhbj())) < 0) {
                 return -1;
-            } else {
+            } else if ((Integer.valueOf(t1.getFhbj()) - Integer.valueOf(t2.getFhbj())) > 0) {
                 return 0;
+            } else {
+                return (int) (t2.getFhsj() - t1.getFhsj());
             }
         }
     };

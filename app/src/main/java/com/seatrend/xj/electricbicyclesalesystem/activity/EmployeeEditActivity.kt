@@ -228,7 +228,7 @@ class EmployeeEditActivity : BaseActivity(), NormalView, SelectorAdapter.CheckSt
 
                 //OCR
                 Integer.toHexString(Constants.SFZ_SYR).toInt() -> {
-                    LoadingDialog.getInstance().showLoadDialog(this)
+                    showLoadingDialog()
                     Thread(Runnable {
                         val bitmap = BitmapFactory.decodeFile(imgOCRFile!!.path) //父类的fileimage
                         onStartOCRSFZ(bitmap, ed_xm, ed_sfz)

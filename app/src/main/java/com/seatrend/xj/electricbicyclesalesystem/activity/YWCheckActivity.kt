@@ -55,37 +55,41 @@ class YWCheckActivity : BaseActivity(), NormalView, YwFhAdapter.onItemListener {
 
     override fun netWorkTaskSuccess(commonResponse: CommonResponse) {
         dismissLoadingDialog()
-        if (Constants.FH_GET_LIST.equals(commonResponse.getUrl())) {
-            var enity = GsonUtils.gson(commonResponse.getResponseString(), FHEnity::class.java)
-            if (page == 1) {
-                if (null == enity.data || null == enity.data.list || enity.data.list.size == 0) {
+        try {
+            if (Constants.FH_GET_LIST.equals(commonResponse.getUrl())) {
+                var enity = GsonUtils.gson(commonResponse.getResponseString(), FHEnity::class.java)
+                if (page == 1) {
+                    if (null == enity.data || null == enity.data.list || enity.data.list.size == 0) {
+                        mData.clear()
+                        runOnUiThread {  adapter!!.setData(mData) }
+                        showToast("获取列表信息为空")
+                        return
+                    }
                     mData.clear()
-                    runOnUiThread {  adapter!!.setData(mData) }
-                    showToast("获取列表信息为空")
-                    return
+                    mData = FHUtil.getSortList(enity.data.list)
+                    runOnUiThread{ adapter!!.setData(mData) }
+                } else if (page > 1 && Constants.FH_GET_LIST.equals(commonResponse.getUrl())) {
+                    shuaxin.finishLoadmore()
+                    mData.addAll(FHUtil.getSortList(enity.data.list))
+                    runOnUiThread{ adapter!!.setData(mData) }
                 }
-                mData.clear()
-                mData = FHUtil.getSortList(enity.data.list)
-                runOnUiThread{ adapter!!.setData(mData) }
-            } else if (page > 1 && Constants.FH_GET_LIST.equals(commonResponse.getUrl())) {
-                shuaxin.finishLoadmore()
-                mData.addAll(FHUtil.getSortList(enity.data.list))
-                runOnUiThread{ adapter!!.setData(mData) }
             }
-        }
-        if (Constants.YW_GET_YWCZ_BIKE_DATA.equals(commonResponse.getUrl())) {
-            val mAllBikeMsgEnity = GsonUtils.gson(commonResponse.getResponseString(), AllBikeMsgEnity::class.java)
-            Yw3CzActivity.mAllBikeMsgEnity = mAllBikeMsgEnity
-            var intent = Intent(this, Yw3CzActivity::class.java)
-            intent.putExtra(Constants.UI_TYPE, "0")
-            showLog("[BZ] = "+mData[position].fhbz)
-            intent.putExtra("fhr", mData[position].fhr)
-            intent.putExtra("fhzt", mData[position].fhbj)
-            intent.putExtra("fhyy", mData[position].btgyy)
-            intent.putExtra("fhsj", mData[position].fhsj.toString())
-            intent.putExtra("fhbz", mData[position].fhbz)
-            startActivity(intent)
-            return
+            if (Constants.YW_GET_YWCZ_BIKE_DATA.equals(commonResponse.getUrl())) {
+                val mAllBikeMsgEnity = GsonUtils.gson(commonResponse.getResponseString(), AllBikeMsgEnity::class.java)
+                Yw3CzActivity.mAllBikeMsgEnity = mAllBikeMsgEnity
+                var intent = Intent(this, Yw3CzActivity::class.java)
+                intent.putExtra(Constants.UI_TYPE, "0")
+                showLog("[BZ] = "+mData[position].fhbz)
+                intent.putExtra("fhr", mData[position].fhr)
+                intent.putExtra("fhzt", mData[position].fhbj)
+                intent.putExtra("fhyy", mData[position].btgyy)
+                intent.putExtra("fhsj", mData[position].fhsj.toString())
+                intent.putExtra("fhbz", mData[position].fhbz)
+                startActivity(intent)
+                return
+            }
+        } catch (e: Exception) {
+            showToast(e.message.toString())
         }
 
     }

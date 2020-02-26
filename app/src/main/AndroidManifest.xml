@@ -108,6 +108,6 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.YwCarCheckActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
-        <service android:name=".service.PhotoUploadService"/>
+        <service android:name="com.seatrend.xj.electricbicyclesalesystem.service.PhotoUploadService"/>
     </application>
 </manifest>

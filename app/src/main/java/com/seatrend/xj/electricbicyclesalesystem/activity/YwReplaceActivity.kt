@@ -37,6 +37,8 @@ import kotlinx.android.synthetic.main.bottom_button.*
 class YwReplaceActivity : BaseActivity(), NormalView {
 
 
+    private var mxCphm: String? = null //新车牌号码
+    private var moCphm: String? = null //原来的车牌号码
     private var headPhoto: ByteArray? = null//头像照片
     private var FACE_COMPARE_CODE: Int = 11
     private var mNormalPresenter: NormalPresenter? = null
@@ -70,6 +72,7 @@ class YwReplaceActivity : BaseActivity(), NormalView {
             }
             runOnUiThread {
                 et_cphm.text = enity.data
+                mxCphm = enity.data
             }
         }
     }
@@ -111,6 +114,7 @@ class YwReplaceActivity : BaseActivity(), NormalView {
         }
 
         btn_hqhphm.setOnClickListener {
+            showLoadingDialog()
             val map = HashMap<String, String>()
             map["lybm"] = UserInfo.GLBM
             mNormalPresenter!!.doNetworkTask(map, Constants.SYSTEM_PRODUCT_HPHM)
@@ -151,6 +155,7 @@ class YwReplaceActivity : BaseActivity(), NormalView {
         ed_yj_xm.filters = arrayOf(inputFilter)
         et_yj_xxdz.filters = arrayOf(inputFilter)
     }
+
     private fun startThreadUpdateSp(dmsm: String, spinner: Spinner?) {
         var pcThread = Thread {
             val dmz = CodeTableSQLiteUtils.queryByDmlbAndDmsm(Constants.XSQY, dmsm)
@@ -178,21 +183,21 @@ class YwReplaceActivity : BaseActivity(), NormalView {
         val enity = CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness
         when (obj) {
             sp_syr_qh2 -> {
-                if (enity.djxzqh == null || "0" != enity.sfkyghhp ||changed1) {
+                if (enity.djxzqh == null || "0" != enity.sfkyghhp || changed1) {
                     return
                 }
-                changed1=true
+                changed1 = true
                 OtherUtils.setSpinner2Dmsm(CodeTableSQLiteUtils.queryByDmlbAndDmzGetDmsm(Constants.XSQY, enity.djxzqh), sp_syr_qh2)
             }
             sp_syr_yj_qh2 -> {
-                if (enity.lxdzxzqh == null || "0" != enity.sfkyghhp ||changed2) {
+                if (enity.lxdzxzqh == null || "0" != enity.sfkyghhp || changed2) {
                     return
                 }
                 changed2 = true
                 OtherUtils.setSpinner2Dmsm(CodeTableSQLiteUtils.queryByDmlbAndDmzGetDmsm(Constants.XSQY, enity.lxdzxzqh), sp_syr_yj_qh2)
             }
             sp_yj_qh2 -> {
-                if (enity.sjryjxzqh == null || "0" != enity.sfkyghhp ||changed3) {
+                if (enity.sjryjxzqh == null || "0" != enity.sfkyghhp || changed3) {
                     return
                 }
                 changed3 = true
@@ -203,18 +208,22 @@ class YwReplaceActivity : BaseActivity(), NormalView {
 
     private fun initData() {
         bt_next.text = "人证核验"
-        initSpData()
-        cb_xsz_huan.performClick()
-        if ("0".equals(UserInfo.GlobalParameter.LQBJ)) {
-            ll_yjxx.visibility = View.GONE
-        } else {
-            ll_yjxx.visibility = View.VISIBLE
-        }
+        try {
+            initSpData()
+            cb_xsz_huan.performClick()
+            if ("0".equals(UserInfo.GlobalParameter.LQBJ)) {
+                ll_yjxx.visibility = View.GONE
+            } else {
+                ll_yjxx.visibility = View.VISIBLE
+            }
 
-        if ("0".equals(CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.sfkyghhp)) {
-            ViewShowUtils.showGoneView(btn_hqhphm)
+            if ("0".equals(CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.sfkyghhp)) {
+                ViewShowUtils.showGoneView(btn_hqhphm)
+            }
+            getData()
+        } catch (e: Exception) {
+            showToast(e.message.toString())
         }
-        getData()
     }
 
     private fun getData() {
@@ -234,7 +243,7 @@ class YwReplaceActivity : BaseActivity(), NormalView {
             et_syr_yj_yzbm.setText(enity.yzbm)
             et_syr_yxdz.setText(enity.dzyx)
             et_cphm.text = enity.cph
-
+            moCphm = enity.cph
             OtherUtils.setSpinnerToDmz(enity.dlrsfzmlx, sp_dlr_sfz)
             ed_dlr_sfz.setText(enity.dlrsfzmhm)
             ed_dlr_xm.setText(enity.dlrxm)
@@ -254,9 +263,9 @@ class YwReplaceActivity : BaseActivity(), NormalView {
     private fun initSpData() {
 
         //省的设置
-        SpinnerUtil.setPinnerDataQh(this, Constants.MY_QH_SHENG_DMLB, sp_syr_qh1, if(null == CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.djxzqh || TextUtils.isEmpty(CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.djxzqh)) null else CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.djxzqh.substring(0, 2) + "0000")
-        SpinnerUtil.setPinnerDataQh(this, Constants.MY_QH_SHENG_DMLB, sp_yj_qh1, if(null == CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.sjryjxzqh || TextUtils.isEmpty(CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.sjryjxzqh)) null else CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.sjryjxzqh.substring(0, 2) + "0000")
-        SpinnerUtil.setPinnerDataQh(this, Constants.MY_QH_SHENG_DMLB, sp_syr_yj_qh1, if(null == CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.lxdzxzqh || TextUtils.isEmpty(CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.lxdzxzqh)) null else CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.lxdzxzqh.substring(0, 2) + "0000")
+        SpinnerUtil.setPinnerDataQh(this, Constants.MY_QH_SHENG_DMLB, sp_syr_qh1, if (null == CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.djxzqh || TextUtils.isEmpty(CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.djxzqh)) null else CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.djxzqh.substring(0, 2) + "0000")
+        SpinnerUtil.setPinnerDataQh(this, Constants.MY_QH_SHENG_DMLB, sp_yj_qh1, if (null == CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.sjryjxzqh || TextUtils.isEmpty(CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.sjryjxzqh)) null else CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.sjryjxzqh.substring(0, 2) + "0000")
+        SpinnerUtil.setPinnerDataQh(this, Constants.MY_QH_SHENG_DMLB, sp_syr_yj_qh1, if (null == CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.lxdzxzqh || TextUtils.isEmpty(CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.lxdzxzqh)) null else CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.lxdzxzqh.substring(0, 2) + "0000")
 
         SpinnerUtil.setPinnerData(this, Constants.SFZMMC, sp_syr_sfz)
         SpinnerUtil.setPinnerData(this, Constants.SFZMMC, sp_dlr_sfz)
@@ -274,6 +283,7 @@ class YwReplaceActivity : BaseActivity(), NormalView {
                 cb2.isChecked = false
                 initYYSp(2, spinner)
             }
+            setBtnInvisible()
             if (cb1.isChecked || cb2.isChecked) {
                 spinner.visibility = View.VISIBLE
             } else {
@@ -286,13 +296,31 @@ class YwReplaceActivity : BaseActivity(), NormalView {
                 cb1.isChecked = false
                 initYYSp(1, spinner)
             }
+            setBtnInvisible()
             if (cb1.isChecked || cb2.isChecked) {
                 spinner.visibility = View.VISIBLE
             } else {
                 spinner.visibility = View.INVISIBLE
             }
         }
+    }
 
+    //车牌号是否需要新建
+    private fun setBtnInvisible() {
+        if (cb_hp_bu.isChecked || cb_hp_huan.isChecked) { //车牌号是否被点击
+            btn_hqhphm.visibility = View.VISIBLE
+            tv_hphm.text = "新号牌号码"
+            et_cphm.text = mxCphm // 号牌号码的缓存
+
+            if(TextUtils.isEmpty(mxCphm)){ //没有获取新号牌 就用旧号牌
+                et_cphm.text = moCphm
+            }
+
+        } else {          //行驶证的
+            btn_hqhphm.visibility = View.GONE
+            tv_hphm.text = "号牌号码"
+            et_cphm.text = moCphm // 号牌号码的缓存
+        }
     }
 
     private fun initYYSp(flag: Int?, spiner: Spinner) {
@@ -356,21 +384,21 @@ class YwReplaceActivity : BaseActivity(), NormalView {
 
                 //OCR
                 Integer.toHexString(Constants.SFZ_SYR).toInt() -> {
-                    LoadingDialog.getInstance().showLoadDialog(this)
+                    showLoadingDialog()
                     Thread(Runnable {
                         val bitmap = BitmapFactory.decodeFile(imgOCRFile!!.path) //父类的fileimage
                         onStartOCRSFZ(bitmap, ed_syr_xm, ed_syr_sfz)
                     }).start()
                 }
                 Integer.toHexString(Constants.SFZ_DLR).toInt() -> {
-                    LoadingDialog.getInstance().showLoadDialog(this)
+                    showLoadingDialog()
                     Thread(Runnable {
                         val bitmap = BitmapFactory.decodeFile(imgOCRFile!!.path) //父类的fileimage
                         onStartOCRSFZ(bitmap, ed_dlr_xm, ed_dlr_sfz)
                     }).start()
                 }
                 Integer.toHexString(Constants.SFZ_YJ).toInt() -> {
-                    LoadingDialog.getInstance().showLoadDialog(this)
+                    showLoadingDialog()
                     Thread(Runnable {
                         val bitmap = BitmapFactory.decodeFile(imgOCRFile!!.path) //父类的fileimage
                         onStartOCRSFZ(bitmap, ed_yj_xm, ed_yj_sfz)
@@ -386,7 +414,10 @@ class YwReplaceActivity : BaseActivity(), NormalView {
                 showToast("网络同步信息失败，请先设置界面同步代码")
                 return
             }
-
+            if (TextUtils.isEmpty(et_cphm.text.toString())) {
+                showToast("请获取车牌号码")
+                return
+            }
             if (!CheckEditTxetUtils.checkEditextValuable(ed_syr_sfz, ed_syr_xm, et_syr_lxdh, et_syr_xxdz, et_syr_yj_xxdz, et_syr_yj_yzbm)) {
                 showToast("请填写完成所有人信息")
                 return

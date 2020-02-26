@@ -66,14 +66,14 @@ class CarCYxxFragment : BaseFragment() {
             if (activity is Yw3CzActivity && "3" == activity.intent.getStringExtra(Constants.UI_TYPE)) {
                     getCxCarData()
             } else {
-                if (null == enity || null == enity!!.data || null == enity!!.data.fjdcBusiness) {
-                    showToast("查询查验信息为空")
+                if (null == enity || null == enity!!.data || null == enity!!.data.checkData) {
+                    showToast("查验信息为空")
                     return
                 }
 
-                if ("A".equals(enity!!.data.fjdcBusiness.ywlx) ||
-                        "B".equals(enity!!.data.fjdcBusiness.ywlx) ||
-                        "D".equals(enity!!.data.fjdcBusiness.ywlx)) { //A注册 D变更 B转移 7旧车换牌
+                if ("A".equals(enity!!.data.checkData.ywlx) ||
+                        "B".equals(enity!!.data.checkData.ywlx) ||
+                        "D".equals(enity!!.data.checkData.ywlx)) { //A注册 D变更 B转移 7旧车换牌
                     getData()
                 } else {
                     ViewShowUtils.showGoneView(ll_cyxx)
@@ -93,7 +93,7 @@ class CarCYxxFragment : BaseFragment() {
 
     private fun getData() {
         try {
-            if (enity == null || enity!!.data == null || enity!!.data.checkData == null || enity!!.data.photoList == null || enity!!.data.photoList.size == 0) {
+            if (enity == null || enity!!.data == null || enity!!.data.checkData == null ) {
                 showToast("获取查验信息失败")
                 return
             }
@@ -119,6 +119,11 @@ class CarCYxxFragment : BaseFragment() {
             tv_zxj.text = enity!!.data.checkData.scqhlzxj
             val cyList = CodeTableSQLiteUtils.queryByDMLB(Constants.CYZP)
             //只获取查验的照片
+
+            if(enity!!.data.photoList.size == 0){
+                showToast("获取查验图片信息为空")
+                return
+            }
             photoList.clear()
             for (db in enity!!.data.photoList) {
                 for (enity in cyList) {

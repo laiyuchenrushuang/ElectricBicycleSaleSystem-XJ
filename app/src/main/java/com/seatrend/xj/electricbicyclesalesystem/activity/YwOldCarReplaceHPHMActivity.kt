@@ -128,6 +128,7 @@ class YwOldCarReplaceHPHMActivity : BaseActivity(),NormalView{
 
 
         btn_hqhphm.setOnClickListener {
+            showLoadingDialog()
             val map = HashMap<String, String>()
             map["lybm"] = UserInfo.GLBM
             mNormalPresenter!!.doNetworkTask(map, Constants.SYSTEM_PRODUCT_HPHM)
@@ -200,10 +201,14 @@ class YwOldCarReplaceHPHMActivity : BaseActivity(),NormalView{
     }
 
     private fun initShowScrean() {
-        initSp()
+        try {
+            initSpData()
+        } catch (e: Exception) {
+            showToast(e.message.toString())
+        }
     }
 
-    private fun initSp() {
+    private fun initSpData() {
         //省的设置
         SpinnerUtil.setPinnerDataQh(this, Constants.MY_QH_SHENG_DMLB, sp_syr_qh1, if(null == CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.djxzqh || TextUtils.isEmpty(CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.djxzqh)) null else CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.djxzqh.substring(0, 2) + "0000")
         SpinnerUtil.setPinnerDataQh(this, Constants.MY_QH_SHENG_DMLB, sp_yj_qh1, if(null == CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.sjryjxzqh || TextUtils.isEmpty(CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.sjryjxzqh)) null else CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.sjryjxzqh.substring(0, 2) + "0000")
@@ -256,21 +261,21 @@ class YwOldCarReplaceHPHMActivity : BaseActivity(),NormalView{
 
                 //OCR
                 Integer.toHexString(Constants.SFZ_SYR).toInt() -> {
-                    LoadingDialog.getInstance().showLoadDialog(this)
+                    showLoadingDialog()
                     Thread(Runnable {
                         val bitmap = BitmapFactory.decodeFile(imgOCRFile!!.path) //父类的fileimage
                         onStartOCRSFZ(bitmap, ed_syr_xm, ed_syr_sfz)
                     }).start()
                 }
                 Integer.toHexString(Constants.SFZ_DLR).toInt() -> {
-                    LoadingDialog.getInstance().showLoadDialog(this)
+                    showLoadingDialog()
                     Thread(Runnable {
                         val bitmap = BitmapFactory.decodeFile(imgOCRFile!!.path) //父类的fileimage
                         onStartOCRSFZ(bitmap, ed_dlr_xm, ed_dlr_sfz)
                     }).start()
                 }
                 Integer.toHexString(Constants.SFZ_YJ).toInt() -> {
-                    LoadingDialog.getInstance().showLoadDialog(this)
+                    showLoadingDialog()
                     Thread(Runnable {
                         val bitmap = BitmapFactory.decodeFile(imgOCRFile!!.path) //父类的fileimage
                         onStartOCRSFZ(bitmap, ed_yj_xm, ed_yj_sfz)

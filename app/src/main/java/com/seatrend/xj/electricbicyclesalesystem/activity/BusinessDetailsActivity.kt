@@ -155,7 +155,7 @@ class BusinessDetailsActivity : BaseActivity(), BusinessDetailsView {
         map.put("djbm", UserInfo.GLBM)
         map.put("kssj", tv_tjqssj.text.toString() + " 00:00:00")
         map.put("jssj", tv_tjzzsj.text.toString() + " 23:59:59")
-        LoadingDialog.getInstance().showLoadDialog(this)
+        showLoadingDialog()
         mBusinessDetailsPersenter!!.doNetworkTask(map, Constants.BUSINESS_MESSAGE)
     }
 

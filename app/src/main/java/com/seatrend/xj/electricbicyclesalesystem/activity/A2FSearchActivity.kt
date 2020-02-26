@@ -133,7 +133,7 @@ class A2FSearchActivity: BaseActivity(), NormalView {
                 map["pageSize"] = "1"
                 map["gdbm"] = UserInfo.GLBM
                 map["zcbm"] = searchString.trim().toUpperCase()
-                LoadingDialog.getInstance().showLoadDialog(this)
+                showLoadingDialog()
                 mNormalPresenter!!.doNetworkTask(map, Constants.GD_GET_LIST)
             }else{
                 val map = HashMap<String, String?>()
@@ -141,7 +141,7 @@ class A2FSearchActivity: BaseActivity(), NormalView {
                 map["pageSize"] = "1"
                 map["gdbm"] = UserInfo.GLBM
                 map["hphm"] = searchString.trim().toUpperCase()
-                LoadingDialog.getInstance().showLoadDialog(this)
+                showLoadingDialog()
                 mNormalPresenter!!.doNetworkTask(map, Constants.GD_GET_LIST)
             }
 

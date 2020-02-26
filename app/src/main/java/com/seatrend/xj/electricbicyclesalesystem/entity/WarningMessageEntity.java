@@ -74,7 +74,7 @@ public class WarningMessageEntity extends BaseEntity {
             private String zcbm;
             private String yjyy;
             private long yjsj;
-            private String qs;
+            private String qs; // 0未签收 1签收
             private String qsr;
             private String qssj;
 

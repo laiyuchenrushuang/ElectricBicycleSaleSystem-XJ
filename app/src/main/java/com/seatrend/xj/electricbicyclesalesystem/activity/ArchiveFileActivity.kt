@@ -111,7 +111,7 @@ class ArchiveFileActivity : BaseActivity(), SearchViewState, ArchiveFileView {
             }
             val map = HashMap<String, String?>()
             map["zcbm"] = searchString!!.trim().toUpperCase()
-            LoadingDialog.getInstance().showLoadDialog(this)
+            showLoadingDialog()
             mArchiveFilePresenter!!.doNetworkTask(map, Constants.FACTOTY_GET_CAR_MSG)
         }
 
@@ -128,7 +128,7 @@ class ArchiveFileActivity : BaseActivity(), SearchViewState, ArchiveFileView {
             val map = HashMap<String, String?>()
             map["filingJSON"] = adapter!!.getPositionList().toString()+""
             map["username"] = UserInfo.SFZMHM+""
-            LoadingDialog.getInstance().showLoadDialog(this)
+            showLoadingDialog()
             mArchiveFilePresenter!!.doNetworkTask(map, Constants.POST_DAGD)
         }
     }

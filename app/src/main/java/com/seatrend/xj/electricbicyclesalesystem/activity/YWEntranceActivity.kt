@@ -135,7 +135,7 @@ class YWEntranceActivity : BaseActivity(), NormalView {
 
         bt_next.setOnClickListener {
             if (sp_yw.selectedItem != null && "A".equals(sp_yw.selectedItem.toString().split(":")[0])) {  //注册登记
-                LoadingDialog.getInstance().showLoadDialog(this)
+                showLoadingDialog()
                 if (!ObjectNullUtil.checknull(et_yw_cphm.text.toString()) && !ObjectNullUtil.checknull(et_yw_hgzbh.text.toString())) {
                     showToast("整车编码为空或者车牌号为空")
                     return@setOnClickListener
@@ -158,7 +158,7 @@ class YWEntranceActivity : BaseActivity(), NormalView {
                     showToast("车牌号码为空")
                     return@setOnClickListener
                 }
-                LoadingDialog.getInstance().showLoadDialog(this)
+                showLoadingDialog()
                 showToast("车牌号码查询")
                 val map = HashMap<String, String?>()
                 map.put("hphm", et_yw_cphm.text.toString().toUpperCase())
@@ -202,7 +202,7 @@ class YWEntranceActivity : BaseActivity(), NormalView {
         }
         et_yw_hgzbh.setText(zcbm)
 //        map["hgzewm"] = qrcode
-//        LoadingDialog.getInstance().showLoadDialog(this)
+//        showLoadingDialog()
 //        mNormalPresenter!!.doNetworkTask(map, Constants.QR_CODE_ANALYSIS)
     }
 

@@ -155,7 +155,7 @@ class YwFhSearchActivity : BaseActivity(), NormalView {
                 map["curPage"] = "1"
                 map["pageSize"] = "1"
                 map["djbm"] = UserInfo.GLBM
-                LoadingDialog.getInstance().showLoadDialog(this)
+                showLoadingDialog()
                 mNormalPresenter!!.doNetworkTask(map, Constants.FH_GET_LIST)
             }else{
                 val map = HashMap<String, String?>()
@@ -163,7 +163,7 @@ class YwFhSearchActivity : BaseActivity(), NormalView {
                 map["curPage"] = "1"
                 map["pageSize"] = "1"
                 map["djbm"] = UserInfo.GLBM
-                LoadingDialog.getInstance().showLoadDialog(this)
+                showLoadingDialog()
                 mNormalPresenter!!.doNetworkTask(map, Constants.FH_GET_LIST)
             }
 

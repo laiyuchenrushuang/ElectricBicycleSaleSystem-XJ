@@ -85,7 +85,7 @@ class InsuranceActivity : BaseActivity(), CollectBicycleView {
 
         val map = HashMap<String, String?>()
         map.put("code", qrcode)
-        LoadingDialog.getInstance().showLoadDialog(this)
+        showLoadingDialog()
         mCollectBicyclePersenter!!.doNetworkTask(map, Constants.DECRYPT_INSURANCE_MSG)
     }
 
@@ -116,7 +116,7 @@ class InsuranceActivity : BaseActivity(), CollectBicycleView {
      * 获取保险机构类型(OK)
      */
     private fun getBDType() {
-        LoadingDialog.getInstance().showLoadDialog(this)
+        showLoadingDialog()
         mCollectBicyclePersenter!!.doNetworkTask(HashMap<String, String?>(), Constants.GET_COMPANY_NAME)
     }
 

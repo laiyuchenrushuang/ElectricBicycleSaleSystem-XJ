@@ -237,13 +237,14 @@ class ChaYanActivity : BaseActivity(), NormalView {
                     map["cph"] = cphm
                 }
                 showLog("result [CY-POST] === " + GsonUtils.toJson(map))
-                LoadingDialog.getInstance().showLoadDialog(this)
+                showLoadingDialog()
                 mNormalPresenter!!.doNetworkTask(map, Constants.SAVE_CY_MSG)
             } catch (e: Exception) {
                 showToast(e.message.toString())
             }
         }
         btn_hqhphm.setOnClickListener {
+            showLoadingDialog()
             val map = HashMap<String, String>()
             map["lybm"] = UserInfo.GLBM
             mNormalPresenter!!.doNetworkTask(map, Constants.SYSTEM_PRODUCT_HPHM)

@@ -73,24 +73,28 @@ class YwTbEditActivity: BaseActivity(), SelectorAdapter.CheckState,NormalView {
     private fun bindEvent() {
         bt_next.setOnClickListener {
             showLoadingDialog()
-            var resultyy = StringBuffer()
-            val map = HashMap<String,String>()
-            map["lsh"] = Yw3CzActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.lsh
-            map["xh"] = Yw3CzActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.xh
-            map["glbm"] = UserInfo.GLBM
-            map["zt"] = "Q" // Q-已退办
-            if(mList != null && mList!!.size >0){
-                for(db in mList!!){
-                    if(db != mList!!.last()){
-                        resultyy.append("$db,")
-                    }else{
-                        resultyy.append(db)
+            try {
+                var resultyy = StringBuffer()
+                val map = HashMap<String,String>()
+                map["lsh"] = Yw3CzActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.lsh
+                map["xh"] = Yw3CzActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.xh
+                map["glbm"] = UserInfo.GLBM
+                map["zt"] = "Q" // Q-已退办
+                if(mList != null && mList!!.size >0){
+                    for(db in mList!!){
+                        if(db != mList!!.last()){
+                            resultyy.append("$db,")
+                        }else{
+                            resultyy.append(db)
+                        }
                     }
                 }
+                map["yy"] = resultyy.toString()
+                map["bz"] = ed_tbbz.text.toString()
+                mNormalPresenter!!.doNetworkTask(map, Constants.TB_COMMIT)
+            } catch (e: Exception) {
+                showToast(e.message.toString())
             }
-            map["yy"] = resultyy.toString()
-            map["bz"] = ed_tbbz.text.toString()
-            mNormalPresenter!!.doNetworkTask(map, Constants.TB_COMMIT)
         }
         ed_tbbz.filters = arrayOf(inputFilter)
     }

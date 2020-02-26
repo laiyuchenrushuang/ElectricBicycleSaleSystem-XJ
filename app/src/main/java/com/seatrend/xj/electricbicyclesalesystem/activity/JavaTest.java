@@ -29,6 +29,7 @@ public class JavaTest {
 //
         Pattern emoji = Pattern.compile("[\ud83c\udc00-\ud83c\udfff]|[\ud83d\udc00-\ud83d\udfff]|[\u2600-\u27ff]",
                 Pattern.UNICODE_CASE | Pattern.CASE_INSENSITIVE);
+
 //
 //       String regEx = "(\\d+\\.\\d+\\.\\d+\\.\\d+)\\:(\\d+)";
 //        String result = "http://192.168.0.221:8099/electricVehicleSalePlatformXinjiang";

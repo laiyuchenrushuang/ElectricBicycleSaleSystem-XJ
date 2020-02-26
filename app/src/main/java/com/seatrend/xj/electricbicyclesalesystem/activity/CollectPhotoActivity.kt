@@ -377,9 +377,10 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
 
 
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-
+            showLoadingDialog()
 
             Thread(Runnable {
+
                 var bitmap = BitmapUtils.getSmallBitmap(imgFile!!.path)
                 bitmap = BitmapUtils.compressImage(bitmap)
                 BitmapUtils.saveBitmap(bitmap, imgFile!!.name.replace(".jpg", ""))
@@ -389,6 +390,7 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
                 runOnUiThread {
                     allPhoto[photoPosition].zpPath = imgFile!!.path
                     mCheckDataPhotoAdapter!!.setPhoto(photoPosition, imgFile!!.path)
+                    dismissLoadingDialog()
                 }
             }).start()
         }

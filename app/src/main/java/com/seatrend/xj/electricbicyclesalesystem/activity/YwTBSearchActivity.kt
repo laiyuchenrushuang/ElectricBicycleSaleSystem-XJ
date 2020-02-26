@@ -134,7 +134,7 @@ class YwTBSearchActivity : BaseActivity(), NormalView {
                 return@setOnClickListener
             }
             searchview.clearFocus()
-            if (searchString!!.trim().length > 10) {
+            if (ParseQcodeUtil.isZcbmString(searchString!!.trim())) {
                 val map = HashMap<String, String?>()
                 map["zcbm"] = searchString.trim().toUpperCase()
                 map["curPage"] = "1"

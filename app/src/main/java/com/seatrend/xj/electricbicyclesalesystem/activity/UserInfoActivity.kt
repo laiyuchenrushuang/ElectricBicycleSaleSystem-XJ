@@ -96,7 +96,7 @@ class UserInfoActivity : BaseActivity() {
     }
 
     private fun exitLogin() {
-        LoadingDialog.getInstance().showLoadDialog(this)
+        showLoadingDialog()
         val map = HashMap<String, String?>()
         map.put("username", UserInfo.XM)
         HttpService.getInstance().getDataFromServer(map, Constants.EXIT_LOGIN, Constants.GET, object : BaseModule() {

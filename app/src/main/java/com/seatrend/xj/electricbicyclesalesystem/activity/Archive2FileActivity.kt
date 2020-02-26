@@ -1,5 +1,6 @@
 package com.seatrend.xj.electricbicyclesalesystem.activity
 
+import android.app.Dialog
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Build
@@ -7,10 +8,7 @@ import android.support.annotation.RequiresApi
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.ListView
-import android.widget.PopupWindow
+import android.widget.*
 import com.seatrend.xj.electricbicyclesalesystem.R
 import com.seatrend.xj.electricbicyclesalesystem.adpater.YwGdAdapter
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
@@ -49,17 +47,17 @@ class Archive2FileActivity : BaseActivity(), YwGdAdapter.itemOnclickListener, Ba
             if (page == 1) {
                 if (null == enity || null == enity.data || null == enity.data.list || enity.data.list.size == 0) {
                     mData.clear()
-                    runOnUiThread {  adapter!!.setData(mData) }
+                    runOnUiThread { adapter!!.setData(mData) }
                     showToast("获取列表信息为空")
                     return
                 }
                 mData.clear()
                 mData = enity.data.list
-                runOnUiThread {  adapter!!.setData(mData) }
+                runOnUiThread { adapter!!.setData(mData) }
             } else {
                 shuaxin.finishLoadmore()
                 mData.addAll(enity.data.list)
-                runOnUiThread {  adapter!!.setData(mData) }
+                runOnUiThread { adapter!!.setData(mData) }
             }
         }
 
@@ -145,7 +143,7 @@ class Archive2FileActivity : BaseActivity(), YwGdAdapter.itemOnclickListener, Ba
             }
         }
         bt_next.setOnClickListener {
-            showTipDialog("操作提示", "即将进行批量归档操作，确认以继续。\n",0)
+            showTipDialog("操作提示", "即将进行批量归档操作，确认以继续。\n", 0)
         }
 
         shuaxin.setOnLoadmoreListener {
@@ -183,7 +181,7 @@ class Archive2FileActivity : BaseActivity(), YwGdAdapter.itemOnclickListener, Ba
             typeSelectYwztPopup!!.dismiss()
         }
         typeSelectYwztPopup = PopupWindow(mTypeLv, ll_ywlx.width, ViewGroup.LayoutParams.WRAP_CONTENT, true)
-        typeSelectYwztPopup!!.setBackgroundDrawable(ContextCompat.getDrawable(this,R.color.white))
+        typeSelectYwztPopup!!.setBackgroundDrawable(ContextCompat.getDrawable(this, R.color.white))
         typeSelectYwztPopup!!.isFocusable = false
         typeSelectYwztPopup!!.isOutsideTouchable = true
         typeSelectYwztPopup!!.setOnDismissListener {
@@ -210,6 +208,24 @@ class Archive2FileActivity : BaseActivity(), YwGdAdapter.itemOnclickListener, Ba
     }
 
     override fun itemBtnOnclick(posion: Int) {
+//
+//        val dialog = Dialog(this)
+//        // MAlertDialog dialog=new MAlertDialog(this);
+//        dialog.setContentView(R.layout.dialog_tip_picker)
+//        dialog.setCanceledOnTouchOutside(false)
+//
+//        val btnCancel = dialog.findViewById<Button>(R.id.btn_cancel)
+//        val btnOk = dialog.findViewById<Button>(R.id.btn_ok)
+//        val content = dialog.findViewById<TextView>(R.id.content)
+//
+//        content.text = "是否归档当前条目？"
+//        dialog.show()
+//        btnCancel.setOnClickListener {
+//            dialog.dismiss()
+//        }
+//        btnOk.setOnClickListener {
+//            dialog.dismiss()
+        showLoadingDialog()
         plCommit = false
         val map = HashMap<String, String?>()
         map["lsh"] = mData[posion].lsh
@@ -217,10 +233,11 @@ class Archive2FileActivity : BaseActivity(), YwGdAdapter.itemOnclickListener, Ba
         map["glbm"] = UserInfo.GLBM
         map["zt"] = "E" // E-已归档
         mNormalPresenter!!.doNetworkTask(map, Constants.GD_COMMIT)
+//        }
     }
 
 
-    override fun tipDialogOKListener(flag:Int) {
+    override fun tipDialogOKListener(flag: Int) {
         count = 0
         plCommit = true
         for (db in mData) {

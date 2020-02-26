@@ -29,9 +29,12 @@ import com.joyusing.ocr.OcrResult
 import com.seatrend.xj.electricbicyclesalesystem.R
 import com.seatrend.xj.electricbicyclesalesystem.activity.LoginLoadingActivity
 import com.seatrend.xj.electricbicyclesalesystem.activity.MainOtherActivity
+import com.seatrend.xj.electricbicyclesalesystem.database.CodeTableSQLiteUtils
 import com.seatrend.xj.electricbicyclesalesystem.entity.MessageEntity
+import com.seatrend.xj.electricbicyclesalesystem.service.PhotoUploadService
 import com.seatrend.xj.electricbicyclesalesystem.util.GsonUtils
 import com.seatrend.xj.electricbicyclesalesystem.util.LoadingDialog
+import com.seatrend.xj.electricbicyclesalesystem.util.ServiceUtils
 import com.seatrend.xj.electricbicyclesalesystem.util.StringUtils
 import org.json.JSONException
 import org.json.JSONObject
@@ -128,11 +131,24 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT//竖屏
         ActivityCollector.addActivity(this)
         //ButterKnife.bind(this)
+        serviceOnLine()
         initCommonTitle()
         initView()
 
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
-            setStatusBarColor(ContextCompat.getColor(this,R.color.theme_color))
+            setStatusBarColor(ContextCompat.getColor(this, R.color.theme_color))
+        }
+    }
+
+    //service 保护
+    private fun serviceOnLine() {
+        showLog("PhotoUploadService coming services online")
+        if (!ServiceUtils.isRunService(this, "com.seatrend.xj.electricbicyclesalesystem.service.PhotoUploadService")) {
+            showLog("PhotoUploadService is not run")
+            if (CodeTableSQLiteUtils.queryAll().size > 0) {
+                showLog("PhotoUploadService restart")
+                startService(Intent(this, PhotoUploadService::class.java))
+            }
         }
     }
 
@@ -528,7 +544,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
         text.setHorizontallyScrolling(true)
     }
 
-    interface DialogListener {
+    interface DialogListener{
         fun tipDialogOKListener(flag: Int)
     }
 }

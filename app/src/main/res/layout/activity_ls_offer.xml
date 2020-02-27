@@ -30,21 +30,15 @@
 
                 <TextView
                     style="@style/carcy_info_jscs_left"
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
                     android:layout_height="match_parent"
-                    android:gravity="center"
                     android:text="业务类型" />
-
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
 
                 <TextView
                     style="@style/carcy_info_jscs_right"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:gravity="center"
+                    android:layout_marginStart="12dp"
                     android:text="临时号牌申请" />
             </LinearLayout>
 

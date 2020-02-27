@@ -83,18 +83,28 @@ public class PhotoUploadService extends Service {
         }
     };
 
+    /**
+     * Why kill the current service here "stopSelf()", because the program design does not want the service to be open all the time,
+     * which is not friendly to the phone performance of the customer, when the program detects that there is no picture
+     * upload business, then kill the service process, then when to start? Each Activity has a parent, when open each
+     * interface, go to monitor whether the service is running, if the current service in running, so will not open
+     * service, if the current service closed and will open services, to upload photos, interface must be changed,
+     * the service is open, when the service open database to detect whether there is need to upload photos, if you
+     * have a photo to upload, if no photo, close the current service, have a task, upload service open, task,
+     * service shut down.
+     */
 
     private void checkUpload() {
         List<PhotoEntity> list = CodeTableSQLiteUtils.queryAll();
         if (list.size() == 0) {
             Log.i(PUS_TAG, "数据库无照片");
+            stopSelf();
             return;
         }
         Log.i(PUS_TAG, "数据库有照片 长度 =" + list.size());
         Log.i(PUS_TAG, "数据库有照片 内容 =" + GsonUtils.toJson(list));
 
         for (PhotoEntity entity : list) {
-
 
             File file = new File(entity.getZpPath());
             String zpdz = entity.getZpdz();
@@ -272,13 +282,12 @@ public class PhotoUploadService extends Service {
     public void onDestroy() {
         super.onDestroy();
         stopSelf();
+        Log.i(PUS_TAG, "SERVICE　OFF");
         try {
             timer.cancel();
             timerTask.cancel();
         } catch (Exception e) {
             e.getMessage();
         }
-
-
     }
 }

@@ -145,7 +145,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
         showLog("PhotoUploadService coming services online")
         if (!ServiceUtils.isRunService(this, "com.seatrend.xj.electricbicyclesalesystem.service.PhotoUploadService")) {
             showLog("PhotoUploadService is not run")
-            if (CodeTableSQLiteUtils.queryAll().size > 0) {
+            if (CodeTableSQLiteUtils.queryAll().size > 0) { //只有有数据才去重启服务
                 showLog("PhotoUploadService restart")
                 startService(Intent(this, PhotoUploadService::class.java))
             }

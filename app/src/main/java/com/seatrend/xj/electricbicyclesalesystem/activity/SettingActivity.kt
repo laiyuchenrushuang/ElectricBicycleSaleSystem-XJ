@@ -73,6 +73,7 @@ class SettingActivity : BaseActivity(), SettingView {
         showErrorDialog(commonResponse.getResponseString())
         if (Constants.QH_SHENG.equals(commonResponse.getUrl()) || commonResponse.getUrl().equals(Constants.GET_ALL_CODE)) {
             CodeTableSQLiteUtils.deleteAll(CodeTableSQLiteOpenHelper.TABLE_NAME)
+            SharedPreferencesUtils.setIsFirst(true)  // 避免请求失败 二次进入数据为空的情况
             codeAllEntity = null
             codeShengEntity = null
         }

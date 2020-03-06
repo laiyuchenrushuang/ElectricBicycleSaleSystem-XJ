@@ -10,9 +10,7 @@ import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants.Companion.CAR_CY
 import com.seatrend.xj.electricbicyclesalesystem.database.CodeTableSQLiteUtils
-import com.seatrend.xj.electricbicyclesalesystem.entity.CommonResponse
-import com.seatrend.xj.electricbicyclesalesystem.entity.HpHmEnity
-import com.seatrend.xj.electricbicyclesalesystem.entity.UserInfo
+import com.seatrend.xj.electricbicyclesalesystem.entity.*
 import com.seatrend.xj.electricbicyclesalesystem.persenter.NormalPresenter
 import com.seatrend.xj.electricbicyclesalesystem.util.*
 import com.seatrend.xj.electricbicyclesalesystem.view.NormalView
@@ -29,9 +27,10 @@ import kotlinx.android.synthetic.main.bottom_button.*
  * It is forbidden to make profits by spreading the code.
  */
 class ChaYanActivity : BaseActivity(), NormalView {
+    private var data1: CYEntranceEnity? = null
+    private var data3c: ThreeCEnity? = null
     private var mNormalPresenter: NormalPresenter? = null
-    val data1 = CarInfoActivity.mDataZcbm
-    val data3c = CarInfoActivity.mData3C
+
 
     override fun netWorkTaskSuccess(commonResponse: CommonResponse) {
         LoadingDialog.getInstance().dismissLoadDialog()
@@ -67,6 +66,9 @@ class ChaYanActivity : BaseActivity(), NormalView {
     }
 
     private fun initData() {
+        data1 = intent.getSerializableExtra("all_data") as CYEntranceEnity
+        data3c = intent.getSerializableExtra("3c_data") as ThreeCEnity
+
         setSpinnerAdapter(sp_csys_a)
         setSpinnerAdapter(sp_csys_b)
         setSpinnerAdapter(sp_csys_c)
@@ -79,18 +81,18 @@ class ChaYanActivity : BaseActivity(), NormalView {
     @SuppressLint("SetTextI18n", "ResourceAsColor")
     private fun getData() {
 
-        if (data3c == null || data3c.data == null || data3c.data.threeCertificates == null || data3c.data.threeCertificates.data == null ) {
+        if (!(data3c?.data != null && data3c!!.data.threeCertificates != null && data3c!!.data.threeCertificates.data != null)) {
             showToast("获取技术参数失败")
             return
         }
-        et_c.setText(data3c.data.threeCertificates.data.length)
-        et_k.setText(data3c.data.threeCertificates.data.width)
-        et_g.setText(data3c.data.threeCertificates.data.height)
-        et_zczl.setText(data3c.data.threeCertificates.data.weight)
-        et_zgss.setText(data3c.data.threeCertificates.data.maxSpeed)
+        et_c.setText(data3c!!.data.threeCertificates.data.length)
+        et_k.setText(data3c!!.data.threeCertificates.data.width)
+        et_g.setText(data3c!!.data.threeCertificates.data.height)
+        et_zczl.setText(data3c!!.data.threeCertificates.data.weight)
+        et_zgss.setText(data3c!!.data.threeCertificates.data.maxSpeed)
 //        et_qhlzxj.setText(data1!!.data.fjdcJscu.j)  //前后轮中心距
-        if (!TextUtils.isEmpty(data3c.data.threeCertificates.data.vehicleManufacturer)) {
-            et_zzc.setText(data3c.data.threeCertificates.data.vehicleManufacturer)
+        if (!TextUtils.isEmpty(data3c!!.data.threeCertificates.data.vehicleManufacturer)) {
+            et_zzc.setText(data3c!!.data.threeCertificates.data.vehicleManufacturer)
             et_zzc.isFocusable = false
         } else {
             et_zzc.isFocusable = true
@@ -124,19 +126,19 @@ class ChaYanActivity : BaseActivity(), NormalView {
         }
 
         //车身颜色
-        if(data3c.data.threeCertificates.data.color != null && data3c.data.threeCertificates.data.color.contains("/")){
-            var str = data3c.data.threeCertificates.data.color.split("/")
-            if(str.size ==2){
-                OtherUtils.setSpinnerToDmsm(str[0],sp_csys_a)
-                OtherUtils.setSpinnerToDmsm(str[1],sp_csys_b)
-            }else if(str.size == 3){
-                OtherUtils.setSpinnerToDmsm(str[0],sp_csys_a)
-                OtherUtils.setSpinnerToDmsm(str[1],sp_csys_b)
-                OtherUtils.setSpinnerToDmsm(str[2],sp_csys_c)
+        if (data3c!!.data.threeCertificates.data.color != null && data3c!!.data.threeCertificates.data.color.contains("/")) {
+            var str = data3c!!.data.threeCertificates.data.color.split("/")
+            if (str.size == 2) {
+                OtherUtils.setSpinnerToDmsm(str[0], sp_csys_a)
+                OtherUtils.setSpinnerToDmsm(str[1], sp_csys_b)
+            } else if (str.size == 3) {
+                OtherUtils.setSpinnerToDmsm(str[0], sp_csys_a)
+                OtherUtils.setSpinnerToDmsm(str[1], sp_csys_b)
+                OtherUtils.setSpinnerToDmsm(str[2], sp_csys_c)
 
             }
-        }else{ //只有一个数据
-            OtherUtils.setSpinnerToDmsm(data3c.data.threeCertificates.data.color,sp_csys_a)
+        } else { //只有一个数据
+            OtherUtils.setSpinnerToDmsm(data3c!!.data.threeCertificates.data.color, sp_csys_a)
         }
 
     }
@@ -196,14 +198,14 @@ class ChaYanActivity : BaseActivity(), NormalView {
 
                 val map = HashMap<String, String?>()
                 map["lsh"] = data1!!.data.lsh
-                map["xh"] = data1.data.xh
+                map["xh"] = data1!!.data.xh
                 map["cyr"] = UserInfo.XM
                 map["cyrsfzmhm"] = UserInfo.SFZMHM//查验人身份证明号码
                 map["czpt"] = Constants.CZPT //查验平台
 
                 map["zcbm"] = intent.getStringExtra("zcbm")
                 map["cybm"] = UserInfo.GLBM
-                map["cphgzbh"] = if (data3c == null || data3c.data == null || data3c.data.threeCertificates.data == null ) "" else data3c.data.threeCertificates.data.qualificationCode
+                map["cphgzbh"] = if (data3c == null || data3c!!.data == null || data3c!!.data.threeCertificates.data == null) "" else data3c!!.data.threeCertificates.data.qualificationCode
 
                 map["ywlx"] = if (!TextUtils.isEmpty(intent.getStringExtra("ywlx"))) intent.getStringExtra("ywlx") else "" //为空传”“
                 map["ywyy"] = if (!TextUtils.isEmpty(intent.getStringExtra("ywyy"))) intent.getStringExtra("ywyy") else "" //为空传”“

@@ -12,9 +12,7 @@ import com.seatrend.xj.electricbicyclesalesystem.activity.CarInfoByCyActivity
 import com.seatrend.xj.electricbicyclesalesystem.activity.Yw3CzActivity
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseFragment
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants
-import com.seatrend.xj.electricbicyclesalesystem.entity.AllBikeMsgEnity
-import com.seatrend.xj.electricbicyclesalesystem.entity.CYEntranceEnity
-import com.seatrend.xj.electricbicyclesalesystem.entity.CYEntranceEnity3C
+import com.seatrend.xj.electricbicyclesalesystem.entity.*
 import com.seatrend.xj.electricbicyclesalesystem.util.CarUtils
 import com.seatrend.xj.electricbicyclesalesystem.util.OtherUtils
 import com.seatrend.xj.electricbicyclesalesystem.util.StringUtils
@@ -28,10 +26,8 @@ import kotlinx.android.synthetic.main.fragment_jscs.*
  * It is forbidden to make profits by spreading the code.
  */
 class CarMsgJscsFragment : BaseFragment() {
-    companion object {
-        var enity: AllBikeMsgEnity? = null
-    }
-
+    var enity: AllBikeMsgEnity? = null
+    private var cydata : CarMsgEnity?=null
     private var mActivity: CarInfoActivity? = null
 
     override fun getLayoutView(inflater: LayoutInflater?, container: ViewGroup?): View {
@@ -52,7 +48,7 @@ class CarMsgJscsFragment : BaseFragment() {
             if (activity is CarInfoActivity) {
 
                 if ("A" == activity.intent.getStringExtra("ywlx")) {
-                    var data3c = CarInfoActivity.mData3C //注册登记专用
+                    var data3c = activity.intent.getSerializableExtra("3c_data") as ThreeCEnity //注册登记专用
                     //注册登记3c走互联网获取的3c信息
                     if (data3c == null || data3c.data == null || data3c.data.threeCertificates == null) {
                         showToast("获取3C技术参数失败")
@@ -80,7 +76,7 @@ class CarMsgJscsFragment : BaseFragment() {
                     carinfo_jscs_zzrq.text = if (TextUtils.isEmpty(data3c.data.threeCertificates.data.manufacturingDate)) "/" else data3c.data.threeCertificates.data.manufacturingDate //制造日期
                 } else {
                     //其他的登记 走服务器上存储的3c信息
-                    var data1 = CarInfoActivity.mDataZcbm
+                    var data1 = activity.intent.getSerializableExtra("all_data") as CYEntranceEnity
                     if (data1 == null || data1.data == null || data1.data.threeCertificates == null) {
                         showToast("获取3C技术参数失败")
                         return
@@ -107,28 +103,29 @@ class CarMsgJscsFragment : BaseFragment() {
             } else {
 
                 if (activity is Yw3CzActivity && "3" == activity.intent.getStringExtra(Constants.UI_TYPE)) { //证明是车辆查询来的
-                    carinfo_jscs_zcbm.text = Yw3CzActivity.mAllCXData!!.data.jscs.cphgzbh //zcbm
-                    carinfo_jscs_cjszcbmdwz.text = Yw3CzActivity.mAllCXData!!.data.jscs.cjszcbhwz.trim() //wz
-                    carinfo_jscs_clzwsb.text = Yw3CzActivity.mAllCXData!!.data.jscs.clzwsb //
-                    carinfo_jscs_cpxh.text = Yw3CzActivity.mAllCXData!!.data.jscs.cpxh //
-                    carinfo_jscs_mpgdwz.text = Yw3CzActivity.mAllCXData!!.data.jscs.mpgdwz //
-                    carinfo_jscs_cphgzbh.text = Yw3CzActivity.mAllCXData!!.data.jscs.cphgzbh //
-                    carinfo_jscs_ccczsbh.text = Yw3CzActivity.mAllCXData!!.data.jscs.cccbh //
-                    carinfo_jscs_ccczsfzrq.text = Yw3CzActivity.mAllCXData!!.data.cccdata.cccyxq
-                    carinfo_jscs_csys.text = Yw3CzActivity.mAllCXData!!.data.cccdata.csys
-                    carinfo_jscs_c.text = Yw3CzActivity.mAllCXData!!.data.jscs.cwkc
-                    carinfo_jscs_k.text = Yw3CzActivity.mAllCXData!!.data.jscs.cwkk
-                    carinfo_jscs_g.text = Yw3CzActivity.mAllCXData!!.data.jscs.cwkg
+                    cydata = activity.intent.getSerializableExtra("cy_data") as CarMsgEnity
+                    carinfo_jscs_zcbm.text = cydata!!.data.jscs.cphgzbh //zcbm
+                    carinfo_jscs_cjszcbmdwz.text = cydata!!.data.jscs.cjszcbhwz.trim() //wz
+                    carinfo_jscs_clzwsb.text = cydata!!.data.jscs.clzwsb //
+                    carinfo_jscs_cpxh.text = cydata!!.data.jscs.cpxh //
+                    carinfo_jscs_mpgdwz.text = cydata!!.data.jscs.mpgdwz //
+                    carinfo_jscs_cphgzbh.text = cydata!!.data.jscs.cphgzbh //
+                    carinfo_jscs_ccczsbh.text = cydata!!.data.jscs.cccbh //
+                    carinfo_jscs_ccczsfzrq.text = cydata!!.data.cccdata.cccyxq
+                    carinfo_jscs_csys.text = cydata!!.data.cccdata.csys
+                    carinfo_jscs_c.text = cydata!!.data.jscs.cwkc
+                    carinfo_jscs_k.text = cydata!!.data.jscs.cwkk
+                    carinfo_jscs_g.text = cydata!!.data.jscs.cwkg
 //                carinfo_jscs_qhlzxj.text = enity!!.data.checkData.scqhlzxj  //前后中心距
-                    carinfo_jscs_zbzl.text = Yw3CzActivity.mAllCXData!!.data.cccdata.zbzl
-                    carinfo_jscs_zgsjcs.text = Yw3CzActivity.mAllCXData!!.data.jscs.zgcs
+                    carinfo_jscs_zbzl.text = cydata!!.data.cccdata.zbzl
+                    carinfo_jscs_zgsjcs.text = cydata!!.data.jscs.zgcs
                     //        carinfo_jscs_ddjxh.text = enity.data.cccData.ddjxs // 电动机序号
-                    carinfo_jscs_clzzs.text = Yw3CzActivity.mAllCXData!!.data.jscs.clzzs//车辆制造商
-                    carinfo_jscs_xhlc.text = Yw3CzActivity.mAllCXData!!.data.cccdata.xhlc //续航里程  张月说不展示
-                    carinfo_jscs_zzrq.text = Yw3CzActivity.mAllCXData!!.data.cccdata.zzrq//制造日期
-                    carinfo_jscs_ccczszt.text =Yw3CzActivity.mAllCXData!!.data.cccdata.ccczt//ccc状态
+                    carinfo_jscs_clzzs.text = cydata!!.data.jscs.clzzs//车辆制造商
+                    carinfo_jscs_xhlc.text = cydata!!.data.cccdata.xhlc //续航里程  张月说不展示
+                    carinfo_jscs_zzrq.text = cydata!!.data.cccdata.zzrq//制造日期
+                    carinfo_jscs_ccczszt.text =cydata!!.data.cccdata.ccczt//ccc状态
                 } else { //原来的逻辑不变
-
+                    enity = activity.intent.getSerializableExtra("all_data") as AllBikeMsgEnity
                     if (enity == null || enity!!.data == null || enity!!.data.cccData == null || enity!!.data.cccData == null) {
                         showToast("获取技术参数失败")
                         return

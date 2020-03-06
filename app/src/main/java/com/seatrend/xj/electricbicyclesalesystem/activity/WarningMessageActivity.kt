@@ -105,6 +105,9 @@ class WarningMessageActivity : BaseActivity(), WarningMessageView {
                 map["pageSize"] = "20"
                 map["glbm"] = UserInfo.GLBM
                 map["zcbm"] = searchString
+                if (ifToday) {
+                    map.put("toDay", "1") // (1返回当前的数据,不传或传null返回全部 按时间降序排列)
+                }
                 mWarningMessagePersenter!!.doNetworkTask(map, Constants.WARNING_MESSAGE)
             } else {  //号牌号码查询
                 showLoadingDialog()
@@ -113,6 +116,9 @@ class WarningMessageActivity : BaseActivity(), WarningMessageView {
                 map["curPage"] = "1"
                 map["pageSize"] = "20"
                 map["glbm"] = UserInfo.GLBM
+                if (ifToday) {
+                    map.put("toDay", "1") // (1返回当前的数据,不传或传null返回全部 按时间降序排列)
+                }
                 mWarningMessagePersenter!!.doNetworkTask(map, Constants.WARNING_MESSAGE)
             }
         }

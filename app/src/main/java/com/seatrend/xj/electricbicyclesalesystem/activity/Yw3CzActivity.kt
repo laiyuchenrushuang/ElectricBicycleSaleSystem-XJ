@@ -24,6 +24,7 @@ import com.seatrend.xj.electricbicyclesalesystem.util.StringUtils
 import com.seatrend.xj.electricbicyclesalesystem.util.ViewShowUtils
 import com.seatrend.xj.electricbicyclesalesystem.view.NormalView
 import kotlinx.android.synthetic.main.activity_3cz_detail.*
+import kotlinx.android.synthetic.main.common_title.*
 
 /**
  * Created by ly on 2019/11/8 14:39
@@ -39,12 +40,11 @@ class Yw3CzActivity : BaseActivity(), NormalView {
     companion object {
         var fhzt: String? = null  //复核状态  复核标记 9-无需复核，0-待复核，1-复核通过，2-复核未通过
         var zcbm: String? = null  //通过整车编码查询或者修改复核状态
-        var mAllBikeMsgEnity: AllBikeMsgEnity? = null  //所有的data
-
-        var mAllCXData: CarMsgEnity? = null  //所有的查询车辆data
     }
 
+    private var isTbDetals: Boolean = false //是否是退办详情界面
 
+    var mAllCXData: CarMsgEnity? = null  //所有的查询车辆data
     override fun netWorkTaskSuccess(commonResponse: CommonResponse) {
         dismissLoadingDialog()
         if (Constants.GD_COMMIT.equals(commonResponse.url)) {
@@ -66,19 +66,15 @@ class Yw3CzActivity : BaseActivity(), NormalView {
     override fun initView() {
         setPageTitle("业务详情")
         tv_fhbz!!.movementMethod = ScrollingMovementMethod.getInstance()
+        tv_tbbz!!.movementMethod = ScrollingMovementMethod.getInstance()
+        tv_tbyy!!.movementMethod = ScrollingMovementMethod.getInstance()
+        tv_fhyy!!.movementMethod = ScrollingMovementMethod.getInstance()
         mNormalPresenter = NormalPresenter(this)
         mCarMsgJscsFG = CarMsgJscsFragment()
         mRegisterInfoFragment = RegisterAllInfoFragment()
         mCarCYxxFG = CarCYxxFragment()
         bindEvent()
         carmsg_rg!!.check(rb_jscs!!.id)
-        initFgData()
-    }
-
-    private fun initFgData() {
-        CarMsgJscsFragment.enity = mAllBikeMsgEnity //车的信息以及图片
-        RegisterAllInfoFragment.enity = mAllBikeMsgEnity //注册信息
-        CarCYxxFragment.enity = mAllBikeMsgEnity
     }
 
     override fun onStart() {
@@ -129,9 +125,15 @@ class Yw3CzActivity : BaseActivity(), NormalView {
             bt_next.text = "归档"
             //业务退办
         } else if ("2".equals(intent.getStringExtra(Constants.UI_TYPE))) {
-            ViewShowUtils.showGoneView(ll_fhjg)
-            ViewShowUtils.showVisibleView(bt_next)
-            bt_next.text = "退办"
+            if(!isTbDetals){
+                ViewShowUtils.showGoneView(ll_fhjg)
+                ViewShowUtils.showVisibleView(bt_next)
+                bt_next.text = "退办"
+            }else{
+                ViewShowUtils.showGoneView(ll_fhjg,bt_next)
+                ViewShowUtils.showVisibleView(ll_tbjg)
+            }
+
         }
     }
 
@@ -157,28 +159,39 @@ class Yw3CzActivity : BaseActivity(), NormalView {
         bt_next.setOnClickListener {
             if ("0".equals(intent.getStringExtra(Constants.UI_TYPE))) {
                 //复核
-                startActivity(Intent(this, YwfhEditActivity::class.java))
+                intent.setClass(this, YwfhEditActivity::class.java)
+                startActivity(intent)
             } else if ("2".equals(intent.getStringExtra(Constants.UI_TYPE))) {
                 //退办
-                startActivity(Intent(this, YwTbEditActivity::class.java))
+                intent.setClass(this, YwTbEditActivity::class.java)
+                startActivityForResult(intent, 1)
             } else {
                 //归档
                 val map = HashMap<String, String?>()
-                map["lsh"] = mAllBikeMsgEnity!!.data.fjdcBusiness.lsh
-                map["xh"] = mAllBikeMsgEnity!!.data.fjdcBusiness.xh
+                val mAllBikeMsgEnity  = intent.getSerializableExtra("all_data") as AllBikeMsgEnity
+                map["lsh"] = mAllBikeMsgEnity.data.fjdcBusiness.lsh
+                map["xh"] = mAllBikeMsgEnity.data.fjdcBusiness.xh
                 map["glbm"] = UserInfo.GLBM
                 map["zt"] = "E" // E-已归档
                 mNormalPresenter!!.doNetworkTask(map, Constants.GD_COMMIT)
             }
         }
+        iv_back.setOnClickListener {
+            if (isTbDetals) {
+                val intent = Intent(this, YwTBSearchActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP  //致于栈顶
+                startActivity(intent)
+            }
+            finish()
+        }
     }
 
     private fun changeColor(which: RadioButton) {
-        rb_jscs!!.setTextColor(ContextCompat.getColor(this,R.color.black))
-        rb_djxx!!.setTextColor(ContextCompat.getColor(this,R.color.black))
-        rb_cyxx!!.setTextColor(ContextCompat.getColor(this,R.color.black))
+        rb_jscs!!.setTextColor(ContextCompat.getColor(this, R.color.black))
+        rb_djxx!!.setTextColor(ContextCompat.getColor(this, R.color.black))
+        rb_cyxx!!.setTextColor(ContextCompat.getColor(this, R.color.black))
         carmsg_rg.check(which.id)
-        which.setTextColor(ContextCompat.getColor(this,R.color.theme_color))
+        which.setTextColor(ContextCompat.getColor(this, R.color.theme_color))
     }
 
     private fun switchFragment(fragment: Fragment?) {
@@ -205,10 +218,25 @@ class Yw3CzActivity : BaseActivity(), NormalView {
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            runOnUiThread {
+                isTbDetals = true
+                tv_tbr.text = UserInfo.XM
+                tv_tbzt.text = "已退办"
+                tv_tbyy.text = data!!.getStringExtra("tb_reason")
+                tv_tbsj.text = data.getStringExtra("tb_time")
+                tv_tbbz.text = data.getStringExtra("tb_beizhu")
+            }
+
+        }
+    }
+
     override fun onDestroy() {
+        isTbDetals = false
         super.onDestroy()
         mAllCXData = null
-        mAllBikeMsgEnity = null
     }
 
     override fun getLayout(): Int {

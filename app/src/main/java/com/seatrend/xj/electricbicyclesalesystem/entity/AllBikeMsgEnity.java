@@ -1,5 +1,6 @@
 package com.seatrend.xj.electricbicyclesalesystem.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -9,7 +10,7 @@ import java.util.List;
  * co., LTD. The code is only for learning and sharing.
  * It is forbidden to make profits by spreading the code.
  */
-public class AllBikeMsgEnity extends BaseEntity {
+public class AllBikeMsgEnity extends BaseEntity implements Serializable {
     private Data data;
     public void setData(Data data) {
         this.data = data;
@@ -18,7 +19,7 @@ public class AllBikeMsgEnity extends BaseEntity {
         return data;
     }
 
-    public static class Data {
+    public static class Data implements Serializable{
 
         private List<PhotoList> photoList;
         private CccData cccData;
@@ -60,7 +61,7 @@ public class AllBikeMsgEnity extends BaseEntity {
             return fjdcJscu;
         }
 
-        public class FjdcJscu {
+        public class FjdcJscu implements Serializable{
 
             private String cphgzbh;
             private String cccbh;
@@ -521,7 +522,7 @@ public class AllBikeMsgEnity extends BaseEntity {
         }
 
 
-        public class CheckData {
+        public class CheckData implements Serializable{
 
             private String lsh;
             private String xh;
@@ -838,7 +839,7 @@ public class AllBikeMsgEnity extends BaseEntity {
         }
 
 
-        public static class PhotoList {
+        public static class PhotoList implements Serializable{
             private String lsh;
             private String xh;
             private String zpxh;
@@ -930,7 +931,7 @@ public class AllBikeMsgEnity extends BaseEntity {
         }
 
 
-        public class FjdcBusiness {
+        public class FjdcBusiness implements Serializable{
 
             private String lsh;
             private String xh;
@@ -1652,7 +1653,7 @@ public class AllBikeMsgEnity extends BaseEntity {
         }
 
 
-        public class CccData {
+        public class CccData implements Serializable{
 
             private String lsh;
             private String cphgzbh;

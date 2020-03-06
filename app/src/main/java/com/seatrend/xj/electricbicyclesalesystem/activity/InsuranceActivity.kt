@@ -136,7 +136,7 @@ class InsuranceActivity : BaseActivity(), CollectBicycleView {
             map["cyrsfzmhm"] = UserInfo.SFZMHM//查验人身份证明号码
             map["czpt"] = Constants.CZPT //查验平台
 
-            map["ywlx"] = CarInfoByCyActivity.mAllBikeMsgEnity!!.data.checkData.ywlx //业务类型（注册业务才有保险）
+            map["ywlx"] = (intent.getSerializableExtra("all_data") as AllBikeMsgEnity).data.checkData.ywlx //业务类型（注册业务才有保险）
             mCollectBicyclePersenter!!.doNetworkTask(map, Constants.UPDATA_LS_ZT)
 
         }

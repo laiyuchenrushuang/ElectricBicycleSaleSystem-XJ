@@ -11,6 +11,8 @@ import com.seatrend.xj.electricbicyclesalesystem.R
 import com.seatrend.xj.electricbicyclesalesystem.activity.CarInfoActivity
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseFragment
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants
+import com.seatrend.xj.electricbicyclesalesystem.entity.CYEntranceEnity
+import com.seatrend.xj.electricbicyclesalesystem.entity.ThreeCEnity
 import com.seatrend.xj.electricbicyclesalesystem.util.StringUtils
 import com.seatrend.xj.electricbicyclesalesystem.util.TextViewUtils
 import kotlinx.android.synthetic.main.fragment_ggxx.*
@@ -61,8 +63,8 @@ class CarMsgGgxxFragment : BaseFragment() {
     }
 
     private fun initData() {
-        val data1 = CarInfoActivity.mDataZcbm
-        val data3c = CarInfoActivity.mData3C
+        val data1 = activity.intent.getSerializableExtra("all_data") as CYEntranceEnity
+
         if (data1 == null || data1.data == null) {
             showToast("获取参数失败")
             return
@@ -72,7 +74,7 @@ class CarMsgGgxxFragment : BaseFragment() {
 //        carinfo_jscs_zcbm.text = if (TextUtils.isEmpty(data3c.data.threeCertificates.data.vehicleCode)) "/" else data1.data.threeCertificates.vehicleCode//zcbm
 
         if ("A".equals(activity.intent.getStringExtra("ywlx"))) {
-
+            val data3c = activity.intent.getSerializableExtra("3c_data") as ThreeCEnity
             if (data3c == null || data3c.data == null || data3c.data == null || data3c.data.threeCertificates == null || data3c.data.threeCertificates.data == null) {
                 showToast("获取3C技术参数失败")
                 return

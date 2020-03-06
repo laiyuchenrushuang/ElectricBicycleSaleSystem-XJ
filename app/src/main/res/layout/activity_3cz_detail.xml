@@ -166,7 +166,7 @@
                 style="@style/pay_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxHeight="150dp"
+                android:maxHeight="60dp"
                 android:ellipsize="marquee"
                 android:scrollbars="vertical"
                 android:text="XXXXXXXXXXXXXXX" />
@@ -278,7 +278,7 @@
                 style="@style/pay_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxHeight="150dp"
+                android:maxHeight="60dp"
                 android:ellipsize="marquee"
                 android:scrollbars="vertical"
                 android:text="XXXXXXXXXXXXXXX" />

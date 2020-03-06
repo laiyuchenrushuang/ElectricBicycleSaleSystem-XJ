@@ -1,10 +1,12 @@
 package com.seatrend.xj.electricbicyclesalesystem.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by seatrend on 2018/8/21.
  */
 
-public class BaseEntity {
+public class BaseEntity implements Serializable {
     private boolean status;
     private int code;
     private String message;

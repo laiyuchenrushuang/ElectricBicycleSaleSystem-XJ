@@ -66,7 +66,7 @@ class YWCheckActivity : BaseActivity(), NormalView, YwFhAdapter.onItemListener {
                         return
                     }
                     mData.clear()
-                    mData = FHUtil.getSortList(enity.data.list)
+                    mData = FHUtil.getSortList(enity.data.list)  //复核顺序 以复核时间排序
                     runOnUiThread{ adapter!!.setData(mData) }
                 } else if (page > 1 && Constants.FH_GET_LIST.equals(commonResponse.getUrl())) {
                     shuaxin.finishLoadmore()
@@ -76,8 +76,7 @@ class YWCheckActivity : BaseActivity(), NormalView, YwFhAdapter.onItemListener {
             }
             if (Constants.YW_GET_YWCZ_BIKE_DATA.equals(commonResponse.getUrl())) {
                 val mAllBikeMsgEnity = GsonUtils.gson(commonResponse.getResponseString(), AllBikeMsgEnity::class.java)
-                Yw3CzActivity.mAllBikeMsgEnity = mAllBikeMsgEnity
-                var intent = Intent(this, Yw3CzActivity::class.java)
+                intent.setClass(this, Yw3CzActivity::class.java)
                 intent.putExtra(Constants.UI_TYPE, "0")
                 showLog("[BZ] = "+mData[position].fhbz)
                 intent.putExtra("fhr", mData[position].fhr)
@@ -85,6 +84,7 @@ class YWCheckActivity : BaseActivity(), NormalView, YwFhAdapter.onItemListener {
                 intent.putExtra("fhyy", mData[position].btgyy)
                 intent.putExtra("fhsj", mData[position].fhsj.toString())
                 intent.putExtra("fhbz", mData[position].fhbz)
+                intent.putExtra("all_data",mAllBikeMsgEnity)
                 startActivity(intent)
                 return
             }

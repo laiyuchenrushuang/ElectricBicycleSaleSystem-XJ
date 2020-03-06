@@ -51,7 +51,8 @@ class AutographActivity : BaseActivity(), CarPhotoView {
             if (!TextUtils.isEmpty(filePath)) {
                 PhotoFileUtils.deleteFile(filePath)
             }
-            startActivity(Intent(this, CollectPhotoActivity::class.java))
+            intent.setClass(this, CollectPhotoActivity::class.java)
+            startActivity(intent)
 
         }
 

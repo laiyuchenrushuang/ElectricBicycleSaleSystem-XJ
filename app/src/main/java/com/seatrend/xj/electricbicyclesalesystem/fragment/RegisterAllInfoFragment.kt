@@ -1,6 +1,7 @@
 package com.seatrend.xj.electricbicyclesalesystem.fragment
 
 import android.support.v7.widget.StaggeredGridLayoutManager
+import android.text.TextUtils
 import android.text.method.ScrollingMovementMethod
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -13,6 +14,7 @@ import com.seatrend.xj.electricbicyclesalesystem.common.BaseFragment
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants
 import com.seatrend.xj.electricbicyclesalesystem.database.CodeTableSQLiteUtils
 import com.seatrend.xj.electricbicyclesalesystem.entity.AllBikeMsgEnity
+import com.seatrend.xj.electricbicyclesalesystem.entity.CarMsgEnity
 import com.seatrend.xj.electricbicyclesalesystem.entity.UserInfo
 import com.seatrend.xj.electricbicyclesalesystem.util.*
 import kotlinx.android.synthetic.main.fragment_register_all_info.*
@@ -26,13 +28,12 @@ import java.util.ArrayList
  * It is forbidden to make profits by spreading the code.
  */
 class RegisterAllInfoFragment : BaseFragment(), View.OnTouchListener {
-    companion object {
-        var enity: AllBikeMsgEnity? = null
-    }
 
+    var enity: AllBikeMsgEnity? = null
     private var mTextTouchListener: View.OnTouchListener? = null
     private var mCyxxPhotoAdapter: CyxxPhotoAdapter? = null
     var photoList = ArrayList<AllBikeMsgEnity.Data.PhotoList>()
+    private var cydata :CarMsgEnity?=null
 
     override fun getLayoutView(inflater: LayoutInflater?, container: ViewGroup?): View {
          return inflater!!.inflate(R.layout.fragment_register_all_info, container, false)
@@ -45,19 +46,24 @@ class RegisterAllInfoFragment : BaseFragment(), View.OnTouchListener {
     }
 
     private fun getYwLxData() {
+
         if (activity is Yw3CzActivity && "3" == activity.intent.getStringExtra(Constants.UI_TYPE)) { //证明是车辆查询来的
+            cydata = activity.intent.getSerializableExtra("cy_data") as CarMsgEnity
             ll_ywxx.visibility = View.GONE
             initSyrXX()
             initDlrXX()
             getPhotodata()
         } else {
+            enity = activity.intent.getSerializableExtra("all_data") as AllBikeMsgEnity
             try {
-                if (!ObjectNullUtil.checknull(enity) || !ObjectNullUtil.checknull(enity!!.data)) {
+                if(!ObjectNullUtil.checknull(enity) || !ObjectNullUtil.checknull(enity!!.data) || null == enity!!.data.fjdcBusiness || null == enity!!.data.fjdcBusiness.ywlx || TextUtils.isEmpty(enity!!.data.fjdcBusiness.ywlx)){
                     showToast("登记信息获取为空")
                     return
                 }
+
                 //可以根据登记信息里面的ywlx字段
                 tv_ywlx.text = DMZUtils.getDMSM(Constants.YWLX, enity!!.data.fjdcBusiness.ywlx)
+                showLog("sssssss = "+ tv_ywlx.text.toString())
                 when (enity!!.data.fjdcBusiness.ywlx) {
 
 
@@ -160,23 +166,23 @@ class RegisterAllInfoFragment : BaseFragment(), View.OnTouchListener {
 
     private fun initYjXX() {
         if (activity is Yw3CzActivity && "3" == activity.intent.getStringExtra(Constants.UI_TYPE)) { //证明是车辆查询来的
-            if (ObjectNullUtil.checknull(Yw3CzActivity.mAllCXData!!.data.syrjbxx.zzxsz) && !"0".equals(UserInfo.GlobalParameter.LQBJ)) {
+            if (ObjectNullUtil.checknull(cydata!!.data.syrjbxx.zzxsz) && !"0".equals(UserInfo.GlobalParameter.LQBJ)) {
                 ll_jdxx1.visibility = View.VISIBLE
-                if ("1".equals(Yw3CzActivity.mAllCXData!!.data.syrjbxx.zzxsz)) {
+                if ("1".equals(cydata!!.data.syrjbxx.zzxsz)) {
                     tv_zzxsz.text = "需要"
-                    if ("1".equals(Yw3CzActivity.mAllCXData!!.data.syrjbxx.lqfs)) {
+                    if ("1".equals(cydata!!.data.syrjbxx.lqfs)) {
                         tv_lqfs.text = "现场领取"
                         ll_jdxx2.visibility = View.GONE
                     } else {
                         tv_lqfs.text = "邮寄领取"
                         ll_jdxx2.visibility = View.VISIBLE
-                        tv_yj_sfzmc.text = DMZUtils.getDMSM(Constants.SFZMMC, Yw3CzActivity.mAllCXData!!.data.syrjbxx.sjrsfzmlx)
-                        tv_yj_sfz.text = Yw3CzActivity.mAllCXData!!.data.syrjbxx.sjrsfzmhm
-                        tv_yj_xm.text = Yw3CzActivity.mAllCXData!!.data.syrjbxx.sjrxm
-                        tv_yj_lxdh.text = Yw3CzActivity.mAllCXData!!.data.syrjbxx.sjrlxdh
-                        tv_yj_xzqh.text = DMZUtils.getDMSM(Constants.XSQY, Yw3CzActivity.mAllCXData!!.data.syrjbxx.sjryjxzqh)
-                        tv_yj_xxdz.text = Yw3CzActivity.mAllCXData!!.data.syrjbxx.sjryjxxdz
-                        tv_yj_yzbm.text = Yw3CzActivity.mAllCXData!!.data.syrjbxx.sjryzbm
+                        tv_yj_sfzmc.text = DMZUtils.getDMSM(Constants.SFZMMC, cydata!!.data.syrjbxx.sjrsfzmlx)
+                        tv_yj_sfz.text = cydata!!.data.syrjbxx.sjrsfzmhm
+                        tv_yj_xm.text = cydata!!.data.syrjbxx.sjrxm
+                        tv_yj_lxdh.text = cydata!!.data.syrjbxx.sjrlxdh
+                        tv_yj_xzqh.text = DMZUtils.getDMSM(Constants.XSQY, cydata!!.data.syrjbxx.sjryjxzqh)
+                        tv_yj_xxdz.text = cydata!!.data.syrjbxx.sjryjxxdz
+                        tv_yj_yzbm.text = cydata!!.data.syrjbxx.sjryzbm
                     }
                 } else {
                     tv_zzxsz.text = "不需要"
@@ -213,12 +219,12 @@ class RegisterAllInfoFragment : BaseFragment(), View.OnTouchListener {
 
     private fun initDlrXX() {
         if (activity is Yw3CzActivity && "3" == activity.intent.getStringExtra(Constants.UI_TYPE)) { //证明是车辆查询来的
-            if (ObjectNullUtil.checknull(Yw3CzActivity.mAllCXData!!.data.syrjbxx.dlrsfzmhm)) {
+            if (ObjectNullUtil.checknull(cydata!!.data.syrjbxx.dlrsfzmhm)) {
                 ll_dlrxx.visibility = View.VISIBLE
-                tv_dlr_sfzmc.text = DMZUtils.getDMSM(Constants.SFZMMC, Yw3CzActivity.mAllCXData!!.data.syrjbxx.dlrsfzmlx)
-                tv_dlr_sfz.text = Yw3CzActivity.mAllCXData!!.data.syrjbxx.dlrsfzmhm
-                tv_dlr_xm.text = Yw3CzActivity.mAllCXData!!.data.syrjbxx.dlrxm
-                tv_dlr_lxdh.text = Yw3CzActivity.mAllCXData!!.data.syrjbxx.dlrlxdh
+                tv_dlr_sfzmc.text = DMZUtils.getDMSM(Constants.SFZMMC, cydata!!.data.syrjbxx.dlrsfzmlx)
+                tv_dlr_sfz.text = cydata!!.data.syrjbxx.dlrsfzmhm
+                tv_dlr_xm.text = cydata!!.data.syrjbxx.dlrxm
+                tv_dlr_lxdh.text = cydata!!.data.syrjbxx.dlrlxdh
             } else {
                 ll_dlrxx.visibility = View.GONE
             }
@@ -237,17 +243,18 @@ class RegisterAllInfoFragment : BaseFragment(), View.OnTouchListener {
 
     private fun initSyrXX() {
         if (activity is Yw3CzActivity && "3" == activity.intent.getStringExtra(Constants.UI_TYPE)) { //证明是车辆查询来的
-            tv_syr_sfzmc.text = DMZUtils.getDMSM(Constants.SFZMMC, Yw3CzActivity.mAllCXData!!.data.syrjbxx.sfzmmc)
-            tv_syr_sfz.text = Yw3CzActivity.mAllCXData!!.data.syrjbxx.sfzmhm
-            tv_syr_xm.text = Yw3CzActivity.mAllCXData!!.data.syrjbxx.syrmc
-            tv_syr_lxdh.text = Yw3CzActivity.mAllCXData!!.data.syrjbxx.lxdh
-            tv_syr_xzqh.text = DMZUtils.getDMSM(Constants.XSQY, Yw3CzActivity.mAllCXData!!.data.syrjbxx.djxzqh)
-            tv_syr_xxdz.text = Yw3CzActivity.mAllCXData!!.data.syrjbxx.djxxdz
+            tv_syr_sfzmc.text = DMZUtils.getDMSM(Constants.SFZMMC, cydata!!.data.syrjbxx.sfzmmc)
+            tv_syr_sfz.text = cydata!!.data.syrjbxx.sfzmhm
+            tv_syr_xm.text = cydata!!.data.syrjbxx.syrmc
+            tv_syr_lxdh.text = cydata!!.data.syrjbxx.lxdh
+            tv_syr_xzqh.text = DMZUtils.getDMSM(Constants.XSQY, cydata!!.data.syrjbxx.djxzqh)
+            tv_syr_xxdz.text = cydata!!.data.syrjbxx.djxxdz
 
-            tv_syr_yj_xzqh.text = DMZUtils.getDMSM(Constants.XSQY, Yw3CzActivity.mAllCXData!!.data.syrjbxx.lxdzxzqh)
-            tv_syr_yj_xxdz.text = Yw3CzActivity.mAllCXData!!.data.syrjbxx.lxxxdz
-            tv_syr_yj_yzbm.text = Yw3CzActivity.mAllCXData!!.data.syrjbxx.yzbm
-            tv_syr_yxdz.text = Yw3CzActivity.mAllCXData!!.data.syrjbxx.dzyx
+            tv_syr_yj_xzqh.text = DMZUtils.getDMSM(Constants.XSQY, cydata!!.data.syrjbxx.lxdzxzqh)
+            tv_syr_yj_xxdz.text = cydata!!.data.syrjbxx.lxxxdz
+            tv_syr_yj_yzbm.text = cydata!!.data.syrjbxx.yzbm
+
+            tv_syr_yxdz.text = if(TextUtils.isEmpty(cydata!!.data.syrjbxx.dzyx)) "/" else cydata!!.data.syrjbxx.dzyx
         } else {
             tv_syr_sfzmc.text = DMZUtils.getDMSM(Constants.SFZMMC, enity!!.data.fjdcBusiness.sfzmmc)
             tv_syr_sfz.text = enity!!.data.fjdcBusiness.sfzmhm
@@ -259,7 +266,7 @@ class RegisterAllInfoFragment : BaseFragment(), View.OnTouchListener {
             tv_syr_yj_xzqh.text = DMZUtils.getDMSM(Constants.XSQY, enity!!.data.fjdcBusiness.lxdzxzqh)
             tv_syr_yj_xxdz.text = enity!!.data.fjdcBusiness.lxxxdz
             tv_syr_yj_yzbm.text = enity!!.data.fjdcBusiness.yzbm
-            tv_syr_yxdz.text = enity!!.data.fjdcBusiness.dzyx
+            tv_syr_yxdz.text = if(TextUtils.isEmpty(enity!!.data.fjdcBusiness.dzyx)) "/" else enity!!.data.fjdcBusiness.dzyx
         }
     }
 
@@ -270,7 +277,7 @@ class RegisterAllInfoFragment : BaseFragment(), View.OnTouchListener {
                 val cyList = CodeTableSQLiteUtils.queryByDMLB(Constants.CYZP)
                 photoList.clear()
                 //只获取查验的照片 排除法  这里不太好，因为登记照片越来越多怎么办？
-                for (db in Yw3CzActivity.mAllCXData!!.data.syrzpxx) {
+                for (db in cydata!!.data.syrzpxx) {
                     var flag = false
                     for (enity in cyList) {
                         if (null != db.zpzl && db.zpzl == enity.dmz) {

@@ -18,6 +18,7 @@ import com.seatrend.xj.electricbicyclesalesystem.util.*
 import kotlinx.android.synthetic.main.activity_main_other.*
 import kotlinx.android.synthetic.main.activity_user_info.*
 import kotlinx.android.synthetic.main.activity_user_info.iv_head
+import kotlinx.android.synthetic.main.common_title.*
 import java.lang.Exception
 import java.util.regex.Pattern
 
@@ -91,6 +92,10 @@ class UserInfoActivity : BaseActivity() {
 //            startActivity(intent)
 //        }
 
+        iv_back.setOnClickListener {
+            finish()
+            overridePendingTransition(R.anim.zoomin, R.anim.zoomout)
+        }
         tv_glbm!!.movementMethod = ScrollingMovementMethod.getInstance()
         tv_fwz!!.movementMethod = ScrollingMovementMethod.getInstance()
     }

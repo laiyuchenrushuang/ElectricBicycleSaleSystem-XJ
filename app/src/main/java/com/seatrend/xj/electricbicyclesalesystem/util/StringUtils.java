@@ -19,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.Locale;
+import java.util.concurrent.Executor;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -87,9 +88,15 @@ public class StringUtils {
      * 处理空字符串
      */
     public static String isNull(Object obj) {
-        String content = "--";
-        if (obj != null && !obj.toString().equals("") && !obj.toString().equals("null"))
-            content = obj.toString();
+        String content = "/";
+
+        try {
+            if (obj != null && !obj.toString().equals("") && !obj.toString().equals("null"))
+                content = obj.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
         return content;
     }
 

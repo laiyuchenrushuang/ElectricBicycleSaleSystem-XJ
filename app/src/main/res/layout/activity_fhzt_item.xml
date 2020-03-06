@@ -52,7 +52,7 @@
                 <TextView
                     android:id="@+id/tv_fh_zcbm"
                     style="@style/pay_info"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textIsSelectable="true"
                     android:text="XX" />
@@ -71,7 +71,7 @@
                 <TextView
                     android:id="@+id/tv_fh_cphm"
                     style="@style/pay_info"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textIsSelectable="true"
                     android:text="XX" />

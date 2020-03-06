@@ -27,7 +27,6 @@ class MyRecycleManager(var mContext: Context?) : RecyclerView.LayoutManager() {
         detachAndScrapAttachedViews(recycler)
 
         val sumWidth = width
-        com.seatrend.xj.electricbicyclesalesystem.util.LogUtil.getInstance().d("  总宽 = "+sumWidth)
         var curLineWidth = 0
         var curLineTop = 0
         var lastLineMaxHeight = 0
@@ -38,10 +37,7 @@ class MyRecycleManager(var mContext: Context?) : RecyclerView.LayoutManager() {
             measureChildWithMargins(view, 0, 0)
             val width = getDecoratedMeasuredWidth(view)
             val height = getDecoratedMeasuredHeight(view)
-            com.seatrend.xj.electricbicyclesalesystem.util.LogUtil.getInstance().d("  item"+i +" 的宽度 = "+width)
-            com.seatrend.xj.electricbicyclesalesystem.util.LogUtil.getInstance().d("  item"+i +" 的高度 = "+height)
             curLineWidth += width
-            com.seatrend.xj.electricbicyclesalesystem.util.LogUtil.getInstance().d(" 第"+i+"行的总宽 "+curLineWidth)
             if (curLineWidth <= sumWidth) {//不需要换行
                 layoutDecorated(view, curLineWidth - width, curLineTop, curLineWidth, curLineTop + height)
                 //比较当前行多有item的最大高度

@@ -34,16 +34,15 @@ class YwTBSearchActivity : BaseActivity(), NormalView {
         if (Constants.YW_GET_YWCZ_BIKE_DATA.equals(commonResponse.getUrl())) {
             val mAllBikeMsgEnity = GsonUtils.gson(commonResponse.getResponseString(), AllBikeMsgEnity::class.java)
             if (!"1".equals(lczt)) {
-                Yw3CzActivity.mAllBikeMsgEnity = mAllBikeMsgEnity
-                var intent = Intent(this, Yw3CzActivity::class.java)
+                intent.putExtra("all_data",mAllBikeMsgEnity)
+                intent.setClass(this, Yw3CzActivity::class.java)
                 intent.putExtra(Constants.UI_TYPE, "2")
                 startActivity(intent)
             }
             if ("1".equals(lczt)) { //查验需要退办的
-                var intent = Intent(this, CarInfoByCyActivity::class.java)
+                intent.setClass(this, CarInfoByCyActivity::class.java)
                 intent.putExtra("ywlx",mAllBikeMsgEnity.data.fjdcBusiness.ywlx)
-                CarInfoByCyActivity.mAllBikeMsgEnity = mAllBikeMsgEnity
-                Yw3CzActivity.mAllBikeMsgEnity = mAllBikeMsgEnity
+                intent.putExtra("all_data",mAllBikeMsgEnity)
                 CarInfoByCyActivity.entranceFlag = Constants.YWTB
                 startActivity(intent)
             }

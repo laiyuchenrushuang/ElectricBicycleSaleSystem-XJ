@@ -22,9 +22,7 @@ import kotlinx.android.synthetic.main.fragment_register_info.*
  * It is forbidden to make profits by spreading the code.
  */
 class RegisterInfoFragment : BaseFragment() {
-    companion object {
-        var enity: AllBikeMsgEnity? = null
-    }
+    var enity: AllBikeMsgEnity? = null
 
     override fun getLayoutView(inflater: LayoutInflater?, container: ViewGroup?): View {
          return inflater!!.inflate(R.layout.fragment_register_info, container, false)
@@ -36,11 +34,12 @@ class RegisterInfoFragment : BaseFragment() {
 
     private fun getdata() {
         try {
+            enity = activity.intent.getSerializableExtra("all_data") as AllBikeMsgEnity
             if (entranceFlag == Constants.YWTB || entranceFlag == Constants.CAR_ZC) { //注册登记或者是退办过来查询的
-                tv_cllx.text = CllxUtils.getCllxDMSM(CarInfoByCyActivity.mAllBikeMsgEnity!!.data.checkData.cllx)
-                tv_csys.text = CsysUtils.getCsysMc(CarInfoByCyActivity.mAllBikeMsgEnity!!.data.checkData.csys)
-                var cphm = CarInfoByCyActivity.mAllBikeMsgEnity!!.data.checkData.cph
-                var cphm1 = CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.cph
+                tv_cllx.text = CllxUtils.getCllxDMSM(enity!!.data.checkData.cllx)
+                tv_csys.text = CsysUtils.getCsysMc(enity!!.data.checkData.csys)
+                var cphm = enity!!.data.checkData.cph
+                var cphm1 = enity!!.data.fjdcBusiness.cph
 
                 if (!TextUtils.isEmpty(cphm1)) {
                     cphm = cphm1

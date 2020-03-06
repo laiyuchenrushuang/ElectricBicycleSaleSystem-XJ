@@ -58,7 +58,7 @@ class ChaYanEntranceActivity : BaseActivity(), NormalView {
                 if (!"A".equals(sp_cy.selectedItem.toString().split(":")[0])) {
                     intent.putExtra("hphm", et_cy_cphm.text.toString().toUpperCase()) // 车牌号码
                 }
-                CarInfoActivity.mDataZcbm = cYEntranceEnity
+                intent.putExtra("all_data",cYEntranceEnity)
                 intent.setClass(this, CarInfoActivity::class.java)
                 startActivity(intent)
             }
@@ -69,7 +69,7 @@ class ChaYanEntranceActivity : BaseActivity(), NormalView {
                     showToast("注册登记3C信息获取为空")
                     return
                 }
-                CarInfoActivity.mData3C = cThreeCEnity
+                intent.putExtra("3c_data",cThreeCEnity)
                 val map = HashMap<String, String?>()
                 map["glbm"] = UserInfo.GLBM
                 map["zcbm"] = et_cy_zcbm.text.toString()
@@ -208,6 +208,9 @@ class ChaYanEntranceActivity : BaseActivity(), NormalView {
         dialog.show()
         val btn_pda = dialog.findViewById<Button>(R.id.btn_pda)
         val btn_other = dialog.findViewById<Button>(R.id.btn_other)
+        if(!AppUtils.HCPDA()){
+            btn_pda.isEnabled = false
+        }
         btn_pda.setOnClickListener {
             dialog.dismiss()
             if (mDeviceScanUtils == null) {

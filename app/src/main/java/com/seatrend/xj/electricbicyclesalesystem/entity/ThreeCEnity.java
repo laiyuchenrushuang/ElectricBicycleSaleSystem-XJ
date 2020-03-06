@@ -1,7 +1,9 @@
 package com.seatrend.xj.electricbicyclesalesystem.entity;
 
+import java.io.Serializable;
+
 //{"status":true,"code":0,"message":"成功","data":{"threeCertificates":{"code":"0000","data":{"image":null,"productModel":"TDT309Z","certState":"有效","color":"中华红/亮黑","trademarkCn":"玫瑰之约","length":"1470","weight":"53.2","maxSpeed":"24.0","qualificationCode":"A11265319T3090100","codeOnFrame":"打刻于头管右侧","vehicleManufacturer":"成都当肯车业有限公司","certcode":"2019011119189128","fixedPositionName":"粘贴在鞍管上","certExpiryDate":"2024-05-27","continuousMileage":"35.0","width":"592","manufacturingDate":"2019-09-19","height":"1008"},"message":null}},"total":0}
-public class ThreeCEnity extends BaseEntity {
+public class ThreeCEnity extends BaseEntity implements Serializable {
 
     private Data data;
     private int total;
@@ -22,7 +24,7 @@ public class ThreeCEnity extends BaseEntity {
         return total;
     }
 
-    public class Data {
+    public class Data implements Serializable{
 
         private ThreeCertificates threeCertificates;
 
@@ -34,7 +36,7 @@ public class ThreeCEnity extends BaseEntity {
             return threeCertificates;
         }
 
-        public class ThreeCertificates {
+        public class ThreeCertificates implements Serializable{
 
             private String code;
             private Data1 data;
@@ -64,7 +66,7 @@ public class ThreeCEnity extends BaseEntity {
                 return message;
             }
 
-            public class Data1 {
+            public class Data1 implements Serializable{
 
                 private String image;
                 private String productModel;

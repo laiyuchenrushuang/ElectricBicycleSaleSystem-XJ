@@ -6,6 +6,7 @@ import com.seatrend.xj.electricbicyclesalesystem.R
 import com.seatrend.xj.electricbicyclesalesystem.adpater.SelectorAdapter
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants
+import com.seatrend.xj.electricbicyclesalesystem.entity.AllBikeMsgEnity
 import com.seatrend.xj.electricbicyclesalesystem.entity.CommonResponse
 import com.seatrend.xj.electricbicyclesalesystem.entity.UserInfo
 import com.seatrend.xj.electricbicyclesalesystem.manager.MyRecycleManager
@@ -22,17 +23,19 @@ class YwfhEditActivity : BaseActivity(), SelectorAdapter.CheckState, NormalView 
     var yyList = ArrayList<String>() //业务原因list
     private var ll: RecyclerView.LayoutManager? = null
     var adapter: SelectorAdapter? = null
+    private var data : AllBikeMsgEnity?=null
+
     override fun netWorkTaskSuccess(commonResponse: CommonResponse) {
         dismissLoadingDialog()
         if (Constants.FH_COMMIT.equals(commonResponse.getUrl())) {
 
             if ("1" == UserInfo.GlobalParameter.SFBJ && !rb_fh_no.isChecked  ) {//不通过不收费
                 val intent = Intent(this, PayActivity::class.java)
-                Yw3CzActivity.mAllBikeMsgEnity!!.data.fjdcBusiness
+                data!!.data.fjdcBusiness
 
-                intent.putExtra("syr", Yw3CzActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.syrmc)
-                intent.putExtra("sfz", Yw3CzActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.sfzmhm)
-                intent.putExtra("hphm", Yw3CzActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.cph)
+                intent.putExtra("syr", data!!.data.fjdcBusiness.syrmc)
+                intent.putExtra("sfz", data!!.data.fjdcBusiness.sfzmhm)
+                intent.putExtra("hphm", data!!.data.fjdcBusiness.cph)
                 startActivity(intent)
             } else {
                 val intent = Intent(this, YWCheckActivity::class.java)
@@ -75,6 +78,7 @@ class YwfhEditActivity : BaseActivity(), SelectorAdapter.CheckState, NormalView 
     }
 
     private fun getData() {
+        data = intent.getSerializableExtra("all_data") as AllBikeMsgEnity
         yyList.add("原因1原因1")
         yyList.add("原因2原因2")
         yyList.add("原因3原因3")
@@ -89,8 +93,8 @@ class YwfhEditActivity : BaseActivity(), SelectorAdapter.CheckState, NormalView 
                 Yw3CzActivity.fhzt = "1"
                 val map = HashMap<String, String?>()
                 map["fhbj"] = "1"    //复核标记 9-无需复核，0-待复核，1-复核通过，2-复核未通过
-                map["lsh"] = Yw3CzActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.lsh
-                map["xh"] = Yw3CzActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.xh
+                map["lsh"] = data!!.data.fjdcBusiness.lsh
+                map["xh"] = data!!.data.fjdcBusiness.xh
                 map["fhr"] = UserInfo.XM
                 map["fhbz"] = et_fhbz.text.toString()
                 mNormalPresenter!!.doNetworkTask(map, Constants.FH_COMMIT)
@@ -99,8 +103,8 @@ class YwfhEditActivity : BaseActivity(), SelectorAdapter.CheckState, NormalView 
                 Yw3CzActivity.fhzt = "2"
                 val map = HashMap<String, String?>()
                 map["fhbj"] = "2"    //复核标记 9-无需复核，0-待复核，1-复核通过，2-复核未通过
-                map["lsh"] = Yw3CzActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.lsh
-                map["xh"] = Yw3CzActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.xh
+                map["lsh"] = data!!.data.fjdcBusiness.lsh
+                map["xh"] = data!!.data.fjdcBusiness.xh
                 map["fhr"] = UserInfo.XM
 
                 map["cyrsfzmhm"] = UserInfo.SFZMHM//查验人身份证明号码

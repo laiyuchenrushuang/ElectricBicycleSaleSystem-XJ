@@ -1,5 +1,6 @@
 package com.seatrend.xj.electricbicyclesalesystem.activity
 
+import android.content.Intent
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.widget.CompoundButton
@@ -17,12 +18,11 @@ import com.seatrend.xj.electricbicyclesalesystem.view.NormalView
 import kotlinx.android.synthetic.main.activity_car_info.*
 import kotlinx.android.synthetic.main.bottom_button.*
 
+
 class CarInfoActivity : BaseActivity(), NormalView {
 
-    companion object{
-        var mDataZcbm: CYEntranceEnity?= null  //普通信息  all data
-        var mData3C: ThreeCEnity?= null  //3C信息  注册登记有用 ,注册登记才请求3c信息存数据库
-    }
+    var mDataZcbm: CYEntranceEnity? = null  //普通信息  all data
+//    var mData3C: ThreeCEnity? = null  //3C信息  注册登记有用 ,注册登记才请求3c信息存数据库
 
     private var mCarMsgJscsFG: CarMsgJscsFragment? = null
     private var mCarMsgggxxFG: CarMsgGgxxFragment? = null
@@ -38,6 +38,7 @@ class CarInfoActivity : BaseActivity(), NormalView {
 
     override fun initView() {
         setPageTitle("技术参数查验")
+        mDataZcbm = intent.getSerializableExtra("all_data") as CYEntranceEnity
         mNormalPresenter = NormalPresenter(this)
         mCarMsgJscsFG = CarMsgJscsFragment()
         mCarMsgggxxFG = CarMsgGgxxFragment()
@@ -49,20 +50,21 @@ class CarInfoActivity : BaseActivity(), NormalView {
 
         rb_jscs.setOnCheckedChangeListener { _: CompoundButton, check: Boolean ->
             if (check) {
-                rb_jscs!!.setTextColor(ContextCompat.getColor(this,R.color.theme_color))
-                rb_ggxx!!.setTextColor(ContextCompat.getColor(this,R.color.black))
+                rb_jscs!!.setTextColor(ContextCompat.getColor(this, R.color.theme_color))
+                rb_ggxx!!.setTextColor(ContextCompat.getColor(this, R.color.black))
                 switchFragment(mCarMsgJscsFG)
             } else {
-                rb_ggxx!!.setTextColor(ContextCompat.getColor(this,R.color.theme_color))
-                rb_jscs!!.setTextColor(ContextCompat.getColor(this,R.color.black))
+                rb_ggxx!!.setTextColor(ContextCompat.getColor(this, R.color.theme_color))
+                rb_jscs!!.setTextColor(ContextCompat.getColor(this, R.color.black))
                 switchFragment(mCarMsgggxxFG)
             }
         }
 
         bt_next!!.setOnClickListener {
-            if("A".equals(intent.getStringExtra("ywlx"))){
-                startActivity(intent.setClass(this, ChaYanActivity::class.java))
-            }else{
+            if ("A".equals(intent.getStringExtra("ywlx"))) {
+                intent.setClass(this, ChaYanActivity::class.java)
+                startActivity(intent)
+            } else {
                 CollectPhotoActivity.photoEntranceFlag = Constants.CAR_CY
                 startActivity(intent.setClass(this, CollectPhotoActivity::class.java))
             }
@@ -74,6 +76,7 @@ class CarInfoActivity : BaseActivity(), NormalView {
     private fun switchFragment(fragment: Fragment?) {
         supportFragmentManager.beginTransaction().replace(R.id.carmsg_fl, fragment).commit()
     }
+
 
     override fun getLayout(): Int {
         return R.layout.activity_car_info

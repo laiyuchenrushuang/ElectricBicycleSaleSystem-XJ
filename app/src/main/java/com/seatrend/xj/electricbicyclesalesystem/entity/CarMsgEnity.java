@@ -1,5 +1,6 @@
 package com.seatrend.xj.electricbicyclesalesystem.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -9,7 +10,7 @@ import java.util.List;
  * co., LTD. The code is only for learning and sharing.
  * It is forbidden to make profits by spreading the code.
  */
-public class CarMsgEnity extends BaseEntity{
+public class CarMsgEnity extends BaseEntity implements Serializable {
 
     private Data data;
     public void setData(Data data) {
@@ -19,7 +20,7 @@ public class CarMsgEnity extends BaseEntity{
         return data;
     }
 
-    public class Data {
+    public class Data implements Serializable{
 
         private Jscs jscs;
         private CheckData checkData;
@@ -61,7 +62,7 @@ public class CarMsgEnity extends BaseEntity{
             return cccdata;
         }
 
-        public class Syrzpxx {
+        public class Syrzpxx implements Serializable{
 
             private String lsh;
             private String xh;
@@ -153,7 +154,7 @@ public class CarMsgEnity extends BaseEntity{
 
         }
 
-        public class Syrjbxx {
+        public class Syrjbxx implements Serializable{
 
             private String lsh;
             private String xh;
@@ -869,7 +870,7 @@ public class CarMsgEnity extends BaseEntity{
 
         }
 
-        public class CheckData {
+        public class CheckData implements Serializable{
 
             private String lsh;
             private String xh;
@@ -1186,7 +1187,7 @@ public class CarMsgEnity extends BaseEntity{
         }
 
 
-        public class Jscs {
+        public class Jscs implements Serializable{
 
             private String cphgzbh;
             private String cccbh;
@@ -1613,7 +1614,7 @@ public class CarMsgEnity extends BaseEntity{
             }
 
         }
-        public class CccData {
+        public class CccData implements Serializable{
 
             private String lsh;
             private String cphgzbh;

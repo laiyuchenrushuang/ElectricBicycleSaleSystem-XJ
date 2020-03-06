@@ -67,10 +67,13 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
     private var count = 0 //方便计数 zpdz为空，也可以传，但是总photolistsize -count  成功数-count
     private var isCommiting = false
 
+
+    var mDataZcbm :CYEntranceEnity ?=null
+    var mData3C :ThreeCEnity ?=null
+
     override fun initView() {
         setPageTitle(getString(R.string.carcy_next))
         bindEvent()
-
         mCarPhotoPersenter = CarPhotoPersenter(this)
         m_recycler_view.layoutManager = StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
         mCheckDataPhotoAdapter = CheckDataPhotoAdapter(this)
@@ -84,6 +87,7 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
         rb_cy_ok.isChecked = true
         //查验结论的逻辑 查验才有
         if (Constants.CAR_CY.equals(photoEntranceFlag)) {
+            mDataZcbm = intent.getSerializableExtra("all_data") as CYEntranceEnity
             ll_cyjl.visibility = View.VISIBLE
             if (!jtxsFlag) {
                 rb_cy_ok.isEnabled = false
@@ -147,13 +151,14 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
                         try {
                             if ("A" == intent.getStringExtra("ywlx")) {
                                 showLoadingDialog()
+                                mData3C = intent.getSerializableExtra("3c_data") as ThreeCEnity
                                 val map = HashMap<String, String?>()
                                 map["zcbm"] = intent.getStringExtra("zcbm")
-                                map["lsh"] = CarInfoActivity.mDataZcbm!!.data.lsh
-                                map["xh"] = CarInfoActivity.mDataZcbm!!.data.xh
-                                map["cphgzbh"] = CarInfoActivity.mData3C!!.data.threeCertificates.data.qualificationCode
-                                map["cccbh"] = CarInfoActivity.mData3C!!.data.threeCertificates.data.certcode
-                                map["scqymc"] = CarInfoActivity.mData3C!!.data.threeCertificates.data.vehicleManufacturer
+                                map["lsh"] = mDataZcbm!!.data.lsh
+                                map["xh"] = mDataZcbm!!.data.xh
+                                map["cphgzbh"] = mData3C!!.data.threeCertificates.data.qualificationCode
+                                map["cccbh"] = mData3C!!.data.threeCertificates.data.certcode
+                                map["scqymc"] = mData3C!!.data.threeCertificates.data.vehicleManufacturer
                                 map["ywlx"] = intent.getStringExtra("ywlx")
                                 map["cybm"] = UserInfo.GLBM
                                 map["fzjg"] = if (TextUtils.isEmpty(UserInfo.FZJG)) "" else UserInfo.FZJG
@@ -162,17 +167,17 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
                                 map["cyrsfzmhm"] = UserInfo.SFZMHM//查验人身份证明号码
                                 map["czpt"] = Constants.CZPT //查验平台
 
-                                map["clzwsb"] = CarInfoActivity.mData3C!!.data.threeCertificates.data.trademarkCn
+                                map["clzwsb"] = mData3C!!.data.threeCertificates.data.trademarkCn
 
-                                map["cwkc"] = CarInfoActivity.mData3C!!.data.threeCertificates.data.length
-                                map["cwck"] = CarInfoActivity.mData3C!!.data.threeCertificates.data.width
-                                map["cwkg"] = CarInfoActivity.mData3C!!.data.threeCertificates.data.height
+                                map["cwkc"] = mData3C!!.data.threeCertificates.data.length
+                                map["cwck"] = mData3C!!.data.threeCertificates.data.width
+                                map["cwkg"] = mData3C!!.data.threeCertificates.data.height
 
-                                map["zbzl"] = CarInfoActivity.mData3C!!.data.threeCertificates.data.weight
-                                map["xxlc"] = CarInfoActivity.mData3C!!.data.threeCertificates.data.continuousMileage
-                                map["cpxh"] = CarInfoActivity.mData3C!!.data.threeCertificates.data.productModel
-                                map["zzrq"] = CarInfoActivity.mData3C!!.data.threeCertificates.data.manufacturingDate
-                                map["zgcs"] = CarInfoActivity.mData3C!!.data.threeCertificates.data.maxSpeed
+                                map["zbzl"] = mData3C!!.data.threeCertificates.data.weight
+                                map["xxlc"] = mData3C!!.data.threeCertificates.data.continuousMileage
+                                map["cpxh"] = mData3C!!.data.threeCertificates.data.productModel
+                                map["zzrq"] = mData3C!!.data.threeCertificates.data.manufacturingDate
+                                map["zgcs"] = mData3C!!.data.threeCertificates.data.maxSpeed
 
                                 map["ywyy"] = if (!TextUtils.isEmpty(intent.getStringExtra("ywyy"))) intent.getStringExtra("ywyy") else "" //为空传”“
                                 if (rb_cy_no.isChecked) {
@@ -196,12 +201,12 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
                             } else {  //除开业务注册
                                 showLoadingDialog()
                                 val map = HashMap<String, String?>()
-                                map["zcbm"] = CarInfoActivity.mDataZcbm!!.data.threeCertificates.zcbm
-                                map["lsh"] = CarInfoActivity.mDataZcbm!!.data.lsh
-                                map["xh"] = CarInfoActivity.mDataZcbm!!.data.xh
-                                map["cphgzbh"] = CarInfoActivity.mDataZcbm!!.data.threeCertificates.cphgzbh
-                                map["cccbh"] = CarInfoActivity.mDataZcbm!!.data.threeCertificates.cccbh
-                                map["scqymc"] = CarInfoActivity.mDataZcbm!!.data.threeCertificates.clzzs
+                                map["zcbm"] = mDataZcbm!!.data.threeCertificates.zcbm
+                                map["lsh"] = mDataZcbm!!.data.lsh
+                                map["xh"] = mDataZcbm!!.data.xh
+                                map["cphgzbh"] = mDataZcbm!!.data.threeCertificates.cphgzbh
+                                map["cccbh"] = mDataZcbm!!.data.threeCertificates.cccbh
+                                map["scqymc"] = mDataZcbm!!.data.threeCertificates.clzzs
                                 map["ywlx"] = intent.getStringExtra("ywlx")
                                 map["cybm"] = UserInfo.GLBM
                                 map["fzjg"] = if (TextUtils.isEmpty(UserInfo.FZJG)) "" else UserInfo.FZJG
@@ -212,17 +217,17 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
 
                                 map["cph"] = intent.getStringExtra("hphm")
 
-                                map["clzwsb"] = CarInfoActivity.mDataZcbm!!.data.threeCertificates.clzwsb
+                                map["clzwsb"] = mDataZcbm!!.data.threeCertificates.clzwsb
 
-                                map["cwkc"] = CarInfoActivity.mDataZcbm!!.data.threeCertificates.cwkc
-                                map["cwck"] = CarInfoActivity.mDataZcbm!!.data.threeCertificates.cwkk
-                                map["cwkg"] = CarInfoActivity.mDataZcbm!!.data.threeCertificates.cwkg
+                                map["cwkc"] = mDataZcbm!!.data.threeCertificates.cwkc
+                                map["cwck"] = mDataZcbm!!.data.threeCertificates.cwkk
+                                map["cwkg"] = mDataZcbm!!.data.threeCertificates.cwkg
 
-                                map["zbzl"] = CarInfoActivity.mDataZcbm!!.data.threeCertificates.zbzl
-                                map["xxlc"] = CarInfoActivity.mDataZcbm!!.data.threeCertificates.xhlc
-                                map["cpxh"] = CarInfoActivity.mDataZcbm!!.data.threeCertificates.cpxh
-                                map["zzrq"] = CarInfoActivity.mDataZcbm!!.data.threeCertificates.zzrq
-                                map["zgcs"] = CarInfoActivity.mDataZcbm!!.data.threeCertificates.zgcs
+                                map["zbzl"] = mDataZcbm!!.data.threeCertificates.zbzl
+                                map["xxlc"] = mDataZcbm!!.data.threeCertificates.xhlc
+                                map["cpxh"] = mDataZcbm!!.data.threeCertificates.cpxh
+                                map["zzrq"] = mDataZcbm!!.data.threeCertificates.zzrq
+                                map["zgcs"] = mDataZcbm!!.data.threeCertificates.zgcs
 
                                 map["ywyy"] = if (!TextUtils.isEmpty(intent.getStringExtra("ywyy"))) intent.getStringExtra("ywyy") else "" //为空传”“
                                 if (rb_cy_no.isChecked) {
@@ -290,8 +295,8 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
         when (flag) {
             Constants.CAR_CY -> {  //查验照片存储
                 var enity = PhotoEntity()
-                enity.lsh = CarInfoActivity.mDataZcbm!!.data.lsh
-                enity.xh = CarInfoActivity.mDataZcbm!!.data.xh
+                enity.lsh = mDataZcbm!!.data.lsh
+                enity.xh = mDataZcbm!!.data.xh
                 enity.zpzl = db.zplx
                 enity.zpPath = db.zpPath
                 enity.zpdz = db.zplj
@@ -332,8 +337,9 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
 
     private fun savePhoto() { //其他业务类
         if (Constants.CAR_ZC.equals(photoEntranceFlag) || Constants.CAR_BG.equals(photoEntranceFlag) || Constants.CAR_ZY.equals(photoEntranceFlag)) {
-            mLsh = CarInfoByCyActivity.mAllBikeMsgEnity!!.data.checkData.lsh
-            mXh = CarInfoByCyActivity.mAllBikeMsgEnity!!.data.checkData.xh
+           val enity= intent.getSerializableExtra("all_data") as AllBikeMsgEnity
+            mLsh = enity.data.checkData.lsh
+            mXh = enity.data.checkData.xh
         }
 
         //保存图片

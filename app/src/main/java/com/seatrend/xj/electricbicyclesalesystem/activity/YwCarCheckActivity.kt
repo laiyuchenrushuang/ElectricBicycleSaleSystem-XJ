@@ -102,10 +102,10 @@ class YwCarCheckActivity : BaseActivity(), NormalView {
             mNormalPresenter!!.doNetworkTask(map, Constants.CAR_MSG_SEARCH)
         }
 
-        ll_item.setOnClickListener {
-            var intent = Intent(this, Yw3CzActivity::class.java)
+        item_cardview.setOnClickListener {
+            intent.setClass(this, Yw3CzActivity::class.java)
             intent.putExtra(Constants.UI_TYPE, "3") //车辆查询入口进去
-            Yw3CzActivity.mAllCXData = mEnity
+            intent.putExtra("cy_data",mEnity)
             startActivity(intent)
         }
         ll_back.setOnClickListener {

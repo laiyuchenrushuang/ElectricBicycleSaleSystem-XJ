@@ -38,8 +38,7 @@ class YWEntranceActivity : BaseActivity(), NormalView {
             mAllBikeMsgEnity = GsonUtils.gson(commonResponse.getResponseString(), AllBikeMsgEnity::class.java)
             resetData()
 
-
-            CarInfoByCyActivity.mAllBikeMsgEnity = mAllBikeMsgEnity
+            intent.putExtra("all_data",mAllBikeMsgEnity)
             intent.putExtra("ywlx", sp_yw.selectedItem.toString().split(":")[0])
             intent.setClass(this, CarInfoByCyActivity::class.java)
             startActivity(intent)
@@ -180,6 +179,9 @@ class YWEntranceActivity : BaseActivity(), NormalView {
         dialog.show()
         val btn_pda = dialog.findViewById<Button>(R.id.btn_pda)
         val btn_other = dialog.findViewById<Button>(R.id.btn_other)
+        if(!AppUtils.HCPDA()){
+            btn_pda.isEnabled = false
+        }
         btn_pda.setOnClickListener {
             dialog.dismiss()
 

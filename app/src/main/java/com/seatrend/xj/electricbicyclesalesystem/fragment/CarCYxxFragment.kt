@@ -14,6 +14,7 @@ import com.seatrend.xj.electricbicyclesalesystem.common.BaseFragment
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants
 import com.seatrend.xj.electricbicyclesalesystem.database.CodeTableSQLiteUtils
 import com.seatrend.xj.electricbicyclesalesystem.entity.AllBikeMsgEnity
+import com.seatrend.xj.electricbicyclesalesystem.entity.CarMsgEnity
 import com.seatrend.xj.electricbicyclesalesystem.entity.UserInfo
 import com.seatrend.xj.electricbicyclesalesystem.entity.YWRegisterEntranceEnity
 import com.seatrend.xj.electricbicyclesalesystem.util.*
@@ -25,12 +26,12 @@ import kotlin.collections.HashMap
 import kotlin.collections.ArrayList as ArrayList1
 
 class CarCYxxFragment : BaseFragment() {
-    companion object {
-        var enity: AllBikeMsgEnity? = null
-    }
+    var enity: AllBikeMsgEnity? = null
 
     private var mCyxxPhotoAdapter: CyxxPhotoAdapter? = null
     var photoList = ArrayList<AllBikeMsgEnity.Data.PhotoList>()
+
+    private var cydata: CarMsgEnity? = null
 
     override fun getLayoutView(inflater: LayoutInflater?, container: ViewGroup?): View {
         return inflater!!.inflate(R.layout.fragment_car_cy_info, container, false)
@@ -53,7 +54,6 @@ class CarCYxxFragment : BaseFragment() {
         }
 
         if (activity is CarInfoByCyActivity) {
-            showLog(activity.intent.getStringExtra("ywlx"))
             if ("A".equals(activity.intent.getStringExtra("ywlx")) ||
                     "B".equals(activity.intent.getStringExtra("ywlx")) ||
                     "D".equals(activity.intent.getStringExtra("ywlx"))) { //A注册 D变更 B转移 7旧车换牌
@@ -64,10 +64,19 @@ class CarCYxxFragment : BaseFragment() {
             }
         } else if (activity is Yw3CzActivity) {
             if (activity is Yw3CzActivity && "3" == activity.intent.getStringExtra(Constants.UI_TYPE)) {
-                    getCxCarData()
+                getCxCarData()
             } else {
+
+                enity = activity.intent.getSerializableExtra("all_data") as AllBikeMsgEnity
+
                 if (null == enity || null == enity!!.data || null == enity!!.data.checkData) {
-                    showToast("查验信息为空")
+                    //可能是无需查验的登记,补换注销登记
+                    if (null != enity && enity!!.data != null && enity!!.data.fjdcBusiness != null && "A" != enity!!.data.fjdcBusiness.ywlx && "B" != enity!!.data.fjdcBusiness.ywlx && "D" != enity!!.data.fjdcBusiness.ywlx) {
+                        ViewShowUtils.showGoneView(ll_cyxx)
+                        ViewShowUtils.showVisibleView(tv_cyxx)
+                    } else {
+                        showToast("查验信息为空")
+                    }
                     return
                 }
 
@@ -93,7 +102,8 @@ class CarCYxxFragment : BaseFragment() {
 
     private fun getData() {
         try {
-            if (enity == null || enity!!.data == null || enity!!.data.checkData == null ) {
+            enity = activity.intent.getSerializableExtra("all_data") as AllBikeMsgEnity
+            if (enity == null || enity!!.data == null || enity!!.data.checkData == null) {
                 showToast("获取查验信息失败")
                 return
             }
@@ -120,7 +130,7 @@ class CarCYxxFragment : BaseFragment() {
             val cyList = CodeTableSQLiteUtils.queryByDMLB(Constants.CYZP)
             //只获取查验的照片
 
-            if(enity!!.data.photoList.size == 0){
+            if (enity!!.data.photoList.size == 0) {
                 showToast("获取查验图片信息为空")
                 return
             }
@@ -145,31 +155,32 @@ class CarCYxxFragment : BaseFragment() {
 
     private fun getCxCarData() {
         try {
-            if ("A".equals(Yw3CzActivity.mAllCXData!!.data.checkData.ywlx)) {
+            cydata = activity.intent.getSerializableExtra("cy_data") as CarMsgEnity
+            if ("A".equals(cydata!!.data.checkData.ywlx)) {
                 ll_item_cyxx.visibility = View.VISIBLE
-                tv_csys.text = CsysUtils.getCsysMc(Yw3CzActivity.mAllCXData!!.data.checkData.csys)
-                tv_ckg.text = Yw3CzActivity.mAllCXData!!.data.checkData.scc + "*" + Yw3CzActivity.mAllCXData!!.data.checkData.sck + "*" + Yw3CzActivity.mAllCXData!!.data.checkData.scg
-                tv_zczl.text = Yw3CzActivity.mAllCXData!!.data.checkData.sczbzl
-                tv_zgss.text = Yw3CzActivity.mAllCXData!!.data.checkData.sczgcs
-                tv_zxj.text = Yw3CzActivity.mAllCXData!!.data.checkData.scqhlzxj  //中心距
-                tv_jtxs.text = if ("1".equals(Yw3CzActivity.mAllCXData!!.data.checkData.jtgn)) "有" else "否"
-                tv_dpxs.text = if ("1".equals(Yw3CzActivity.mAllCXData!!.data.checkData.shdp)) "是" else "否"
-                tv_cphm.text = if (ObjectNullUtil.checknull(Yw3CzActivity.mAllCXData!!.data.checkData.cph)) Yw3CzActivity.mAllCXData!!.data.checkData.cph else "/"
+                tv_csys.text = CsysUtils.getCsysMc(cydata!!.data.checkData.csys)
+                tv_ckg.text = cydata!!.data.checkData.scc + "*" + cydata!!.data.checkData.sck + "*" + cydata!!.data.checkData.scg
+                tv_zczl.text = cydata!!.data.checkData.sczbzl
+                tv_zgss.text = cydata!!.data.checkData.sczgcs
+                tv_zxj.text = cydata!!.data.checkData.scqhlzxj  //中心距
+                tv_jtxs.text = if ("1".equals(cydata!!.data.checkData.jtgn)) "有" else "否"
+                tv_dpxs.text = if ("1".equals(cydata!!.data.checkData.shdp)) "是" else "否"
+                tv_cphm.text = if (ObjectNullUtil.checknull(cydata!!.data.checkData.cph)) cydata!!.data.checkData.cph else "/"
             } else {
                 ll_item_cyxx.visibility = View.GONE
             }
 
-            tv_cyjl.text = if ("1".equals(Yw3CzActivity.mAllCXData!!.data.checkData.cyjl)) "合格" else "不合格"
-            tv_cyr.text = if (TextUtils.isEmpty(Yw3CzActivity.mAllCXData!!.data.checkData.cyr)) "无" else Yw3CzActivity.mAllCXData!!.data.checkData.cyr
-            tv_cysj.text = StringUtils.longToStringData(Yw3CzActivity.mAllCXData!!.data.checkData.cyrq)
-//        tv_glbm.text = Yw3CzActivity.mAllCXData!!.data.checkData.cybm
+            tv_cyjl.text = if ("1".equals(cydata!!.data.checkData.cyjl)) "合格" else "不合格"
+            tv_cyr.text = if (TextUtils.isEmpty(cydata!!.data.checkData.cyr)) "无" else cydata!!.data.checkData.cyr
+            tv_cysj.text = StringUtils.longToStringData(cydata!!.data.checkData.cyrq)
+//        tv_glbm.text = cydata!!.data.checkData.cybm
             tv_glbm.text = UserInfo.NewUserInfo.BMMC
-            tv_zxj.text = Yw3CzActivity.mAllCXData!!.data.checkData.scqhlzxj
+            tv_zxj.text = cydata!!.data.checkData.scqhlzxj
             val cyList = CodeTableSQLiteUtils.queryByDMLB(Constants.CYZP)
             //只获取查验的照片
             photoList.clear()
 
-            for (db in Yw3CzActivity.mAllCXData!!.data.syrzpxx) {
+            for (db in cydata!!.data.syrzpxx) {
                 for (enity in cyList) {
                     if (db.zpzl.equals(enity.dmz)) {
                         var data = AllBikeMsgEnity.Data.PhotoList()

@@ -34,9 +34,9 @@ class YwFhSearchActivity : BaseActivity(), NormalView {
 
         if (Constants.YW_GET_YWCZ_BIKE_DATA.equals(commonResponse.getUrl())) {
             val mAllBikeMsgEnity = GsonUtils.gson(commonResponse.getResponseString(), AllBikeMsgEnity::class.java)
-            Yw3CzActivity.mAllBikeMsgEnity = mAllBikeMsgEnity
-            var intent = Intent(this, Yw3CzActivity::class.java)
             Yw3CzActivity.fhzt = mFhdata!!.data.list[0].fhbj
+            intent.putExtra("all_data",mAllBikeMsgEnity)
+            intent.setClass(this, Yw3CzActivity::class.java)
             intent.putExtra(Constants.UI_TYPE, "0")
             intent.putExtra("fhr", mFhdata!!.data.list[0].fhr)
             intent.putExtra("fhzt", mFhdata!!.data.list[0].fhbj)

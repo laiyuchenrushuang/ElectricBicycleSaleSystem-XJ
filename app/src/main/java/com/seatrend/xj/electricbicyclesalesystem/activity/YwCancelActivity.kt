@@ -10,6 +10,7 @@ import android.widget.Spinner
 import com.seatrend.xj.electricbicyclesalesystem.R
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants
+import com.seatrend.xj.electricbicyclesalesystem.entity.AllBikeMsgEnity
 import com.seatrend.xj.electricbicyclesalesystem.entity.CommonResponse
 import com.seatrend.xj.electricbicyclesalesystem.entity.DjLshEnity
 import com.seatrend.xj.electricbicyclesalesystem.entity.UserInfo
@@ -31,6 +32,7 @@ class YwCancelActivity : BaseActivity(), NormalView {
         var YWYY: Int = -1 // 业务原因 1 自行报废   2 灭失
     }
 
+    private var data :AllBikeMsgEnity?=null
     private var headPhoto: ByteArray? = null//头像照片
     private var FACE_COMPARE_CODE: Int = 11
     private var mNormalPresenter: NormalPresenter? = null
@@ -45,13 +47,13 @@ class YwCancelActivity : BaseActivity(), NormalView {
             }
 
         }
-        intent.putExtra("syr", CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.syrmc)
-        intent.putExtra("sfz", CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.sfzmhm)
-        intent.putExtra("hphm", CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.cph)
+        intent.putExtra("syr", data!!.data.fjdcBusiness.syrmc)
+        intent.putExtra("sfz", data!!.data.fjdcBusiness.sfzmhm)
+        intent.putExtra("hphm", data!!.data.fjdcBusiness.cph)
         intent.setClass(this, AutographActivity::class.java)
         startActivity(intent)
         CollectPhotoActivity.photoEntranceFlag = Constants.CAR_ZX
-        CollectPhotoActivity.ywlx = CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.ywlx
+        CollectPhotoActivity.ywlx = data!!.data.fjdcBusiness.ywlx
     }
 
     override fun netWorkTaskfailed(commonResponse: CommonResponse) {
@@ -63,6 +65,7 @@ class YwCancelActivity : BaseActivity(), NormalView {
     override fun initView() {
         setPageTitle("注销登记")
         mNormalPresenter = NormalPresenter(this)
+        data = intent.getSerializableExtra("all_data") as AllBikeMsgEnity
         initData()
         bindEvent()
     }
@@ -74,7 +77,7 @@ class YwCancelActivity : BaseActivity(), NormalView {
     }
 
     private fun getData() {
-        val enity = CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness
+        val enity = data!!.data.fjdcBusiness
         if (null == enity) {
             showToast("登记信息为空")
             return
@@ -169,7 +172,7 @@ class YwCancelActivity : BaseActivity(), NormalView {
 
     private fun postHttpRequest() {
         try {
-            val enity = CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness
+            val enity = data!!.data.fjdcBusiness
 
             enity.ywlx = intent.getStringExtra("ywlx") //业务类型
             enity.glbm = UserInfo.GLBM //管理部门
@@ -184,6 +187,10 @@ class YwCancelActivity : BaseActivity(), NormalView {
             if (ObjectNullUtil.checknull(ed_dlr_sfz.text.toString(), ed_dlr_xm.text.toString(), et_dlr_lxdh.text.toString())) {
                 if("A" == sp_dlr_sfz.selectedItem.toString().split(":")[0] && !SFZCheckUtil.isCorrect(ed_dlr_sfz.text.toString())){
                     showToast("请正确填写代理人身份证信息")
+                    return
+                }
+                if (!StringUtils.isPhoneNumber(et_dlr_lxdh.text.toString())) {
+                    showToast("请正确填写邮寄手机信息")
                     return
                 }
                 enity.dlrsfzmlx = sp_dlr_sfz.selectedItem.toString().split(":")[0]

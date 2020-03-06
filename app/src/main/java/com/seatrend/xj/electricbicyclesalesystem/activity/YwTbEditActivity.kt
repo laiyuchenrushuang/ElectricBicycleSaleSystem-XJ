@@ -1,15 +1,18 @@
 package com.seatrend.xj.electricbicyclesalesystem.activity
 
-import android.content.Intent
+import android.app.Activity
 import android.support.v7.widget.RecyclerView
 import com.seatrend.xj.electricbicyclesalesystem.R
 import com.seatrend.xj.electricbicyclesalesystem.adpater.SelectorAdapter
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants
+import com.seatrend.xj.electricbicyclesalesystem.entity.AllBikeMsgEnity
 import com.seatrend.xj.electricbicyclesalesystem.entity.CommonResponse
 import com.seatrend.xj.electricbicyclesalesystem.entity.UserInfo
 import com.seatrend.xj.electricbicyclesalesystem.manager.MyRecycleManager
 import com.seatrend.xj.electricbicyclesalesystem.persenter.NormalPresenter
+import com.seatrend.xj.electricbicyclesalesystem.util.OtherUtils
+import com.seatrend.xj.electricbicyclesalesystem.util.StringUtils
 import com.seatrend.xj.electricbicyclesalesystem.view.NormalView
 import kotlinx.android.synthetic.main.activity_tb_edit.*
 import kotlinx.android.synthetic.main.bottom_button.*
@@ -21,17 +24,19 @@ class YwTbEditActivity: BaseActivity(), SelectorAdapter.CheckState,NormalView {
     var yyList = ArrayList<String>() //业务原因list
     private var ll: RecyclerView.LayoutManager? = null
     var adapter: SelectorAdapter? = null
-
+    private var data : AllBikeMsgEnity?=null
+    var resultyy = StringBuffer()
 
     override fun netWorkTaskSuccess(commonResponse: CommonResponse) {
 //        startActivity(Intent(this,RemindCommonActivity::class.java))
         dismissLoadingDialog()
-        showToast("退办成功")
-        val intent= Intent(this, YwTBSearchActivity::class.java)
-        intent.flags= Intent.FLAG_ACTIVITY_CLEAR_TOP  //致于栈顶
-        startActivity(intent)
-        finish()
+        intent.putExtra("tb_reason",resultyy.toString())
+        intent.putExtra("tb_beizhu",ed_tbbz.text.toString())
+        intent.putExtra("tb_time",StringUtils.longToStringData(System.currentTimeMillis()))
 
+        setResult(Activity.RESULT_OK,intent)
+        showToast("退办成功")
+        finish()
     }
 
 
@@ -64,6 +69,7 @@ class YwTbEditActivity: BaseActivity(), SelectorAdapter.CheckState,NormalView {
     }
 
     private fun getData() {
+        data = intent.getSerializableExtra("all_data") as AllBikeMsgEnity
         yyList.add("原因1")
         yyList.add("原因2")
         yyList.add("原因3")
@@ -74,10 +80,9 @@ class YwTbEditActivity: BaseActivity(), SelectorAdapter.CheckState,NormalView {
         bt_next.setOnClickListener {
             showLoadingDialog()
             try {
-                var resultyy = StringBuffer()
                 val map = HashMap<String,String>()
-                map["lsh"] = Yw3CzActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.lsh
-                map["xh"] = Yw3CzActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.xh
+                map["lsh"] = data!!.data.fjdcBusiness.lsh
+                map["xh"] = data!!.data.fjdcBusiness.xh
                 map["glbm"] = UserInfo.GLBM
                 map["zt"] = "Q" // Q-已退办
                 if(mList != null && mList!!.size >0){

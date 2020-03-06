@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.StaggeredGridLayoutManager
+import android.text.TextUtils
 import android.text.method.ScrollingMovementMethod
 import android.view.View
 import android.view.ViewGroup
@@ -19,10 +20,7 @@ import com.seatrend.xj.electricbicyclesalesystem.entity.AllBikeMsgEnity
 import com.seatrend.xj.electricbicyclesalesystem.entity.CommonResponse
 import com.seatrend.xj.electricbicyclesalesystem.entity.EmployeeBean
 import com.seatrend.xj.electricbicyclesalesystem.persenter.NormalPresenter
-import com.seatrend.xj.electricbicyclesalesystem.util.DMZUtils
-import com.seatrend.xj.electricbicyclesalesystem.util.GsonUtils
-import com.seatrend.xj.electricbicyclesalesystem.util.JslxUtils
-import com.seatrend.xj.electricbicyclesalesystem.util.ViewShowUtils
+import com.seatrend.xj.electricbicyclesalesystem.util.*
 import com.seatrend.xj.electricbicyclesalesystem.view.NormalView
 import kotlinx.android.synthetic.main.activty_employee_detail.*
 import kotlinx.android.synthetic.main.recyclerview.*
@@ -97,7 +95,21 @@ class EmployeeDetailActivity : BaseActivity(), NormalView, BaseActivity.DialogLi
         mNormalPresenter = NormalPresenter(this)
         initRecycle()
         getData()
+        getPopData()
         bindEvent()
+    }
+
+    private fun getPopData() {
+        listData.clear()
+        if ("停用".equals(mEmployeeListBean!!.zhzt)) {
+            listData.add("账号启用")
+        } else if ("审核不通过".equals(mEmployeeListBean!!.zhzt)) {
+            listData.add("信息变更")
+        } else {
+            listData.add("信息变更")
+            listData.add("修改密码")
+            listData.add("账号禁用")
+        }
     }
 
     private fun getData() {
@@ -117,7 +129,7 @@ class EmployeeDetailActivity : BaseActivity(), NormalView, BaseActivity.DialogLi
             tv_sfz.text = mEmployeeListBean!!.sfzmhm
             tv_lxdh.text = mEmployeeListBean!!.lxdh
             tv_jslx.text = JslxUtils.getJslxMc(mEmployeeListBean!!.jslx)
-            tv_glbm.text = mEmployeeListBean!!.sjbmmc
+            tv_glbm.text = StringUtils.isNull(mEmployeeListBean!!.sjbmmc)
 
             tv_fwzmc.text = mEmployeeListBean!!.bmmc
 
@@ -125,25 +137,16 @@ class EmployeeDetailActivity : BaseActivity(), NormalView, BaseActivity.DialogLi
 
             showLog(GsonUtils.toJson(mEmployeeListBean))
 
-            for (i in mEmployeeListBean!!.listRole.indices) {
-                if (i == mEmployeeListBean!!.listRole.size - 1) {
-                    sb.append(mEmployeeListBean!!.listRole[i].getjsmc())
-                    break
+            if (null != mEmployeeListBean && null != mEmployeeListBean!!.listRole && mEmployeeListBean!!.listRole.size > 0) {
+                for (i in mEmployeeListBean!!.listRole.indices) {
+                    if (i == mEmployeeListBean!!.listRole.size - 1) {
+                        sb.append(mEmployeeListBean!!.listRole[i].getjsmc())
+                        break
+                    }
+                    sb.append(mEmployeeListBean!!.listRole[i].getjsmc()).append(",")
                 }
-                sb.append(mEmployeeListBean!!.listRole[i].getjsmc()).append(",")
             }
             tv_jsqx.text = sb.toString()
-
-            listData.clear()
-            if ("停用".equals(mEmployeeListBean!!.zhzt)) {
-                listData.add("账号启用")
-            } else if ("审核不通过".equals(mEmployeeListBean!!.zhzt)) {
-                listData.add("信息变更")
-            } else {
-                listData.add("信息变更")
-                listData.add("修改密码")
-                listData.add("账号禁用")
-            }
 
             if ("1".equals(mEmployeeListBean!!.jslx)) { //车管部门
                 listData.remove("信息变更")
@@ -222,7 +225,7 @@ class EmployeeDetailActivity : BaseActivity(), NormalView, BaseActivity.DialogLi
             pop!!.dismiss()
         }
         pop = PopupWindow(mTypeLv, tv_right.width, ViewGroup.LayoutParams.WRAP_CONTENT, true)
-        pop!!.setBackgroundDrawable(ContextCompat.getDrawable(this,R.color.white))
+        pop!!.setBackgroundDrawable(ContextCompat.getDrawable(this, R.color.white))
         pop!!.isFocusable = false
         pop!!.isOutsideTouchable = true
         pop!!.setOnDismissListener {

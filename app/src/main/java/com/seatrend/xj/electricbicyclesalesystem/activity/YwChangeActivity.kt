@@ -15,10 +15,7 @@ import com.seatrend.xj.electricbicyclesalesystem.R
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants
 import com.seatrend.xj.electricbicyclesalesystem.database.CodeTableSQLiteUtils
-import com.seatrend.xj.electricbicyclesalesystem.entity.CommonResponse
-import com.seatrend.xj.electricbicyclesalesystem.entity.DjLshEnity
-import com.seatrend.xj.electricbicyclesalesystem.entity.HpHmEnity
-import com.seatrend.xj.electricbicyclesalesystem.entity.UserInfo
+import com.seatrend.xj.electricbicyclesalesystem.entity.*
 import com.seatrend.xj.electricbicyclesalesystem.persenter.NormalPresenter
 import com.seatrend.xj.electricbicyclesalesystem.util.*
 import com.seatrend.xj.electricbicyclesalesystem.view.NormalView
@@ -30,6 +27,7 @@ class YwChangeActivity : BaseActivity(), NormalView {
     private var headPhoto: ByteArray? = null//头像照片
     private var FACE_COMPARE_CODE: Int = 11
     private var mNormalPresenter: NormalPresenter? = null
+    private var data : AllBikeMsgEnity?=null
 
     private var changed1 = false
     private var changed2 = false
@@ -46,11 +44,11 @@ class YwChangeActivity : BaseActivity(), NormalView {
             }
             intent.putExtra("syr", ed_syr_xm.text.toString())
             intent.putExtra("sfz", ed_syr_sfz.text.toString())
-            intent.putExtra("hphm", if ("B".equals(CarInfoByCyActivity.mAllBikeMsgEnity!!.data.checkData.ywyy)) et_cphm.text.toString().toUpperCase() else CarInfoByCyActivity.mAllBikeMsgEnity!!.data.checkData.cph)
+            intent.putExtra("hphm", if ("B".equals(data!!.data.checkData.ywyy)) et_cphm.text.toString().toUpperCase() else data!!.data.checkData.cph)
             intent.setClass(this, AutographActivity::class.java)
             startActivity(intent)
             CollectPhotoActivity.photoEntranceFlag = Constants.CAR_BG
-            CollectPhotoActivity.ywlx = CarInfoByCyActivity.mAllBikeMsgEnity!!.data.checkData.ywlx
+            CollectPhotoActivity.ywlx = data!!.data.checkData.ywlx
             CollectPhotoActivity.dzpzFlag = rb_zzxsz_ok.isChecked
         }
         if (Constants.SYSTEM_PRODUCT_HPHM.equals(commonResponse.getUrl())) {
@@ -74,6 +72,7 @@ class YwChangeActivity : BaseActivity(), NormalView {
     override fun initView() {
         setPageTitle("变更登记")
         mNormalPresenter = NormalPresenter(this)
+        data = intent.getSerializableExtra("all_data") as AllBikeMsgEnity
         initData()
         bindEvent()
     }
@@ -163,7 +162,7 @@ class YwChangeActivity : BaseActivity(), NormalView {
     }
 
     private fun getData() {
-        val enity = CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness
+        val enity = data!!.data.fjdcBusiness
         if (null == enity) {
             showToast("登记信息为空")
             return
@@ -202,12 +201,12 @@ class YwChangeActivity : BaseActivity(), NormalView {
         SpinnerUtil.setPinnerData(this, Constants.SYXZ, sp_syxz)
         SpinnerUtil.setPinnerData(this, Constants.CLYT, sp_syyt)
 
-        SpinnerUtil.setPinnerDataQh(this, Constants.MY_QH_SHENG_DMLB, sp_syr_qh1, if(null == CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.djxzqh || TextUtils.isEmpty(CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.djxzqh)) null else CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.djxzqh.substring(0, 2) + "0000")
-        SpinnerUtil.setPinnerDataQh(this, Constants.MY_QH_SHENG_DMLB, sp_yj_qh1, if(null == CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.sjryjxzqh || TextUtils.isEmpty(CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.sjryjxzqh)) null else CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.sjryjxzqh.substring(0, 2) + "0000")
-        SpinnerUtil.setPinnerDataQh(this, Constants.MY_QH_SHENG_DMLB, sp_syr_yj_qh1, if(null == CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.lxdzxzqh || TextUtils.isEmpty(CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.lxdzxzqh)) null else CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.lxdzxzqh.substring(0, 2) + "0000")
+        SpinnerUtil.setPinnerDataQh(this, Constants.MY_QH_SHENG_DMLB, sp_syr_qh1, if(null == data!!.data.fjdcBusiness.djxzqh || TextUtils.isEmpty(data!!.data.fjdcBusiness.djxzqh)) null else data!!.data.fjdcBusiness.djxzqh.substring(0, 2) + "0000")
+        SpinnerUtil.setPinnerDataQh(this, Constants.MY_QH_SHENG_DMLB, sp_yj_qh1, if(null == data!!.data.fjdcBusiness.sjryjxzqh || TextUtils.isEmpty(data!!.data.fjdcBusiness.sjryjxzqh)) null else data!!.data.fjdcBusiness.sjryjxzqh.substring(0, 2) + "0000")
+        SpinnerUtil.setPinnerDataQh(this, Constants.MY_QH_SHENG_DMLB, sp_syr_yj_qh1, if(null == data!!.data.fjdcBusiness.lxdzxzqh || TextUtils.isEmpty(data!!.data.fjdcBusiness.lxdzxzqh)) null else data!!.data.fjdcBusiness.lxdzxzqh.substring(0, 2) + "0000")
 
         //转入地
-        SpinnerUtil.setPinnerDataQh(this, Constants.MY_QH_SHENG_DMLB, sp_zrd1,if(null == CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.zrd || TextUtils.isEmpty( CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.zrd)) null else CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.zrd.substring(0, 2) + "0000")
+        SpinnerUtil.setPinnerDataQh(this, Constants.MY_QH_SHENG_DMLB, sp_zrd1,if(null == data!!.data.fjdcBusiness.zrd || TextUtils.isEmpty( data!!.data.fjdcBusiness.zrd)) null else data!!.data.fjdcBusiness.zrd.substring(0, 2) + "0000")
 
         SpinnerUtil.setPinnerData(this, Constants.SFZMMC, sp_syr_sfz)
         SpinnerUtil.setPinnerData(this, Constants.SFZMMC, sp_dlr_sfz)
@@ -216,14 +215,14 @@ class YwChangeActivity : BaseActivity(), NormalView {
 
 
     private fun initShowScrean() {
-        if ("B".equals(CarInfoByCyActivity.mAllBikeMsgEnity!!.data.checkData.ywyy)) {
+        if ("B".equals(data!!.data.checkData.ywyy)) {
             ViewShowUtils.showGoneView(ll_zrd)
             ViewShowUtils.showVisibleView(ll_yjxx, ll_xhphm)
             tv_ywyy.text = "变更所有人"
-            if ("0".equals(CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.sfkyghhp)) {
+            if ("0".equals(data!!.data.fjdcBusiness.sfkyghhp)) {
                 ViewShowUtils.showGoneView(btn_hqhphm)
             }
-        } else if ("A".equals(CarInfoByCyActivity.mAllBikeMsgEnity!!.data.checkData.ywyy)) {
+        } else if ("A".equals(data!!.data.checkData.ywyy)) {
             ViewShowUtils.showVisibleView(ll_zrd)
             ViewShowUtils.showGoneView(ll_yjxx, ll_xhphm)
             tv_ywyy.text = "变更迁出"
@@ -258,7 +257,7 @@ class YwChangeActivity : BaseActivity(), NormalView {
     }
 
     private fun insertData(obj: Any) {
-        val enity = CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness
+        val enity = data!!.data.fjdcBusiness
         when (obj) {
             sp_syr_qh2 -> {
                 if (enity.djxzqh == null  || changed1) {
@@ -361,7 +360,7 @@ class YwChangeActivity : BaseActivity(), NormalView {
                 showToast("网络同步信息失败，请先设置界面同步代码")
                 return
             }
-            if ("B".equals(CarInfoByCyActivity.mAllBikeMsgEnity!!.data.checkData.ywyy)) {
+            if ("B".equals(data!!.data.checkData.ywyy)) {
                 if (!CheckEditTxetUtils.checkEditextValuable(et_cphm)) {
                     showToast("请获取车牌号码")
                     return
@@ -383,29 +382,29 @@ class YwChangeActivity : BaseActivity(), NormalView {
                 showToast("请正确填写手机信息")
                 return
             }
-            val enity = CarInfoByCyActivity.mAllBikeMsgEnity!!.data.fjdcBusiness
+            val enity = data!!.data.fjdcBusiness
 
-            val lsh = CarInfoByCyActivity.mAllBikeMsgEnity!!.data.checkData.lsh
-            val xh = CarInfoByCyActivity.mAllBikeMsgEnity!!.data.checkData.xh
-            val zcbm = CarInfoByCyActivity.mAllBikeMsgEnity!!.data.checkData.zcbm
+            val lsh = data!!.data.checkData.lsh
+            val xh = data!!.data.checkData.xh
+            val zcbm = data!!.data.checkData.zcbm
             //1
             enity.lsh = lsh
             enity.xh = xh
             enity.zcbm = zcbm
             enity.blr = UserInfo.XM  //办理人
             enity.glbm = UserInfo.GLBM //管理部门
-            enity.ywyy = CarInfoByCyActivity.mAllBikeMsgEnity!!.data.checkData.ywyy
-            enity.ywlx = CarInfoByCyActivity.mAllBikeMsgEnity!!.data.checkData.ywlx
+            enity.ywyy = data!!.data.checkData.ywyy
+            enity.ywlx = data!!.data.checkData.ywlx
             enity.fzjg = if (TextUtils.isEmpty(UserInfo.FZJG)) "" else UserInfo.FZJG
             enity.cyrsfzmhm = UserInfo.SFZMHM//查验人身份证明号码
             enity.czpt = Constants.CZPT //查验平台
             enity.sqfs = "0"//申请方式  0所有人 1 代理人
 
-            if ("B".equals(CarInfoByCyActivity.mAllBikeMsgEnity!!.data.checkData.ywyy)) {
+            if ("B".equals(data!!.data.checkData.ywyy)) {
                 //变更所有人
                 val cph = et_cphm.text.toString().toUpperCase()
                 enity.cph = cph
-            } else if ("A".equals(CarInfoByCyActivity.mAllBikeMsgEnity!!.data.checkData.ywyy)) {
+            } else if ("A".equals(data!!.data.checkData.ywyy)) {
                 //变更迁出
                 enity.zrd = CodeTableSQLiteUtils.queryByDmlbAndDmsm(Constants.XSQY, sp_zrd2.selectedItem.toString())
                 enity.zt = "3" //zt   状态（1正常,2注销,3转出

@@ -21,6 +21,7 @@ import kotlinx.android.synthetic.main.activity_gd_check.*
 
 class A2FSearchActivity: BaseActivity(), NormalView {
 
+    private var mAllBikeMsgEnity: AllBikeMsgEnity?=null
     private var mNormalPresenter: NormalPresenter? = null
     private var mGdEnity: GDEnity?=null
     override fun netWorkTaskSuccess(commonResponse: CommonResponse) {
@@ -40,9 +41,9 @@ class A2FSearchActivity: BaseActivity(), NormalView {
         }
 
         if (Constants.YW_GET_YWCZ_BIKE_DATA == commonResponse.getUrl()) {
-            val mAllBikeMsgEnity = GsonUtils.gson(commonResponse.getResponseString(), AllBikeMsgEnity::class.java)
-            Yw3CzActivity.mAllBikeMsgEnity = mAllBikeMsgEnity
-            val intent = Intent(this, Yw3CzActivity::class.java)
+            mAllBikeMsgEnity = GsonUtils.gson(commonResponse.getResponseString(), AllBikeMsgEnity::class.java)
+            intent.putExtra("all_data",mAllBikeMsgEnity)
+            intent.setClass(this, Yw3CzActivity::class.java)
             intent.putExtra(Constants.UI_TYPE,"1")
             startActivityForResult(intent,1) //requestcode = 1
         }
@@ -153,8 +154,8 @@ class A2FSearchActivity: BaseActivity(), NormalView {
         }
         btn_gd.setOnClickListener {
             val map = HashMap<String,String>()
-            map["lsh"] = Yw3CzActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.lsh
-            map["xh"] = Yw3CzActivity.mAllBikeMsgEnity!!.data.fjdcBusiness.xh
+            map["lsh"] = mAllBikeMsgEnity!!.data.fjdcBusiness.lsh
+            map["xh"] = mAllBikeMsgEnity!!.data.fjdcBusiness.xh
             map["glbm"] = UserInfo.GLBM
             map["zt"] = "E" // E-已归档
             mNormalPresenter!!.doNetworkTask(map, Constants.GD_COMMIT)

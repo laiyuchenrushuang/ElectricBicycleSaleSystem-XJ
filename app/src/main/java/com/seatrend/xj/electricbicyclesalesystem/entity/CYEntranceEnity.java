@@ -1,5 +1,7 @@
 package com.seatrend.xj.electricbicyclesalesystem.entity;
 
+import java.io.Serializable;
+
 /**
  "data": {
  "lsh": "191025000002",
@@ -37,7 +39,7 @@ package com.seatrend.xj.electricbicyclesalesystem.entity;
  }
  }
  */
-public class CYEntranceEnity extends BaseEntity {
+public class CYEntranceEnity extends BaseEntity implements Serializable {
     private Data data;
     public void setData(Data data) {
         this.data = data;
@@ -46,7 +48,7 @@ public class CYEntranceEnity extends BaseEntity {
         return data;
     }
 
-    public class Data {
+    public class Data implements Serializable{
 
         private String lsh;
         private String xh;
@@ -81,7 +83,7 @@ public class CYEntranceEnity extends BaseEntity {
         }
 
 
-        public class ThreeCertificates {
+        public class ThreeCertificates implements Serializable{
 
             private String lsh;
             private String cphgzbh;
@@ -237,7 +239,7 @@ public class CYEntranceEnity extends BaseEntity {
 
         }
 
-        public class FjdcJscu {
+        public class FjdcJscu implements Serializable{
 
             private String cphgzbh;
             private String cccbh;

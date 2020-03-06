@@ -80,8 +80,8 @@ class Archive2FileActivity : BaseActivity(), YwGdAdapter.itemOnclickListener, Ba
         }
         if (Constants.YW_GET_YWCZ_BIKE_DATA.equals(commonResponse.getUrl())) {
             val mAllBikeMsgEnity = GsonUtils.gson(commonResponse.getResponseString(), AllBikeMsgEnity::class.java)
-            Yw3CzActivity.mAllBikeMsgEnity = mAllBikeMsgEnity
-            var intent = Intent(this, Yw3CzActivity::class.java)
+            intent.putExtra("all_data",mAllBikeMsgEnity)
+            intent.setClass(this, Yw3CzActivity::class.java)
             intent.putExtra(Constants.UI_TYPE, "1")
             startActivityForResult(intent, 1)
         }
@@ -132,7 +132,8 @@ class Archive2FileActivity : BaseActivity(), YwGdAdapter.itemOnclickListener, Ba
 //            header.tooltipText = ""
 //        }
         iv_right.setOnClickListener {
-            startActivity(Intent(this, A2FSearchActivity::class.java))
+            intent.setClass(this, A2FSearchActivity::class.java)
+            startActivity(intent)
         }
 
         ll_ywlx.setOnClickListener {

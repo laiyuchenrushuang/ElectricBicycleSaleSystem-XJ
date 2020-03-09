@@ -385,7 +385,7 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             showLoadingDialog()
 
-            Thread(Runnable {
+            ThreadPoolUtils.instance.execute(Runnable {
 
                 var bitmap = BitmapUtils.getSmallBitmap(imgFile!!.path)
                 bitmap = BitmapUtils.compressImage(bitmap)
@@ -398,7 +398,7 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
                     mCheckDataPhotoAdapter!!.setPhoto(photoPosition, imgFile!!.path)
                     dismissLoadingDialog()
                 }
-            }).start()
+            })
         }
     }
 

@@ -105,61 +105,63 @@ class ChaYanEntranceActivity : BaseActivity(), NormalView {
     private fun bindEvent() {
         bt_next.setOnClickListener {
 
-            try {
-                var flag = sp_cy.selectedItem.toString().split(":")[0]
-                when (flag) {
-                    "A" -> {   // 注册登记    Only 整车编码
-                        if(!ParseQcodeUtil.isZcbmString(et_cy_zcbm.text.toString())){
-                            showToast("整车编码是否是15位数字?")
-                            return@setOnClickListener
+            if (!FastClickUtils.isFastClick()) {
+                try {
+                    var flag = sp_cy.selectedItem.toString().split(":")[0]
+                    when (flag) {
+                        "A" -> {   // 注册登记    Only 整车编码
+                            if(!ParseQcodeUtil.isZcbmString(et_cy_zcbm.text.toString())){
+                                showToast("整车编码是否是15位数字?")
+                                return@setOnClickListener
+                            }
+                            showLoadingDialog()
+                            val map1 = HashMap<String, String?>()
+                            map1["clsbdh"] = et_cy_zcbm.text.toString()
+                            mNormalPresenter!!.doNetworkTask(map1, Constants.CY_ENTRANCE_3C)
                         }
-                        showLoadingDialog()
-                        val map1 = HashMap<String, String?>()
-                        map1["clsbdh"] = et_cy_zcbm.text.toString()
-                        mNormalPresenter!!.doNetworkTask(map1, Constants.CY_ENTRANCE_3C)
-                    }
-                    "B" -> {   // 转移登记  only 车牌号
-                        et_cy_zcbm.setText("")
-                        if (TextUtils.isEmpty(et_cy_cphm.text.toString())) {
-                            showToast("请正确输入车牌号")
-                            return@setOnClickListener
+                        "B" -> {   // 转移登记  only 车牌号
+                            et_cy_zcbm.setText("")
+                            if (TextUtils.isEmpty(et_cy_cphm.text.toString())) {
+                                showToast("请正确输入车牌号")
+                                return@setOnClickListener
+                            }
+                            showLoadingDialog()
+                            val map = HashMap<String, String?>()
+                            map["hphm"] = et_cy_cphm.text.toString().toUpperCase()
+                            map["glbm"] = UserInfo.GLBM
+                            map["ywlx"] = sp_cy.selectedItem.toString().split(":")[0]
+                            mNormalPresenter!!.doNetworkTask(map, Constants.CY_ENTRANCE)
                         }
-                        showLoadingDialog()
-                        val map = HashMap<String, String?>()
-                        map["hphm"] = et_cy_cphm.text.toString().toUpperCase()
-                        map["glbm"] = UserInfo.GLBM
-                        map["ywlx"] = sp_cy.selectedItem.toString().split(":")[0]
-                        mNormalPresenter!!.doNetworkTask(map, Constants.CY_ENTRANCE)
-                    }
-                    "D" -> {   // 变更登记  only 车牌号
-                        et_cy_zcbm.setText("")
-                        if (TextUtils.isEmpty(et_cy_cphm.text.toString())) {
-                            showToast("请正确输入车牌号")
-                            return@setOnClickListener
+                        "D" -> {   // 变更登记  only 车牌号
+                            et_cy_zcbm.setText("")
+                            if (TextUtils.isEmpty(et_cy_cphm.text.toString())) {
+                                showToast("请正确输入车牌号")
+                                return@setOnClickListener
+                            }
+                            showLoadingDialog()
+                            val map = HashMap<String, String?>()
+                            map["hphm"] = et_cy_cphm.text.toString().toUpperCase()
+                            map["glbm"] = UserInfo.GLBM
+                            map["ywlx"] = sp_cy.selectedItem.toString().split(":")[0]
+                            mNormalPresenter!!.doNetworkTask(map, Constants.CY_ENTRANCE)
                         }
-                        showLoadingDialog()
-                        val map = HashMap<String, String?>()
-                        map["hphm"] = et_cy_cphm.text.toString().toUpperCase()
-                        map["glbm"] = UserInfo.GLBM
-                        map["ywlx"] = sp_cy.selectedItem.toString().split(":")[0]
-                        mNormalPresenter!!.doNetworkTask(map, Constants.CY_ENTRANCE)
-                    }
-                    "J" -> {   // 旧车登记  only 车牌号
-                        et_cy_zcbm.setText("")
-                        if (TextUtils.isEmpty(et_cy_cphm.text.toString())) {
-                            showToast("请正确输入车牌号")
-                            return@setOnClickListener
+                        "J" -> {   // 旧车登记  only 车牌号
+                            et_cy_zcbm.setText("")
+                            if (TextUtils.isEmpty(et_cy_cphm.text.toString())) {
+                                showToast("请正确输入车牌号")
+                                return@setOnClickListener
+                            }
+                            showLoadingDialog()
+                            val map = HashMap<String, String?>()
+                            map.put("hphm", et_cy_cphm.text.toString().toUpperCase())
+                            map.put("glbm", UserInfo.GLBM)
+                            map.put("ywlx", sp_cy.selectedItem.toString().split(":")[0])
+                            mNormalPresenter!!.doNetworkTask(map, Constants.CY_ENTRANCE)
                         }
-                        showLoadingDialog()
-                        val map = HashMap<String, String?>()
-                        map.put("hphm", et_cy_cphm.text.toString().toUpperCase())
-                        map.put("glbm", UserInfo.GLBM)
-                        map.put("ywlx", sp_cy.selectedItem.toString().split(":")[0])
-                        mNormalPresenter!!.doNetworkTask(map, Constants.CY_ENTRANCE)
                     }
+                } catch (e: Exception) {
+                    showToast(e.message.toString())
                 }
-            } catch (e: Exception) {
-                showToast(e.message.toString())
             }
 
         }

@@ -9,10 +9,7 @@ import com.seatrend.xj.electricbicyclesalesystem.entity.CommonResponse
 import com.seatrend.xj.electricbicyclesalesystem.entity.PhotoIdEnity
 import com.seatrend.xj.electricbicyclesalesystem.persenter.CarPhotoPersenter
 import com.seatrend.xj.electricbicyclesalesystem.persenter.NormalPresenter
-import com.seatrend.xj.electricbicyclesalesystem.util.BitmapUtils
-import com.seatrend.xj.electricbicyclesalesystem.util.GsonUtils
-import com.seatrend.xj.electricbicyclesalesystem.util.ObjectNullUtil
-import com.seatrend.xj.electricbicyclesalesystem.util.PhotoFileUtils
+import com.seatrend.xj.electricbicyclesalesystem.util.*
 import com.seatrend.xj.electricbicyclesalesystem.view.CarPhotoView
 import kotlinx.android.synthetic.main.activity_autograph.*
 import kotlinx.android.synthetic.main.bottom_button.*
@@ -93,11 +90,11 @@ class AutographActivity : BaseActivity(), CarPhotoView {
     }
 
     private fun saveQm() {
-        Thread(Runnable {
+        ThreadPoolUtils.instance.execute(Runnable {
             filePath = BitmapUtils.saveBitmap(auto_view.getAutographBitmap(), "qmzp" + System.currentTimeMillis())
             val map = HashMap<String, String>()
             map["type"] = "Q"//自定义的签名照
             mCarPhotoPersenter!!.uploadFile(File(filePath), map, Constants.PHOTO_INSERT)
-        }).start()
+        })
     }
 }

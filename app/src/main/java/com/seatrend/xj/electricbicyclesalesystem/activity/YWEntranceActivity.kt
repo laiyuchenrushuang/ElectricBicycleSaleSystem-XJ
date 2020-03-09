@@ -133,36 +133,38 @@ class YWEntranceActivity : BaseActivity(), NormalView {
         }
 
         bt_next.setOnClickListener {
-            if (sp_yw.selectedItem != null && "A".equals(sp_yw.selectedItem.toString().split(":")[0])) {  //注册登记
-                showLoadingDialog()
-                if (!ObjectNullUtil.checknull(et_yw_cphm.text.toString()) && !ObjectNullUtil.checknull(et_yw_hgzbh.text.toString())) {
-                    showToast("整车编码为空或者车牌号为空")
-                    return@setOnClickListener
-                }
-                val map = HashMap<String, String?>()
-                if (ObjectNullUtil.checknull(et_yw_hgzbh.text.toString())) {
-                    showToast("整车编码查询")
-                    map.put("zcbm", et_yw_hgzbh.text.toString())
-                    map.put("ywlx", sp_yw.selectedItem.toString().split(":")[0])
-                    mNormalPresenter!!.doNetworkTask(map, Constants.YW_GET_ALL_BIKE_DATA)
+            if (!FastClickUtils.isFastClick()) {
+                if (sp_yw.selectedItem != null && "A".equals(sp_yw.selectedItem.toString().split(":")[0])) {  //注册登记
+                    showLoadingDialog()
+                    if (!ObjectNullUtil.checknull(et_yw_cphm.text.toString()) && !ObjectNullUtil.checknull(et_yw_hgzbh.text.toString())) {
+                        showToast("整车编码为空或者车牌号为空")
+                        return@setOnClickListener
+                    }
+                    val map = HashMap<String, String?>()
+                    if (ObjectNullUtil.checknull(et_yw_hgzbh.text.toString())) {
+                        showToast("整车编码查询")
+                        map.put("zcbm", et_yw_hgzbh.text.toString())
+                        map.put("ywlx", sp_yw.selectedItem.toString().split(":")[0])
+                        mNormalPresenter!!.doNetworkTask(map, Constants.YW_GET_ALL_BIKE_DATA)
+                    } else {
+                        showToast("车牌号码查询")
+                        map.put("hphm", et_yw_cphm.text.toString().toUpperCase())
+                        map.put("ywlx", sp_yw.selectedItem.toString().split(":")[0])
+                        mNormalPresenter!!.doNetworkTask(map, Constants.YW_GET_ALL_BIKE_DATA)
+                    }
+
                 } else {
+                    if (!ObjectNullUtil.checknull(et_yw_cphm.text.toString())) {
+                        showToast("车牌号码为空")
+                        return@setOnClickListener
+                    }
+                    showLoadingDialog()
                     showToast("车牌号码查询")
+                    val map = HashMap<String, String?>()
                     map.put("hphm", et_yw_cphm.text.toString().toUpperCase())
                     map.put("ywlx", sp_yw.selectedItem.toString().split(":")[0])
                     mNormalPresenter!!.doNetworkTask(map, Constants.YW_GET_ALL_BIKE_DATA)
                 }
-
-            } else {
-                if (!ObjectNullUtil.checknull(et_yw_cphm.text.toString())) {
-                    showToast("车牌号码为空")
-                    return@setOnClickListener
-                }
-                showLoadingDialog()
-                showToast("车牌号码查询")
-                val map = HashMap<String, String?>()
-                map.put("hphm", et_yw_cphm.text.toString().toUpperCase())
-                map.put("ywlx", sp_yw.selectedItem.toString().split(":")[0])
-                mNormalPresenter!!.doNetworkTask(map, Constants.YW_GET_ALL_BIKE_DATA)
             }
         }
         et_yw_cphm.transformationMethod = CarHphmUtils.TransInformation()

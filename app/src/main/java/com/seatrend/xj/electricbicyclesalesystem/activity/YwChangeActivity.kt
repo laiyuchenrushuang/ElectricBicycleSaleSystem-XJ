@@ -235,14 +235,13 @@ class YwChangeActivity : BaseActivity(), NormalView {
     }
 
     private fun startThreadUpdateSp(dmsm: String, spinner: Spinner?) {
-        var pcThread = Thread {
+        ThreadPoolUtils.instance.execute(Runnable {
             val dmz = CodeTableSQLiteUtils.queryByDmlbAndDmsm(Constants.XSQY, dmsm)
             var dataList = QHUtils.getAllOneLevelCitys(dmz)
             runOnUiThread {
                 SpinnerUtil.setPinnerQHData(this@YwChangeActivity, dmz, dataList, spinner, mHandler)
             }
-        }
-        pcThread.start()
+        })
     }
 
     var mHandler = @SuppressLint("HandlerLeak")
@@ -331,24 +330,24 @@ class YwChangeActivity : BaseActivity(), NormalView {
                 //OCR
                 Integer.toHexString(Constants.SFZ_SYR).toInt() -> {
                     showLoadingDialog()
-                    Thread(Runnable {
+                    ThreadPoolUtils.instance.execute(Runnable {
                         val bitmap = BitmapFactory.decodeFile(imgOCRFile!!.path) //父类的fileimage
                         onStartOCRSFZ(bitmap, ed_syr_xm, ed_syr_sfz)
-                    }).start()
+                    })
                 }
                 Integer.toHexString(Constants.SFZ_DLR).toInt() -> {
                     showLoadingDialog()
-                    Thread(Runnable {
+                    ThreadPoolUtils.instance.execute(Runnable {
                         val bitmap = BitmapFactory.decodeFile(imgOCRFile!!.path) //父类的fileimage
                         onStartOCRSFZ(bitmap, ed_dlr_xm, ed_dlr_sfz)
-                    }).start()
+                    })
                 }
                 Integer.toHexString(Constants.SFZ_YJ).toInt() -> {
                     showLoadingDialog()
-                    Thread(Runnable {
+                    ThreadPoolUtils.instance.execute(Runnable {
                         val bitmap = BitmapFactory.decodeFile(imgOCRFile!!.path) //父类的fileimage
                         onStartOCRSFZ(bitmap, ed_yj_xm, ed_yj_sfz)
-                    }).start()
+                    })
                 }
             }
         }

@@ -181,68 +181,70 @@ class ChaYanActivity : BaseActivity(), NormalView {
         et_cphm.transformationMethod = CarHphmUtils.TransInformation()
 
         bt_next.setOnClickListener {
-            try {
-                if (!CsysCompareSameUtils.compare3(sp_csys_a, sp_csys_b, sp_csys_c)) {
-                    showToast("请正确输入车身颜色，不能两两选择相同颜色")
-                    return@setOnClickListener
-                }
-
-                if (!CheckEditTxetUtils.checkEditextValuable(et_c, et_k, et_g, et_zczl, et_zgss, et_qhlzxj, et_zzc)) {
-                    showToast("请填完所有信息再提交")
-                    return@setOnClickListener
-                }
-                if (rb_dpxs_ok.isChecked && !CheckEditTxetUtils.checkEditextValuable(et_cphm)) {
-                    showToast("请填完车牌号码信息")
-                    return@setOnClickListener
-                }
-
-                val map = HashMap<String, String?>()
-                map["lsh"] = data1!!.data.lsh
-                map["xh"] = data1!!.data.xh
-                map["cyr"] = UserInfo.XM
-                map["cyrsfzmhm"] = UserInfo.SFZMHM//查验人身份证明号码
-                map["czpt"] = Constants.CZPT //查验平台
-
-                map["zcbm"] = intent.getStringExtra("zcbm")
-                map["cybm"] = UserInfo.GLBM
-                map["cphgzbh"] = if (data3c == null || data3c!!.data == null || data3c!!.data.threeCertificates.data == null) "" else data3c!!.data.threeCertificates.data.qualificationCode
-
-                map["ywlx"] = if (!TextUtils.isEmpty(intent.getStringExtra("ywlx"))) intent.getStringExtra("ywlx") else "" //为空传”“
-                map["ywyy"] = if (!TextUtils.isEmpty(intent.getStringExtra("ywyy"))) intent.getStringExtra("ywyy") else "" //为空传”“
-                map["csys"] = CsysUtils.getSpCommitString(sp_csys_a, sp_csys_b, sp_csys_c)
-                if ("1" == UserInfo.GlobalParameter.SCBJ) {
-                    map["scc"] = et_c.text.toString()
-                    map["sck"] = et_k.text.toString()
-                    map["scg"] = et_g.text.toString()
-
-                    map["sczgcs"] = et_zgss.text.toString()
-                    map["sczbzl"] = et_zczl.text.toString()
-                    map["scqhlzxj"] = et_qhlzxj.text.toString()
-                }
-
-                map["clzzs"] = et_zzc.text.toString()
-                map["jtgn"] = if (rb_jtxs_ok.isChecked) "1" else "0" // 脚踏功能 0没有 1 有
-                map["shdp"] = if (rb_dpxs_ok.isChecked) "1" else "0" // 是否带牌销售 0否 1是
-                map["cllx"] = if (rb_jtxs_ok.isChecked && et_zczl.text.toString().toFloat() <= 55.0 && et_zgss.text.toString().toFloat() <= 25.0) "1" else "2"// 车辆类型  1标准 2超
-                if ("1" == UserInfo.GlobalParameter.DPBJ) {
-                    map["ywyy"] = "是否带牌销售"
-                } else {
-                    map["ywyy"] = "正常登记"
-                }
-
-                if (rb_dpxs_ok.isChecked) {
-                    var cphm = et_cphm.text.toString().toUpperCase()
-                    if (!ObjectNullUtil.checknull(cphm)) {
-                        showToast("请获取车牌号码")
+            if (!FastClickUtils.isFastClick()) {
+                try {
+                    if (!CsysCompareSameUtils.compare3(sp_csys_a, sp_csys_b, sp_csys_c)) {
+                        showToast("请正确输入车身颜色，不能两两选择相同颜色")
                         return@setOnClickListener
                     }
-                    map["cph"] = cphm
+
+                    if (!CheckEditTxetUtils.checkEditextValuable(et_c, et_k, et_g, et_zczl, et_zgss, et_qhlzxj, et_zzc)) {
+                        showToast("请填完所有信息再提交")
+                        return@setOnClickListener
+                    }
+                    if (rb_dpxs_ok.isChecked && !CheckEditTxetUtils.checkEditextValuable(et_cphm)) {
+                        showToast("请填完车牌号码信息")
+                        return@setOnClickListener
+                    }
+
+                    val map = HashMap<String, String?>()
+                    map["lsh"] = data1!!.data.lsh
+                    map["xh"] = data1!!.data.xh
+                    map["cyr"] = UserInfo.XM
+                    map["cyrsfzmhm"] = UserInfo.SFZMHM//查验人身份证明号码
+                    map["czpt"] = Constants.CZPT //查验平台
+
+                    map["zcbm"] = intent.getStringExtra("zcbm")
+                    map["cybm"] = UserInfo.GLBM
+                    map["cphgzbh"] = if (data3c == null || data3c!!.data == null || data3c!!.data.threeCertificates.data == null) "" else data3c!!.data.threeCertificates.data.qualificationCode
+
+                    map["ywlx"] = if (!TextUtils.isEmpty(intent.getStringExtra("ywlx"))) intent.getStringExtra("ywlx") else "" //为空传”“
+                    map["ywyy"] = if (!TextUtils.isEmpty(intent.getStringExtra("ywyy"))) intent.getStringExtra("ywyy") else "" //为空传”“
+                    map["csys"] = CsysUtils.getSpCommitString(sp_csys_a, sp_csys_b, sp_csys_c)
+                    if ("1" == UserInfo.GlobalParameter.SCBJ) {
+                        map["scc"] = et_c.text.toString()
+                        map["sck"] = et_k.text.toString()
+                        map["scg"] = et_g.text.toString()
+
+                        map["sczgcs"] = et_zgss.text.toString()
+                        map["sczbzl"] = et_zczl.text.toString()
+                        map["scqhlzxj"] = et_qhlzxj.text.toString()
+                    }
+
+                    map["clzzs"] = et_zzc.text.toString()
+                    map["jtgn"] = if (rb_jtxs_ok.isChecked) "1" else "0" // 脚踏功能 0没有 1 有
+                    map["shdp"] = if (rb_dpxs_ok.isChecked) "1" else "0" // 是否带牌销售 0否 1是
+                    map["cllx"] = if (rb_jtxs_ok.isChecked && et_zczl.text.toString().toFloat() <= 55.0 && et_zgss.text.toString().toFloat() <= 25.0) "1" else "2"// 车辆类型  1标准 2超
+                    if ("1" == UserInfo.GlobalParameter.DPBJ) {
+                        map["ywyy"] = "是否带牌销售"
+                    } else {
+                        map["ywyy"] = "正常登记"
+                    }
+
+                    if (rb_dpxs_ok.isChecked) {
+                        var cphm = et_cphm.text.toString().toUpperCase()
+                        if (!ObjectNullUtil.checknull(cphm)) {
+                            showToast("请获取车牌号码")
+                            return@setOnClickListener
+                        }
+                        map["cph"] = cphm
+                    }
+                    showLog("result [CY-POST] === " + GsonUtils.toJson(map))
+                    showLoadingDialog()
+                    mNormalPresenter!!.doNetworkTask(map, Constants.SAVE_CY_MSG)
+                } catch (e: Exception) {
+                    showToast(e.message.toString())
                 }
-                showLog("result [CY-POST] === " + GsonUtils.toJson(map))
-                showLoadingDialog()
-                mNormalPresenter!!.doNetworkTask(map, Constants.SAVE_CY_MSG)
-            } catch (e: Exception) {
-                showToast(e.message.toString())
             }
         }
         btn_hqhphm.setOnClickListener {

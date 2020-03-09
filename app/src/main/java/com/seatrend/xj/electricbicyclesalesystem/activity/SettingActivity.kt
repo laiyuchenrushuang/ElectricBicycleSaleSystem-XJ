@@ -16,6 +16,7 @@ import com.seatrend.xj.electricbicyclesalesystem.persenter.SettingPersenter
 import com.seatrend.xj.electricbicyclesalesystem.util.GsonUtils
 import com.seatrend.xj.electricbicyclesalesystem.util.PermissionEnity
 import com.seatrend.xj.electricbicyclesalesystem.util.SharedPreferencesUtils
+import com.seatrend.xj.electricbicyclesalesystem.util.ThreadPoolUtils
 import com.seatrend.xj.electricbicyclesalesystem.view.SettingView
 import kotlinx.android.synthetic.main.activity_setting.*
 
@@ -44,7 +45,7 @@ class SettingActivity : BaseActivity(), SettingView {
 //            }
 
             if (null != codeShengEntity && null != codeAllEntity) {
-                Thread {
+                ThreadPoolUtils.instance.execute(Runnable {
                     try {
                         Looper.prepare()
                         CodeTableSQLiteUtils.deleteAll(CodeTableSQLiteOpenHelper.TABLE_NAME)
@@ -59,7 +60,7 @@ class SettingActivity : BaseActivity(), SettingView {
                     } catch (e: Exception) {
                         showToast(e.message.toString())
                     }
-                }.start()
+                })
             }
         } catch (e: Exception) {
             showToast("同步失败")

@@ -161,10 +161,10 @@ class YwCancelActivity : BaseActivity(), NormalView {
 
                 Integer.toHexString(Constants.SFZ_DLR).toInt() -> {
                     showLoadingDialog()
-                    Thread(Runnable {
+                    ThreadPoolUtils.instance.execute(Runnable {
                         val bitmap = BitmapFactory.decodeFile(imgOCRFile!!.getPath()) //父类的fileimage
                         onStartOCRSFZ(bitmap, ed_dlr_xm, ed_dlr_sfz)
-                    }).start()
+                    })
                 }
             }
         }

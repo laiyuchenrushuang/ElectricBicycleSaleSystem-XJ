@@ -265,31 +265,33 @@ class LoginByUserPasswordActivity : BaseActivity(), LoginView, CarPhotoView {
             imgFile = null
         }
         btn_login.setOnClickListener {
-            if (TextUtils.isEmpty(et_user.text)) {
-                showToast("请输入账号")
-                return@setOnClickListener
-            }
-            if (TextUtils.isEmpty(et_pwd.text)) {
-                showToast("请输入密码")
-                return@setOnClickListener
-            }
-            if (null == imgFile || TextUtils.isEmpty(imgFile!!.path)) {
-                showToast("请拍摄图片")
-                return@setOnClickListener
-            }
-            if (SharedPreferencesUtils.getIsFirst()) {
-                showToast("请先同步代码")
-                return@setOnClickListener
-            }
+            if (!FastClickUtils.isFastClick()) {
+                if (TextUtils.isEmpty(et_user.text)) {
+                    showToast("请输入账号")
+                    return@setOnClickListener
+                }
+                if (TextUtils.isEmpty(et_pwd.text)) {
+                    showToast("请输入密码")
+                    return@setOnClickListener
+                }
+                if (null == imgFile || TextUtils.isEmpty(imgFile!!.path)) {
+                    showToast("请拍摄图片")
+                    return@setOnClickListener
+                }
+                if (SharedPreferencesUtils.getIsFirst()) {
+                    showToast("请先同步代码")
+                    return@setOnClickListener
+                }
 
-            loginEntity = null //reset
-            showLoadingDialog()
-            val map = HashMap<String, String?>()
-            map.put("username", et_user.text.toString())
-            map.put("password", et_pwd.text.toString())
-            map.put("appVersion",  AppUtils.getVersionName(this))
-            map.put("ly", Constants.CZPT) // app的登录
-            mLoginPersenter!!.doNetworkTask(map, Constants.USER_LOGIN)
+                loginEntity = null //reset
+                showLoadingDialog()
+                val map = HashMap<String, String?>()
+                map.put("username", et_user.text.toString())
+                map.put("password", et_pwd.text.toString())
+                map.put("appVersion",  AppUtils.getVersionName(this))
+                map.put("ly", Constants.CZPT) // app的登录
+                mLoginPersenter!!.doNetworkTask(map, Constants.USER_LOGIN)
+            }
 
         }
     }
@@ -317,7 +319,7 @@ class LoginByUserPasswordActivity : BaseActivity(), LoginView, CarPhotoView {
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             showLoadingDialog()
             showLog(imgFile!!.path)
-            val pcThread = Thread {
+            ThreadPoolUtils.instance.execute(Runnable {
                 val bt: Bitmap = BitmapUtils.getSmallBitmap(imgFile!!.path)
                 val bitmap = BitmapUtils.compressImage(bt)
                 BitmapUtils.saveBitmap(bitmap, imgFile!!.name.replace(".jpg", ""))
@@ -328,8 +330,7 @@ class LoginByUserPasswordActivity : BaseActivity(), LoginView, CarPhotoView {
                     iv_delete.visibility = View.VISIBLE
                     photoTagFace = 1
                 }
-            }
-            pcThread.start()
+            })
         }else{
             imgFile = null
         }

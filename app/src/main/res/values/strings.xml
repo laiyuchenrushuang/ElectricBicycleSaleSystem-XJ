@@ -134,7 +134,7 @@
     <string name="dfh">0:待复核</string>
     <string name="tg">1:通过</string>
     <string name="btg">2:不通过</string>
-    <string name="update_message">检测到软件新版本，是否需要更新?\n更新内容:%1$s</string>
+    <string name="update_message">检测到软件新版本，是否需要更新?\n更新内容:\n%1$s</string>
     <string name="downloading">正在下载更新包...</string>
 
 

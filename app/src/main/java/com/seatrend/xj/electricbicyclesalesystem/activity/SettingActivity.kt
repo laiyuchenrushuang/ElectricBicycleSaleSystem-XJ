@@ -13,10 +13,7 @@ import com.seatrend.xj.electricbicyclesalesystem.database.CodeTableSQLiteUtils
 import com.seatrend.xj.electricbicyclesalesystem.entity.CodeEntity
 import com.seatrend.xj.electricbicyclesalesystem.entity.CommonResponse
 import com.seatrend.xj.electricbicyclesalesystem.persenter.SettingPersenter
-import com.seatrend.xj.electricbicyclesalesystem.util.GsonUtils
-import com.seatrend.xj.electricbicyclesalesystem.util.PermissionEnity
-import com.seatrend.xj.electricbicyclesalesystem.util.SharedPreferencesUtils
-import com.seatrend.xj.electricbicyclesalesystem.util.ThreadPoolUtils
+import com.seatrend.xj.electricbicyclesalesystem.util.*
 import com.seatrend.xj.electricbicyclesalesystem.view.SettingView
 import kotlinx.android.synthetic.main.activity_setting.*
 

@@ -1,14 +1,13 @@
 package com.seatrend.xj.electricbicyclesalesystem.activity
 
-import android.content.Intent
 import android.text.TextUtils
 import com.seatrend.xj.electricbicyclesalesystem.R
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants
 import com.seatrend.xj.electricbicyclesalesystem.entity.CommonResponse
 import com.seatrend.xj.electricbicyclesalesystem.entity.PhotoIdEnity
+import com.seatrend.xj.electricbicyclesalesystem.http.thread.ThreadPoolManager
 import com.seatrend.xj.electricbicyclesalesystem.persenter.CarPhotoPersenter
-import com.seatrend.xj.electricbicyclesalesystem.persenter.NormalPresenter
 import com.seatrend.xj.electricbicyclesalesystem.util.*
 import com.seatrend.xj.electricbicyclesalesystem.view.CarPhotoView
 import kotlinx.android.synthetic.main.activity_autograph.*
@@ -90,7 +89,7 @@ class AutographActivity : BaseActivity(), CarPhotoView {
     }
 
     private fun saveQm() {
-        ThreadPoolUtils.instance.execute(Runnable {
+        ThreadPoolManager.instance.execute(Runnable {
             filePath = BitmapUtils.saveBitmap(auto_view.getAutographBitmap(), "qmzp" + System.currentTimeMillis())
             val map = HashMap<String, String>()
             map["type"] = "Q"//自定义的签名照

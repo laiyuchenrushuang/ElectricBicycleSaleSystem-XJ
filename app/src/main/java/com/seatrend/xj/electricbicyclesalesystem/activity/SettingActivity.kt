@@ -12,6 +12,7 @@ import com.seatrend.xj.electricbicyclesalesystem.database.CodeTableSQLiteOpenHel
 import com.seatrend.xj.electricbicyclesalesystem.database.CodeTableSQLiteUtils
 import com.seatrend.xj.electricbicyclesalesystem.entity.CodeEntity
 import com.seatrend.xj.electricbicyclesalesystem.entity.CommonResponse
+import com.seatrend.xj.electricbicyclesalesystem.http.thread.ThreadPoolManager
 import com.seatrend.xj.electricbicyclesalesystem.persenter.SettingPersenter
 import com.seatrend.xj.electricbicyclesalesystem.util.*
 import com.seatrend.xj.electricbicyclesalesystem.view.SettingView
@@ -42,7 +43,7 @@ class SettingActivity : BaseActivity(), SettingView {
 //            }
 
             if (null != codeShengEntity && null != codeAllEntity) {
-                ThreadPoolUtils.instance.execute(Runnable {
+                ThreadPoolManager.instance.execute(Runnable {
                     try {
                         Looper.prepare()
                         CodeTableSQLiteUtils.deleteAll(CodeTableSQLiteOpenHelper.TABLE_NAME)

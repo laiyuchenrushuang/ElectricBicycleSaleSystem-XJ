@@ -16,6 +16,7 @@ import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants
 import com.seatrend.xj.electricbicyclesalesystem.database.CodeTableSQLiteUtils
 import com.seatrend.xj.electricbicyclesalesystem.entity.*
+import com.seatrend.xj.electricbicyclesalesystem.http.thread.ThreadPoolManager
 import com.seatrend.xj.electricbicyclesalesystem.persenter.NormalPresenter
 import com.seatrend.xj.electricbicyclesalesystem.util.*
 import com.seatrend.xj.electricbicyclesalesystem.view.NormalView
@@ -189,7 +190,7 @@ class YwTransferActivity : BaseActivity(), NormalView {
     }
 
     private fun startThreadUpdateSp(dmsm: String, spinner: Spinner?) {
-        ThreadPoolUtils.instance.execute(Runnable {
+        ThreadPoolManager.instance.execute(Runnable {
             val dmz = CodeTableSQLiteUtils.queryByDmlbAndDmsm(Constants.XSQY, dmsm)
             var dataList = QHUtils.getAllOneLevelCitys(dmz)
             runOnUiThread {
@@ -375,21 +376,21 @@ class YwTransferActivity : BaseActivity(), NormalView {
                 //OCR
                 Integer.toHexString(Constants.SFZ_SYR).toInt() -> {
                     showLoadingDialog()
-                    ThreadPoolUtils.instance.execute(Runnable {
+                    ThreadPoolManager.instance.execute(Runnable {
                         val bitmap = BitmapFactory.decodeFile(imgOCRFile!!.path) //父类的fileimage
                         onStartOCRSFZ(bitmap, ed_syr_xm, ed_syr_sfz)
                     })
                 }
                 Integer.toHexString(Constants.SFZ_DLR).toInt() -> {
                     showLoadingDialog()
-                    ThreadPoolUtils.instance.execute(Runnable {
+                    ThreadPoolManager.instance.execute(Runnable {
                         val bitmap = BitmapFactory.decodeFile(imgOCRFile!!.path) //父类的fileimage
                         onStartOCRSFZ(bitmap, ed_dlr_xm, ed_dlr_sfz)
                     })
                 }
                 Integer.toHexString(Constants.SFZ_YJ).toInt() -> {
                     showLoadingDialog()
-                    ThreadPoolUtils.instance.execute(Runnable {
+                    ThreadPoolManager.instance.execute(Runnable {
                         val bitmap = BitmapFactory.decodeFile(imgOCRFile!!.path) //父类的fileimage
                         onStartOCRSFZ(bitmap, ed_yj_xm, ed_yj_sfz)
                     })

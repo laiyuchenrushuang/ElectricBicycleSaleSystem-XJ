@@ -18,9 +18,9 @@ import com.seatrend.xj.electricbicyclesalesystem.R
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants
 import com.seatrend.xj.electricbicyclesalesystem.entity.*
+import com.seatrend.xj.electricbicyclesalesystem.http.thread.ThreadPoolManager
 import com.seatrend.xj.electricbicyclesalesystem.persenter.CarPhotoPersenter
 import com.seatrend.xj.electricbicyclesalesystem.persenter.LoginPersenter
-import com.seatrend.xj.electricbicyclesalesystem.service.PhotoUploadService
 import com.seatrend.xj.electricbicyclesalesystem.util.*
 import com.seatrend.xj.electricbicyclesalesystem.view.CarPhotoView
 import com.seatrend.xj.electricbicyclesalesystem.view.LoginView
@@ -319,7 +319,7 @@ class LoginByUserPasswordActivity : BaseActivity(), LoginView, CarPhotoView {
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             showLoadingDialog()
             showLog(imgFile!!.path)
-            ThreadPoolUtils.instance.execute(Runnable {
+            ThreadPoolManager.instance.execute(Runnable {
                 val bt: Bitmap = BitmapUtils.getSmallBitmap(imgFile!!.path)
                 val bitmap = BitmapUtils.compressImage(bt)
                 BitmapUtils.saveBitmap(bitmap, imgFile!!.name.replace(".jpg", ""))

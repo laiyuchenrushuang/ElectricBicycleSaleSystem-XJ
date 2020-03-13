@@ -14,6 +14,7 @@ import com.seatrend.xj.electricbicyclesalesystem.entity.AllBikeMsgEnity
 import com.seatrend.xj.electricbicyclesalesystem.entity.CommonResponse
 import com.seatrend.xj.electricbicyclesalesystem.entity.DjLshEnity
 import com.seatrend.xj.electricbicyclesalesystem.entity.UserInfo
+import com.seatrend.xj.electricbicyclesalesystem.http.thread.ThreadPoolManager
 import com.seatrend.xj.electricbicyclesalesystem.persenter.NormalPresenter
 import com.seatrend.xj.electricbicyclesalesystem.util.*
 import com.seatrend.xj.electricbicyclesalesystem.view.NormalView
@@ -161,7 +162,7 @@ class YwCancelActivity : BaseActivity(), NormalView {
 
                 Integer.toHexString(Constants.SFZ_DLR).toInt() -> {
                     showLoadingDialog()
-                    ThreadPoolUtils.instance.execute(Runnable {
+                    ThreadPoolManager.instance.execute(Runnable {
                         val bitmap = BitmapFactory.decodeFile(imgOCRFile!!.getPath()) //父类的fileimage
                         onStartOCRSFZ(bitmap, ed_dlr_xm, ed_dlr_sfz)
                     })

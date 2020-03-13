@@ -1,13 +1,16 @@
 package com.seatrend.xj.electricbicyclesalesystem.activity;
 
-import android.text.InputFilter;
-import android.text.Spanned;
-
 import com.seatrend.xj.electricbicyclesalesystem.entity.FHEnity;
+import com.seatrend.xj.electricbicyclesalesystem.http.thread.Priority;
+import com.seatrend.xj.electricbicyclesalesystem.http.thread.PriorityRunnable;
+import com.seatrend.xj.electricbicyclesalesystem.http.thread.ThreadConstants;
 import com.seatrend.xj.electricbicyclesalesystem.util.CheckPawUtil;
+import com.seatrend.xj.electricbicyclesalesystem.util.StringUtils;
+import com.seatrend.xj.electricbicyclesalesystem.http.thread.ThreadPoolManager;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.TimerTask;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,6 +26,7 @@ public class JavaTest {
     static int[] ints = {1, 1, 1, 1, 1, 1};
     static int[] intx = {1, 1, 0, 1, 1, 1};
     static ArrayList<Integer> list = new ArrayList<>();
+    static Thread t1, t2, t3;
 
     public static void main(String[] args) {
 //        String result = "http://mv.cqccms.com.cn/incoc/GSViewEbike!viewCocEbike.action?vinCode=117321900000243mn1112222111412541";
@@ -101,11 +105,173 @@ public class JavaTest {
 //        }
 
 
-        String s = "SS11111s";
-        System.out.println(CheckPawUtil.isSixPaw(s));
+//        String s = "SS11111s";
+//        System.out.println(CheckPawUtil.isSixPaw(s));
+
+//        for (int i = 1; i < 20; i++) {
+//            PriorityRunnable priorityRunnable = new PriorityRunnable(Priority.Level.NORMAL, new Runnable() {
+//                @Override
+//                public void run() {
+//                    System.out.println(Thread.currentThread().getName() + "优先级正常");
+//                }
+//            });
+//            if (i % 3 == 1) {
+//                priorityRunnable = new PriorityRunnable(Priority.Level.HIGH, new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        System.out.println(Thread.currentThread().getName() + "优先级高");
+//                    }
+//                });
+//            } else if (i % 5 == 0) {
+//                priorityRunnable = new PriorityRunnable(Priority.Level.LOW, new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        System.out.println(Thread.currentThread().getName() + "优先级低");
+//                    }
+//                });
+//            }
+//            ThreadPoolManager.Companion.getInstance().setQueueMode(false).execute(priorityRunnable);
+//        }
+//
+//        for (int i = 1; i < 20; i++) {
+//            Runnable runnable = new Runnable() {
+//                @Override
+//                public void run() {
+//                    System.out.println(Thread.currentThread().getName() + "普通");
+//                }
+//            };
+//            ThreadPoolManager.Companion.getInstance().execute(runnable);
+//        }
+//
+//        Runnable t1 = new Runnable() {
+//            @Override
+//            public void run() {
+//                System.out.println(" 定时任务 t1");
+//            }
+//        };
+//        Runnable t2 = new Runnable() {
+//            @Override
+//            public void run() {
+//                System.out.println(" 定时任务 t2");
+//            }
+//        };
+//        Runnable t3 = new Runnable() {
+//            @Override
+//            public void run() {
+//                System.out.println(" 定时任务 t3");
+//            }
+//        };
+//
+//
+//        ThreadPoolManager.Companion.getInstance().createSchedulePool(t1,0, 2000);
+//        ThreadPoolManager.Companion.getInstance().createSchedulePool(t2,0, 2000);
+//        ThreadPoolManager.Companion.getInstance().createSchedulePool(t3,0, 2000);
+
+
+        t1 = new Thread() {
+            @Override
+            public void run() {
+                for (int i = 0; i < 10; i++) {
+                    System.out.println("当前线程 t1");
+                    if (i == 5) {
+
+                        synchronized (t1) {
+                            try {
+                                t2.start();
+                                t1.wait();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        t2 = new Thread() {
+            @Override
+            public void run() {
+                for (int i = 0; i < 10; i++) {
+                    System.out.println("当前线程 t2");
+                    if (i == 2) {
+                        try {
+                            t3.start();
+                            synchronized (t2){
+                                t2.wait();
+                            }
+
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if (i ==9) {
+                        synchronized (t1) {
+                            t1.notify();
+                        }
+                    }
+                }
+            }
+        };
+
+        t3 = new Thread() {
+            @Override
+            public void run() {
+                System.out.println("当前线程 t3");
+                synchronized (t2) {
+                    t2.notify();
+                }
+            }
+        };
+
+        t1.start();
+        try {
+            t1.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        t2.start();
+
+//
+//        try {
+//            Thread.sleep(10000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//
+//        ThreadPoolManager.Companion.getInstance().cancel();
+
+
+//        ThreadPoolManager.Companion.getInstance().showdownNow();
+//
+//        ThreadPoolManager.Companion.getInstance().open();
+//
+//
+//        TimerTask t = new TimerTask() {
+//            @Override
+//            public void run() {
+//                System.out.println("每10秒一次运动  time = "+ StringUtils.longToStringData(System.currentTimeMillis()));
+//            }
+//        };
+//
+//        ThreadPoolManager.Companion.getInstance().schedule(t, 0, 10000);
+//
+//
+//
+//        t.cancel();
+//
+//
+//        System.out.println("end");
+//
+//        ThreadPoolManager.Companion.getInstance().schedule(new TimerTask() {
+//            @Override
+//            public void run() {
+//                System.out.println("每5秒一次运动  time = "+ StringUtils.longToStringData(System.currentTimeMillis()));
+//            }
+//        },0,5000);
+
     }
 
-    public static boolean isCorrect(String sfz){
+    public static boolean isCorrect(String sfz) {
         String regx = "(^[1-9]\\d{5}(18|19|20)\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{3}[0-9Xx]$)|" +
                 "(^[1-9]\\d{5}\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{3}$)";
         Pattern pattern = Pattern.compile(regx);

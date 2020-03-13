@@ -18,6 +18,7 @@ import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants
 import com.seatrend.xj.electricbicyclesalesystem.database.CodeTableSQLiteUtils
 import com.seatrend.xj.electricbicyclesalesystem.entity.*
+import com.seatrend.xj.electricbicyclesalesystem.http.thread.ThreadPoolManager
 import com.seatrend.xj.electricbicyclesalesystem.persenter.CarPhotoPersenter
 import com.seatrend.xj.electricbicyclesalesystem.util.*
 import com.seatrend.xj.electricbicyclesalesystem.view.CarPhotoView
@@ -385,7 +386,7 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             showLoadingDialog()
 
-            ThreadPoolUtils.instance.execute(Runnable {
+            ThreadPoolManager.instance.execute(Runnable {
 
                 var bitmap = BitmapUtils.getSmallBitmap(imgFile!!.path)
                 bitmap = BitmapUtils.compressImage(bitmap)

@@ -569,10 +569,12 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
             return true
         }
 
-        if (tag == mActivityJumpTag && LIMIT_CLICK_TIME >= SystemClock.uptimeMillis() - mClickTime!!) {
-            if(intent.component != null && AppManager.getInstance().repeatActivity(intent.component.className)){
-                return false
-            }
+        if (tag == mActivityJumpTag && LIMIT_CLICK_TIME >= SystemClock.uptimeMillis() - mClickTime!!) { //间隔时间太短 不能跳转
+            return false
+        }
+
+        if(intent.component != null && AppManager.getInstance().repeatActivity(intent.component.className)){
+            return false
         }
 
         // 记录启动标记和时间

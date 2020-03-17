@@ -38,11 +38,8 @@ public class AppManager {
             activityStack = new Stack<>();
         }
         //处理重复启用的activity
-        for (int i = 0; i < activityStack.size(); i++) {
-            if (activity != null && !activity.isFinishing() && activity.getClass().getName().equals(activityStack.get(i).getClass().getName())) {
-                activityStack.remove(activity);
-                activity.finish();
-            }
+        if (activityStack.contains(activity)) {
+            activityStack.remove(activity);
         }
         activityStack.add(activity);
     }

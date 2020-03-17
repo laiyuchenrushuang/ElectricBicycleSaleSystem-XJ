@@ -569,10 +569,12 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
             return true
         }
 
-        if (tag == mActivityJumpTag && LIMIT_CLICK_TIME >= SystemClock.uptimeMillis() - mClickTime!!) { //间隔时间太短 不能跳转
+        //间隔时间太短 不能跳转  返回false
+        if (tag == mActivityJumpTag && LIMIT_CLICK_TIME >= SystemClock.uptimeMillis() - mClickTime!!) {
             return false
         }
 
+        // 间隔时间不短，但是栈里面已经start界面，属于repeat活动界面，返回false[适用于Activity 活动，但是不适用隐式跳转] ---- 堆栈存储的是Activity
         if(intent.component != null && AppManager.getInstance().repeatActivity(intent.component.className)){
             return false
         }

@@ -38,7 +38,7 @@ public class PriorityExecutor extends ThreadPoolExecutor {
      * @param fifo 优先级相同时, 等待队列的是否优先执行先加入的任务.
      */
     public PriorityExecutor(boolean fifo) {
-        this(ThreadConstants.CORE_POOL_SIZE, fifo);
+        this(ThreadConstants.Companion.getCORE_POOL_SIZE(), fifo);
     }
 
     /**
@@ -46,7 +46,7 @@ public class PriorityExecutor extends ThreadPoolExecutor {
      * @param fifo     优先级相同时, 等待队列的是否优先执行先加入的任务.
      */
     public PriorityExecutor(int poolSize, boolean fifo) {
-        this(poolSize, ThreadConstants.MAXIMUM_POOL_SIZE, ThreadConstants.KEEP_ALIVE, TimeUnit.SECONDS, new PriorityBlockingQueue<>(ThreadConstants.MAXIMUM_POOL_SIZE, fifo ? Priority.FIFO : Priority.LIFO), sThreadFactory);
+        this(poolSize, ThreadConstants.Companion.getMAXIMUM_POOL_SIZE(), ThreadConstants.Companion.getKEEP_ALIVE(), TimeUnit.SECONDS, new PriorityBlockingQueue<>(ThreadConstants.Companion.getMAXIMUM_POOL_SIZE(), fifo ? Priority.FIFO : Priority.LIFO), sThreadFactory);
     }
 
     public PriorityExecutor(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue, ThreadFactory threadFactory) {

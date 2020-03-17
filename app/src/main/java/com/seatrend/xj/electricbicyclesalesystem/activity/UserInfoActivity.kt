@@ -1,11 +1,8 @@
 package com.seatrend.xj.electricbicyclesalesystem.activity
 
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import android.text.method.ScrollingMovementMethod
-import com.bumptech.glide.Glide
 import com.seatrend.xj.electricbicyclesalesystem.R
-import com.seatrend.xj.electricbicyclesalesystem.common.ActivityCollector
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseModule
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants
@@ -14,8 +11,8 @@ import com.seatrend.xj.electricbicyclesalesystem.entity.CommonResponse
 import com.seatrend.xj.electricbicyclesalesystem.entity.LoginEntity
 import com.seatrend.xj.electricbicyclesalesystem.entity.UserInfo
 import com.seatrend.xj.electricbicyclesalesystem.http.HttpService
+import com.seatrend.xj.electricbicyclesalesystem.manager.AppManager
 import com.seatrend.xj.electricbicyclesalesystem.util.*
-import kotlinx.android.synthetic.main.activity_main_other.*
 import kotlinx.android.synthetic.main.activity_user_info.*
 import kotlinx.android.synthetic.main.activity_user_info.iv_head
 import kotlinx.android.synthetic.main.common_title.*
@@ -115,12 +112,9 @@ class UserInfoActivity : BaseActivity() {
                     LoadingDialog.getInstance().dismissLoadDialog()
                     val entity = GsonUtils.gson(commonResponse.getResponseString(), BaseEntity::class.java)
                     showToast(entity.message)
-                    ActivityCollector.finishAll()
-                    startActivity(Intent(this@UserInfoActivity, LoginActivity::class.java))
-                    finish()
+                    AppManager.getInstance().finishToOne(LoginActivity::class.java)
                 } catch (e: Exception) {
                     e.printStackTrace()
-                    finish()
                 }
             }
         })

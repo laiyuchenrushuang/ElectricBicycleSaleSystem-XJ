@@ -58,18 +58,18 @@ class ChaYanEntranceActivity : BaseActivity(), NormalView {
                 if (!"A".equals(sp_cy.selectedItem.toString().split(":")[0])) {
                     intent.putExtra("hphm", et_cy_cphm.text.toString().toUpperCase()) // 车牌号码
                 }
-                intent.putExtra("all_data",cYEntranceEnity)
+                intent.putExtra("all_data", cYEntranceEnity)
                 intent.setClass(this, CarInfoActivity::class.java)
                 startActivity(intent)
             }
 
-            if(Constants.CY_ENTRANCE_3C == commonResponse.getUrl()){
+            if (Constants.CY_ENTRANCE_3C == commonResponse.getUrl()) {
                 cThreeCEnity = GsonUtils.gson(commonResponse.getResponseString(), ThreeCEnity::class.java)
-                if (cThreeCEnity == null || cThreeCEnity!!.data == null ||cThreeCEnity!!.data.threeCertificates ==null ||cThreeCEnity!!.data.threeCertificates.data ==null) {
+                if (cThreeCEnity == null || cThreeCEnity!!.data == null || cThreeCEnity!!.data.threeCertificates == null || cThreeCEnity!!.data.threeCertificates.data == null) {
                     showToast("注册登记3C信息获取为空")
                     return
                 }
-                intent.putExtra("3c_data",cThreeCEnity)
+                intent.putExtra("3c_data", cThreeCEnity)
                 val map = HashMap<String, String?>()
                 map["glbm"] = UserInfo.GLBM
                 map["zcbm"] = et_cy_zcbm.text.toString()
@@ -89,7 +89,7 @@ class ChaYanEntranceActivity : BaseActivity(), NormalView {
 
     override fun initView() {
         setPageTitle("车辆查验")
-        if(AppUtils.isApkInDebug(this)){
+        if (AppUtils.isApkInDebug(this)) {
             et_cy_zcbm.setText("117321900000195")
         }
         mNormalPresenter = NormalPresenter(this)
@@ -105,65 +105,62 @@ class ChaYanEntranceActivity : BaseActivity(), NormalView {
     private fun bindEvent() {
         bt_next.setOnClickListener {
 
-            if (!FastClickUtils.isFastClick()) {
-                try {
-                    var flag = sp_cy.selectedItem.toString().split(":")[0]
-                    when (flag) {
-                        "A" -> {   // 注册登记    Only 整车编码
-                            if(!ParseQcodeUtil.isZcbmString(et_cy_zcbm.text.toString())){
-                                showToast("整车编码是否是15位数字?")
-                                return@setOnClickListener
-                            }
-                            showLoadingDialog()
-                            val map1 = HashMap<String, String?>()
-                            map1["clsbdh"] = et_cy_zcbm.text.toString()
-                            mNormalPresenter!!.doNetworkTask(map1, Constants.CY_ENTRANCE_3C)
+            try {
+                var flag = sp_cy.selectedItem.toString().split(":")[0]
+                when (flag) {
+                    "A" -> {   // 注册登记    Only 整车编码
+                        if (!ParseQcodeUtil.isZcbmString(et_cy_zcbm.text.toString())) {
+                            showToast("整车编码是否是15位数字?")
+                            return@setOnClickListener
                         }
-                        "B" -> {   // 转移登记  only 车牌号
-                            et_cy_zcbm.setText("")
-                            if (TextUtils.isEmpty(et_cy_cphm.text.toString())) {
-                                showToast("请正确输入车牌号")
-                                return@setOnClickListener
-                            }
-                            showLoadingDialog()
-                            val map = HashMap<String, String?>()
-                            map["hphm"] = et_cy_cphm.text.toString().toUpperCase()
-                            map["glbm"] = UserInfo.GLBM
-                            map["ywlx"] = sp_cy.selectedItem.toString().split(":")[0]
-                            mNormalPresenter!!.doNetworkTask(map, Constants.CY_ENTRANCE)
-                        }
-                        "D" -> {   // 变更登记  only 车牌号
-                            et_cy_zcbm.setText("")
-                            if (TextUtils.isEmpty(et_cy_cphm.text.toString())) {
-                                showToast("请正确输入车牌号")
-                                return@setOnClickListener
-                            }
-                            showLoadingDialog()
-                            val map = HashMap<String, String?>()
-                            map["hphm"] = et_cy_cphm.text.toString().toUpperCase()
-                            map["glbm"] = UserInfo.GLBM
-                            map["ywlx"] = sp_cy.selectedItem.toString().split(":")[0]
-                            mNormalPresenter!!.doNetworkTask(map, Constants.CY_ENTRANCE)
-                        }
-                        "J" -> {   // 旧车登记  only 车牌号
-                            et_cy_zcbm.setText("")
-                            if (TextUtils.isEmpty(et_cy_cphm.text.toString())) {
-                                showToast("请正确输入车牌号")
-                                return@setOnClickListener
-                            }
-                            showLoadingDialog()
-                            val map = HashMap<String, String?>()
-                            map.put("hphm", et_cy_cphm.text.toString().toUpperCase())
-                            map.put("glbm", UserInfo.GLBM)
-                            map.put("ywlx", sp_cy.selectedItem.toString().split(":")[0])
-                            mNormalPresenter!!.doNetworkTask(map, Constants.CY_ENTRANCE)
-                        }
+                        showLoadingDialog()
+                        val map1 = HashMap<String, String?>()
+                        map1["clsbdh"] = et_cy_zcbm.text.toString()
+                        mNormalPresenter!!.doNetworkTask(map1, Constants.CY_ENTRANCE_3C)
                     }
-                } catch (e: Exception) {
-                    showToast(e.message.toString())
+                    "B" -> {   // 转移登记  only 车牌号
+                        et_cy_zcbm.setText("")
+                        if (TextUtils.isEmpty(et_cy_cphm.text.toString())) {
+                            showToast("请正确输入车牌号")
+                            return@setOnClickListener
+                        }
+                        showLoadingDialog()
+                        val map = HashMap<String, String?>()
+                        map["hphm"] = et_cy_cphm.text.toString().toUpperCase()
+                        map["glbm"] = UserInfo.GLBM
+                        map["ywlx"] = sp_cy.selectedItem.toString().split(":")[0]
+                        mNormalPresenter!!.doNetworkTask(map, Constants.CY_ENTRANCE)
+                    }
+                    "D" -> {   // 变更登记  only 车牌号
+                        et_cy_zcbm.setText("")
+                        if (TextUtils.isEmpty(et_cy_cphm.text.toString())) {
+                            showToast("请正确输入车牌号")
+                            return@setOnClickListener
+                        }
+                        showLoadingDialog()
+                        val map = HashMap<String, String?>()
+                        map["hphm"] = et_cy_cphm.text.toString().toUpperCase()
+                        map["glbm"] = UserInfo.GLBM
+                        map["ywlx"] = sp_cy.selectedItem.toString().split(":")[0]
+                        mNormalPresenter!!.doNetworkTask(map, Constants.CY_ENTRANCE)
+                    }
+                    "J" -> {   // 旧车登记  only 车牌号
+                        et_cy_zcbm.setText("")
+                        if (TextUtils.isEmpty(et_cy_cphm.text.toString())) {
+                            showToast("请正确输入车牌号")
+                            return@setOnClickListener
+                        }
+                        showLoadingDialog()
+                        val map = HashMap<String, String?>()
+                        map.put("hphm", et_cy_cphm.text.toString().toUpperCase())
+                        map.put("glbm", UserInfo.GLBM)
+                        map.put("ywlx", sp_cy.selectedItem.toString().split(":")[0])
+                        mNormalPresenter!!.doNetworkTask(map, Constants.CY_ENTRANCE)
+                    }
                 }
+            } catch (e: Exception) {
+                showToast(e.message.toString())
             }
-
         }
         sp_cy.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -210,7 +207,7 @@ class ChaYanEntranceActivity : BaseActivity(), NormalView {
         dialog.show()
         val btn_pda = dialog.findViewById<Button>(R.id.btn_pda)
         val btn_other = dialog.findViewById<Button>(R.id.btn_other)
-        if(!AppUtils.HCPDA()){
+        if (!AppUtils.HCPDA()) {
             btn_pda.isEnabled = false
         }
         btn_pda.setOnClickListener {
@@ -222,7 +219,7 @@ class ChaYanEntranceActivity : BaseActivity(), NormalView {
         }
         btn_other.setOnClickListener {
             dialog.dismiss()
-            startActivityForResult(intent.setClass(this, CaptureActivity::class.java),0)
+            startActivityForResult(intent.setClass(this, CaptureActivity::class.java), 0)
         }
     }
 
@@ -293,8 +290,8 @@ class ChaYanEntranceActivity : BaseActivity(), NormalView {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(resultCode == Activity.RESULT_OK){
-            if(data != null){
+        if (resultCode == Activity.RESULT_OK) {
+            if (data != null) {
                 et_cy_zcbm.setText(data.getStringExtra("result_zcbm"))
             }
         }

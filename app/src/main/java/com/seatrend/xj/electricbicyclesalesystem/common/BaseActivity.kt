@@ -11,6 +11,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.os.SystemClock
 import android.provider.MediaStore
 import android.support.annotation.RequiresApi
 import android.support.v4.content.ContextCompat
@@ -27,10 +28,12 @@ import android.widget.*
 import com.joyusing.ocr.OCR
 import com.joyusing.ocr.OcrResult
 import com.seatrend.xj.electricbicyclesalesystem.R
+import com.seatrend.xj.electricbicyclesalesystem.activity.LoginActivity
 import com.seatrend.xj.electricbicyclesalesystem.activity.LoginLoadingActivity
 import com.seatrend.xj.electricbicyclesalesystem.activity.MainOtherActivity
 import com.seatrend.xj.electricbicyclesalesystem.database.CodeTableSQLiteUtils
 import com.seatrend.xj.electricbicyclesalesystem.entity.MessageEntity
+import com.seatrend.xj.electricbicyclesalesystem.manager.AppManager
 import com.seatrend.xj.electricbicyclesalesystem.service.PhotoUploadService
 import com.seatrend.xj.electricbicyclesalesystem.util.GsonUtils
 import com.seatrend.xj.electricbicyclesalesystem.util.LoadingDialog
@@ -63,8 +66,12 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
     private var noDataView: View? = null
     val ID_CARD_READ_CODE = 10
     val LIMIT_TIME: Int = 30 * 60 * 1000
-    var currentTime: Long = 0
+    var currentTime: Long = SystemClock.uptimeMillis()
     private var mOcr: OCR? = null
+
+    private var mActivityJumpTag: String? = null       //activity跳转tag
+    private var mClickTime: Long? = null  //事件间隔time
+    private var LIMIT_CLICK_TIME: Long = 1000 //限制跳转界面的时间
 
     //TextView 和 ScollView 冲突监听器
     val onTouchListener = View.OnTouchListener { v, event ->
@@ -129,11 +136,12 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
         setContentView(getLayout())
         //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);// 横屏
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT//竖屏
-        ActivityCollector.addActivity(this)
         //ButterKnife.bind(this)
         serviceOnLine()
         initCommonTitle()
         initView()
+
+        AppManager.getInstance().addActivity(this)
 
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
             setStatusBarColor(ContextCompat.getColor(this, R.color.theme_color))
@@ -170,13 +178,6 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
         if (ivBack != null) {
             ivBack!!.visibility = View.GONE
         }
-    }
-
-    fun goMainActivity() {
-        /*Intent intent = new Intent(BaseActivity.this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);*/
-        ActivityCollector.finishToOne(MainOtherActivity::class.java)
     }
 
     fun setPageTitle(pageTitle: String) {
@@ -291,7 +292,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
     override fun onDestroy() {
         super.onDestroy()
         // backHomeThread.interrupt();
-        ActivityCollector.removeActivity(this)
+        AppManager.getInstance().finishActivity(this)
 
     }
 
@@ -394,22 +395,18 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
     /**
      * 30分钟无操作推出登录
      */
-    override fun dispatchKeyShortcutEvent(event: KeyEvent?): Boolean {
+    override fun dispatchTouchEvent(event: MotionEvent?): Boolean {
         when (event!!.action) {
             MotionEvent.ACTION_UP -> {
-                if (System.currentTimeMillis() - currentTime > LIMIT_TIME) {
-                    ActivityCollector.finishAll()
-                    var intent: Intent = Intent(this, LoginLoadingActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                    startActivity(intent)
-                    currentTime = System.currentTimeMillis()
-                    finish()
+                if (SystemClock.uptimeMillis() - currentTime > LIMIT_TIME) {
+                    AppManager.getInstance().finishToOne(LoginActivity::class.java)
+                    currentTime = SystemClock.uptimeMillis()
                 } else {
-                    currentTime = System.currentTimeMillis()
+                    currentTime = SystemClock.uptimeMillis()
                 }
             }
         }
-        return super.dispatchKeyShortcutEvent(event)
+        return super.dispatchTouchEvent(event)
     }
 
     fun showTimeDialog(view: TextView) {
@@ -544,7 +541,47 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
         text.setHorizontallyScrolling(true)
     }
 
-    interface DialogListener{
+    @SuppressLint("RestrictedApi")
+    override fun startActivityForResult(intent: Intent?, requestCode: Int, options: Bundle?) {
+        if (checkDoubleClick(intent!!)) {
+            super.startActivityForResult(intent, requestCode, options)
+        }
+    }
+
+    /**
+     * 检查是否重复跳转，不需要则重写方法并返回true(这样的好处是界面事件的唯一性，如果同一界面是卡时间，如果不同界面时间没限制)
+     *
+     * 这是一个解决方案，方案弊端如果是app只有一个activity,fragment切换不适用，方案采用第二个，查验终端的方案
+     *
+     * 最终两者结合
+     */
+    private fun checkDoubleClick(intent: Intent): Boolean {
+
+        // 默认检查通过
+        var result = true
+        // 标记对象
+        val tag: String?
+        if (intent.component != null) { // 显式跳转
+            tag = intent.component!!.className
+        } else if (intent.action != null) { // 隐式跳转
+            tag = intent.action
+        } else {
+            return true
+        }
+
+        if (tag == mActivityJumpTag && LIMIT_CLICK_TIME >= SystemClock.uptimeMillis() - mClickTime!!) {
+            if(intent.component != null && AppManager.getInstance().repeatActivity(intent.component.className)){
+                return false
+            }
+        }
+
+        // 记录启动标记和时间
+        mActivityJumpTag = tag
+        mClickTime = SystemClock.uptimeMillis()
+        return result
+    }
+
+    interface DialogListener {
         fun tipDialogOKListener(flag: Int)
     }
 }

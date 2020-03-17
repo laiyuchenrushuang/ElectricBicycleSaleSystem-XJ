@@ -26,7 +26,7 @@
         android:largeHeap="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.MainOtherActivity" />
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.MainOtherActivity"/>
         <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.LoginLoadingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,8 +34,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.SettingActivity" />
-        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.ServiceSettingActivity" />
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.SettingActivity"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.ServiceSettingActivity"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -46,10 +46,10 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.ShowPhotoActivity" />
-        <activity android:name=".zxing.activity.CaptureActivity" />
-        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.LoginActivity" />
-        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.LoginByUserPasswordActivity" />
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.ShowPhotoActivity"/>
+        <activity android:name=".zxing.activity.CaptureActivity"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.LoginActivity"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.LoginByUserPasswordActivity"/>
         <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.HelpActivity"/>
         <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.ArchiveFileActivity"/>
         <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.YWEntranceActivity"/>

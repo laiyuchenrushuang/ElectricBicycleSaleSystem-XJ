@@ -11,6 +11,7 @@ import com.seatrend.xj.electricbicyclesalesystem.http.thread.ThreadPoolManager;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.TimerTask;
+import java.util.concurrent.locks.Lock;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -108,6 +109,9 @@ public class JavaTest {
 //        String s = "SS11111s";
 //        System.out.println(CheckPawUtil.isSixPaw(s));
 
+
+//优先任务的开启方式
+
 //        for (int i = 1; i < 20; i++) {
 //            PriorityRunnable priorityRunnable = new PriorityRunnable(Priority.Level.NORMAL, new Runnable() {
 //                @Override
@@ -166,101 +170,6 @@ public class JavaTest {
 //        ThreadPoolManager.Companion.getInstance().createSchedulePool(t1,0, 2000);
 //        ThreadPoolManager.Companion.getInstance().createSchedulePool(t2,0, 2000);
 //        ThreadPoolManager.Companion.getInstance().createSchedulePool(t3,0, 2000);
-
-
-        t1 = new Thread() {
-            @Override
-            public void run() {
-                for (int i = 0; i < 10; i++) {
-                    System.out.println("当前线程 t1");
-                    if (i == 5) {
-
-                        synchronized (t1) {
-                            try {
-                                t2.start();
-                                t1.wait();
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                }
-            }
-        };
-
-        t2 = new Thread() {
-            @Override
-            public void run() {
-                for (int i = 0; i < 10; i++) {
-                    System.out.println("当前线程 t2");
-                    if (i == 2) {
-                        try {
-                            t3.start();
-                            synchronized (t2){
-                                t2.wait();
-                            }
-
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    if (i ==9) {
-                        synchronized (t1) {
-                            t1.notify();
-                        }
-                    }
-                }
-            }
-        };
-
-        t3 = new Thread() {
-            @Override
-            public void run() {
-                System.out.println("当前线程 t3");
-                synchronized (t2) {
-                    t2.notify();
-                }
-            }
-        };
-
-        t1.start();
-        try {
-            t1.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        t2.start();
-
-//
-//        try {
-//            Thread.sleep(10000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//
-//        ThreadPoolManager.Companion.getInstance().cancel();
-
-
-//        ThreadPoolManager.Companion.getInstance().showdownNow();
-//
-//        ThreadPoolManager.Companion.getInstance().open();
-//
-//
-//        TimerTask t = new TimerTask() {
-//            @Override
-//            public void run() {
-//                System.out.println("每10秒一次运动  time = "+ StringUtils.longToStringData(System.currentTimeMillis()));
-//            }
-//        };
-//
-//        ThreadPoolManager.Companion.getInstance().schedule(t, 0, 10000);
-//
-//
-//
-//        t.cancel();
-//
-//
-//        System.out.println("end");
 //
 //        ThreadPoolManager.Companion.getInstance().schedule(new TimerTask() {
 //            @Override
@@ -268,6 +177,23 @@ public class JavaTest {
 //                System.out.println("每5秒一次运动  time = "+ StringUtils.longToStringData(System.currentTimeMillis()));
 //            }
 //        },0,5000);
+
+        Thread t1 = new Thread(){
+            @Override
+            public void run() {
+                for(;;){
+                    System.out.println(" tt");
+                }
+            }
+        };
+        t1.start();
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        t1.stop();
 
     }
 

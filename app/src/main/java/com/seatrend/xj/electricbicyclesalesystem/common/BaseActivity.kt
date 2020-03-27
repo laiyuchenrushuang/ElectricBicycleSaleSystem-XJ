@@ -575,9 +575,9 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
         }
 
         // 间隔时间不短，但是栈里面已经start界面，属于repeat活动界面，返回false[适用于Activity 活动，但是不适用隐式跳转] ---- 堆栈存储的是Activity
-        if(intent.component != null && AppManager.getInstance().repeatActivity(intent.component.className)){
-            return false
-        }
+//        if(intent.component != null && AppManager.getInstance().repeatActivity(intent.component.className)){
+//            return false
+//        }
 
         // 记录启动标记和时间
         mActivityJumpTag = tag

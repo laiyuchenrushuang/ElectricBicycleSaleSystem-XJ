@@ -142,6 +142,16 @@ class ThreadPoolManager {
     }
 
     /**
+     * 定时安全任务池
+     */
+    fun createSchedulePool(runnable: Runnable,delay: Long) {
+        timer!!.schedule(timerTask {
+            val newScheduledThreadPool = Executors.newScheduledThreadPool(ThreadConstants.CORE_POOL_SIZE)
+            newScheduledThreadPool.schedule(runnable,0,TimeUnit.SECONDS)
+        },delay)
+    }
+
+    /**
      * timer 取消
      */
     fun cancel(){

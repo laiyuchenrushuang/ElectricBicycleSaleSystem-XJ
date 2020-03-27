@@ -114,6 +114,7 @@ class UserInfoActivity : BaseActivity() {
                     showToast(entity.message)
                     AppManager.getInstance().finishToOne(LoginActivity::class.java)
                 } catch (e: Exception) {
+                    showToast("退出失败")
                     e.printStackTrace()
                 }
             }

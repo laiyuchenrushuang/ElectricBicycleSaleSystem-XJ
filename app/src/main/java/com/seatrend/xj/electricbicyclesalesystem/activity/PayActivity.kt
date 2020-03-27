@@ -13,6 +13,7 @@ import com.seatrend.xj.electricbicyclesalesystem.R
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants
 import com.seatrend.xj.electricbicyclesalesystem.entity.PayPostEnity
+import com.seatrend.xj.electricbicyclesalesystem.manager.AppManager
 import com.seatrend.xj.electricbicyclesalesystem.util.DMZUtils
 import com.seatrend.xj.electricbicyclesalesystem.util.GsonUtils
 import com.seatrend.xj.electricbicyclesalesystem.util.StringUtils

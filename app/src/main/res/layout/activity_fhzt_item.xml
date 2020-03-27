@@ -66,7 +66,7 @@
                     style="@style/pay_info"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:text="车牌号码" />
+                    android:text="号牌号码" />
 
                 <TextView
                     android:id="@+id/tv_fh_cphm"

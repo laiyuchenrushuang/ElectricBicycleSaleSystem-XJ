@@ -16,6 +16,9 @@
     <uses-permission android:name="android.permission.NFC" />
     <uses-feature android:name="android.hardware.nfc" android:required="true" />
 
+    //华为的坑[Android 8.0]
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+
     <application
         android:name=".common.MyApplication"
         android:allowBackup="true"

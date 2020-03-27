@@ -35,8 +35,8 @@ import kotlinx.android.synthetic.main.bottom_button.*
 class YwReplaceActivity : BaseActivity(), NormalView {
 
 
-    private var mxCphm: String? = null //新车牌号码
-    private var moCphm: String? = null //原来的车牌号码
+    private var mxCphm: String? = null //新号牌号码
+    private var moCphm: String? = null //原来的号牌号码
     private var headPhoto: ByteArray? = null//头像照片
     private var FACE_COMPARE_CODE: Int = 11
     private var mNormalPresenter: NormalPresenter? = null
@@ -414,7 +414,7 @@ class YwReplaceActivity : BaseActivity(), NormalView {
                 return
             }
             if (TextUtils.isEmpty(et_cphm.text.toString())) {
-                showToast("请获取车牌号码")
+                showToast("请获取号牌号码")
                 return
             }
             if (!CheckEditTxetUtils.checkEditextValuable(ed_syr_sfz, ed_syr_xm, et_syr_lxdh, et_syr_xxdz, et_syr_yj_xxdz, et_syr_yj_yzbm)) {

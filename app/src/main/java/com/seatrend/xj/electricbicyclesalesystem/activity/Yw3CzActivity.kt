@@ -18,6 +18,7 @@ import com.seatrend.xj.electricbicyclesalesystem.fragment.CarCYxxFragment
 import com.seatrend.xj.electricbicyclesalesystem.fragment.CarMsgJscsFragment
 import com.seatrend.xj.electricbicyclesalesystem.fragment.RegisterAllInfoFragment
 import com.seatrend.xj.electricbicyclesalesystem.fragment.RegisterInfoFragment
+import com.seatrend.xj.electricbicyclesalesystem.manager.AppManager
 import com.seatrend.xj.electricbicyclesalesystem.persenter.NormalPresenter
 import com.seatrend.xj.electricbicyclesalesystem.util.FHUtil
 import com.seatrend.xj.electricbicyclesalesystem.util.StringUtils
@@ -64,7 +65,11 @@ class Yw3CzActivity : BaseActivity(), NormalView {
     private var mNormalPresenter: NormalPresenter? = null
 
     override fun initView() {
-        setPageTitle("业务详情")
+        if("3" == intent.getStringExtra(Constants.UI_TYPE)){
+            setPageTitle("车辆详情")
+        }else {
+            setPageTitle("业务详情")
+        }
         tv_fhbz!!.movementMethod = ScrollingMovementMethod.getInstance()
         tv_tbbz!!.movementMethod = ScrollingMovementMethod.getInstance()
         tv_tbyy!!.movementMethod = ScrollingMovementMethod.getInstance()

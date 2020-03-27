@@ -367,7 +367,7 @@ class YwRegisterActivity : BaseActivity(), NormalView {
                 return
             }
             if (ll_cphm.visibility == View.VISIBLE && !CheckEditTxetUtils.checkEditextValuable(et_cphm)) {
-                showToast("请获取车牌号码")
+                showToast("请获取号牌号码")
                 return
             }
             if (!CheckEditTxetUtils.checkEditextValuable(ed_syr_sfz, ed_syr_xm, et_syr_lxdh, et_syr_xxdz, et_syr_yj_xxdz, et_syr_yj_yzbm)) {

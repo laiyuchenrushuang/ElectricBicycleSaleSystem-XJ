@@ -56,7 +56,7 @@ class ChaYanEntranceActivity : BaseActivity(), NormalView {
                 intent.putExtra("xh", cYEntranceEnity!!.data.xh) // 序号
                 intent.putExtra("zcbm", et_cy_zcbm.text.toString()) // 整车编码
                 if (!"A".equals(sp_cy.selectedItem.toString().split(":")[0])) {
-                    intent.putExtra("hphm", et_cy_cphm.text.toString().toUpperCase()) // 车牌号码
+                    intent.putExtra("hphm", et_cy_cphm.text.toString().toUpperCase()) // 号牌号码
                 }
                 intent.putExtra("all_data", cYEntranceEnity)
                 intent.setClass(this, CarInfoActivity::class.java)

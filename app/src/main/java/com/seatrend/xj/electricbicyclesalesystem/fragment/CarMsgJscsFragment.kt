@@ -103,7 +103,13 @@ class CarMsgJscsFragment : BaseFragment() {
             } else {
 
                 if (activity is Yw3CzActivity && "3" == activity.intent.getStringExtra(Constants.UI_TYPE)) { //证明是车辆查询来的
+
                     cydata = activity.intent.getSerializableExtra("cy_data") as CarMsgEnity
+
+                    if (cydata == null || cydata!!.data == null || cydata!!.data.jscs == null || cydata!!.data.jscs.cphgzbh == null) {
+                        showToast("获取技术参数失败")
+                        return
+                    }
                     carinfo_jscs_zcbm.text = cydata!!.data.jscs.cphgzbh //zcbm
                     carinfo_jscs_cjszcbmdwz.text = cydata!!.data.jscs.cjszcbhwz.trim() //wz
                     carinfo_jscs_clzwsb.text = cydata!!.data.jscs.clzwsb //
@@ -126,7 +132,7 @@ class CarMsgJscsFragment : BaseFragment() {
                     carinfo_jscs_ccczszt.text =cydata!!.data.cccdata.ccczt//ccc状态
                 } else { //原来的逻辑不变
                     enity = activity.intent.getSerializableExtra("all_data") as AllBikeMsgEnity
-                    if (enity == null || enity!!.data == null || enity!!.data.cccData == null || enity!!.data.cccData == null) {
+                    if (enity == null || enity!!.data == null || enity!!.data.cccData == null) {
                         showToast("获取技术参数失败")
                         return
                     }

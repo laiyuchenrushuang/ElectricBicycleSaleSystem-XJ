@@ -449,7 +449,7 @@ class YwTransferActivity : BaseActivity(), NormalView {
 
             } else if ("B" == ywyy) {
                 if (!ObjectNullUtil.checknull(et_cphm.text.toString())) {
-                    showToast("请获取车牌号码")
+                    showToast("请获取号牌号码")
                     return
                 }
                 enity.cph = et_cphm.text.toString().toUpperCase()

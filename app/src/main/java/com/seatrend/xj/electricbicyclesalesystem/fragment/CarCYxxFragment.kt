@@ -41,7 +41,7 @@ class CarCYxxFragment : BaseFragment() {
         initUI()
 
 
-        //是否隐藏带牌销售和车牌号码
+        //是否隐藏带牌销售和号牌号码
         if ("0" == UserInfo.GlobalParameter.DPBJ) {
             ViewShowUtils.showGoneView(ll_dpxs_all)
         } else {  //全局参数

@@ -362,7 +362,7 @@ class YwChangeActivity : BaseActivity(), NormalView {
             }
             if ("B".equals(data!!.data.checkData.ywyy)) {
                 if (!CheckEditTxetUtils.checkEditextValuable(et_cphm)) {
-                    showToast("请获取车牌号码")
+                    showToast("请获取号牌号码")
                     return
                 }
             }

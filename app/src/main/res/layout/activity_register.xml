@@ -54,7 +54,7 @@
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical|left"
-                    android:text="车牌号码" />
+                    android:text="号牌号码" />
 
                 <TextView
                     android:id="@+id/tv_cph"

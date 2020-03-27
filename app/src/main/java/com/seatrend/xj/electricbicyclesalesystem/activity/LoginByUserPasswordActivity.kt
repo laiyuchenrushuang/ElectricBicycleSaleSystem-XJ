@@ -199,16 +199,12 @@ class LoginByUserPasswordActivity : BaseActivity(), LoginView, CarPhotoView {
     override fun downloadProgress(commonProgress: CommonProgress) {
         if (progressdialog == null) {
             showProgressDialog()
-        } else {
-            if (!progressdialog!!.isShowing) {
-                progressdialog!!.show()
-            }
         }
         if (progressdialog != null && progressdialog!!.isShowing) {
             progressBar!!.progress = java.lang.Double.parseDouble(commonProgress.getProgress()).toInt()
             tvPro!!.text = String.format("%s%%", commonProgress.getProgress())
         }
-        if ("100.0" == commonProgress.getProgress() && progressdialog != null && progressdialog!!.isShowing) {
+        if ("100.0" == commonProgress.getProgress() && progressdialog != null) {
             progressdialog!!.dismiss()
             installApk()
         }
@@ -331,6 +327,7 @@ class LoginByUserPasswordActivity : BaseActivity(), LoginView, CarPhotoView {
         } else {
             imgFile = null
         }
+
     }
 
     //在线更新apk

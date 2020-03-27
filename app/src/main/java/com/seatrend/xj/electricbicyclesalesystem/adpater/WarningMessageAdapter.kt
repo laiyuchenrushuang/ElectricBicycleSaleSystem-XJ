@@ -11,6 +11,7 @@ import android.widget.TextView
 import com.seatrend.xj.electricbicyclesalesystem.R
 import com.seatrend.xj.electricbicyclesalesystem.activity.WarningMessageActivity
 import com.seatrend.xj.electricbicyclesalesystem.entity.WarningMessageEntity
+import com.seatrend.xj.electricbicyclesalesystem.util.AppUtils
 import com.seatrend.xj.electricbicyclesalesystem.util.CllxUtils
 import com.seatrend.xj.electricbicyclesalesystem.util.StringUtils
 
@@ -98,7 +99,7 @@ class WarningMessageAdapter(private val mContext: Context) : RecyclerView.Adapte
             try {
                 tvLsh!!.text = dataBean.lsh
                 tvCllx!!.text = CllxUtils.getCllxDMSM(dataBean.cllx)
-                tvCphm!!.text = dataBean.hphm
+                tvCphm!!.text = StringUtils.isNull(dataBean.hphm)
                 tvZcbm!!.text = dataBean.zcbm
                 tvYjlx!!.text = dataBean.yjlx
                 tvYjms!!.text = dataBean.yjyy

@@ -63,7 +63,7 @@ class BusinessDetailsActivity : BaseActivity(), BusinessDetailsView {
         tv_name.text = getString(R.string.who_hello, UserInfo.XM)
         tv_tjqssj.text = SharedPreferencesUtils.getTjqssj()
         tv_tjzzsj.text = SharedPreferencesUtils.getTjzzsj()
-        tv_xsdmc.text = UserInfo.NewUserInfo.BMMC
+        tv_xsdmc.text = StringUtils.isNull(UserInfo.BMMC)  //20-03-26 duan 说改
         bindEvent()
         lazyLoad()
     }

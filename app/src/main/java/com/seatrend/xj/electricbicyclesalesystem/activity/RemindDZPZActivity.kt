@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory
 import android.text.TextUtils
 import com.seatrend.xj.electricbicyclesalesystem.R
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
+import com.seatrend.xj.electricbicyclesalesystem.manager.AppManager
 import com.seatrend.xj.electricbicyclesalesystem.util.StringUtils
 import kotlinx.android.synthetic.main.activity_dzpz.*
 
@@ -22,9 +23,7 @@ class RemindDZPZactivity: BaseActivity() {
 
 
         btn_back_home.setOnClickListener {
-            val intent= Intent(this, MainOtherActivity::class.java)
-            intent.flags= Intent.FLAG_ACTIVITY_CLEAR_TOP
-            startActivity(intent)
+            AppManager.getInstance().finishToOne(MainOtherActivity::class.java)
             finish()
         }
     }

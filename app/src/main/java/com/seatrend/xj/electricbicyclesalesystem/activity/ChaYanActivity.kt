@@ -192,7 +192,7 @@ class ChaYanActivity : BaseActivity(), NormalView {
                     return@setOnClickListener
                 }
                 if (rb_dpxs_ok.isChecked && !CheckEditTxetUtils.checkEditextValuable(et_cphm)) {
-                    showToast("请填完车牌号码信息")
+                    showToast("请填完号牌号码信息")
                     return@setOnClickListener
                 }
 
@@ -233,7 +233,7 @@ class ChaYanActivity : BaseActivity(), NormalView {
                 if (rb_dpxs_ok.isChecked) {
                     var cphm = et_cphm.text.toString().toUpperCase()
                     if (!ObjectNullUtil.checknull(cphm)) {
-                        showToast("请获取车牌号码")
+                        showToast("请获取号牌号码")
                         return@setOnClickListener
                     }
                     map["cph"] = cphm

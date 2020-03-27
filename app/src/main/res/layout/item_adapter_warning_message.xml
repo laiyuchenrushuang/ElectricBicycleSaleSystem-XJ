@@ -92,7 +92,7 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
-                    android:text="车牌号码:"
+                    android:text="号牌号码:"
                     android:textColor="@color/textcolor"
                     android:textSize="@dimen/text_large_16sp" />
 

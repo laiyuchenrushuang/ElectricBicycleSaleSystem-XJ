@@ -4,6 +4,7 @@ import android.content.Intent
 import com.seatrend.xj.electricbicyclesalesystem.R
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants
+import com.seatrend.xj.electricbicyclesalesystem.manager.AppManager
 import com.seatrend.xj.electricbicyclesalesystem.util.PhotoFileUtils
 import kotlinx.android.synthetic.main.activity_remind_common.*
 

@@ -15,6 +15,7 @@ import com.seatrend.xj.electricbicyclesalesystem.entity.*
 import com.seatrend.xj.electricbicyclesalesystem.fragment.CarCYxxFragment
 import com.seatrend.xj.electricbicyclesalesystem.fragment.CarMsgJscsFragment
 import com.seatrend.xj.electricbicyclesalesystem.fragment.RegisterInfoFragment
+import com.seatrend.xj.electricbicyclesalesystem.manager.AppManager
 import com.seatrend.xj.electricbicyclesalesystem.persenter.NormalPresenter
 import com.seatrend.xj.electricbicyclesalesystem.util.ViewShowUtils
 import com.seatrend.xj.electricbicyclesalesystem.view.NormalView

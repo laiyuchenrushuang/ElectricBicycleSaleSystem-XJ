@@ -109,7 +109,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:gravity="center_vertical"
-                android:text="车牌号码:"
+                android:text="号牌号码:"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
@@ -119,7 +119,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@null"
-                android:hint="请输入车牌号码"
+                android:hint="请输入号牌号码"
                 android:gravity="left|center_vertical"
                 android:textColor="@color/black"
                 android:textColorHint="@color/theme_color"

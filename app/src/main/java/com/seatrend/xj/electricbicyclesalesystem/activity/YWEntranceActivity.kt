@@ -146,7 +146,7 @@ class YWEntranceActivity : BaseActivity(), NormalView {
                     map.put("ywlx", sp_yw.selectedItem.toString().split(":")[0])
                     mNormalPresenter!!.doNetworkTask(map, Constants.YW_GET_ALL_BIKE_DATA)
                 } else {
-                    showToast("车牌号码查询")
+                    showToast("号牌号码查询")
                     map.put("hphm", et_yw_cphm.text.toString().toUpperCase())
                     map.put("ywlx", sp_yw.selectedItem.toString().split(":")[0])
                     mNormalPresenter!!.doNetworkTask(map, Constants.YW_GET_ALL_BIKE_DATA)
@@ -154,11 +154,11 @@ class YWEntranceActivity : BaseActivity(), NormalView {
 
             } else {
                 if (!ObjectNullUtil.checknull(et_yw_cphm.text.toString())) {
-                    showToast("车牌号码为空")
+                    showToast("号牌号码为空")
                     return@setOnClickListener
                 }
                 showLoadingDialog()
-                showToast("车牌号码查询")
+                showToast("号牌号码查询")
                 val map = HashMap<String, String?>()
                 map.put("hphm", et_yw_cphm.text.toString().toUpperCase())
                 map.put("ywlx", sp_yw.selectedItem.toString().split(":")[0])

@@ -482,7 +482,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
 
-                        android:text="新车牌号码" />
+                        android:text="新号牌号码" />
 
                     <android.support.v4.widget.Space
                         android:layout_width="0dp"
@@ -656,7 +656,7 @@
                         style="@style/carcy_info_jscs_left"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="新车牌号码" />
+                        android:text="新号牌号码" />
 
                     <android.support.v4.widget.Space
                         android:layout_width="0dp"
@@ -735,7 +735,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
 
-                        android:text="新车牌号码" />
+                        android:text="新号牌号码" />
 
                     <android.support.v4.widget.Space
                         android:layout_width="0dp"

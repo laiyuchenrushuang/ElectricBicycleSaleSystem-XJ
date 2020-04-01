@@ -106,7 +106,7 @@ class CarMsgJscsFragment : BaseFragment() {
 
                     cydata = activity.intent.getSerializableExtra("cy_data") as CarMsgEnity
 
-                    if (cydata == null || cydata!!.data == null || cydata!!.data.jscs == null || cydata!!.data.jscs.cphgzbh == null) {
+                    if (cydata == null || cydata!!.data == null || cydata!!.data.jscs == null || cydata!!.data.jscs.cphgzbh == null || cydata!!.data.cccdata == null) {
                         showToast("获取技术参数失败")
                         return
                     }

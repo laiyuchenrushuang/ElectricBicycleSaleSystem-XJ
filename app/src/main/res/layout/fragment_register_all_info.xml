@@ -998,8 +998,10 @@
                         style="@style/carcy_info_jscs_right"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-
-                        android:text="/" />
+                        android:maxWidth="200dp"
+                        android:paddingEnd="5dp"
+                        android:ellipsize="end"
+                        android:text="/ " />
                 </LinearLayout>
 
                 <include layout="@layout/my_view3" />
@@ -1062,7 +1064,9 @@
                         style="@style/carcy_info_jscs_right"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-
+                        android:maxWidth="200dp"
+                        android:paddingEnd="5dp"
+                        android:ellipsize="end"
                         android:text="/" />
                 </LinearLayout>
 

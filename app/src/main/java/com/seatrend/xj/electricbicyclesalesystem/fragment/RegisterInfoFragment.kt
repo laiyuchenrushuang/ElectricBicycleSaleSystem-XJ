@@ -30,6 +30,8 @@ class RegisterInfoFragment : BaseFragment() {
 
     override fun initView() {
         getdata()
+        setLongTextview(tv_xxdz)
+        setLongTextview(tv_yj_xxdz)
     }
 
     private fun getdata() {

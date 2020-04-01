@@ -80,6 +80,12 @@ abstract class BaseFragment : Fragment(), BaseView {
 
     }
 
+    //显示不完全的Textview 处理
+    fun setLongTextview(text: TextView?) {
+        text!!.movementMethod = ScrollingMovementMethod.getInstance()
+        text.setOnTouchListener(onTouchListener)
+    }
+
     override fun showToast(msgId: Int) {
         Toast.makeText(context, getString(msgId), Toast.LENGTH_SHORT).show()
     }

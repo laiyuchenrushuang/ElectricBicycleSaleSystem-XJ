@@ -30,7 +30,6 @@ import java.util.ArrayList
 class RegisterAllInfoFragment : BaseFragment(), View.OnTouchListener {
 
     var enity: AllBikeMsgEnity? = null
-    private var mTextTouchListener: View.OnTouchListener? = null
     private var mCyxxPhotoAdapter: CyxxPhotoAdapter? = null
     var photoList = ArrayList<AllBikeMsgEnity.Data.PhotoList>()
     private var cydata :CarMsgEnity?=null
@@ -42,7 +41,8 @@ class RegisterAllInfoFragment : BaseFragment(), View.OnTouchListener {
     override fun initView() {
         initUI()
         getYwLxData()
-        mTextTouchListener = this
+        setLongTextview(tv_syr_xxdz)
+        setLongTextview(tv_syr_yj_xxdz)
     }
 
     private fun getYwLxData() {
@@ -150,7 +150,7 @@ class RegisterAllInfoFragment : BaseFragment(), View.OnTouchListener {
                         tv_bh_ywyy.text = enity!!.data.fjdcBusiness.ywyy
                         tv_bh_ywyy!!.movementMethod = ScrollingMovementMethod.getInstance()
                         tv_bh_ywyy!!.setHorizontallyScrolling(true)
-                        tv_bh_ywyy!!.setOnTouchListener(mTextTouchListener)
+                        tv_bh_ywyy!!.setOnTouchListener(onTouchListener)
                         tv_bh_cph.text = if ("".equals(enity!!.data.fjdcBusiness.cph)) "/" else enity!!.data.fjdcBusiness.cph
                         initSyrXX()
                         initDlrXX()

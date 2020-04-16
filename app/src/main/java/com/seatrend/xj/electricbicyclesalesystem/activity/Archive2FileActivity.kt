@@ -27,6 +27,7 @@ import kotlinx.android.synthetic.main.common_title.*
 
 class Archive2FileActivity : BaseActivity(), YwGdAdapter.itemOnclickListener, BaseActivity.DialogListener, NormalView {
 
+
     private var plCommit = false
     private var count: Int = 0
     private var adapter: YwGdAdapter? = null
@@ -249,6 +250,9 @@ class Archive2FileActivity : BaseActivity(), YwGdAdapter.itemOnclickListener, Ba
             map["zt"] = "E" // E-已归档
             mNormalPresenter!!.doNetworkTask(map, Constants.GD_COMMIT)
         }
+    }
+
+    override fun tipDialogNOListener(flag: Int) {
     }
 
     override fun onDestroy() {

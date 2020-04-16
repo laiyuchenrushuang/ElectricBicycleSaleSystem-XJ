@@ -156,11 +156,15 @@ class YwOldCarReplaceHPHMActivity : BaseActivity(),NormalView{
 
     private fun startThreadUpdateSp(dmsm: String, spinner: Spinner?) {
         ThreadPoolManager.instance.execute(Runnable {
-            val dmz = CodeTableSQLiteUtils.queryByDmlbAndDmsm(Constants.XSQY, dmsm)
-            var dataList = QHUtils.getAllOneLevelCitys(dmz)
-            showLog(CodeTableSQLiteUtils.queryByDmlbAndDmzGetDmsm(Constants.XSQY, dmz))
-            runOnUiThread {
-                SpinnerUtil.setPinnerQHData(this@YwOldCarReplaceHPHMActivity, dmz, dataList, spinner, mHandler)
+            try {
+                val dmz = CodeTableSQLiteUtils.queryByDmlbAndDmsm(Constants.XSQY, dmsm)
+                var dataList = QHUtils.getAllOneLevelCitys(dmz)
+                showLog(CodeTableSQLiteUtils.queryByDmlbAndDmzGetDmsm(Constants.XSQY, dmz))
+                runOnUiThread {
+                    SpinnerUtil.setPinnerQHData(this@YwOldCarReplaceHPHMActivity, dmz, dataList, spinner, mHandler)
+                }
+            } catch (e: Exception) {
+                showToast(e.message.toString())
             }
         })
     }

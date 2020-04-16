@@ -174,269 +174,387 @@
                     android:textColor="@color/white"
                     android:text="获取号牌"/>
             </LinearLayout>
-
-            <TextView
-                style="@style/carcy_info_title"
-                android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:text="现所有人信息" />
-
+            //所有人信息
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="44dp">
-
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical|left"
-                    android:text="身份证明名称" />
-
-                <Spinner
-                    android:id="@+id/sp_syr_sfz"
-                    android:layout_width="0dp"
-                    android:layout_height="28dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="12dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/sp_bg"
-                    android:spinnerMode="dialog" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="44dp">
-
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical|left"
-                    android:text="身份证明号码" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="@drawable/edit_text_bg">
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/carcy_info_title"
+                        android:layout_width="100dp"
+                        android:layout_height="44dp"
+                        android:text="现所有人信息" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="44dp"
+                        android:gravity="center_vertical"
+                        android:text="* "
+                        android:textColor="@color/red"
+                        android:textSize="16sp" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="44dp"
+                        android:gravity="center_vertical"
+                        android:text=" 为必填项"
+                        android:textColor="@color/red"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
+
+                    <LinearLayout
+                        android:layout_width="100dp"
+                        android:layout_height="44dp">
+
+                        <TextView
+                            style="@style/carcy_info_jscs_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical|left"
+                            android:text="身份证明名称" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:text="* "
+                            android:textColor="@color/red"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <Spinner
+                        android:id="@+id/sp_syr_sfz"
+                        android:layout_width="0dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="center_vertical"
+
+                        android:layout_weight="1"
+                        android:background="@drawable/sp_bg"
+                        android:gravity="end"
+                        android:spinnerMode="dialog" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
+
+                    <LinearLayout
+                        android:layout_width="100dp"
+                        android:layout_height="44dp">
+
+                        <TextView
+                            style="@style/carcy_info_jscs_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical|left"
+                            android:text="身份证明号码" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:text="* "
+                            android:textColor="@color/red"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/edit_text_bg">
+
+                        <EditText
+                            android:id="@+id/ed_syr_sfz"
+                            style="@style/carcy_info_jscs_left"
+                            android:layout_width="0dp"
+                            android:layout_height="28dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:digits="@string/number_and_letter" />
+
+                        <ImageView
+                            android:id="@+id/iv_syr_scan"
+                            style="@style/iv_sfz"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/scan_bule_icon" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
+
+                    <LinearLayout
+                        android:layout_width="100dp"
+                        android:layout_height="44dp">
+
+                        <TextView
+                            style="@style/carcy_info_jscs_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical|left"
+                            android:text="姓名/名称" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:text="* "
+                            android:textColor="@color/red"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
 
                     <EditText
-                        android:id="@+id/ed_syr_sfz"
+                        android:id="@+id/ed_syr_xm"
                         style="@style/carcy_info_jscs_left"
                         android:layout_width="0dp"
                         android:layout_height="28dp"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
-                        android:background="@null"
-
-                        android:digits="@string/number_and_letter" />
-
-                    <ImageView
-                        style="@style/iv_sfz"
-                        android:id="@+id/iv_syr_scan"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/scan_bule_icon" />
+                        android:background="@drawable/edit_text_bg" />
                 </LinearLayout>
-            </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="44dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
 
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical|left"
-                    android:text="姓名/名称" />
+                    <LinearLayout
+                        android:layout_width="100dp"
+                        android:layout_height="44dp">
 
-                <EditText
-                    android:id="@+id/ed_syr_xm"
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="0dp"
-                    android:layout_height="28dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="12dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/edit_text_bg" />
-            </LinearLayout>
+                        <TextView
+                            style="@style/carcy_info_jscs_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical|left"
+                            android:text="联系电话" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="44dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:text="* "
+                            android:textColor="@color/red"
+                            android:textSize="16sp" />
+                    </LinearLayout>
 
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical|left"
-                    android:text="联系电话" />
+                    <EditText
+                        android:id="@+id/et_syr_lxdh"
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="0dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:background="@drawable/edit_text_bg"
+                        android:digits="@string/number_telephone"
+                        android:maxLength="11" />
+                </LinearLayout>
 
-                <EditText
-                    android:id="@+id/et_syr_lxdh"
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="0dp"
-                    android:layout_height="28dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="12dp"
-                    android:layout_weight="1"
-                    android:maxLength="11"
-                    android:background="@drawable/edit_text_bg"
-                    android:digits="@string/number_telephone" />
-            </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="44dp">
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical|left"
+                        android:text="行政区划" />
 
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical|left"
-                    android:text="行政区划" />
+                    <Spinner
+                        android:id="@+id/sp_syr_qh1"
+                        android:layout_width="0dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:background="@drawable/sp_bg"
+                        android:gravity="end"
+                        android:spinnerMode="dialog" />
 
-                <Spinner
-                    android:id="@+id/sp_syr_qh1"
-                    android:layout_width="0dp"
-                    android:layout_height="28dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="12dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/sp_bg"
-                    android:spinnerMode="dialog" />
-                <Spinner
-                    android:id="@+id/sp_syr_qh2"
-                    android:layout_width="0dp"
-                    android:layout_height="28dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:background="@drawable/sp_bg"
-                    android:spinnerMode="dialog" />
-            </LinearLayout>
+                    <Spinner
+                        android:id="@+id/sp_syr_qh2"
+                        android:layout_width="0dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:background="@drawable/sp_bg"
+                        android:gravity="end"
+                        android:spinnerMode="dialog" />
+                </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="44dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
 
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical|left"
-                    android:text="详细地址" />
+                    <LinearLayout
+                        android:layout_width="100dp"
+                        android:layout_height="44dp">
 
-                <EditText
-                    android:id="@+id/et_syr_xxdz"
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="0dp"
-                    android:layout_height="28dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="12dp"
-                    android:layout_weight="1"
-                    android:maxLength="255"
-                    android:background="@drawable/edit_text_bg" />
-            </LinearLayout>
+                        <TextView
+                            style="@style/carcy_info_jscs_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical|left"
+                            android:text="详细地址" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="44dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:text="* "
+                            android:textColor="@color/red"
+                            android:textSize="16sp" />
+                    </LinearLayout>
 
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical|left"
-                    android:text="邮寄行政区划" />
+                    <EditText
+                        android:id="@+id/et_syr_xxdz"
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="0dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:background="@drawable/edit_text_bg"
+                        android:maxLength="255" />
+                </LinearLayout>
 
-                <Spinner
-                    android:id="@+id/sp_syr_yj_qh1"
-                    android:layout_width="0dp"
-                    android:layout_height="28dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="12dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/sp_bg"
-                    android:spinnerMode="dialog" />
-                <Spinner
-                    android:id="@+id/sp_syr_yj_qh2"
-                    android:layout_width="0dp"
-                    android:layout_height="28dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:background="@drawable/sp_bg"
-                    android:spinnerMode="dialog" />
-            </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="44dp">
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical|left"
+                        android:text="邮寄行政区划" />
 
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical|left"
-                    android:text="邮寄详细地址" />
+                    <Spinner
+                        android:id="@+id/sp_syr_yj_qh1"
+                        android:layout_width="0dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:background="@drawable/sp_bg"
+                        android:spinnerMode="dialog" />
 
-                <EditText
-                    android:id="@+id/et_syr_yj_xxdz"
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="0dp"
-                    android:layout_height="28dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="12dp"
-                    android:layout_weight="1"
-                    android:maxLength="255"
-                    android:background="@drawable/edit_text_bg" />
-            </LinearLayout>
+                    <Spinner
+                        android:id="@+id/sp_syr_yj_qh2"
+                        android:layout_width="0dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:background="@drawable/sp_bg"
+                        android:spinnerMode="dialog" />
+                </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="44dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
 
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical|left"
-                    android:text="邮政编码" />
+                    <LinearLayout
+                        android:layout_width="100dp"
+                        android:layout_height="44dp">
 
-                <EditText
-                    android:id="@+id/et_syr_yj_yzbm"
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="0dp"
-                    android:layout_height="28dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="12dp"
-                    android:layout_weight="1"
-                    android:maxLength="6"
-                    android:background="@drawable/edit_text_bg"
-                    android:digits="@string/number_text" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="44dp">
+                        <TextView
+                            style="@style/carcy_info_jscs_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical|left"
+                            android:text="邮寄详细地址" />
 
-                <TextView
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical|left"
-                    android:text="邮箱地址" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:text="* "
+                            android:textColor="@color/red"
+                            android:textSize="16sp" />
+                    </LinearLayout>
 
-                <EditText
-                    android:id="@+id/et_syr_yxdz"
-                    style="@style/carcy_info_jscs_left"
-                    android:layout_width="0dp"
-                    android:layout_height="28dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="12dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/edit_text_bg"
-                    android:digits="@string/number_email" />
+                    <EditText
+                        android:id="@+id/et_syr_yj_xxdz"
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="0dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:background="@drawable/edit_text_bg"
+                        android:maxLength="255" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
+
+                    <LinearLayout
+                        android:layout_width="100dp"
+                        android:layout_height="44dp">
+
+                        <TextView
+                            style="@style/carcy_info_jscs_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical|left"
+                            android:text="邮政编码" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:text="* "
+                            android:textColor="@color/red"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+
+                    <EditText
+                        android:id="@+id/et_syr_yj_yzbm"
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="0dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:background="@drawable/edit_text_bg"
+                        android:digits="@string/number_text"
+                        android:maxLength="6" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
+
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical|left"
+                        android:text="邮箱地址" />
+
+                    <EditText
+                        android:id="@+id/et_syr_yxdz"
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="0dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:background="@drawable/edit_text_bg"
+                        android:digits="@string/number_email" />
+                </LinearLayout>
             </LinearLayout>
 
 

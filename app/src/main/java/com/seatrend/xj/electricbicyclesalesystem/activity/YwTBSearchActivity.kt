@@ -68,20 +68,20 @@ class YwTBSearchActivity : BaseActivity(), NormalView {
         ll_item.visibility = View.VISIBLE
         mTbEnity = enity
         lczt = enity.data.list[0].lczt
-        tv_syr.text = enity.data.list[0].syr
-        tv_hphm.text = enity.data.list[0].cph
-        tv_zcbm.text = enity.data.list[0].zcbm
+        tv_syr.text = StringUtils.isNull(enity.data.list[0].syr)
+        tv_hphm.text = StringUtils.isNull(enity.data.list[0].cph)
+        tv_zcbm.text = StringUtils.isNull(enity.data.list[0].zcbm)
 //        if(null == enity.data.list[0].ywry || TextUtils.isEmpty(enity.data.list[0].ywry)){
 //            text_ry_flag.text = "业务人员"
 //            tv_ywry.text = enity.data.list[0].ywry
 //        }else{
 //            text_ry_flag.text = "业务人员"
-        tv_ywry.text = enity.data.list[0].ywry
+        tv_ywry.text = StringUtils.isNull(enity.data.list[0].ywry)
 //        }
         tv_ywlx.text = DMZUtils.getDMSM(Constants.YWLX, enity.data.list[0].ywlx)
-        tv_slsj.text = StringUtils.longToStringData(enity.data.list[0].kssj)
-        tv_fhzt.text = FHUtil.getDMSM(enity.data.list[0].fhbj)
-        tv_ywzt.text = LcStateUtils.getDMSM(enity.data.list[0].lczt)
+        tv_slsj.text = StringUtils.isNull(StringUtils.longToStringData(enity.data.list[0].kssj))
+        tv_fhzt.text = StringUtils.isNull(FHUtil.getDMSM(enity.data.list[0].fhbj))
+        tv_ywzt.text = StringUtils.isNull(LcStateUtils.getDMSM(enity.data.list[0].lczt))
         if ("1".equals(enity.data.list[0].fhbj)) {
             tv_fhzt.setTextColor(Color.GREEN)
         }

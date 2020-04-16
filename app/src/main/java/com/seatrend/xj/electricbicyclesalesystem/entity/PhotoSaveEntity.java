@@ -25,6 +25,16 @@ public class PhotoSaveEntity extends BaseEntity {
         private String lsh;
         private String zplx;
         private String sfzhm;
+        private String zpPath;
+
+        public String getZpPath() {
+            return zpPath;
+        }
+
+        public void setZpPath(String zpPath) {
+            this.zpPath = zpPath;
+        }
+
 
         public String getSfzhm() {
             return sfzhm;

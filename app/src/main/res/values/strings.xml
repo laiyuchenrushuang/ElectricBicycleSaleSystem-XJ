@@ -136,6 +136,25 @@
     <string name="btg">2:不通过</string>
     <string name="update_message">检测到软件新版本，是否需要更新?\n更新内容:\n%1$s</string>
     <string name="downloading">正在下载更新包...</string>
+    <string name="ccc_check_title">CCC证书预核查</string>
+    <string name="ccc_check_search">CCC证书查询</string>
+    <string name="ccc_detail_title">CCC证书详情</string>
 
+
+    <string name="home_clcy">车辆查验</string>
+    <string name="home_ywdj">业务登记</string>
+    <string name="home_ywfh">业务复核</string>
+    <string name="home_ywgd">档案归档</string>
+    <string name="home_ywtb">业务退办</string>
+    <string name="home_clcx">车辆查询</string>
+    <string name="home_ccchy">CCC证书预核查</string>
+    <string name="cy_collection_msg">车辆信息采集</string>
+
+    <string name="clippview_msg">是否保存裁剪图片(红框内),保存按确定,退出请取消</string>
+    <string name="clippview_tips">整车编码的图片类型支持裁剪功能</string>
+    <string name="clipped">(已裁剪)</string>  //针对裁剪处理界面做区分
+    <string name="clipped_success">裁剪图片保存成功</string>
+
+    <string name="take_many_patterns">多拍模式</string>
 
 </resources>

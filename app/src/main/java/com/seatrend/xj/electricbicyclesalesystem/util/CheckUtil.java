@@ -4,6 +4,8 @@ import android.os.Environment;
 import android.os.StatFs;
 
 import java.io.File;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 检查是否频繁点击按钮
@@ -56,5 +58,16 @@ public class CheckUtil {
 
     public static long firstTime = 0;
 
+    /**
+     *
+     * @param s
+     * @return  true 是正确的邮政编码
+     */
+    public static boolean isYzbmCorrect(String s) {
+        String str = "^[1-9]\\d{5}$";
+        Pattern p = Pattern.compile(str);
+        Matcher m = p.matcher(s);
+        return m.matches();
+    }
 
 }

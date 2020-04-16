@@ -5,6 +5,7 @@ import com.seatrend.xj.electricbicyclesalesystem.http.thread.Priority;
 import com.seatrend.xj.electricbicyclesalesystem.http.thread.PriorityRunnable;
 import com.seatrend.xj.electricbicyclesalesystem.http.thread.ThreadConstants;
 import com.seatrend.xj.electricbicyclesalesystem.util.CheckPawUtil;
+import com.seatrend.xj.electricbicyclesalesystem.util.CheckUtil;
 import com.seatrend.xj.electricbicyclesalesystem.util.StringUtils;
 import com.seatrend.xj.electricbicyclesalesystem.http.thread.ThreadPoolManager;
 
@@ -178,22 +179,26 @@ public class JavaTest {
 //            }
 //        },0,5000);
 
-        Thread t1 = new Thread(){
-            @Override
-            public void run() {
-                for(;;){
-                    System.out.println(" tt");
-                }
-            }
-        };
-        t1.start();
+//        Thread t1 = new Thread(){
+//            @Override
+//            public void run() {
+//                for(;;){
+//                    System.out.println(" tt");
+//                }
+//            }
+//        };
+//        t1.start();
+//
+//        try {
+//            Thread.sleep(2000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        t1.stop();
 
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        t1.stop();
+        String glbm = "6565651";
+
+        System.out.println(CheckUtil.isYzbmCorrect(glbm));
 
     }
 

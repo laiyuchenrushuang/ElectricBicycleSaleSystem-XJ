@@ -142,10 +142,6 @@ class CarInfoByCyActivity : BaseActivity(), NormalView {
         which.setTextColor(ContextCompat.getColor(this,R.color.theme_color))
     }
 
-    private fun switchFragment(fragment: Fragment?) {
-        supportFragmentManager.beginTransaction().replace(R.id.carmsg_fl, fragment).commit();
-    }
-
     private var lastFragment: Fragment? = null
     fun switchFrament(from: Fragment?, to: Fragment?) {
         if (from !== to) {

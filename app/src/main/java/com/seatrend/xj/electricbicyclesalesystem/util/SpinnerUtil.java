@@ -13,6 +13,7 @@ import com.seatrend.xj.electricbicyclesalesystem.R;
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants;
 import com.seatrend.xj.electricbicyclesalesystem.database.CodeTableSQLiteUtils;
 import com.seatrend.xj.electricbicyclesalesystem.entity.CodeEntity;
+import com.seatrend.xj.electricbicyclesalesystem.entity.UserInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +74,7 @@ public class SpinnerUtil {
         if (qh == null || TextUtils.isEmpty(qh)) { // 新疆
             OtherUtils.setSpinner2Dmsm("新疆维吾尔自治区", spinner);
         } else {
-            OtherUtils.setSpinner2Dmsm(CodeTableSQLiteUtils.queryByDmlbAndDmzGetDmsm(Constants.Companion.getXSQY(),qh), spinner);
+            OtherUtils.setSpinner2Dmsm(CodeTableSQLiteUtils.queryByDmlbAndDmzGetDmsm(Constants.Companion.getXSQY(), qh), spinner);
         }
     }
 
@@ -175,10 +176,16 @@ public class SpinnerUtil {
             Toast.makeText(context, "代码值为空", Toast.LENGTH_SHORT).show();
             return;
         }
+        String defaultQh = "";
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.my_simple_spinner_item);
         adapter.setDropDownViewResource(R.layout.item_spinner__down_common);
         for (CodeEntity.DataBean db : dataList) {
             String dmsm1 = db.getDmsm1().trim();
+            if (UserInfo.GLBM != null && UserInfo.GLBM.length() > 4 && !UserInfo.GLBM.substring(0, 4).equals("")) {
+                if ((UserInfo.GLBM.substring(0, 4)+"00").equals(db.getDmz())) {
+                    defaultQh = db.getDmsm1().trim();
+                }
+            }
             adapter.add(dmsm1);
         }
         spinner.setAdapter(adapter);
@@ -186,8 +193,21 @@ public class SpinnerUtil {
         msg.what = INSERT_DATA;
         msg.obj = spinner;
         handler.sendMessage(msg);
+
+        //新疆的定制，ll说修改(2020-04-10)
         if (Constants.Companion.getXIN_JIANG().equals(dmz1)) {
             OtherUtils.setSpinner2Dmsm("乌鲁木齐市", spinner);
+            //新疆定制去找 GLBM 下的区划 因为 现实是这个管理部门的生成规则 只知道新疆的所以抛个异常
+            if(!"".equals(defaultQh)){
+                try {
+                    //去找发证机关城市，发证机关和GLBM 是有关系的，例如管理部门650000000000000000，前面4位加“00”，就是发证机关的城市区划代码值，找不到就锁定省第一个城市
+                    OtherUtils.setSpinner2Dmsm(defaultQh, spinner);
+                } catch (Exception e) {
+                    //异常 就默认省级省会城市
+                    OtherUtils.setSpinner2Dmsm("乌鲁木齐市", spinner);
+                }
+            }
+
         }
     }
 

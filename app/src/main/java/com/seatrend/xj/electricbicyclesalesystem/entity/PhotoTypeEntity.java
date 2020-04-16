@@ -81,7 +81,6 @@ public class PhotoTypeEntity extends BaseEntity {
         }
 
 
-
         public static class ConfigBean {
             /**
              * ywxh : 2
@@ -102,6 +101,24 @@ public class PhotoTypeEntity extends BaseEntity {
             private String zplx;
             private String zplj; //照片路径
             private String zpPath; //照片加载路径
+            private String clipped = "0"; //照片需要裁剪的是否被裁剪（ZCBM 类型的图片）  默认的所有没被裁剪 (0 不需要  1 需要)
+            private String takeMode = "0"; //照片是否多拍 (0 不是  1 是)   0 必拍      1 多拍
+
+            public String getTakeMode() {
+                return takeMode;
+            }
+
+            public void setTakeMode(String takeMode) {
+                this.takeMode = takeMode;
+            }
+
+            public String isClipped() {
+                return clipped;
+            }
+
+            public void setClipped(String clipped) {
+                this.clipped = clipped;
+            }
 
             public void setZpPath(String zpPath) {
                 this.zpPath = zpPath;

@@ -104,7 +104,8 @@
                 android:layout_height="match_parent"
                 android:background="@null"
                 android:maxLength="255"
-                android:hint="请在这里输入"
+                android:padding="5dp"
+                android:hint="允许输入100字以内"
                 android:textSize="@dimen/text_large_16sp" />
         </LinearLayout>
     </LinearLayout>

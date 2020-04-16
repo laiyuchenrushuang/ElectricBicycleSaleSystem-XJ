@@ -65,9 +65,9 @@
 
                     <TextView
                         style="@style/cy_et_style_1"
-                        android:layout_width="100dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="原因：" />
+                        android:text="原因： " />
                 </LinearLayout>
 
                 <RelativeLayout
@@ -99,6 +99,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginTop="10dp"
+                android:padding="5dp"
+                android:hint="允许输入100字以内"
                 android:maxLength="255"
                 android:background="@drawable/carcy_edit_reson" />
         </LinearLayout>

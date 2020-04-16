@@ -151,13 +151,29 @@ class YwRegisterActivity : BaseActivity(), NormalView {
 
     }
 
+    /**
+     * 记录一下 怕忘了
+     * 1. 省级的spinner是固定的，全国30多个，可以一次获取完，第二次进来去锁定，为什么可以，是自己构造了省级的代码值6500 [00]去找的
+     * 2. 第二个spinner,以第一个spinner 去找代码值，为什么代码值 没弄在spinner的item里面（长度不够），然后找到省下的一级城市代码生成规律，拉所有一级城市池装在spinner中
+     * 3.
+     * @param dmsm  第一个spinner的选择内容
+     * @param spinner  第二个spinner的对象
+     *
+     * 代码功能  （1）dmz 获取第一个spinner的代码值
+     *          （2）dataList 获取第二个spinner的代码值集合
+     *
+     */
     private fun startThreadUpdateSp(dmsm: String, spinner: Spinner?) {
         ThreadPoolManager.instance.execute(Runnable {
-            val dmz = CodeTableSQLiteUtils.queryByDmlbAndDmsm(Constants.XSQY, dmsm)
-            var dataList = QHUtils.getAllOneLevelCitys(dmz)
-            showLog(CodeTableSQLiteUtils.queryByDmlbAndDmzGetDmsm(Constants.XSQY, dmz))
-            runOnUiThread {
-                SpinnerUtil.setPinnerQHData(this@YwRegisterActivity, dmz, dataList, spinner, mHandler)
+            try {
+                val dmz = CodeTableSQLiteUtils.queryByDmlbAndDmsm(Constants.XSQY, dmsm)
+                var dataList = QHUtils.getAllOneLevelCitys(dmz)
+                showLog(CodeTableSQLiteUtils.queryByDmlbAndDmzGetDmsm(Constants.XSQY, dmz))
+                runOnUiThread {
+                    SpinnerUtil.setPinnerQHData(this@YwRegisterActivity, dmz, dataList, spinner, mHandler)
+                }
+            } catch (e: Exception) {
+                showToast(e.message.toString())
             }
         })
     }
@@ -385,6 +401,10 @@ class YwRegisterActivity : BaseActivity(), NormalView {
             }
             if (!StringUtils.isPhoneNumber(et_syr_lxdh.text.toString())) {
                 showToast("请正确填写手机信息")
+                return
+            }
+            if(!CheckUtil.isYzbmCorrect(et_syr_yj_yzbm.text.toString())){
+                showToast("请正确填写邮政编码")
                 return
             }
             val enity = data!!.data.fjdcBusiness

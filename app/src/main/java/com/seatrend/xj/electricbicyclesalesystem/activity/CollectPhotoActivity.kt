@@ -10,8 +10,7 @@ import android.support.v4.content.FileProvider
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.text.TextUtils
 import android.view.View
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.*
 import com.seatrend.xj.electricbicyclesalesystem.R
 import com.seatrend.xj.electricbicyclesalesystem.adpater.CheckDataPhotoAdapter
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
@@ -23,6 +22,7 @@ import com.seatrend.xj.electricbicyclesalesystem.persenter.CarPhotoPersenter
 import com.seatrend.xj.electricbicyclesalesystem.util.*
 import com.seatrend.xj.electricbicyclesalesystem.view.CarPhotoView
 import kotlinx.android.synthetic.main.activity_collect_photo.*
+import kotlinx.android.synthetic.main.common_title.*
 import kotlinx.android.synthetic.main.recyclerview.*
 import java.io.File
 import java.text.DecimalFormat
@@ -58,7 +58,9 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
     private var uploadPhotoSuccessNumber = 0//成功总数
     private val VIN_CODE = 30
     private var mCheckDataPhotoAdapter: CheckDataPhotoAdapter? = null
-    var allPhoto = ArrayList<PhotoTypeEntity.DataBean.ConfigBean>() //所有照片类型信息（服务器）
+    var allPhoto = ArrayList<PhotoTypeEntity.DataBean.ConfigBean>() //所有照片类型信息（服务器）  初次进来的所有照片类型
+
+    var addPhoto = ArrayList<PhotoTypeEntity.DataBean.ConfigBean>() //多拍模式 添加的照片类型（缓存初始zplx）
 
     private var progressBar: ProgressBar? = null
     private var tvPro: TextView? = null
@@ -69,8 +71,8 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
     private var isCommiting = false
 
 
-    var mDataZcbm :CYEntranceEnity ?=null
-    var mData3C :ThreeCEnity ?=null
+    var mDataZcbm: CYEntranceEnity? = null
+    var mData3C: ThreeCEnity? = null
 
     override fun initView() {
         setPageTitle(getString(R.string.carcy_next))
@@ -81,6 +83,8 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
         mCheckDataPhotoAdapter!!.setItemOnClick(this)
         mCheckDataPhotoAdapter!!.setItemdeleteClick(this)
         m_recycler_view.adapter = mCheckDataPhotoAdapter
+
+        tv_right.text = resources.getString(R.string.take_many_patterns)
         initData()
     }
 
@@ -97,11 +101,13 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
             }
             val list = CodeTableSQLiteUtils.queryByDMLB(Constants.CYZP)
             allPhoto.clear()
+            addPhoto.clear()
             for (db in list) {
                 var enity = PhotoTypeEntity.DataBean.ConfigBean()
                 enity.zmmc = db.dmsm1
                 enity.zplx = db.dmz
                 allPhoto.add(enity)
+                addPhoto.add(enity)
             }
             mCheckDataPhotoAdapter!!.setPhotoType(allPhoto)
         } else if (Constants.YGBA.equals(photoEntranceFlag)) {
@@ -109,22 +115,36 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
             ll_cyjl.visibility = View.GONE
             val list = CodeTableSQLiteUtils.queryByDMLB(Constants.YGZP)
             allPhoto.clear()
+            addPhoto.clear()
             for (db in list) {
                 var enity = PhotoTypeEntity.DataBean.ConfigBean()
                 enity.zmmc = db.dmsm1
                 enity.zplx = db.dmz
                 allPhoto.add(enity)
+                addPhoto.add(enity)
             }
             mCheckDataPhotoAdapter!!.setPhotoType(allPhoto)
         } else {
             ll_cyjl.visibility = View.GONE
             val list = CodeTableSQLiteUtils.queryByDMLB(Constants.DJZP)
             allPhoto.clear()
+            addPhoto.clear()
+            var flagE: PhotoTypeEntity.DataBean.ConfigBean? = null
             for (db in list) {
                 var enity = PhotoTypeEntity.DataBean.ConfigBean()
                 enity.zmmc = db.dmsm1
                 enity.zplx = db.dmz
-                allPhoto.add(enity)
+                if ("B4" == db.dmz) {
+
+                    flagE = enity
+                } else {
+                    allPhoto.add(enity)
+                    addPhoto.add(enity)
+                }
+            }
+            if (flagE != null) {
+                allPhoto.add(flagE)
+                addPhoto.add(flagE)
             }
             mCheckDataPhotoAdapter!!.setPhotoType(allPhoto)
         }
@@ -288,6 +308,70 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
             }
         }
         ed_bhgyy.filters = arrayOf(inputFilter)
+
+        tv_right.setOnClickListener {
+            showDialog()
+
+        }
+    }
+
+    var countType = 0 //多拍模式下 拍照类型 要不一样 才能保证定时任务上传
+
+    private fun showDialog() {
+        val dialog = Dialog(this)
+        dialog.setContentView(R.layout.dialog_take_many_photo)
+        dialog.setCanceledOnTouchOutside(false)
+
+        val btnCancel = dialog.findViewById<Button>(R.id.btn_cancel)
+        val btnOk = dialog.findViewById<Button>(R.id.btn_ok)
+        val sp = dialog.findViewById<Spinner>(R.id.sp_photo_type)
+
+        // 设置sp
+        setSpinnerAdapter(sp)
+        dialog.show()
+        btnCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+        btnOk.setOnClickListener {
+            dialog.dismiss()
+
+            val zmmc = sp.selectedItem.toString()  //照片名称
+            var zpzl = ""                                    //照片类型
+            for (db in addPhoto) {  //
+                if (zmmc == db.zmmc) {
+                    zpzl = db.zplx + countType++
+                    break
+                }
+            }
+
+            var enity = PhotoTypeEntity.DataBean.ConfigBean()
+            enity.zmmc = zmmc
+            enity.zplx = zpzl
+            enity.takeMode = "1"//多拍添加状态
+            if (allPhoto.size - 1 >= 0) {
+                allPhoto.add(allPhoto.size, enity)
+            } else {
+                allPhoto.add(0, enity)
+            }
+
+            mCheckDataPhotoAdapter!!.setPhotoType(allPhoto)
+        }
+
+    }
+
+    private fun setSpinnerAdapter(spinner: Spinner) {
+        val adapter = ArrayAdapter<String>(this, R.layout.my_simple_spinner_item)
+        adapter.setDropDownViewResource(R.layout.item_spinner__down_common)
+        when (spinner.id) {
+            R.id.sp_photo_type -> {
+                adapter.clear()
+                for (db in addPhoto) {
+                    val dmsm1 = db.zmmc
+                    adapter.add("$dmsm1")
+                }
+                spinner.adapter = adapter
+            }
+        }
     }
 
     //业务流水
@@ -338,7 +422,7 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
 
     private fun savePhoto() { //其他业务类
         if (Constants.CAR_ZC.equals(photoEntranceFlag) || Constants.CAR_BG.equals(photoEntranceFlag) || Constants.CAR_ZY.equals(photoEntranceFlag)) {
-           val enity= intent.getSerializableExtra("all_data") as AllBikeMsgEnity
+            val enity = intent.getSerializableExtra("all_data") as AllBikeMsgEnity
             mLsh = enity.data.checkData.lsh
             mXh = enity.data.checkData.xh
         }
@@ -385,9 +469,7 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
 
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             showLoadingDialog()
-
             ThreadPoolManager.instance.execute(Runnable {
-
                 var bitmap = BitmapUtils.getSmallBitmap(imgFile!!.path)
                 bitmap = BitmapUtils.compressImage(bitmap)
                 BitmapUtils.saveBitmap(bitmap, imgFile!!.name.replace(".jpg", ""))
@@ -400,14 +482,35 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
                     dismissLoadingDialog()
                 }
             })
+
+
+            if (Constants.TYPE_ZCBM == allPhoto[photoPosition].zplx) {
+                showToast(resources.getString(R.string.clippview_tips))
+            }
+
+        }
+
+        if (requestCode == Constants.REQUEST_ZCBM && resultCode == Activity.RESULT_OK) {
+            try {
+                allPhoto[photoPosition].isClipped = data!!.getStringExtra(Constants.CLIPP)
+                // 因為照片路徑沒變，不用換zpPath 更新下adapter試試
+                mCheckDataPhotoAdapter!!.setPhoto(photoPosition, data.getStringExtra(Constants.CLIPP_PICTURE_PATH))
+                showToast(resources.getString(R.string.clipped_success))
+            } catch (e: Exception) {
+
+            }
+
+
         }
     }
 
     private fun checkPhoto(data: ArrayList<PhotoTypeEntity.DataBean.ConfigBean>): Boolean {
         for (cb in data) {
-            if ((cb.zpPath == null || cb.zpPath.isEmpty()) && "B4" != cb.zplx) {
-                showToast("【" + cb.zmmc + "】后台数据为空，请拍摄或再次拍摄")
-                return false
+            if ("0" == cb.takeMode) {  // 只关注必拍模式的图片类型（0 是必拍照片类型）
+                if ((cb.zpPath == null || cb.zpPath.isEmpty()) && "B4" != cb.zplx) {
+                    showToast("【" + cb.zmmc + "】后台数据为空，请拍摄或再次拍摄")
+                    return false
+                }
             }
         }
         return true
@@ -446,17 +549,46 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
         showErrorDialog(commonResponse.getResponseString())
     }
 
+
     override fun itemOnClick(position: Int) {
         photoPosition = position
         if (TextUtils.isEmpty(allPhoto[position].zpPath)) {
             getPicFromCamera()
         } else {
-            val intent = Intent(this, ShowPhotoActivity::class.java)
-            intent.putExtra(Constants.PATH, imgFile!!.path)
-            intent.putExtra(Constants.ZPLX, allPhoto[position].zmmc)
-            startActivity(intent)
-            startRotateAlphaAcaleAnimation()
+
+            showLog(" itemOnClick  " + allPhoto[position].isClipped)
+            if (getClipperView(position) && "0" == allPhoto[position].isClipped) { // 不是整车编码的类型且 没裁剪
+                val intent = Intent(this, ShowPhotoActivity::class.java)
+                intent.putExtra(Constants.PATH, allPhoto[photoPosition].zpPath)
+                intent.putExtra(Constants.ZPMC, allPhoto[position].zmmc)
+                intent.putExtra(Constants.ZPLX, allPhoto[position].zplx.substring(0, 2))
+                intent.putExtra(Constants.CLIPP, "1")  // 需要裁剪没被裁剪
+                startActivityForResult(intent, Constants.REQUEST_ZCBM)
+                startRotateAlphaAcaleAnimation()
+            } else {
+                val intent = Intent(this, ShowPhotoActivity::class.java)
+                intent.putExtra(Constants.CLIPP, "0") // 不需要裁剪
+                intent.putExtra(Constants.PATH, allPhoto[photoPosition].zpPath)
+                intent.putExtra(Constants.ZPMC, allPhoto[position].zmmc)
+                intent.putExtra(Constants.ZPLX, allPhoto[position].zplx)
+                startActivity(intent)
+                startRotateAlphaAcaleAnimation()
+            }
+
         }
+    }
+
+    private fun getClipperView(position: Int): Boolean {
+        //适配整车编码类型的图片
+        if (Constants.TYPE_ZCBM == allPhoto[position].zplx) {
+            return true
+        }
+
+        if (allPhoto[position].zplx.length > 2 && Constants.TYPE_ZCBM == allPhoto[position].zplx.substring(0, 2)) {
+            return true
+        }
+
+        return false
     }
 
     //删除，连带本地数据库也删除
@@ -469,7 +601,8 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
 
     override fun itemdelete(position: Int) {
         deletePosition = position
-        allPhoto[position].zpPath=null
+        allPhoto[position].zpPath = null
+        allPhoto[position].isClipped = "0"
         uploadPhotoSuccessNumber--
     }
 

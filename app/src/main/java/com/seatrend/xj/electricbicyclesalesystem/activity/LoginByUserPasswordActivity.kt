@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide
 import com.seatrend.xj.electricbicyclesalesystem.R
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants
+import com.seatrend.xj.electricbicyclesalesystem.createview.ClipperView
 import com.seatrend.xj.electricbicyclesalesystem.entity.*
 import com.seatrend.xj.electricbicyclesalesystem.http.thread.ThreadPoolManager
 import com.seatrend.xj.electricbicyclesalesystem.persenter.CarPhotoPersenter
@@ -249,7 +250,9 @@ class LoginByUserPasswordActivity : BaseActivity(), LoginView, CarPhotoView {
             } else {
                 val intent = Intent(this, ShowPhotoActivity::class.java)
                 intent.putExtra(Constants.PATH, imgFile!!.path)
-                intent.putExtra(Constants.ZPLX, "现场照片")
+                intent.putExtra(Constants.ZPMC, "现场照片")
+//                intent.putExtra(Constants.ZPLX, "A1")  //测试 要删除
+//                intent.putExtra(Constants.CLIPP, "1") //测试 要删除
                 startActivity(intent)
                 startRotateAlphaAcaleAnimation()
             }
@@ -311,7 +314,7 @@ class LoginByUserPasswordActivity : BaseActivity(), LoginView, CarPhotoView {
 
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             showLoadingDialog()
-            showLog(imgFile!!.path)
+//            showLog(" RRRR "+BitmapUtils.getBitmapWithRightRotation(imgFile!!.path))
             ThreadPoolManager.instance.execute(Runnable {
                 val bt: Bitmap = BitmapUtils.getSmallBitmap(imgFile!!.path)
                 val bitmap = BitmapUtils.compressImage(bt)
@@ -324,7 +327,20 @@ class LoginByUserPasswordActivity : BaseActivity(), LoginView, CarPhotoView {
                     photoTagFace = 1
                 }
             })
-        } else {
+        }
+
+//        if (requestCode == 219 && resultCode == Activity.RESULT_OK) {
+//            val path = data!!.getStringExtra("clipper_path")
+//            ThreadPoolManager.instance.execute(Runnable {
+//                Glide.get(this).clearDiskCache()
+//                runOnUiThread {
+//                    Glide.get(this).clearMemory()
+//                    Glide.with(this).load(path).centerCrop().error(R.drawable.error_image).into(iv_photo)
+//                }
+//            })
+//        }
+
+        else {
             imgFile = null
         }
 

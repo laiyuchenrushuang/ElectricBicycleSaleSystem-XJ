@@ -106,7 +106,8 @@ public class PhotoUploadService extends Service {
 
         for (PhotoEntity entity : list) {
 
-            File file = new File(entity.getZpPath());
+            String path = entity.getZpPath();
+            File file = new File(path);
             String zpdz = entity.getZpdz();
 
             if (!file.exists()) {
@@ -155,6 +156,7 @@ public class PhotoUploadService extends Service {
                         map.put(Constants.Companion.getS_LRBM(), entity.getLrbm());
                         map.put(Constants.Companion.getS_ZPSM(), entity.getZpsm());
                         map.put(Constants.Companion.getS_CFFS(), entity.getCffs());
+//                        map.put(Constants.Companion.getS_ZPPATH(), entity.getZpPath());
                         mUploadModule.uploadPhoto(map, Constants.Companion.getYG_PHOTO_SAVE()); // YG
                     } else {
                         // 存储查验业务类照片
@@ -167,9 +169,9 @@ public class PhotoUploadService extends Service {
                         map.put(Constants.Companion.getS_LRBM(), entity.getLrbm());
                         map.put(Constants.Companion.getS_ZPSM(), entity.getZpsm());
                         map.put(Constants.Companion.getS_CFFS(), entity.getCffs());
+//                        map.put(Constants.Companion.getS_ZPPATH(), entity.getZpPath());
                         mUploadModule.uploadPhoto(map, Constants.Companion.getPHOTO_MSG_SAVE()); // YW &  CY
                     }
-
                 }
             }
         }
@@ -223,9 +225,9 @@ public class PhotoUploadService extends Service {
                             String s2 = enity.getData().getType().split(":")[1]; // 照片种类
                             String s3 = enity.getData().getType().split(":")[2]; // 照片path
                             if(checkIsYgPicture(s2)){ // 员工照片存储
-                                CodeTableSQLiteUtils.updateBySfzAndDmz(s1, s2, id);
+                                CodeTableSQLiteUtils.updateBySfzAndDmz(s1, s2,id);
                             }else {  // 查验和业务
-                                CodeTableSQLiteUtils.updateByLshAndDmz(s1, s2, id);
+                                CodeTableSQLiteUtils.updateByLshAndDmz(s1, s2,id);
                             }
 
                             //服务器的id已经获取，删除本地照片 防止oom

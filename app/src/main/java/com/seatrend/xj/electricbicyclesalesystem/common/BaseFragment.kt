@@ -7,6 +7,8 @@ import android.content.ComponentName
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.text.InputFilter
+import android.text.Spanned
 import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,6 +22,8 @@ import com.seatrend.xj.electricbicyclesalesystem.R
 
 import butterknife.ButterKnife
 import butterknife.Unbinder
+import com.seatrend.xj.electricbicyclesalesystem.util.CarHphmUtils
+import com.seatrend.xj.electricbicyclesalesystem.util.DP2PX
 import com.seatrend.xj.electricbicyclesalesystem.util.StringUtils
 import java.text.SimpleDateFormat
 import java.util.*
@@ -67,6 +71,34 @@ abstract class BaseFragment : Fragment(), BaseView {
         return rootView
     }
 
+    //输入进行过滤 只能输入汉字，字母，英文
+
+    val inputFilter = object : InputFilter {
+
+//        var pattern = Pattern.compile("[^a-zA-Z0-9\\u4E00-\\u9FA5_]")
+//        override fun filter(charSequence: CharSequence, i: Int, i1: Int, spanned: Spanned, i2: Int, i3: Int): CharSequence? {
+//            val matcher = pattern.matcher(charSequence)
+//            if (!matcher.find()) {
+//                return null
+//            } else {
+//                showToast("只能输入汉字,英文，数字")
+//                return ""
+//            }
+//        }
+
+        //保留“-“ 方便门牌输入
+        override fun filter(source: CharSequence, start: Int, end: Int, dest: Spanned, dstart: Int, dend: Int): CharSequence? {
+            for (i in start until end) {
+                if (!Character.isLetterOrDigit(source[i])
+                        && Character.toString(source[i]) != "_"
+                        && Character.toString(source[i]) != "-") {
+                    return ""
+                }
+            }
+            return null
+        }
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         initView()
@@ -84,6 +116,20 @@ abstract class BaseFragment : Fragment(), BaseView {
     fun setLongTextview(text: TextView?) {
         text!!.movementMethod = ScrollingMovementMethod.getInstance()
         text.setOnTouchListener(onTouchListener)
+    }
+
+    //输入表情屏蔽
+    fun setEditNoEmoj(vararg editList: EditText) {
+        for (view in editList) {
+            view.filters = arrayOf(inputFilter)
+        }
+    }
+
+    //切换大写
+    fun setEditUppercase(vararg editList: EditText) {
+        for (view in editList) {
+            view.transformationMethod = CarHphmUtils.TransInformation()
+        }
     }
 
     override fun showToast(msgId: Int) {
@@ -162,10 +208,30 @@ abstract class BaseFragment : Fragment(), BaseView {
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    fun setScollTextView(vararg viewList :TextView){
+    fun setScollTextView(vararg viewList: TextView) {
         for (view in viewList) {
             view.movementMethod = ScrollingMovementMethod.getInstance()
             view.setOnTouchListener(onTouchListener)
+        }
+    }
+
+
+    //显示不完全的Textview 处理(在右端的文字)
+    @SuppressLint("ClickableViewAccessibility")
+    fun setScollTextView(vararg viewList: TextView, maxWith: Int, paddingEndDis: Int) {
+        for (view in viewList) {
+            view.movementMethod = ScrollingMovementMethod.getInstance()
+            val para = view.layoutParams
+            view.maxWidth = DP2PX.dip2px(context, maxWith.toFloat())   //最大宽度
+            view.setPadding(0, 0, DP2PX.dip2px(context, paddingEndDis.toFloat()), 0)  //padding end 5dp
+            view.setOnTouchListener(onTouchListener)
+        }
+    }
+
+    //设置checkbox 默认值
+    fun setCheckBoxDefault(vararg viewList: CheckBox) {
+        for (view in viewList) {
+            view.isChecked = true
         }
     }
 }

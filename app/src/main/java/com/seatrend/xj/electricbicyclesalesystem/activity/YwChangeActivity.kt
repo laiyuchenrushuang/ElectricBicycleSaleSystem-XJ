@@ -21,6 +21,45 @@ import com.seatrend.xj.electricbicyclesalesystem.persenter.NormalPresenter
 import com.seatrend.xj.electricbicyclesalesystem.util.*
 import com.seatrend.xj.electricbicyclesalesystem.view.NormalView
 import kotlinx.android.synthetic.main.activity_change.*
+import kotlinx.android.synthetic.main.activity_change.btn_hqhphm
+import kotlinx.android.synthetic.main.activity_change.ed_dlr_sfz
+import kotlinx.android.synthetic.main.activity_change.ed_dlr_xm
+import kotlinx.android.synthetic.main.activity_change.ed_syr_sfz
+import kotlinx.android.synthetic.main.activity_change.ed_syr_xm
+import kotlinx.android.synthetic.main.activity_change.ed_yj_sfz
+import kotlinx.android.synthetic.main.activity_change.ed_yj_xm
+import kotlinx.android.synthetic.main.activity_change.et_cphm
+import kotlinx.android.synthetic.main.activity_change.et_dlr_lxdh
+import kotlinx.android.synthetic.main.activity_change.et_syr_lxdh
+import kotlinx.android.synthetic.main.activity_change.et_syr_xxdz
+import kotlinx.android.synthetic.main.activity_change.et_syr_yj_xxdz
+import kotlinx.android.synthetic.main.activity_change.et_syr_yj_yzbm
+import kotlinx.android.synthetic.main.activity_change.et_syr_yxdz
+import kotlinx.android.synthetic.main.activity_change.et_yj_lxdh
+import kotlinx.android.synthetic.main.activity_change.et_yj_xxdz
+import kotlinx.android.synthetic.main.activity_change.et_yj_yzbm
+import kotlinx.android.synthetic.main.activity_change.iv_dlr_scan
+import kotlinx.android.synthetic.main.activity_change.iv_syr_scan
+import kotlinx.android.synthetic.main.activity_change.iv_yj_scan
+import kotlinx.android.synthetic.main.activity_change.ll_lqfs
+import kotlinx.android.synthetic.main.activity_change.ll_yjlq
+import kotlinx.android.synthetic.main.activity_change.ll_yjxx
+import kotlinx.android.synthetic.main.activity_change.rb_lqfs_no
+import kotlinx.android.synthetic.main.activity_change.rb_lqfs_ok
+import kotlinx.android.synthetic.main.activity_change.rb_zzxsz_no
+import kotlinx.android.synthetic.main.activity_change.rb_zzxsz_ok
+import kotlinx.android.synthetic.main.activity_change.sp_dlr_sfz
+import kotlinx.android.synthetic.main.activity_change.sp_syr_qh1
+import kotlinx.android.synthetic.main.activity_change.sp_syr_qh2
+import kotlinx.android.synthetic.main.activity_change.sp_syr_sfz
+import kotlinx.android.synthetic.main.activity_change.sp_syr_yj_qh1
+import kotlinx.android.synthetic.main.activity_change.sp_syr_yj_qh2
+import kotlinx.android.synthetic.main.activity_change.sp_syxz
+import kotlinx.android.synthetic.main.activity_change.sp_syyt
+import kotlinx.android.synthetic.main.activity_change.sp_yj_qh1
+import kotlinx.android.synthetic.main.activity_change.sp_yj_qh2
+import kotlinx.android.synthetic.main.activity_change.sp_yj_sfz
+import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.bottom_button.*
 
 class YwChangeActivity : BaseActivity(), NormalView {
@@ -237,10 +276,14 @@ class YwChangeActivity : BaseActivity(), NormalView {
 
     private fun startThreadUpdateSp(dmsm: String, spinner: Spinner?) {
         ThreadPoolManager.instance.execute(Runnable {
-            val dmz = CodeTableSQLiteUtils.queryByDmlbAndDmsm(Constants.XSQY, dmsm)
-            var dataList = QHUtils.getAllOneLevelCitys(dmz)
-            runOnUiThread {
-                SpinnerUtil.setPinnerQHData(this@YwChangeActivity, dmz, dataList, spinner, mHandler)
+            try {
+                val dmz = CodeTableSQLiteUtils.queryByDmlbAndDmsm(Constants.XSQY, dmsm)
+                var dataList = QHUtils.getAllOneLevelCitys(dmz)
+                runOnUiThread {
+                    SpinnerUtil.setPinnerQHData(this@YwChangeActivity, dmz, dataList, spinner, mHandler)
+                }
+            } catch (e: Exception) {
+                showToast(e.message.toString())
             }
         })
     }
@@ -380,6 +423,10 @@ class YwChangeActivity : BaseActivity(), NormalView {
             }
             if (!StringUtils.isPhoneNumber(et_syr_lxdh.text.toString())) {
                 showToast("请正确填写手机信息")
+                return
+            }
+            if(!CheckUtil.isYzbmCorrect(et_syr_yj_yzbm.text.toString())){
+                showToast("请正确填写邮政编码")
                 return
             }
             val enity = data!!.data.fjdcBusiness

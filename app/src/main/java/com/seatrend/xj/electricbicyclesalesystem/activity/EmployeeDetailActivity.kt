@@ -57,6 +57,9 @@ class EmployeeDetailActivity : BaseActivity(), NormalView, BaseActivity.DialogLi
 
     }
 
+    override fun tipDialogNOListener(flag: Int) {
+    }
+
     companion object {
         var mEmployeeListBean: EmployeeBean.Data.EmployList? = null
     }

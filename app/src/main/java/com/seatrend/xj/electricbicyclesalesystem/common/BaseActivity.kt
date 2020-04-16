@@ -14,6 +14,7 @@ import android.os.Environment
 import android.os.SystemClock
 import android.provider.MediaStore
 import android.support.annotation.RequiresApi
+import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v4.content.FileProvider
 import android.support.v4.view.ViewCompat
@@ -35,10 +36,7 @@ import com.seatrend.xj.electricbicyclesalesystem.database.CodeTableSQLiteUtils
 import com.seatrend.xj.electricbicyclesalesystem.entity.MessageEntity
 import com.seatrend.xj.electricbicyclesalesystem.manager.AppManager
 import com.seatrend.xj.electricbicyclesalesystem.service.PhotoUploadService
-import com.seatrend.xj.electricbicyclesalesystem.util.GsonUtils
-import com.seatrend.xj.electricbicyclesalesystem.util.LoadingDialog
-import com.seatrend.xj.electricbicyclesalesystem.util.ServiceUtils
-import com.seatrend.xj.electricbicyclesalesystem.util.StringUtils
+import com.seatrend.xj.electricbicyclesalesystem.util.*
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.File
@@ -70,7 +68,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
     private var mOcr: OCR? = null
 
     private var mActivityJumpTag: String? = null       //activity跳转tag
-    private var mClickTime: Long? = null  //事件间隔time
+    private var mClickTime: Long? = 0L  //事件间隔time
     private var LIMIT_CLICK_TIME: Long = 1000 //限制跳转界面的时间
 
     //TextView 和 ScollView 冲突监听器
@@ -456,6 +454,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
         dialog.show()
         btnCancel.setOnClickListener {
             dialog.dismiss()
+            mDialogListenr!!.tipDialogNOListener(flag)
         }
         btnOk.setOnClickListener {
             dialog.dismiss()
@@ -536,9 +535,53 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
     }
 
     //显示不完全的Textview 处理
-    fun setLongTextview(text: TextView?) {
-        text!!.movementMethod = ScrollingMovementMethod.getInstance()
-        text.setHorizontallyScrolling(true)
+    @SuppressLint("ClickableViewAccessibility")
+    fun setScollTextView(vararg viewList :TextView){
+        for (view in viewList) {
+            view.movementMethod = ScrollingMovementMethod.getInstance()
+            val para = view.layoutParams
+//            view.maxWidth = DP2PX.dip2px(this,180f)   //最大宽度
+//            view.setPadding(0,0,DP2PX.dip2px(this,5f),0)  //padding end 5dp
+            view.setOnTouchListener(onTouchListener)
+        }
+    }
+
+    //显示不完全的Textview 处理(在右端的文字)
+    @SuppressLint("ClickableViewAccessibility")
+    fun setScollTextView(vararg viewList :TextView,maxWith: Int,paddingEndDis:Int){
+        for (view in viewList) {
+            view.movementMethod = ScrollingMovementMethod.getInstance()
+            val para = view.layoutParams
+            view.maxWidth = DP2PX.dip2px(this,maxWith.toFloat())   //最大宽度
+            view.setPadding(0,0,DP2PX.dip2px(this,paddingEndDis.toFloat()),0)  //padding end 5dp
+            view.setOnTouchListener(onTouchListener)
+        }
+    }
+
+    //输入表情屏蔽
+    fun setEditNoEmoj(vararg  editList:EditText){
+        for(view in editList){
+            view.filters = arrayOf(inputFilter)
+        }
+    }
+
+    //切换大写
+    fun setEditUppercase(vararg  editList:EditText){
+        for(view in editList){
+            view.transformationMethod = CarHphmUtils.TransInformation()
+        }
+    }
+
+    //切换fragment(适合两个) 注意（R.id.carmsg_fl）
+    fun switchFragment(fragment: Fragment?) {
+        supportFragmentManager.beginTransaction().replace(R.id.carmsg_fl, fragment).commit()
+    }
+
+    //设置checkbox 默认值
+    fun setCheckBoxDefault(vararg viewList: CheckBox,default:Boolean) {
+        for (view in viewList) {
+            view.isChecked = default
+        }
     }
 
     @SuppressLint("RestrictedApi")
@@ -570,7 +613,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
         }
 
         //间隔时间太短 不能跳转  返回false
-        if (tag == mActivityJumpTag && LIMIT_CLICK_TIME >= SystemClock.uptimeMillis() - mClickTime!!) {
+        if (mActivityJumpTag == tag  && LIMIT_CLICK_TIME >= SystemClock.uptimeMillis() - mClickTime!!) {
             return false
         }
 
@@ -587,5 +630,6 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
 
     interface DialogListener {
         fun tipDialogOKListener(flag: Int)
+        fun tipDialogNOListener(flag: Int)
     }
 }

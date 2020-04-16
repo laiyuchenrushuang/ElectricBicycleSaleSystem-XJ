@@ -2,17 +2,20 @@ package com.seatrend.xj.electricbicyclesalesystem.activity
 
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
+import android.text.TextUtils
 import com.seatrend.xj.electricbicyclesalesystem.R
 import com.seatrend.xj.electricbicyclesalesystem.adpater.SelectorAdapter
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants
 import com.seatrend.xj.electricbicyclesalesystem.entity.AllBikeMsgEnity
 import com.seatrend.xj.electricbicyclesalesystem.entity.CommonResponse
+import com.seatrend.xj.electricbicyclesalesystem.entity.ReasonEntity
 import com.seatrend.xj.electricbicyclesalesystem.entity.UserInfo
 import com.seatrend.xj.electricbicyclesalesystem.manager.AppManager
 import com.seatrend.xj.electricbicyclesalesystem.manager.MyRecycleManager
 import com.seatrend.xj.electricbicyclesalesystem.persenter.NormalPresenter
 import com.seatrend.xj.electricbicyclesalesystem.util.CheckBoxUtils
+import com.seatrend.xj.electricbicyclesalesystem.util.GsonUtils
 import com.seatrend.xj.electricbicyclesalesystem.view.NormalView
 import kotlinx.android.synthetic.main.activity_ywfh_edit.*
 import kotlinx.android.synthetic.main.bottom_button.*
@@ -20,7 +23,7 @@ import kotlinx.android.synthetic.main.bottom_button.*
 
 class YwfhEditActivity : BaseActivity(), SelectorAdapter.CheckState, NormalView {
     private var mNormalPresenter: NormalPresenter? = null
-    private var mList: ArrayList<String>? = null
+    private var mList = ArrayList<String>()
     var yyList = ArrayList<String>() //业务原因list
     private var ll: RecyclerView.LayoutManager? = null
     var adapter: SelectorAdapter? = null
@@ -28,6 +31,27 @@ class YwfhEditActivity : BaseActivity(), SelectorAdapter.CheckState, NormalView 
 
     override fun netWorkTaskSuccess(commonResponse: CommonResponse) {
         dismissLoadingDialog()
+
+        if (Constants.REASON_LIST == commonResponse.url) {
+            yyList.clear()
+            val entity = GsonUtils.gson(commonResponse.responseString, ReasonEntity::class.java)
+            if (entity == null || entity.data == null || entity.data.size < 1) {
+                showToast("原因列表为空")
+                return
+            }
+
+            entity.data.forEach {
+                if ("1" == it.lx) {  // 复核
+                    yyList.add(it.ly)
+                }
+            }
+            runOnUiThread {
+                adapter!!.notifyDataSetChanged()
+            }
+
+
+        }
+
         if (Constants.FH_COMMIT.equals(commonResponse.getUrl())) {
 
             if ("1" == UserInfo.GlobalParameter.SFBJ && !rb_fh_no.isChecked  ) {//不通过不收费
@@ -80,10 +104,8 @@ class YwfhEditActivity : BaseActivity(), SelectorAdapter.CheckState, NormalView 
 
     private fun getData() {
         data = intent.getSerializableExtra("all_data") as AllBikeMsgEnity
-        yyList.add("原因1原因1")
-        yyList.add("原因2原因2")
-        yyList.add("原因3原因3")
-        yyList.add("原因3原因3")
+        showLoadingDialog()
+        mNormalPresenter!!.doNetworkTask(HashMap(), Constants.REASON_LIST)
     }
 
     private fun bindEvent() {
@@ -100,8 +122,21 @@ class YwfhEditActivity : BaseActivity(), SelectorAdapter.CheckState, NormalView 
                 map["fhbz"] = et_fhbz.text.toString()
                 mNormalPresenter!!.doNetworkTask(map, Constants.FH_COMMIT)
             } else {
+                if (mList!!.size < 1) {
+                    showToast("请选择一个原因")
+                    return@setOnClickListener
+                }
+
+                if (yyList.size >= 1 && mList!!.contains(yyList[yyList.size - 1]) && TextUtils.isEmpty(et_fhbz.text.toString())) {
+                    showToast("选择备注原因需填写备注")
+                    return@setOnClickListener
+                }
+
                 showLoadingDialog()
                 Yw3CzActivity.fhzt = "2"
+
+
+
                 val map = HashMap<String, String?>()
                 map["fhbj"] = "2"    //复核标记 9-无需复核，0-待复核，1-复核通过，2-复核未通过
                 map["lsh"] = data!!.data.fjdcBusiness.lsh

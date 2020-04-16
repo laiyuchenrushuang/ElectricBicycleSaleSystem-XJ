@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,18 +25,18 @@ class CheckDataPhotoAdapter(private var mContext: Context? = null) : RecyclerVie
 
 
     private var data = ArrayList<PhotoTypeEntity.DataBean.ConfigBean>()
-    val mCompareR: Comparator<PhotoTypeEntity.DataBean.ConfigBean> =
-            Comparator { p0, _ ->
-                if ("B4" == p0!!.zplx) { //其他
-                    0
-                } else {
-                    -1
-                }
-            }
+//    val mCompareR: Comparator<PhotoTypeEntity.DataBean.ConfigBean> =
+//            Comparator { p0, _ ->
+//                if ("B4" == p0!!.zplx) { //其他
+//                    0
+//                } else {
+//                    -1
+//                }
+//            }
 
     fun setPhotoType(list: ArrayList<PhotoTypeEntity.DataBean.ConfigBean>) {
         this.data = list
-        Collections.sort(data, mCompareR)
+//        Collections.sort(data, mCompareR)
         notifyDataSetChanged()
     }
 
@@ -76,15 +77,17 @@ class CheckDataPhotoAdapter(private var mContext: Context? = null) : RecyclerVie
             ivPhoto!!.setOnClickListener {
                 if (mOnClickListener != null && data[adapterPosition].zplj == null) {
                     mOnClickListener!!.itemOnClick(adapterPosition)
-                } else if (data[adapterPosition].zpPath != null) {
-                    val intent = Intent(mContext, ShowPhotoActivity::class.java)
-                    intent.putExtra(Constants.PATH, data[adapterPosition].zpPath)
-                    intent.putExtra(Constants.ZPLX, data[adapterPosition].zmmc)
-                    mContext!!.startActivity(intent)
-
-                    (mContext as BaseActivity).startRotateAlphaAcaleAnimation()
                 }
             }
+
+            ivPhoto!!.setOnLongClickListener {
+                if ("1" == data[adapterPosition].takeMode) {  //多拍模式的
+                    data.removeAt(adapterPosition)
+                    notifyItemRemoved(adapterPosition)
+                }
+                true
+            }
+
             ivDelete!!.setOnClickListener {
                 data[adapterPosition].zplj = null
                 data[adapterPosition].zpPath = null
@@ -96,9 +99,9 @@ class CheckDataPhotoAdapter(private var mContext: Context? = null) : RecyclerVie
 
         fun initItemView(bean: PhotoTypeEntity.DataBean.ConfigBean) {
             tvType!!.text = bean.zmmc
-            if("B4".equals(bean.zplx)){ //其他 不是必拍项
+            if ("B4" == bean.zplx || (bean.zplx.length > 2 && "B4" == bean.zplx.substring(0, 2))) { //其他 不是必拍项  [多拍模式取其他照片]
                 tvType!!.setTextColor(Color.BLACK)
-            }else{
+            } else {
                 tvType!!.setTextColor(Color.RED)
             }
             if (bean.zpPath != null && bean.zpPath.isNotEmpty()) {

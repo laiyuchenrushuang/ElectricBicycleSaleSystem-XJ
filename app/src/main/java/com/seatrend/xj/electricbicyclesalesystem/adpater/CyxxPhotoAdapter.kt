@@ -59,7 +59,8 @@ class CyxxPhotoAdapter(private var mContext: Context? = null, private var list: 
             ivPhoto!!.setOnClickListener {
                 val intent = Intent(mContext, ShowPhotoActivity::class.java)
                 intent.putExtra(Constants.PATH, LoadUrlUtils.loadurl(list!![adapterPosition].zpdz))
-                intent.putExtra(Constants.ZPLX, list!![adapterPosition].zpsm)
+                intent.putExtra(Constants.ZPMC, list!![adapterPosition].zpsm)
+                intent.putExtra(Constants.ZPLX, list!![adapterPosition].zpzl)
                 mContext!!.startActivity(intent)
 
                 (mContext as BaseActivity).startRotateAlphaAcaleAnimation()

@@ -22,6 +22,7 @@ import com.seatrend.xj.electricbicyclesalesystem.util.*
 import com.seatrend.xj.electricbicyclesalesystem.view.NormalView
 import kotlinx.android.synthetic.main.activity_change.ll_zrd
 import kotlinx.android.synthetic.main.activity_change.tv_ywyy
+import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.activity_transfer.*
 import kotlinx.android.synthetic.main.activity_transfer.btn_hqhphm
 import kotlinx.android.synthetic.main.activity_transfer.ed_dlr_sfz
@@ -44,7 +45,12 @@ import kotlinx.android.synthetic.main.activity_transfer.iv_dlr_scan
 import kotlinx.android.synthetic.main.activity_transfer.iv_syr_scan
 import kotlinx.android.synthetic.main.activity_transfer.iv_yj_scan
 import kotlinx.android.synthetic.main.activity_transfer.ll_lqfs
+import kotlinx.android.synthetic.main.activity_transfer.ll_yjlq
 import kotlinx.android.synthetic.main.activity_transfer.ll_yjxx
+import kotlinx.android.synthetic.main.activity_transfer.rb_lqfs_no
+import kotlinx.android.synthetic.main.activity_transfer.rb_lqfs_ok
+import kotlinx.android.synthetic.main.activity_transfer.rb_zzxsz_no
+import kotlinx.android.synthetic.main.activity_transfer.rb_zzxsz_ok
 import kotlinx.android.synthetic.main.activity_transfer.sp_dlr_sfz
 import kotlinx.android.synthetic.main.activity_transfer.sp_syr_qh1
 import kotlinx.android.synthetic.main.activity_transfer.sp_syr_qh2
@@ -191,10 +197,14 @@ class YwTransferActivity : BaseActivity(), NormalView {
 
     private fun startThreadUpdateSp(dmsm: String, spinner: Spinner?) {
         ThreadPoolManager.instance.execute(Runnable {
-            val dmz = CodeTableSQLiteUtils.queryByDmlbAndDmsm(Constants.XSQY, dmsm)
-            var dataList = QHUtils.getAllOneLevelCitys(dmz)
-            runOnUiThread {
-                SpinnerUtil.setPinnerQHData(this@YwTransferActivity, dmz, dataList, spinner, mHandler)
+            try {
+                val dmz = CodeTableSQLiteUtils.queryByDmlbAndDmsm(Constants.XSQY, dmsm)
+                var dataList = QHUtils.getAllOneLevelCitys(dmz)
+                runOnUiThread {
+                    SpinnerUtil.setPinnerQHData(this@YwTransferActivity, dmz, dataList, spinner, mHandler)
+                }
+            } catch (e: Exception) {
+                showToast(e.message.toString())
             }
         })
     }
@@ -419,6 +429,10 @@ class YwTransferActivity : BaseActivity(), NormalView {
             }
             if (!StringUtils.isPhoneNumber(et_syr_lxdh.text.toString())) {
                 showToast("请正确填写手机信息")
+                return
+            }
+            if(!CheckUtil.isYzbmCorrect(et_syr_yj_yzbm.text.toString())){
+                showToast("请正确填写邮政编码")
                 return
             }
 

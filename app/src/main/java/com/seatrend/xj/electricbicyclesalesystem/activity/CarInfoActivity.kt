@@ -71,13 +71,6 @@ class CarInfoActivity : BaseActivity(), NormalView {
         }
     }
 
-    //误人子弟的 fragment的切换 不要copy
-
-    private fun switchFragment(fragment: Fragment?) {
-        supportFragmentManager.beginTransaction().replace(R.id.carmsg_fl, fragment).commit()
-    }
-
-
     override fun getLayout(): Int {
         return R.layout.activity_car_info
     }

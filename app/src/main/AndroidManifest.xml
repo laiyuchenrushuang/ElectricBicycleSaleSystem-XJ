@@ -90,6 +90,9 @@
         <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.YwTBSearchActivity"/>
         <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.EmployeeRemindActivity"/>
         <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.EmployeeDetailActivity"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.CYCarCollectionMsgActivity"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.CarInspectionActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.EmployeeActivity"
                   android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.YwTbEditActivity"
@@ -111,6 +114,9 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.YwCarCheckActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.CccCheckActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.CccDetailActivity" />
         <service android:name="com.seatrend.xj.electricbicyclesalesystem.service.PhotoUploadService"/>
     </application>
 </manifest>

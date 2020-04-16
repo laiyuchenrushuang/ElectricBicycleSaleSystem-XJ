@@ -1,10 +1,8 @@
 package com.seatrend.xj.electricbicyclesalesystem.activity
 
-import android.content.Intent
 import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
 import android.view.KeyEvent
-import com.bumptech.glide.Glide
 import com.seatrend.xj.electricbicyclesalesystem.R
 import com.seatrend.xj.electricbicyclesalesystem.adpater.ViewPagerAdapter
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
@@ -20,7 +18,6 @@ import com.seatrend.xj.electricbicyclesalesystem.util.GsonUtils
 import com.seatrend.xj.electricbicyclesalesystem.util.LoadUrlUtils
 import com.seatrend.xj.electricbicyclesalesystem.util.RoundHeadImageViewUtil
 import com.seatrend.xj.electricbicyclesalesystem.view.NormalView
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main_other.*
 import kotlinx.android.synthetic.main.activity_main_other.tableLayout
 import kotlinx.android.synthetic.main.activity_main_other.view_pager

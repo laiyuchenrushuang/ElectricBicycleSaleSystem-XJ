@@ -253,6 +253,7 @@ public class CodeTableSQLiteUtils {
         String lsh = entity.getLsh();
         String zpzl = entity.getZpzl();
         String sfz = entity.getSfz();
+        String zpPath = entity.getZpPath();
 
 
         // 数据库已经存在 该车辆类型的照片 执行更新，不存在执行 插入
@@ -382,7 +383,7 @@ public class CodeTableSQLiteUtils {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(Constants.Companion.getS_ZPDZ(), id);
-        db.update(CodeTableSQLiteOpenHelper.PHOTO_TABLE_NAME, cv, "lsh=? and zpzl=?", new String[]{lsh, zplx});
+        db.update(CodeTableSQLiteOpenHelper.PHOTO_TABLE_NAME, cv, "lsh=? and zpzl=? ", new String[]{lsh, zplx});
         db.close();
     }
 
@@ -393,7 +394,7 @@ public class CodeTableSQLiteUtils {
      * @param sfz  流水号
      * @param zplx 照片类型
      */
-    public static void updateBySfzAndDmz(String sfz, String zplx, String id) {
+    public static void updateBySfzAndDmz(String sfz, String zplx,String id) {
         CodeTableSQLiteOpenHelper dbHelper = CodeTableSQLiteOpenHelper.getInstance();
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -495,6 +496,7 @@ public class CodeTableSQLiteUtils {
         while (query.moveToNext()) {
             String lshx = query.getString(query.getColumnIndex(Constants.Companion.getS_LSH()));
             String zpzl = query.getString(query.getColumnIndex(Constants.Companion.getS_ZPZL()));
+            String zppath = query.getString(query.getColumnIndex(Constants.Companion.getS_ZPPATH()));
 
             if (lsh.equals(lshx) && zplx.equals(zpzl)) {
                 String zpdz = query.getString(query.getColumnIndex(Constants.Companion.getS_ZPDZ()));
@@ -502,7 +504,6 @@ public class CodeTableSQLiteUtils {
                 String cffs = query.getString(query.getColumnIndex(Constants.Companion.getS_CFFS()));
                 String lrr = query.getString(query.getColumnIndex(Constants.Companion.getS_LRR()));
                 String lrbm = query.getString(query.getColumnIndex(Constants.Companion.getS_LRBM()));
-                String zpPath = query.getString(query.getColumnIndex(Constants.Companion.getS_ZPPATH()));
                 String xh = query.getString(query.getColumnIndex(Constants.Companion.getS_XH()));
 
                 PhotoEntity photoEntity = new PhotoEntity();
@@ -514,7 +515,7 @@ public class CodeTableSQLiteUtils {
                 photoEntity.setCffs(cffs);
                 photoEntity.setLrr(lrr);
                 photoEntity.setLrbm(lrbm);
-                photoEntity.setZpPath(zpPath);
+                photoEntity.setZpPath(zppath);
                 list.add(photoEntity);
             }
         }
@@ -532,6 +533,7 @@ public class CodeTableSQLiteUtils {
         while (query.moveToNext()) {
             String lsfz = query.getString(query.getColumnIndex(Constants.Companion.getS_SFZ()));
             String zpzl = query.getString(query.getColumnIndex(Constants.Companion.getS_ZPZL()));
+            String zppath = query.getString(query.getColumnIndex(Constants.Companion.getS_ZPPATH()));
 
             if (sfz.equals(lsfz) && zplx.equals(zpzl)) {
                 String zpdz = query.getString(query.getColumnIndex(Constants.Companion.getS_ZPDZ()));
@@ -539,7 +541,6 @@ public class CodeTableSQLiteUtils {
                 String cffs = query.getString(query.getColumnIndex(Constants.Companion.getS_CFFS()));
                 String lrr = query.getString(query.getColumnIndex(Constants.Companion.getS_LRR()));
                 String lrbm = query.getString(query.getColumnIndex(Constants.Companion.getS_LRBM()));
-                String zpPath = query.getString(query.getColumnIndex(Constants.Companion.getS_ZPPATH()));
 
                 PhotoEntity photoEntity = new PhotoEntity();
                 photoEntity.setSfz(lsfz);
@@ -549,7 +550,7 @@ public class CodeTableSQLiteUtils {
                 photoEntity.setCffs(cffs);
                 photoEntity.setLrr(lrr);
                 photoEntity.setLrbm(lrbm);
-                photoEntity.setZpPath(zpPath);
+                photoEntity.setZpPath(zppath);
                 list.add(photoEntity);
             }
         }

@@ -40,6 +40,7 @@ class Constants {
         var PMS_TJ = "980202" //统计
         var PMS_BA = "980203" //备案
         var PMS_CX = "980204" //查询
+        var PMS_HY = "PMS_HY" //CCC核验
 
 
         //登录
@@ -70,6 +71,9 @@ class Constants {
         //退办
         val TB_GET_LIST = "/businessHandling/getFjdcFlowTbList" //退办列表
         val TB_COMMIT = "/businessHandling/updateBusiness" //退办提交
+
+        //原因列表
+        val REASON_LIST = "/config/getVerifyNotPassReason" // 复核退办原因
 
 
         //归档
@@ -176,8 +180,13 @@ class Constants {
         var IS_FIRST = "is_first"
         var QAUTH = "Authorization"
         var PATH = "path"
-        var ZPLX = "zplx"
+        var ZPLX = "zplx"  //这个是照片名称
+        var ZPMC = "zpmc" // 这个是代码值
         var TYPE = "type"
+        var TYPE_ZCBM = "A1"  //整车编码类型 zplx
+        var REQUEST_ZCBM = 219 // 请求request id
+        var CLIPP = "clipped" // 是否裁剪   最好写死在拍照采集界面 控制 已裁剪名称
+        var CLIPP_PICTURE_PATH = "clipped_path" // 是否裁剪
 
         var TJQSSJ = "tjqssj"
         var TJZZSJ = "tjzzsj"

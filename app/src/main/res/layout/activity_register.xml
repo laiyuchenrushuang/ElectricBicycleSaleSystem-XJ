@@ -27,7 +27,24 @@
                     style="@style/carcy_info_title"
                     android:layout_width="wrap_content"
                     android:layout_height="44dp"
-                    android:text="业务信息" />
+                    android:text="业务信息   " />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="44dp"
+                    android:gravity="center_vertical"
+                    android:text="* "
+                    android:textColor="@color/red"
+                    android:textSize="16sp" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="44dp"
+                    android:gravity="center_vertical"
+                    android:text=" 为必填项"
+                    android:textColor="@color/red"
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -188,18 +205,33 @@
                 android:layout_width="match_parent"
                 android:layout_height="44dp">
 
-                <TextView
-                    style="@style/carcy_info_jscs_left"
+                <LinearLayout
                     android:layout_width="100dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical|left"
-                    android:text="销售企业" />
+                    android:layout_height="44dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical|left"
+                        android:text="销售企业" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="* "
+                        android:textColor="@color/red"
+                        android:textSize="16sp" />
+                </LinearLayout>
 
                 <EditText
                     android:id="@+id/et_xsqy"
                     style="@style/carcy_info_jscs_left"
                     android:layout_width="0dp"
                     android:layout_height="28dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:background="@drawable/edit_text_bg"
                     android:maxLength="32" />
@@ -239,6 +271,7 @@
             </LinearLayout>
 
             //所有人信息
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -255,22 +288,6 @@
                         android:layout_height="44dp"
                         android:text="所有人信息" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="44dp"
-                        android:gravity="center_vertical"
-                        android:text="* "
-                        android:textColor="@color/red"
-                        android:textSize="16sp" />
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="44dp"
-                        android:gravity="center_vertical"
-                        android:text=" 为必填项"
-                        android:textColor="@color/red"
-                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -302,7 +319,6 @@
                         android:layout_width="0dp"
                         android:layout_height="28dp"
                         android:layout_gravity="center_vertical"
-
                         android:layout_weight="1"
                         android:background="@drawable/sp_bg"
                         android:gravity="end"
@@ -564,6 +580,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="44dp">
+
                     <LinearLayout
                         android:layout_width="100dp"
                         android:layout_height="44dp">

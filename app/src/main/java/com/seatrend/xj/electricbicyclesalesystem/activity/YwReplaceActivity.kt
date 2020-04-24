@@ -22,44 +22,7 @@ import com.seatrend.xj.electricbicyclesalesystem.http.thread.ThreadPoolManager
 import com.seatrend.xj.electricbicyclesalesystem.persenter.NormalPresenter
 import com.seatrend.xj.electricbicyclesalesystem.util.*
 import com.seatrend.xj.electricbicyclesalesystem.view.NormalView
-import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.activity_replace.*
-import kotlinx.android.synthetic.main.activity_replace.btn_hqhphm
-import kotlinx.android.synthetic.main.activity_replace.ed_dlr_sfz
-import kotlinx.android.synthetic.main.activity_replace.ed_dlr_xm
-import kotlinx.android.synthetic.main.activity_replace.ed_syr_sfz
-import kotlinx.android.synthetic.main.activity_replace.ed_syr_xm
-import kotlinx.android.synthetic.main.activity_replace.ed_yj_sfz
-import kotlinx.android.synthetic.main.activity_replace.ed_yj_xm
-import kotlinx.android.synthetic.main.activity_replace.et_cphm
-import kotlinx.android.synthetic.main.activity_replace.et_dlr_lxdh
-import kotlinx.android.synthetic.main.activity_replace.et_syr_lxdh
-import kotlinx.android.synthetic.main.activity_replace.et_syr_xxdz
-import kotlinx.android.synthetic.main.activity_replace.et_syr_yj_xxdz
-import kotlinx.android.synthetic.main.activity_replace.et_syr_yj_yzbm
-import kotlinx.android.synthetic.main.activity_replace.et_syr_yxdz
-import kotlinx.android.synthetic.main.activity_replace.et_yj_lxdh
-import kotlinx.android.synthetic.main.activity_replace.et_yj_xxdz
-import kotlinx.android.synthetic.main.activity_replace.et_yj_yzbm
-import kotlinx.android.synthetic.main.activity_replace.iv_dlr_scan
-import kotlinx.android.synthetic.main.activity_replace.iv_syr_scan
-import kotlinx.android.synthetic.main.activity_replace.iv_yj_scan
-import kotlinx.android.synthetic.main.activity_replace.ll_lqfs
-import kotlinx.android.synthetic.main.activity_replace.ll_yjlq
-import kotlinx.android.synthetic.main.activity_replace.ll_yjxx
-import kotlinx.android.synthetic.main.activity_replace.rb_lqfs_no
-import kotlinx.android.synthetic.main.activity_replace.rb_lqfs_ok
-import kotlinx.android.synthetic.main.activity_replace.rb_zzxsz_no
-import kotlinx.android.synthetic.main.activity_replace.rb_zzxsz_ok
-import kotlinx.android.synthetic.main.activity_replace.sp_dlr_sfz
-import kotlinx.android.synthetic.main.activity_replace.sp_syr_qh1
-import kotlinx.android.synthetic.main.activity_replace.sp_syr_qh2
-import kotlinx.android.synthetic.main.activity_replace.sp_syr_sfz
-import kotlinx.android.synthetic.main.activity_replace.sp_syr_yj_qh1
-import kotlinx.android.synthetic.main.activity_replace.sp_syr_yj_qh2
-import kotlinx.android.synthetic.main.activity_replace.sp_yj_qh1
-import kotlinx.android.synthetic.main.activity_replace.sp_yj_qh2
-import kotlinx.android.synthetic.main.activity_replace.sp_yj_sfz
 import kotlinx.android.synthetic.main.bottom_button.*
 
 /**
@@ -93,7 +56,7 @@ class YwReplaceActivity : BaseActivity(), NormalView {
             intent.putExtra("syr", ed_syr_xm.text.toString())
             intent.putExtra("sfz", ed_syr_sfz.text.toString())
             intent.putExtra("hphm", if (cb_hp_huan.isChecked || cb_hp_bu.isChecked) et_cphm.text.toString().toUpperCase() else data!!.data.checkData.cph)
-            intent.setClass(this, AutographActivity::class.java)
+            intent.setClass(this, CollectPhotoActivity::class.java)
             startActivity(intent)
             CollectPhotoActivity.ywlx =data!!.data.checkData.ywlx
             CollectPhotoActivity.photoEntranceFlag = Constants.CAR_BH
@@ -108,6 +71,7 @@ class YwReplaceActivity : BaseActivity(), NormalView {
             }
             runOnUiThread {
                 et_cphm.text = enity.data
+                btn_hqhphm.visibility = View.GONE
                 mxCphm = enity.data
             }
         }
@@ -147,7 +111,8 @@ class YwReplaceActivity : BaseActivity(), NormalView {
         bt_next.setOnClickListener {
             //进行人脸识别
 
-            getFaceCamera(Constants.FACE)
+            //getFaceCamera(Constants.FACE)
+            postHttpRequest()
         }
 
         btn_hqhphm.setOnClickListener {
@@ -247,7 +212,7 @@ class YwReplaceActivity : BaseActivity(), NormalView {
     }
 
     private fun initData() {
-        bt_next.text = "人证核验"
+        bt_next.text = "下一步"
         try {
             initSpData()
             cb_xsz_huan.performClick()
@@ -274,6 +239,9 @@ class YwReplaceActivity : BaseActivity(), NormalView {
         }
         try {
 
+            cb_hp_huan.isChecked = true
+            rb_yes.isChecked = true
+
             OtherUtils.setSpinnerToDmz(enity.sfzmmc, sp_syr_sfz)
             ed_syr_sfz.setText(enity.sfzmhm)
             ed_syr_xm.setText(enity.syrmc)
@@ -294,6 +262,7 @@ class YwReplaceActivity : BaseActivity(), NormalView {
             ed_yj_xm.setText(enity.sjrxm)
             et_yj_lxdh.setText(enity.sjrlxdh)
             et_yj_yzbm.setText(enity.yzbm)
+            tv_yhphm.setText(enity.cph)
         } catch (e: Exception) {
             showToast(e.message.toString())
         }
@@ -535,6 +504,11 @@ class YwReplaceActivity : BaseActivity(), NormalView {
             enity.lxxxdz = et_syr_yj_xxdz.text.toString()
             enity.yzbm = et_syr_yj_yzbm.text.toString()
             enity.dzyx = et_syr_yxdz.text.toString()
+            if (rb_yes.isChecked) {
+                enity.hphs = "1"
+            } else {
+                enity.hphs = "0"
+            }
             //3
             if (ObjectNullUtil.checknull(ed_dlr_sfz.text.toString(), ed_dlr_xm.text.toString(), et_dlr_lxdh.text.toString())) {
                 if ("A" == sp_dlr_sfz.selectedItem.toString().split(":")[0] && !SFZCheckUtil.isCorrect(ed_dlr_sfz.text.toString())) {

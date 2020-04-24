@@ -24,6 +24,7 @@ import butterknife.ButterKnife
 import butterknife.Unbinder
 import com.seatrend.xj.electricbicyclesalesystem.util.CarHphmUtils
 import com.seatrend.xj.electricbicyclesalesystem.util.DP2PX
+import com.seatrend.xj.electricbicyclesalesystem.util.LoadingDialog
 import com.seatrend.xj.electricbicyclesalesystem.util.StringUtils
 import java.text.SimpleDateFormat
 import java.util.*
@@ -233,5 +234,13 @@ abstract class BaseFragment : Fragment(), BaseView {
         for (view in viewList) {
             view.isChecked = true
         }
+    }
+
+    fun showLoadingDialog() {
+        LoadingDialog.getInstance().showLoadDialog(context)
+    }
+
+    fun dismissLoadingDialog() {
+        LoadingDialog.getInstance().dismissLoadDialog()
     }
 }

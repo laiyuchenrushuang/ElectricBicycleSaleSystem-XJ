@@ -138,6 +138,10 @@ class A2FSearchActivity: BaseActivity(), NormalView {
                 showLoadingDialog()
                 mNormalPresenter!!.doNetworkTask(map, Constants.GD_GET_LIST)
             }else{
+                if (TextUtils.isEmpty(searchString.trim()) || !CphmUtils.checkXjValueCphm(searchString.trim().toUpperCase())) {
+                    showToast("请正确输入车牌号")
+                    return@setOnClickListener
+                }
                 val map = HashMap<String, String?>()
                 map["curPage"] = "1"
                 map["pageSize"] = "1"

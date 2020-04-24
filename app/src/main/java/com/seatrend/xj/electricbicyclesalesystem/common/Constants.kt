@@ -57,6 +57,7 @@ class Constants {
         var CY_ENTRANCE = "/fjdcJscs/getDdcJscu" //查验开始获取信息1
         var CY_ENTRANCE_3C = "/remote/getThreeCertificates" //查验开始获取信息3c
         val SAVE_CY_MSG = "/fjdcJscs/addCheckMessage" //查验保存信息
+        val SAVE_CY_PD = "/fjdcJscs/addFjdcHandlerResult" //查验判定信息
 
         //登记业务
         val YW_ADD_REGISTER_DATA = "/fjdcBusiness/addBikeRegisterData" //业务注册添加
@@ -137,6 +138,8 @@ class Constants {
         var GET_LSH_MSG = "/businessHandling/getVehFlowMainByLsh"
         var GET_LLZM_MB = "/Configuration/getConfigList"
         var POST_DAGD = "/businessHandling/filing"
+        var PDF_GET_CY = "/file/getbikeCheckPdfBylsh"//PDF 查验
+        var PDF_GET_DJ = "/file/getbikeRegisterPdfBylsh"//PDF 登记
 
 
         //相关的key值
@@ -175,6 +178,9 @@ class Constants {
         var BG_YY = "1021"  //变更
         var ZY_YY = "1020"  //转移
 
+        //判定项目
+        var PD_LIST = "1023"  //判定项目
+
 
         var SYN_CODE = "syncode"
         var IS_FIRST = "is_first"
@@ -184,6 +190,8 @@ class Constants {
         var ZPMC = "zpmc" // 这个是代码值
         var TYPE = "type"
         var TYPE_ZCBM = "A1"  //整车编码类型 zplx
+        var TYPE_TYH = "A5"  //拓印号 zplx
+        var TYPE_QT = "B4"  //拓印号 zplx
         var REQUEST_ZCBM = 219 // 请求request id
         var CLIPP = "clipped" // 是否裁剪   最好写死在拍照采集界面 控制 已裁剪名称
         var CLIPP_PICTURE_PATH = "clipped_path" // 是否裁剪
@@ -239,5 +247,22 @@ class Constants {
         val S_SFZ: String? = "sfzmhm" //身份证
         var PTOTO_UPLOAD_ACTION = "photo_upload_action"
         var DATA = "data"
+
+        //业务信息用到的码表
+
+        val ZY_BA = "BA"  //辖区内转移不换号
+        val ZY_BB = "BB"  //辖区内转移换号
+        val ZY_BC = "BC"  //辖区外转移
+        val BG_DA ="DA" //变更迁出
+        val BG_DB = "DB" //变更所有人
+
+        val A = "A" //注册登记
+        val B = "B" //转移登记
+        val D = "D" //变更登记
+        val G = "G" //注销登记
+        val K = "K" //补换登记
+
+        //判定车身颜色
+        val PD_CSYS="C"
     }
 }

@@ -20,7 +20,6 @@ import com.seatrend.xj.electricbicyclesalesystem.entity.PhotoIdEnity;
 import com.seatrend.xj.electricbicyclesalesystem.entity.PhotoSaveEmployeeEntity;
 import com.seatrend.xj.electricbicyclesalesystem.entity.PhotoSaveEntity;
 import com.seatrend.xj.electricbicyclesalesystem.http.HttpService;
-import com.seatrend.xj.electricbicyclesalesystem.util.FileMgUtils;
 import com.seatrend.xj.electricbicyclesalesystem.util.GsonUtils;
 import com.seatrend.xj.electricbicyclesalesystem.util.ObjectNullUtil;
 import com.seatrend.xj.electricbicyclesalesystem.util.PhotoFileUtils;

@@ -112,7 +112,7 @@ class UserInfoActivity : BaseActivity() {
                     LoadingDialog.getInstance().dismissLoadDialog()
                     val entity = GsonUtils.gson(commonResponse.getResponseString(), BaseEntity::class.java)
                     showToast(entity.message)
-                    AppManager.getInstance().finishToOne(LoginActivity::class.java)
+                    AppManager.getInstance().finishToOne(LoginByUserPasswordActivity::class.java)
                 } catch (e: Exception) {
                     showToast("退出失败")
                     e.printStackTrace()

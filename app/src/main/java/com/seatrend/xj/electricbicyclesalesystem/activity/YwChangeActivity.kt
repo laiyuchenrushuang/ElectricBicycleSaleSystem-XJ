@@ -10,6 +10,8 @@ import android.text.Editable
 import android.text.TextUtils
 import android.view.View
 import android.widget.AdapterView
+import android.widget.CompoundButton
+import android.widget.RadioGroup
 import android.widget.Spinner
 import com.seatrend.xj.electricbicyclesalesystem.R
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
@@ -21,45 +23,6 @@ import com.seatrend.xj.electricbicyclesalesystem.persenter.NormalPresenter
 import com.seatrend.xj.electricbicyclesalesystem.util.*
 import com.seatrend.xj.electricbicyclesalesystem.view.NormalView
 import kotlinx.android.synthetic.main.activity_change.*
-import kotlinx.android.synthetic.main.activity_change.btn_hqhphm
-import kotlinx.android.synthetic.main.activity_change.ed_dlr_sfz
-import kotlinx.android.synthetic.main.activity_change.ed_dlr_xm
-import kotlinx.android.synthetic.main.activity_change.ed_syr_sfz
-import kotlinx.android.synthetic.main.activity_change.ed_syr_xm
-import kotlinx.android.synthetic.main.activity_change.ed_yj_sfz
-import kotlinx.android.synthetic.main.activity_change.ed_yj_xm
-import kotlinx.android.synthetic.main.activity_change.et_cphm
-import kotlinx.android.synthetic.main.activity_change.et_dlr_lxdh
-import kotlinx.android.synthetic.main.activity_change.et_syr_lxdh
-import kotlinx.android.synthetic.main.activity_change.et_syr_xxdz
-import kotlinx.android.synthetic.main.activity_change.et_syr_yj_xxdz
-import kotlinx.android.synthetic.main.activity_change.et_syr_yj_yzbm
-import kotlinx.android.synthetic.main.activity_change.et_syr_yxdz
-import kotlinx.android.synthetic.main.activity_change.et_yj_lxdh
-import kotlinx.android.synthetic.main.activity_change.et_yj_xxdz
-import kotlinx.android.synthetic.main.activity_change.et_yj_yzbm
-import kotlinx.android.synthetic.main.activity_change.iv_dlr_scan
-import kotlinx.android.synthetic.main.activity_change.iv_syr_scan
-import kotlinx.android.synthetic.main.activity_change.iv_yj_scan
-import kotlinx.android.synthetic.main.activity_change.ll_lqfs
-import kotlinx.android.synthetic.main.activity_change.ll_yjlq
-import kotlinx.android.synthetic.main.activity_change.ll_yjxx
-import kotlinx.android.synthetic.main.activity_change.rb_lqfs_no
-import kotlinx.android.synthetic.main.activity_change.rb_lqfs_ok
-import kotlinx.android.synthetic.main.activity_change.rb_zzxsz_no
-import kotlinx.android.synthetic.main.activity_change.rb_zzxsz_ok
-import kotlinx.android.synthetic.main.activity_change.sp_dlr_sfz
-import kotlinx.android.synthetic.main.activity_change.sp_syr_qh1
-import kotlinx.android.synthetic.main.activity_change.sp_syr_qh2
-import kotlinx.android.synthetic.main.activity_change.sp_syr_sfz
-import kotlinx.android.synthetic.main.activity_change.sp_syr_yj_qh1
-import kotlinx.android.synthetic.main.activity_change.sp_syr_yj_qh2
-import kotlinx.android.synthetic.main.activity_change.sp_syxz
-import kotlinx.android.synthetic.main.activity_change.sp_syyt
-import kotlinx.android.synthetic.main.activity_change.sp_yj_qh1
-import kotlinx.android.synthetic.main.activity_change.sp_yj_qh2
-import kotlinx.android.synthetic.main.activity_change.sp_yj_sfz
-import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.bottom_button.*
 
 class YwChangeActivity : BaseActivity(), NormalView {
@@ -67,7 +30,7 @@ class YwChangeActivity : BaseActivity(), NormalView {
     private var headPhoto: ByteArray? = null//头像照片
     private var FACE_COMPARE_CODE: Int = 11
     private var mNormalPresenter: NormalPresenter? = null
-    private var data : AllBikeMsgEnity?=null
+    private var data: AllBikeMsgEnity? = null
 
     private var changed1 = false
     private var changed2 = false
@@ -85,7 +48,7 @@ class YwChangeActivity : BaseActivity(), NormalView {
             intent.putExtra("syr", ed_syr_xm.text.toString())
             intent.putExtra("sfz", ed_syr_sfz.text.toString())
             intent.putExtra("hphm", if ("B".equals(data!!.data.checkData.ywyy)) et_cphm.text.toString().toUpperCase() else data!!.data.checkData.cph)
-            intent.setClass(this, AutographActivity::class.java)
+            intent.setClass(this, CollectPhotoActivity::class.java)
             startActivity(intent)
             CollectPhotoActivity.photoEntranceFlag = Constants.CAR_BG
             CollectPhotoActivity.ywlx = data!!.data.checkData.ywlx
@@ -99,6 +62,7 @@ class YwChangeActivity : BaseActivity(), NormalView {
             }
             runOnUiThread {
                 et_cphm.text = enity.data
+                btn_hqhphm.visibility = View.GONE
             }
         }
 
@@ -120,6 +84,7 @@ class YwChangeActivity : BaseActivity(), NormalView {
     private fun bindEvent() {
         rb_zzxsz_ok.isChecked = true
         rb_lqfs_ok.isChecked = true
+        rb_yes.isChecked = true
         CheckBoxUtils.setListenerAndView(rb_zzxsz_ok, rb_zzxsz_no, ll_lqfs, ll_yjlq)
         CheckBoxUtils.setListenerAndView(rb_lqfs_ok, rb_lqfs_no, ll_yjlq)
 
@@ -137,7 +102,8 @@ class YwChangeActivity : BaseActivity(), NormalView {
 
         bt_next.setOnClickListener {
             //进行人脸识别
-            getFaceCamera(Constants.FACE)
+            //getFaceCamera(Constants.FACE)
+            postHttpRequest()
         }
         et_cphm.transformationMethod = CarHphmUtils.TransInformation()
 
@@ -188,10 +154,21 @@ class YwChangeActivity : BaseActivity(), NormalView {
         ed_dlr_xm.filters = arrayOf(inputFilter)
         ed_yj_xm.filters = arrayOf(inputFilter)
         et_yj_xxdz.filters = arrayOf(inputFilter)
+
+        rb_hphs.setOnCheckedChangeListener { p0, p1 ->
+            when (p1) {
+                //button Yes
+                R.id.rb_yes -> {
+                }
+                //button No
+                R.id.rb_no -> {
+                }
+            }
+        }
     }
 
     private fun initData() {
-        bt_next.text = "人证核验"
+        bt_next.text = "下一步"
         try {
             initShowScrean()
             initSpData()
@@ -210,7 +187,7 @@ class YwChangeActivity : BaseActivity(), NormalView {
         try {
             OtherUtils.setSpinnerToDmz(enity.syxz, sp_syxz)
             OtherUtils.setSpinnerToDmz(enity.clyt, sp_syyt)
-            et_cphm.text = enity.cph
+            tv_hphm.text = enity.cph
 
             OtherUtils.setSpinnerToDmz(enity.sfzmmc, sp_syr_sfz)
             ed_syr_sfz.setText(enity.sfzmhm)
@@ -231,6 +208,7 @@ class YwChangeActivity : BaseActivity(), NormalView {
             ed_yj_xm.setText(enity.sjrxm)
             et_yj_lxdh.setText(enity.sjrlxdh)
             et_yj_yzbm.setText(enity.yzbm)
+            tv_yhphm.setText(enity.cph)
         } catch (e: Exception) {
             showToast(e.message.toString())
         }
@@ -241,12 +219,12 @@ class YwChangeActivity : BaseActivity(), NormalView {
         SpinnerUtil.setPinnerData(this, Constants.SYXZ, sp_syxz)
         SpinnerUtil.setPinnerData(this, Constants.CLYT, sp_syyt)
 
-        SpinnerUtil.setPinnerDataQh(this, Constants.MY_QH_SHENG_DMLB, sp_syr_qh1, if(null == data!!.data.fjdcBusiness.djxzqh || TextUtils.isEmpty(data!!.data.fjdcBusiness.djxzqh)) null else data!!.data.fjdcBusiness.djxzqh.substring(0, 2) + "0000")
-        SpinnerUtil.setPinnerDataQh(this, Constants.MY_QH_SHENG_DMLB, sp_yj_qh1, if(null == data!!.data.fjdcBusiness.sjryjxzqh || TextUtils.isEmpty(data!!.data.fjdcBusiness.sjryjxzqh)) null else data!!.data.fjdcBusiness.sjryjxzqh.substring(0, 2) + "0000")
-        SpinnerUtil.setPinnerDataQh(this, Constants.MY_QH_SHENG_DMLB, sp_syr_yj_qh1, if(null == data!!.data.fjdcBusiness.lxdzxzqh || TextUtils.isEmpty(data!!.data.fjdcBusiness.lxdzxzqh)) null else data!!.data.fjdcBusiness.lxdzxzqh.substring(0, 2) + "0000")
+        SpinnerUtil.setPinnerDataQh(this, Constants.MY_QH_SHENG_DMLB, sp_syr_qh1, if (null == data!!.data.fjdcBusiness.djxzqh || TextUtils.isEmpty(data!!.data.fjdcBusiness.djxzqh)) null else data!!.data.fjdcBusiness.djxzqh.substring(0, 2) + "0000")
+        SpinnerUtil.setPinnerDataQh(this, Constants.MY_QH_SHENG_DMLB, sp_yj_qh1, if (null == data!!.data.fjdcBusiness.sjryjxzqh || TextUtils.isEmpty(data!!.data.fjdcBusiness.sjryjxzqh)) null else data!!.data.fjdcBusiness.sjryjxzqh.substring(0, 2) + "0000")
+        SpinnerUtil.setPinnerDataQh(this, Constants.MY_QH_SHENG_DMLB, sp_syr_yj_qh1, if (null == data!!.data.fjdcBusiness.lxdzxzqh || TextUtils.isEmpty(data!!.data.fjdcBusiness.lxdzxzqh)) null else data!!.data.fjdcBusiness.lxdzxzqh.substring(0, 2) + "0000")
 
         //转入地
-        SpinnerUtil.setPinnerDataQh(this, Constants.MY_QH_SHENG_DMLB, sp_zrd1,if(null == data!!.data.fjdcBusiness.zrd || TextUtils.isEmpty( data!!.data.fjdcBusiness.zrd)) null else data!!.data.fjdcBusiness.zrd.substring(0, 2) + "0000")
+        SpinnerUtil.setPinnerDataQh(this, Constants.MY_QH_SHENG_DMLB, sp_zrd1, if (null == data!!.data.fjdcBusiness.zrd || TextUtils.isEmpty(data!!.data.fjdcBusiness.zrd)) null else data!!.data.fjdcBusiness.zrd.substring(0, 2) + "0000")
 
         SpinnerUtil.setPinnerData(this, Constants.SFZMMC, sp_syr_sfz)
         SpinnerUtil.setPinnerData(this, Constants.SFZMMC, sp_dlr_sfz)
@@ -255,17 +233,18 @@ class YwChangeActivity : BaseActivity(), NormalView {
 
 
     private fun initShowScrean() {
-        if ("B".equals(data!!.data.checkData.ywyy)) {
-            ViewShowUtils.showGoneView(ll_zrd)
-            ViewShowUtils.showVisibleView(ll_yjxx, ll_xhphm)
+        if (Constants.BG_DB == data!!.data.checkData.ywyy) {
+            ViewShowUtils.showGoneView(ll_zrd, ll_yhphm, ll_hphs,ll_hphm)
+            ViewShowUtils.showVisibleView(ll_yjxx)
             tv_ywyy.text = "变更所有人"
             if ("0".equals(data!!.data.fjdcBusiness.sfkyghhp)) {
                 ViewShowUtils.showGoneView(btn_hqhphm)
             }
-        } else if ("A".equals(data!!.data.checkData.ywyy)) {
-            ViewShowUtils.showVisibleView(ll_zrd)
-            ViewShowUtils.showGoneView(ll_yjxx, ll_xhphm)
+        } else if (Constants.BG_DA == data!!.data.checkData.ywyy) {
+            ViewShowUtils.showVisibleView(ll_zrd, ll_yhphm, ll_hphs)
+            ViewShowUtils.showGoneView(ll_yjxx,ll_hphm)
             tv_ywyy.text = "变更迁出"
+            rb_yes.isChecked = true
         }
         if ("0".equals(UserInfo.GlobalParameter.LQBJ)) {
             ll_yjxx.visibility = View.GONE
@@ -303,28 +282,28 @@ class YwChangeActivity : BaseActivity(), NormalView {
         val enity = data!!.data.fjdcBusiness
         when (obj) {
             sp_syr_qh2 -> {
-                if (enity.djxzqh == null  || changed1) {
+                if (enity.djxzqh == null || changed1) {
                     return
                 }
                 changed1 = true
                 OtherUtils.setSpinner2Dmsm(CodeTableSQLiteUtils.queryByDmlbAndDmzGetDmsm(Constants.XSQY, enity.djxzqh), sp_syr_qh2)
             }
             sp_syr_yj_qh2 -> {
-                if (enity.lxdzxzqh == null  || changed2) {
+                if (enity.lxdzxzqh == null || changed2) {
                     return
                 }
                 changed2 = true
                 OtherUtils.setSpinner2Dmsm(CodeTableSQLiteUtils.queryByDmlbAndDmzGetDmsm(Constants.XSQY, enity.lxdzxzqh), sp_syr_yj_qh2)
             }
             sp_yj_qh2 -> {
-                if (enity.sjryjxzqh == null  || changed3) {
+                if (enity.sjryjxzqh == null || changed3) {
                     return
                 }
                 changed3 = true
                 OtherUtils.setSpinner2Dmsm(CodeTableSQLiteUtils.queryByDmlbAndDmzGetDmsm(Constants.XSQY, enity.sjryjxzqh), sp_yj_qh2)
             }
             sp_zrd2 -> {
-                if (enity.zrd == null  || changed4) {
+                if (enity.zrd == null || changed4) {
                     return
                 }
                 changed4 = true
@@ -403,12 +382,12 @@ class YwChangeActivity : BaseActivity(), NormalView {
                 showToast("网络同步信息失败，请先设置界面同步代码")
                 return
             }
-            if ("B".equals(data!!.data.checkData.ywyy)) {
-                if (!CheckEditTxetUtils.checkEditextValuable(et_cphm)) {
-                    showToast("请获取号牌号码")
-                    return
-                }
-            }
+//            if (Constants.BG_DB.equals(data!!.data.checkData.ywyy)) {
+//                if (!CheckEditTxetUtils.checkEditextValuable(et_cphm)) {
+//                    showToast("请获取号牌号码")
+//                    return
+//                }
+//            }
             if (!CheckEditTxetUtils.checkEditextValuable(ed_syr_sfz, ed_syr_xm, et_syr_lxdh, et_syr_xxdz, et_syr_yj_xxdz, et_syr_yj_yzbm)) {
                 showToast("请填写完成所有人信息")
                 return
@@ -425,7 +404,7 @@ class YwChangeActivity : BaseActivity(), NormalView {
                 showToast("请正确填写手机信息")
                 return
             }
-            if(!CheckUtil.isYzbmCorrect(et_syr_yj_yzbm.text.toString())){
+            if (!CheckUtil.isYzbmCorrect(et_syr_yj_yzbm.text.toString())) {
                 showToast("请正确填写邮政编码")
                 return
             }
@@ -447,11 +426,11 @@ class YwChangeActivity : BaseActivity(), NormalView {
             enity.czpt = Constants.CZPT //查验平台
             enity.sqfs = "0"//申请方式  0所有人 1 代理人
 
-            if ("B".equals(data!!.data.checkData.ywyy)) {
-                //变更所有人
-                val cph = et_cphm.text.toString().toUpperCase()
-                enity.cph = cph
-            } else if ("A".equals(data!!.data.checkData.ywyy)) {
+            if (Constants.BG_DB.equals(data!!.data.checkData.ywyy)) {
+                //变更所有人  用以前的hphm
+//                val cph = et_cphm.text.toString().toUpperCase()
+//                enity.cph = cph
+            } else if (Constants.BG_DA.equals(data!!.data.checkData.ywyy)) {
                 //变更迁出
                 enity.zrd = CodeTableSQLiteUtils.queryByDmlbAndDmsm(Constants.XSQY, sp_zrd2.selectedItem.toString())
                 enity.zt = "3" //zt   状态（1正常,2注销,3转出
@@ -470,6 +449,13 @@ class YwChangeActivity : BaseActivity(), NormalView {
             enity.lxxxdz = et_syr_yj_xxdz.text.toString()
             enity.yzbm = et_syr_yj_yzbm.text.toString()
             enity.dzyx = et_syr_yxdz.text.toString()
+            if (Constants.BG_DA == data!!.data.checkData.ywyy) {
+                if (rb_yes.isChecked) {
+                    enity.hphs = "1"
+                } else {
+                    enity.hphs = "0"
+                }
+            }
             //3
             if (ObjectNullUtil.checknull(ed_dlr_sfz.text.toString(), ed_dlr_xm.text.toString(), et_dlr_lxdh.text.toString())) {
                 if ("A" == sp_dlr_sfz.selectedItem.toString().split(":")[0] && !SFZCheckUtil.isCorrect(ed_dlr_sfz.text.toString())) {

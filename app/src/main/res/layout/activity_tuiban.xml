@@ -49,6 +49,7 @@
                 android:layout_weight="1"
                 android:background="@color/white"
                 android:paddingLeft="10dp"
+                android:text="新"
                 android:hint="查询车辆号牌或整车编码"
                 />
 

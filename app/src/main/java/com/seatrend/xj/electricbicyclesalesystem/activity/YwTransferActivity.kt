@@ -22,46 +22,7 @@ import com.seatrend.xj.electricbicyclesalesystem.util.*
 import com.seatrend.xj.electricbicyclesalesystem.view.NormalView
 import kotlinx.android.synthetic.main.activity_change.ll_zrd
 import kotlinx.android.synthetic.main.activity_change.tv_ywyy
-import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.activity_transfer.*
-import kotlinx.android.synthetic.main.activity_transfer.btn_hqhphm
-import kotlinx.android.synthetic.main.activity_transfer.ed_dlr_sfz
-import kotlinx.android.synthetic.main.activity_transfer.ed_dlr_xm
-import kotlinx.android.synthetic.main.activity_transfer.ed_syr_sfz
-import kotlinx.android.synthetic.main.activity_transfer.ed_syr_xm
-import kotlinx.android.synthetic.main.activity_transfer.ed_yj_sfz
-import kotlinx.android.synthetic.main.activity_transfer.ed_yj_xm
-import kotlinx.android.synthetic.main.activity_transfer.et_cphm
-import kotlinx.android.synthetic.main.activity_transfer.et_dlr_lxdh
-import kotlinx.android.synthetic.main.activity_transfer.et_syr_lxdh
-import kotlinx.android.synthetic.main.activity_transfer.et_syr_xxdz
-import kotlinx.android.synthetic.main.activity_transfer.et_syr_yj_xxdz
-import kotlinx.android.synthetic.main.activity_transfer.et_syr_yj_yzbm
-import kotlinx.android.synthetic.main.activity_transfer.et_syr_yxdz
-import kotlinx.android.synthetic.main.activity_transfer.et_yj_lxdh
-import kotlinx.android.synthetic.main.activity_transfer.et_yj_xxdz
-import kotlinx.android.synthetic.main.activity_transfer.et_yj_yzbm
-import kotlinx.android.synthetic.main.activity_transfer.iv_dlr_scan
-import kotlinx.android.synthetic.main.activity_transfer.iv_syr_scan
-import kotlinx.android.synthetic.main.activity_transfer.iv_yj_scan
-import kotlinx.android.synthetic.main.activity_transfer.ll_lqfs
-import kotlinx.android.synthetic.main.activity_transfer.ll_yjlq
-import kotlinx.android.synthetic.main.activity_transfer.ll_yjxx
-import kotlinx.android.synthetic.main.activity_transfer.rb_lqfs_no
-import kotlinx.android.synthetic.main.activity_transfer.rb_lqfs_ok
-import kotlinx.android.synthetic.main.activity_transfer.rb_zzxsz_no
-import kotlinx.android.synthetic.main.activity_transfer.rb_zzxsz_ok
-import kotlinx.android.synthetic.main.activity_transfer.sp_dlr_sfz
-import kotlinx.android.synthetic.main.activity_transfer.sp_syr_qh1
-import kotlinx.android.synthetic.main.activity_transfer.sp_syr_qh2
-import kotlinx.android.synthetic.main.activity_transfer.sp_syr_sfz
-import kotlinx.android.synthetic.main.activity_transfer.sp_syr_yj_qh1
-import kotlinx.android.synthetic.main.activity_transfer.sp_syr_yj_qh2
-import kotlinx.android.synthetic.main.activity_transfer.sp_syxz
-import kotlinx.android.synthetic.main.activity_transfer.sp_syyt
-import kotlinx.android.synthetic.main.activity_transfer.sp_yj_qh1
-import kotlinx.android.synthetic.main.activity_transfer.sp_yj_qh2
-import kotlinx.android.synthetic.main.activity_transfer.sp_yj_sfz
 import kotlinx.android.synthetic.main.bottom_button.*
 
 class YwTransferActivity : BaseActivity(), NormalView {
@@ -87,7 +48,7 @@ class YwTransferActivity : BaseActivity(), NormalView {
             intent.putExtra("syr", ed_syr_xm.text.toString())
             intent.putExtra("sfz", ed_syr_sfz.text.toString())
             intent.putExtra("hphm", data!!.data.checkData.cph)
-            intent.setClass(this, AutographActivity::class.java)
+            intent.setClass(this, CollectPhotoActivity::class.java)
             startActivity(intent)
             CollectPhotoActivity.ywlx = data!!.data.checkData.ywlx
             CollectPhotoActivity.photoEntranceFlag = Constants.CAR_ZY
@@ -103,6 +64,7 @@ class YwTransferActivity : BaseActivity(), NormalView {
             }
             runOnUiThread {
                 et_cphm.text = enity.data
+                btn_hqhphm.visibility = View.GONE
             }
         }
     }
@@ -141,7 +103,8 @@ class YwTransferActivity : BaseActivity(), NormalView {
 
         bt_next.setOnClickListener {
             //进行人脸识别
-            getFaceCamera(Constants.FACE)
+            //getFaceCamera(Constants.FACE)
+            postHttpRequest()
         }
 
         et_cphm.transformationMethod = CarHphmUtils.TransInformation()
@@ -255,7 +218,7 @@ class YwTransferActivity : BaseActivity(), NormalView {
     }
 
     private fun initData() {
-        bt_next.text = "人证核验"
+        bt_next.text = "下一步"
         try {
             initShowScrean()
             initSpData()
@@ -295,6 +258,7 @@ class YwTransferActivity : BaseActivity(), NormalView {
             ed_yj_xm.setText(enity.sjrxm)
             et_yj_lxdh.setText(enity.sjrlxdh)
             et_yj_yzbm.setText(enity.yzbm)
+            tv_yhphm.setText(enity.cph)
         } catch (e: Exception) {
             showToast(e.message.toString())
         }
@@ -319,20 +283,25 @@ class YwTransferActivity : BaseActivity(), NormalView {
     }
 
     private fun initShowScrean() {
-        if ("A".equals(data!!.data.checkData.ywyy)) {
+        if (Constants.ZY_BA.equals(data!!.data.checkData.ywyy)) {
             tv_ywyy.text = "辖区内转移不换号"
             ll_zrd.visibility = View.GONE
             ll_xhphm.visibility = View.GONE
-        } else if ("B".equals(data!!.data.checkData.ywyy)) {
+            ViewShowUtils.showGoneView(ll_hphs,ll_yhphm)
+        } else if (Constants.ZY_BB.equals(data!!.data.checkData.ywyy)) {
             tv_ywyy.text = "辖区内转移换号"
             ll_zrd.visibility = View.GONE
             ll_xhphm.visibility = View.VISIBLE
+            rb_yes.isChecked = true
+            ViewShowUtils.showVisibleView(ll_hphs,ll_yhphm)
             if ("0".equals(data!!.data.fjdcBusiness.sfkyghhp)) {
                 ViewShowUtils.showGoneView(btn_hqhphm)
             }
         } else {
             tv_ywyy.text = "辖区外转移"
             ll_zrd.visibility = View.VISIBLE
+            rb_yes.isChecked = true
+            ViewShowUtils.showVisibleView(ll_hphs,ll_yhphm)
             ViewShowUtils.showGoneView(ll_xhphm, ll_yjxx)
         }
 
@@ -438,7 +407,7 @@ class YwTransferActivity : BaseActivity(), NormalView {
 
             val enity = data!!.data.fjdcBusiness
 
-            val cph = data!!.data.fjdcBusiness.cph
+            val cph = et_cphm.text.toString() //新号牌
             val ywyy = data!!.data.checkData.ywyy
             val lsh = data!!.data.checkData.lsh
             val xh = data!!.data.checkData.xh
@@ -467,9 +436,19 @@ class YwTransferActivity : BaseActivity(), NormalView {
                     return
                 }
                 enity.cph = et_cphm.text.toString().toUpperCase()
+                if (rb_yes.isChecked) {
+                    enity.hphs = "1"
+                } else {
+                    enity.hphs = "0"
+                }
             } else if ("C" == ywyy) {
                 enity.zrd = CodeTableSQLiteUtils.queryByDmlbAndDmsm(Constants.XSQY, sp_zrd2.selectedItem.toString())
                 enity.zt = "3" //zt   状态（1正常,2注销,3转出
+                if (rb_yes.isChecked) {
+                    enity.hphs = "1"
+                } else {
+                    enity.hphs = "0"
+                }
             }
 
             //2

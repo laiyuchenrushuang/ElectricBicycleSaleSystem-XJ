@@ -105,7 +105,7 @@ class YwTbEditActivity : BaseActivity(), SelectorAdapter.CheckState, NormalView 
         bt_next.setOnClickListener {
 
 
-            if (mList!!.size < 1) {
+            if (yyList.size >= 1 && mList!!.size < 1) {
                 showToast("请选择一个原因")
                 return@setOnClickListener
             }

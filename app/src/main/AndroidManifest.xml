@@ -29,6 +29,11 @@
         android:largeHeap="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+
+        <meta-data
+            android:name="com.seatrend.xj.electricbicyclesalesystem.manager.MyGlideModule"
+            android:value="GlideModule" />
+
         <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.MainOtherActivity"/>
         <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.LoginLoadingActivity">
             <intent-filter>
@@ -52,8 +57,10 @@
         <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.ShowPhotoActivity"/>
         <activity android:name=".zxing.activity.CaptureActivity"/>
         <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.LoginActivity"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.CYProjectJudgeActivity"/>
         <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.LoginByUserPasswordActivity"/>
         <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.HelpActivity"/>
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.PDFActivity"/>
         <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.ArchiveFileActivity"/>
         <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.YWEntranceActivity"/>
         <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.ChaYanEntranceActivity"/>

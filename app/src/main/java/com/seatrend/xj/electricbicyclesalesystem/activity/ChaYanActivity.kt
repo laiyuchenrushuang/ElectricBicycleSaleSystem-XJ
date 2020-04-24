@@ -35,8 +35,13 @@ class ChaYanActivity : BaseActivity(), NormalView {
     override fun netWorkTaskSuccess(commonResponse: CommonResponse) {
         LoadingDialog.getInstance().dismissLoadDialog()
         if (Constants.SAVE_CY_MSG.equals(commonResponse.getUrl())) {
+            val flag = rb_jtxs_ok.isChecked && et_zczl.text.toString().toFloat() <= 55.0 && et_zgss.text.toString().toFloat() <= 25.0
             CollectPhotoActivity.photoEntranceFlag = CAR_CY
-            CollectPhotoActivity.jtxsFlag = rb_jtxs_ok.isChecked && et_zczl.text.toString().toFloat() <= 55.0 && et_zgss.text.toString().toFloat() <= 25.0
+            CollectPhotoActivity.jtxsFlag = flag
+
+//            intent.putExtra("photoentranceflag", CAR_CY)
+//            intent.putExtra("jtxsflag", flag)
+
             intent.setClass(this, CollectPhotoActivity::class.java)
             startActivity(intent)
         }
@@ -48,6 +53,7 @@ class ChaYanActivity : BaseActivity(), NormalView {
             }
             runOnUiThread {
                 et_cphm.text = enity.data
+                btn_hqhphm.visibility = View.GONE
             }
         }
     }

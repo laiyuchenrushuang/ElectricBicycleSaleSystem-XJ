@@ -27,7 +27,7 @@ class YwfhEditActivity : BaseActivity(), SelectorAdapter.CheckState, NormalView 
     var yyList = ArrayList<String>() //业务原因list
     private var ll: RecyclerView.LayoutManager? = null
     var adapter: SelectorAdapter? = null
-    private var data : AllBikeMsgEnity?=null
+    private var data: AllBikeMsgEnity? = null
 
     override fun netWorkTaskSuccess(commonResponse: CommonResponse) {
         dismissLoadingDialog()
@@ -54,7 +54,7 @@ class YwfhEditActivity : BaseActivity(), SelectorAdapter.CheckState, NormalView 
 
         if (Constants.FH_COMMIT.equals(commonResponse.getUrl())) {
 
-            if ("1" == UserInfo.GlobalParameter.SFBJ && !rb_fh_no.isChecked  ) {//不通过不收费
+            if ("1" == UserInfo.GlobalParameter.SFBJ && !rb_fh_no.isChecked) {//不通过不收费
                 val intent = Intent(this, PayActivity::class.java)
                 data!!.data.fjdcBusiness
 
@@ -122,7 +122,7 @@ class YwfhEditActivity : BaseActivity(), SelectorAdapter.CheckState, NormalView 
                 map["fhbz"] = et_fhbz.text.toString()
                 mNormalPresenter!!.doNetworkTask(map, Constants.FH_COMMIT)
             } else {
-                if (mList!!.size < 1) {
+                if (yyList.size >= 1 && mList!!.size < 1) {
                     showToast("请选择一个原因")
                     return@setOnClickListener
                 }
@@ -134,7 +134,6 @@ class YwfhEditActivity : BaseActivity(), SelectorAdapter.CheckState, NormalView 
 
                 showLoadingDialog()
                 Yw3CzActivity.fhzt = "2"
-
 
 
                 val map = HashMap<String, String?>()

@@ -51,7 +51,7 @@ class YwCancelActivity : BaseActivity(), NormalView {
         intent.putExtra("syr", data!!.data.fjdcBusiness.syrmc)
         intent.putExtra("sfz", data!!.data.fjdcBusiness.sfzmhm)
         intent.putExtra("hphm", data!!.data.fjdcBusiness.cph)
-        intent.setClass(this, AutographActivity::class.java)
+        intent.setClass(this, CollectPhotoActivity::class.java)
         startActivity(intent)
         CollectPhotoActivity.photoEntranceFlag = Constants.CAR_ZX
         CollectPhotoActivity.ywlx = data!!.data.fjdcBusiness.ywlx
@@ -84,10 +84,12 @@ class YwCancelActivity : BaseActivity(), NormalView {
             return
         }
         try {
+            rb_yes.isChecked = true
             OtherUtils.setSpinnerToDmz(enity.dlrsfzmlx,sp_dlr_sfz)
             ed_dlr_sfz.setText(enity.dlrsfzmhm)
             ed_dlr_xm.setText(enity.dlrxm)
             et_dlr_lxdh.setText(enity.dlrlxdh)
+            tv_yhphm.setText(enity.cph)
         } catch (e: Exception) {
             showToast(e.message.toString())
         }
@@ -117,7 +119,8 @@ class YwCancelActivity : BaseActivity(), NormalView {
         bt_next.setOnClickListener {
 
             //进行人脸识别
-            getFaceCamera(Constants.FACE)
+            //getFaceCamera(Constants.FACE)
+            postHttpRequest()
         }
 
         //限制名称只能输入中文和字母和数字
@@ -184,7 +187,11 @@ class YwCancelActivity : BaseActivity(), NormalView {
             enity.czpt = Constants.CZPT //查验平台
             enity.zt = Constants.CZPT //zt   状态（1正常,2注销,3转出
             enity.sqfs = "0"//申请方式  0所有人 1 代理人
-
+            if (rb_yes.isChecked) {
+                enity.hphs = "1"
+            } else {
+                enity.hphs = "0"
+            }
             if (ObjectNullUtil.checknull(ed_dlr_sfz.text.toString(), ed_dlr_xm.text.toString(), et_dlr_lxdh.text.toString())) {
                 if("A" == sp_dlr_sfz.selectedItem.toString().split(":")[0] && !SFZCheckUtil.isCorrect(ed_dlr_sfz.text.toString())){
                     showToast("请正确填写代理人身份证信息")

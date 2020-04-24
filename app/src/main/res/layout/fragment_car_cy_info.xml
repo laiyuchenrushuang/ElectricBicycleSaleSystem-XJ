@@ -170,31 +170,31 @@
 
                 <include layout="@layout/my_view3" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="42dp"
-                    android:gravity="center_vertical">
+                <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="42dp"-->
+                    <!--android:gravity="center_vertical">-->
 
-                    <TextView
-                        style="@style/carcy_info_jscs_left"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="脚踏行驶:" />
+                    <!--<TextView-->
+                        <!--style="@style/carcy_info_jscs_left"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="脚踏行驶:" />-->
 
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
+                    <!--<View-->
+                        <!--android:layout_width="0dp"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_weight="1" />-->
 
-                    <TextView
-                        android:id="@+id/tv_jtxs"
-                        style="@style/carcy_info_jscs_right"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="/" />
-                </LinearLayout>
+                    <!--<TextView-->
+                        <!--android:id="@+id/tv_jtxs"-->
+                        <!--style="@style/carcy_info_jscs_right"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="/" />-->
+                <!--</LinearLayout>-->
 
-                <include layout="@layout/my_view3" />
+                <!--<include layout="@layout/my_view3" />-->
 
                 <LinearLayout
                     android:id="@+id/ll_dpxs_all"

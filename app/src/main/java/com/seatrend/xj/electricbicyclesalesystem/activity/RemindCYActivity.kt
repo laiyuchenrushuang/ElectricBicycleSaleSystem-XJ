@@ -44,6 +44,13 @@ class RemindCYActivity: BaseActivity() {
 //            PhotoFileUtils.deleteCaptruePhotoFile()
             finish()
         }
+
+//        bt_pdf.visibility=View.GONE
+        bt_pdf.setOnClickListener {
+            intent.putExtra("pdf_lx","0") //查验
+            intent.setClass(this,PDFActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun getLayout(): Int {

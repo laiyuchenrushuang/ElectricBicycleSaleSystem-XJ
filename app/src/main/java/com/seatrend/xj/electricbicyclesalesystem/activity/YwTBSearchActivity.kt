@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.activity_tuiban.*
 
 class YwTBSearchActivity : BaseActivity(), NormalView {
 
-    private var mTbEnity: TBEnity?=null
+    private var mTbEnity: TBEnity? = null
     var lczt: String? = null  // 流程状态 1为已查验
 
     override fun netWorkTaskSuccess(commonResponse: CommonResponse) {
@@ -34,15 +34,15 @@ class YwTBSearchActivity : BaseActivity(), NormalView {
         if (Constants.YW_GET_YWCZ_BIKE_DATA.equals(commonResponse.getUrl())) {
             val mAllBikeMsgEnity = GsonUtils.gson(commonResponse.getResponseString(), AllBikeMsgEnity::class.java)
             if (!"1".equals(lczt)) {
-                intent.putExtra("all_data",mAllBikeMsgEnity)
+                intent.putExtra("all_data", mAllBikeMsgEnity)
                 intent.setClass(this, Yw3CzActivity::class.java)
                 intent.putExtra(Constants.UI_TYPE, "2")
                 startActivity(intent)
             }
             if ("1".equals(lczt)) { //查验需要退办的
                 intent.setClass(this, CarInfoByCyActivity::class.java)
-                intent.putExtra("ywlx",mAllBikeMsgEnity.data.fjdcBusiness.ywlx)
-                intent.putExtra("all_data",mAllBikeMsgEnity)
+                intent.putExtra("ywlx", mAllBikeMsgEnity.data.fjdcBusiness.ywlx)
+                intent.putExtra("all_data", mAllBikeMsgEnity)
                 CarInfoByCyActivity.entranceFlag = Constants.YWTB
                 startActivity(intent)
             }
@@ -142,6 +142,10 @@ class YwTBSearchActivity : BaseActivity(), NormalView {
                 showLoadingDialog()
                 mNormalPresenter!!.doNetworkTask(map, Constants.TB_GET_LIST)
             } else {
+                if (TextUtils.isEmpty(searchString.trim()) || !CphmUtils.checkXjValueCphm(searchString.trim().toUpperCase())) {
+                    showToast("请正确输入车牌号")
+                    return@setOnClickListener
+                }
                 val map = HashMap<String, String?>()
                 map["hphm"] = searchString.trim().toUpperCase()
                 map["curPage"] = "1"
@@ -159,6 +163,11 @@ class YwTBSearchActivity : BaseActivity(), NormalView {
         ll_back.setOnClickListener {
             finish()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        ll_item.visibility = View.GONE
     }
 
     override fun getLayout(): Int {

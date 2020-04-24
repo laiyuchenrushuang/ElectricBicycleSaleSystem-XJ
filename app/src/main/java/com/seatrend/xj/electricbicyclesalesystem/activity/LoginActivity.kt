@@ -96,6 +96,7 @@ class LoginActivity : BaseActivity(), LoginView {
         }
         btn_setting.setOnClickListener {
             startActivity(Intent(this, SettingActivity::class.java))
+//            startActivity(Intent(this, PDFActivity::class.java))
         }
 
 //        tvRight!!.setText("帮助")
@@ -126,32 +127,6 @@ class LoginActivity : BaseActivity(), LoginView {
         return R.layout.activity_login
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
-    private fun appRequestPermissions() {
-
-        val permission = ArrayList<String>()
-        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) !== PackageManager.PERMISSION_GRANTED) {
-            permission.add(Manifest.permission.READ_EXTERNAL_STORAGE)
-        }
-        if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            permission.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        }
-        if (checkSelfPermission(Manifest.permission.CAMERA) !== PackageManager.PERMISSION_GRANTED) {
-            permission.add(Manifest.permission.CAMERA)
-        }
-
-        if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE) !== PackageManager.PERMISSION_GRANTED) {
-            permission.add(Manifest.permission.READ_PHONE_STATE)
-        }
-        if (checkSelfPermission(Manifest.permission.NFC) !== PackageManager.PERMISSION_GRANTED) {
-            permission.add(Manifest.permission.NFC)
-        }
-
-        if (permission.size > 0) {
-            ActivityCompat.requestPermissions(this@LoginActivity, permission.toTypedArray(), 1)
-        }
-    }
-
     private fun doLogin(sfzhm: String) {
         showLoadingDialog()
         val map = HashMap<String, String?>()
@@ -175,6 +150,8 @@ class LoginActivity : BaseActivity(), LoginView {
             }else{
                 showToast("nfc身份证照片读取失败")
             }
+
+
         } else if (requestCode == FACE_COMPARE_CODE && resultCode == Activity.RESULT_OK) {
 //            doLogin(sfzhm)
         }

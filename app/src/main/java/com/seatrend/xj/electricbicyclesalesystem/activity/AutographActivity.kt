@@ -4,6 +4,8 @@ import android.text.TextUtils
 import com.seatrend.xj.electricbicyclesalesystem.R
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants
+import com.seatrend.xj.electricbicyclesalesystem.common.Constants.Companion.CAR_CY
+import com.seatrend.xj.electricbicyclesalesystem.entity.CYEntranceEnity
 import com.seatrend.xj.electricbicyclesalesystem.entity.CommonResponse
 import com.seatrend.xj.electricbicyclesalesystem.entity.PhotoIdEnity
 import com.seatrend.xj.electricbicyclesalesystem.http.thread.ThreadPoolManager
@@ -30,15 +32,27 @@ class AutographActivity : BaseActivity(), CarPhotoView {
             }
             photoId = enity.data.id
             if (!TextUtils.isEmpty(photoId)) {
-                val lsh = CollectPhotoActivity.mLsh
-                val xh = CollectPhotoActivity.mXh
-                val mapP = HashMap<String, String?>()
-                mapP["lsh"] = lsh
-                mapP["xh"] = xh
-                mapP["zpzl"] = enity.data.type
-                mapP["zpdz"] = enity.data.id
-                mapP["zpsm"] = "签名照片"
-                mCarPhotoPersenter!!.doNetworkTask(mapP, Constants.PHOTO_MSG_SAVE)
+                if(CAR_CY != intent.getStringExtra("photoentranceflag")){
+                    val lsh = CollectPhotoActivity.mLsh
+                    val xh = CollectPhotoActivity.mXh
+                    val mapP = HashMap<String, String?>()
+                    mapP["lsh"] = lsh
+                    mapP["xh"] = xh
+                    mapP["zpzl"] = enity.data.type
+                    mapP["zpdz"] = enity.data.id
+                    mapP["zpsm"] = "签名照片"
+                    mCarPhotoPersenter!!.doNetworkTask(mapP, Constants.PHOTO_MSG_SAVE)
+                }else{
+                    val lsh = (intent.getSerializableExtra("all_data") as CYEntranceEnity).data.lsh  //查验流水号
+                    val xh = (intent.getSerializableExtra("all_data") as CYEntranceEnity).data.xh//查验序号
+                    val mapP = HashMap<String, String?>()
+                    mapP["lsh"] = lsh
+                    mapP["xh"] = xh
+                    mapP["zpzl"] = enity.data.type
+                    mapP["zpdz"] = enity.data.id
+                    mapP["zpsm"] = "查验签名照片"
+                    mCarPhotoPersenter!!.doNetworkTask(mapP, Constants.PHOTO_MSG_SAVE)
+                }
             }
         }
 
@@ -47,11 +61,16 @@ class AutographActivity : BaseActivity(), CarPhotoView {
             if (!TextUtils.isEmpty(filePath)) {
                 PhotoFileUtils.deleteFile(filePath)
             }
-            intent.setClass(this, CollectPhotoActivity::class.java)
-            startActivity(intent)
+            if (CAR_CY == intent.getStringExtra("photoentranceflag")) {  //查验签名过来的拍照 （脚踏行驶  查验类型）
+                intent.setClass(this, RemindCYActivity::class.java)
+                startActivity(intent)
+            }else{  //其他业务登记
+                intent.putExtra("lsh",CollectPhotoActivity.mLsh)
+                intent.setClass(this, RemindHPBFActivity::class.java)
+                startActivity(intent)
+            }
 
         }
-
     }
 
     override fun netWorkTaskfailed(commonResponse: CommonResponse) {
@@ -92,8 +111,14 @@ class AutographActivity : BaseActivity(), CarPhotoView {
         ThreadPoolManager.instance.execute(Runnable {
             filePath = BitmapUtils.saveBitmap(auto_view.getAutographBitmap(), "qmzp" + System.currentTimeMillis())
             val map = HashMap<String, String>()
-            map["type"] = "Q"//自定义的签名照
-            mCarPhotoPersenter!!.uploadFile(File(filePath), map, Constants.PHOTO_INSERT)
+            if (CAR_CY == intent.getStringExtra("photoentranceflag")) {
+                map["type"] = "CQ"//查验签名照
+                mCarPhotoPersenter!!.uploadFile(File(filePath), map, Constants.PHOTO_INSERT)
+            }else{ //登记业务
+                map["type"] = "Q"//自定义的签名照
+                mCarPhotoPersenter!!.uploadFile(File(filePath), map, Constants.PHOTO_INSERT)
+            }
+
         })
     }
 }

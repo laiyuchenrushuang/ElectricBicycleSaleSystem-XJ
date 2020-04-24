@@ -372,7 +372,12 @@ public class ClipperView extends View {
                 }
             }
         } else {
-            if (bottom != mViewH - defaultDis - mHWDis) {
+//            showLog("bottom = "+bottom);
+//            showLog("mViewH = "+mViewH);
+//            showLog("defaultDis = "+defaultDis);
+//            showLog("mHWDis = "+mHWDis);
+//            showLog("top = "+top);
+            if ((int)bottom != (int)(mViewH - defaultDis - mHWDis)) {
                 if (top > defaultDis + mHWDis) {
                     top = (int) (y - dt);
                     if (top < defaultDis + mHWDis) {

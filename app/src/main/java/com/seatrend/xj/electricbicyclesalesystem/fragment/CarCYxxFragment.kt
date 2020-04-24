@@ -114,7 +114,7 @@ class CarCYxxFragment : BaseFragment() {
                 tv_zczl.text = enity!!.data.checkData.sczbzl
                 tv_zgss.text = enity!!.data.checkData.sczgcs
                 tv_zxj.text = enity!!.data.checkData.scqhlzxj  //中心距
-                tv_jtxs.text = if ("1".equals(enity!!.data.checkData.jtgn)) "有" else "否"
+//                tv_jtxs.text = if ("1".equals(enity!!.data.checkData.jtgn)) "有" else "否"
                 tv_dpxs.text = if ("1".equals(enity!!.data.checkData.shdp)) "是" else "否"
                 tv_cphm.text = if (ObjectNullUtil.checknull(enity!!.data.checkData.cph)) enity!!.data.checkData.cph else "/"
             } else {
@@ -163,7 +163,7 @@ class CarCYxxFragment : BaseFragment() {
                 tv_zczl.text = cydata!!.data.checkData.sczbzl
                 tv_zgss.text = cydata!!.data.checkData.sczgcs
                 tv_zxj.text = cydata!!.data.checkData.scqhlzxj  //中心距
-                tv_jtxs.text = if ("1".equals(cydata!!.data.checkData.jtgn)) "有" else "否"
+//                tv_jtxs.text = if ("1".equals(cydata!!.data.checkData.jtgn)) "有" else "否"
                 tv_dpxs.text = if ("1".equals(cydata!!.data.checkData.shdp)) "是" else "否"
                 tv_cphm.text = if (ObjectNullUtil.checknull(cydata!!.data.checkData.cph)) cydata!!.data.checkData.cph else "/"
             } else {

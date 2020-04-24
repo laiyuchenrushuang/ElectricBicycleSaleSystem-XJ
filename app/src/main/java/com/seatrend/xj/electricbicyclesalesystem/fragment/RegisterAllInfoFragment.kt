@@ -88,13 +88,13 @@ class RegisterAllInfoFragment : BaseFragment(), View.OnTouchListener {
                     //变更
                     "D" -> {
                         ll_bg_ywxx.visibility = View.VISIBLE
-                        if ("A".equals(enity!!.data.fjdcBusiness.ywyy)) {
+                        if (Constants.BG_DA.equals(enity!!.data.fjdcBusiness.ywyy)) {
                             ll_bg_cphm.visibility = View.GONE
                             ll_bg_zrd.visibility = View.VISIBLE
                             tv_bg_zrd.text = DMZUtils.getDMSM(Constants.XSQY, enity!!.data.fjdcBusiness.zrd)
                             tv_bg_ywyy.text = "变更迁出"
                             ViewShowUtils.showGoneView(ll_jdxx1, ll_jdxx2)
-                        } else if ("B".equals(enity!!.data.fjdcBusiness.ywyy)) {
+                        } else if (Constants.BG_DB.equals(enity!!.data.fjdcBusiness.ywyy)) {
                             ll_bg_zrd.visibility = View.GONE
                             ll_bg_cphm.visibility = View.VISIBLE
                             tv_bg_ywyy.text = "变更所有人"
@@ -113,11 +113,11 @@ class RegisterAllInfoFragment : BaseFragment(), View.OnTouchListener {
                         tv_zy_clyt.text = DMZUtils.getDMSM(Constants.CLYT, enity!!.data.fjdcBusiness.clyt)
                         tv_zy_syxz.text = DMZUtils.getDMSM(Constants.SYXZ, enity!!.data.fjdcBusiness.syxz)
 
-                        if ("A".equals(enity!!.data.fjdcBusiness.ywyy)) {
+                        if (Constants.ZY_BA.equals(enity!!.data.fjdcBusiness.ywyy)) {
                             tv_zy_ywyy.text = "辖区内转移不换号"
                             ViewShowUtils.showGoneView(ll_zy_cphm, ll_zy_zrd)
                             initYjXX()
-                        } else if ("B".equals(enity!!.data.fjdcBusiness.ywyy)) {
+                        } else if (Constants.ZY_BB.equals(enity!!.data.fjdcBusiness.ywyy)) {
                             tv_zy_ywyy.text = "辖区内转移换号"
                             ll_zy_cphm.visibility = View.VISIBLE
                             tv_zy_cph.text = enity!!.data.fjdcBusiness.cph

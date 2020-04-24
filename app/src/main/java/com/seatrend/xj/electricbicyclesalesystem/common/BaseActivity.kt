@@ -1,10 +1,12 @@
 package com.seatrend.xj.electricbicyclesalesystem.common
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.ComponentName
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Matrix
 import android.net.Uri
@@ -14,6 +16,7 @@ import android.os.Environment
 import android.os.SystemClock
 import android.provider.MediaStore
 import android.support.annotation.RequiresApi
+import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v4.content.FileProvider
@@ -30,8 +33,7 @@ import com.joyusing.ocr.OCR
 import com.joyusing.ocr.OcrResult
 import com.seatrend.xj.electricbicyclesalesystem.R
 import com.seatrend.xj.electricbicyclesalesystem.activity.LoginActivity
-import com.seatrend.xj.electricbicyclesalesystem.activity.LoginLoadingActivity
-import com.seatrend.xj.electricbicyclesalesystem.activity.MainOtherActivity
+import com.seatrend.xj.electricbicyclesalesystem.activity.LoginByUserPasswordActivity
 import com.seatrend.xj.electricbicyclesalesystem.database.CodeTableSQLiteUtils
 import com.seatrend.xj.electricbicyclesalesystem.entity.MessageEntity
 import com.seatrend.xj.electricbicyclesalesystem.manager.AppManager
@@ -40,6 +42,7 @@ import com.seatrend.xj.electricbicyclesalesystem.util.*
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.File
+import java.util.ArrayList
 import java.util.regex.Pattern
 
 /**
@@ -155,6 +158,34 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
                 showLog("PhotoUploadService restart")
                 startService(Intent(this, PhotoUploadService::class.java))
             }
+        }
+    }
+
+
+    //权限申请
+    @RequiresApi(Build.VERSION_CODES.M)
+    protected fun appRequestPermissions() {
+
+        val permission = ArrayList<String>()
+        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) !== PackageManager.PERMISSION_GRANTED) {
+            permission.add(Manifest.permission.READ_EXTERNAL_STORAGE)
+        }
+        if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            permission.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        }
+        if (checkSelfPermission(Manifest.permission.CAMERA) !== PackageManager.PERMISSION_GRANTED) {
+            permission.add(Manifest.permission.CAMERA)
+        }
+
+        if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE) !== PackageManager.PERMISSION_GRANTED) {
+            permission.add(Manifest.permission.READ_PHONE_STATE)
+        }
+        if (checkSelfPermission(Manifest.permission.NFC) !== PackageManager.PERMISSION_GRANTED) {
+            permission.add(Manifest.permission.NFC)
+        }
+
+        if (permission.size > 0) {
+            ActivityCompat.requestPermissions(this@BaseActivity, permission.toTypedArray(), 1)
         }
     }
 
@@ -343,6 +374,8 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
         try {
             val intent = Intent(Intent.ACTION_VIEW)
             intent.component = ComponentName("com.tmri.cd.nfcread", "com.tmri.cd.nfcread.IdCardReadActivity")
+
+            intent.putExtra("laiyu", "MMMMMM")
             startActivityForResult(intent, code)
         } catch (e: java.lang.Exception) {
             showToast("未找到NFC身份证读取插件，请先安装插件")
@@ -397,7 +430,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
         when (event!!.action) {
             MotionEvent.ACTION_UP -> {
                 if (SystemClock.uptimeMillis() - currentTime > LIMIT_TIME) {
-                    AppManager.getInstance().finishToOne(LoginActivity::class.java)
+                    AppManager.getInstance().finishToOne(LoginByUserPasswordActivity::class.java)
                     currentTime = SystemClock.uptimeMillis()
                 } else {
                     currentTime = SystemClock.uptimeMillis()
@@ -536,7 +569,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
 
     //显示不完全的Textview 处理
     @SuppressLint("ClickableViewAccessibility")
-    fun setScollTextView(vararg viewList :TextView){
+    fun setScollTextView(vararg viewList: TextView) {
         for (view in viewList) {
             view.movementMethod = ScrollingMovementMethod.getInstance()
             val para = view.layoutParams
@@ -548,37 +581,37 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
 
     //显示不完全的Textview 处理(在右端的文字)
     @SuppressLint("ClickableViewAccessibility")
-    fun setScollTextView(vararg viewList :TextView,maxWith: Int,paddingEndDis:Int){
+    fun setScollTextView(vararg viewList: TextView, maxWith: Int, paddingEndDis: Int) {
         for (view in viewList) {
             view.movementMethod = ScrollingMovementMethod.getInstance()
             val para = view.layoutParams
-            view.maxWidth = DP2PX.dip2px(this,maxWith.toFloat())   //最大宽度
-            view.setPadding(0,0,DP2PX.dip2px(this,paddingEndDis.toFloat()),0)  //padding end 5dp
+            view.maxWidth = DP2PX.dip2px(this, maxWith.toFloat())   //最大宽度
+            view.setPadding(0, 0, DP2PX.dip2px(this, paddingEndDis.toFloat()), 0)  //padding end 5dp
             view.setOnTouchListener(onTouchListener)
         }
     }
 
     //输入表情屏蔽
-    fun setEditNoEmoj(vararg  editList:EditText){
-        for(view in editList){
+    fun setEditNoEmoj(vararg editList: EditText) {
+        for (view in editList) {
             view.filters = arrayOf(inputFilter)
         }
     }
 
     //切换大写
-    fun setEditUppercase(vararg  editList:EditText){
-        for(view in editList){
+    fun setEditUppercase(vararg editList: EditText) {
+        for (view in editList) {
             view.transformationMethod = CarHphmUtils.TransInformation()
         }
     }
 
-    //切换fragment(适合两个) 注意（R.id.carmsg_fl）
+    //切换fragment(适合两个) 注意（R.id.carmsg_fl）[显示还可以，但是数据传递 有问题哦]
     fun switchFragment(fragment: Fragment?) {
         supportFragmentManager.beginTransaction().replace(R.id.carmsg_fl, fragment).commit()
     }
 
     //设置checkbox 默认值
-    fun setCheckBoxDefault(vararg viewList: CheckBox,default:Boolean) {
+    fun setCheckBoxDefault(vararg viewList: CheckBox, default: Boolean) {
         for (view in viewList) {
             view.isChecked = default
         }
@@ -613,7 +646,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
         }
 
         //间隔时间太短 不能跳转  返回false
-        if (mActivityJumpTag == tag  && LIMIT_CLICK_TIME >= SystemClock.uptimeMillis() - mClickTime!!) {
+        if (mActivityJumpTag == tag && LIMIT_CLICK_TIME >= SystemClock.uptimeMillis() - mClickTime!!) {
             return false
         }
 
@@ -626,6 +659,41 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
         mActivityJumpTag = tag
         mClickTime = SystemClock.uptimeMillis()
         return result
+    }
+
+    //request
+    fun appPermissionReq() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            appRequestPermissions()
+        }
+    }
+
+    //get all permissions is  OK ?
+    fun appGetPermission():Boolean{
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val permission = ArrayList<String>()
+            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) !== PackageManager.PERMISSION_GRANTED) {
+                permission.add(Manifest.permission.READ_EXTERNAL_STORAGE)
+            }
+            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                permission.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            }
+            if (checkSelfPermission(Manifest.permission.CAMERA) !== PackageManager.PERMISSION_GRANTED) {
+                permission.add(Manifest.permission.CAMERA)
+            }
+
+            if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE) !== PackageManager.PERMISSION_GRANTED) {
+                permission.add(Manifest.permission.READ_PHONE_STATE)
+            }
+            if (checkSelfPermission(Manifest.permission.NFC) !== PackageManager.PERMISSION_GRANTED) {
+                permission.add(Manifest.permission.NFC)
+            }
+
+            if (permission.size > 0) {
+                return false
+            }
+        }
+        return true
     }
 
     interface DialogListener {

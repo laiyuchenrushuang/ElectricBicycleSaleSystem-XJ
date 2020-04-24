@@ -64,6 +64,7 @@
             android:layout_weight="1"
             android:background="@null"
             android:focusable="true"
+            android:text="新"
             android:focusableInTouchMode="true"
             android:paddingLeft="10dp"
             android:hint="请用号牌号码或整车编码查询"

@@ -23,7 +23,20 @@ public class LoadUrlUtils {
         path=AESUtils.encrypt(path);
         String baseUrl = SharedPreferencesUtils.getNetworkAddress();
         String finalUrl = baseUrl + Constants.Companion.getPHOTO_SHOW();
-        Log.d("lylog ","load photo url ==== "+finalUrl+"?filePath="+path);
+        Log.d("lylog ","http load photo url ==== "+finalUrl+"?filePath="+path);
         return finalUrl+"?filePath="+path;
+    }
+
+    /**
+     * 获取表格的图片  原来是pdf  改成了jpg
+     *
+     * http://11.121.35.182:8081/file/getbikeCheckPdfBylsh?lx=65FAE00A3B2A0E233A5A665A6A2CDB4D&lsh=FDBFC7E5F877EE3417021C4B2911827A
+     */
+
+    public static String loadPdfUrl(String lsh,String url){
+        String baseUrl = SharedPreferencesUtils.getNetworkAddress();
+        String finalUrl = baseUrl + url;
+        Log.d("lylog ","http load photo url ==== "+finalUrl+"?lsh="+AESUtils.encrypt(lsh));
+        return finalUrl+"?lsh="+AESUtils.encrypt(lsh);
     }
 }

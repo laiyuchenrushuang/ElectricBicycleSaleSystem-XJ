@@ -27,7 +27,7 @@ class CheckDataPhotoAdapter(private var mContext: Context? = null) : RecyclerVie
     private var data = ArrayList<PhotoTypeEntity.DataBean.ConfigBean>()
 //    val mCompareR: Comparator<PhotoTypeEntity.DataBean.ConfigBean> =
 //            Comparator { p0, _ ->
-//                if ("B4" == p0!!.zplx) { //其他
+//                if (Constants.TYPE_QT == p0!!.zplx) { //其他
 //                    0
 //                } else {
 //                    -1
@@ -99,7 +99,7 @@ class CheckDataPhotoAdapter(private var mContext: Context? = null) : RecyclerVie
 
         fun initItemView(bean: PhotoTypeEntity.DataBean.ConfigBean) {
             tvType!!.text = bean.zmmc
-            if ("B4" == bean.zplx || (bean.zplx.length > 2 && "B4" == bean.zplx.substring(0, 2))) { //其他 不是必拍项  [多拍模式取其他照片]
+            if (Constants.TYPE_QT == bean.zplx || (bean.zplx.length > 2 && Constants.TYPE_QT == bean.zplx.substring(0, 2))) { //其他 不是必拍项  [多拍模式取其他照片]
                 tvType!!.setTextColor(Color.BLACK)
             } else {
                 tvType!!.setTextColor(Color.RED)

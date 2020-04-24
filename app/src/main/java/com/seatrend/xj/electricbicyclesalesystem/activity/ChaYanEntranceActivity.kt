@@ -120,7 +120,9 @@ class ChaYanEntranceActivity : BaseActivity(), NormalView {
                     }
                     "B" -> {   // 转移登记  only 车牌号
                         et_cy_zcbm.setText("")
-                        if (TextUtils.isEmpty(et_cy_cphm.text.toString())) {
+                        showLog("   "+et_cy_cphm.text.toString())
+                        showLog("   "+CphmUtils.checkXjValueCphm(et_cy_cphm.text.toString()))
+                        if (TextUtils.isEmpty(et_cy_cphm.text.toString()) || !CphmUtils.checkXjValueCphm(et_cy_cphm.text.toString().toUpperCase())) {
                             showToast("请正确输入车牌号")
                             return@setOnClickListener
                         }
@@ -133,7 +135,7 @@ class ChaYanEntranceActivity : BaseActivity(), NormalView {
                     }
                     "D" -> {   // 变更登记  only 车牌号
                         et_cy_zcbm.setText("")
-                        if (TextUtils.isEmpty(et_cy_cphm.text.toString())) {
+                        if (TextUtils.isEmpty(et_cy_cphm.text.toString()) || !CphmUtils.checkXjValueCphm(et_cy_cphm.text.toString().toUpperCase())) {
                             showToast("请正确输入车牌号")
                             return@setOnClickListener
                         }
@@ -146,7 +148,7 @@ class ChaYanEntranceActivity : BaseActivity(), NormalView {
                     }
                     "J" -> {   // 旧车登记  only 车牌号
                         et_cy_zcbm.setText("")
-                        if (TextUtils.isEmpty(et_cy_cphm.text.toString())) {
+                        if (TextUtils.isEmpty(et_cy_cphm.text.toString()) || !CphmUtils.checkXjValueCphm(et_cy_cphm.text.toString().toUpperCase())) {
                             showToast("请正确输入车牌号")
                             return@setOnClickListener
                         }
@@ -192,8 +194,8 @@ class ChaYanEntranceActivity : BaseActivity(), NormalView {
         iv_scan.setOnClickListener {
             showQcodeModeDialog()
         }
-        et_cy_cphm.transformationMethod = CarHphmUtils.TransInformation()
         et_cy_cphm.filters = arrayOf(inputFilter)
+        et_cy_cphm.transformationMethod = CarHphmUtils.TransInformation()
         et_cy_zcbm.transformationMethod = CarHphmUtils.TransInformation()
     }
 

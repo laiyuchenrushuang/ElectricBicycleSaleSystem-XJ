@@ -158,6 +158,10 @@ class YwFhSearchActivity : BaseActivity(), NormalView {
                 showLoadingDialog()
                 mNormalPresenter!!.doNetworkTask(map, Constants.FH_GET_LIST)
             }else{
+                if (TextUtils.isEmpty(searchString.trim()) || !CphmUtils.checkXjValueCphm(searchString.trim().toUpperCase())) {
+                    showToast("请正确输入车牌号")
+                    return@setOnClickListener
+                }
                 val map = HashMap<String, String?>()
                 map["hphm"] = searchString.trim().toUpperCase()
                 map["curPage"] = "1"

@@ -18,7 +18,7 @@ class EmployeeChangePasswordActivity : BaseActivity(), NormalView {
     private var mNormalPresenter: NormalPresenter? = null
     override fun netWorkTaskSuccess(commonResponse: CommonResponse) {
         dismissLoadingDialog()
-        val intent = Intent(this, LoginActivity::class.java)
+        val intent = Intent(this, LoginByUserPasswordActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         startActivity(intent)
         finish()

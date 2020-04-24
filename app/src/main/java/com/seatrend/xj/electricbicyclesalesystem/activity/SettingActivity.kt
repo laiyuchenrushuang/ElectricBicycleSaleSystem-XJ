@@ -115,7 +115,7 @@ class SettingActivity : BaseActivity(), SettingView {
             mHandler.sendMessage(msg)
         }
         btn_video.setOnClickListener {
-            startActivity(Intent(this, VideoActivity::class.java))
+//            startActivity(Intent(this, PDFActivity::class.java))
         }
     }
 

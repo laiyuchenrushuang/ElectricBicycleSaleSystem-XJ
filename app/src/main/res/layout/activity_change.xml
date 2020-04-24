@@ -140,9 +140,9 @@
                     android:spinnerMode="dialog" />
             </LinearLayout>
 
-
+            //车牌号码显示 区分业务原因
             <LinearLayout
-                android:id="@+id/ll_xhphm"
+                android:id="@+id/ll_hphm"
                 android:layout_width="match_parent"
                 android:layout_height="44dp">
 
@@ -151,7 +151,93 @@
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical|left"
+                    android:text="号牌号码" />
+
+                <TextView
+                    android:id="@+id/tv_hphm"
+                    style="@style/cy_et_style1"
+                    android:layout_width="0dp"
+                    android:layout_height="28dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:ellipsize="marquee"
+                    android:text="新A 123587"
+                    android:textSize="14dp" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_yhphm"
+                android:layout_width="match_parent"
+                android:layout_height="44dp">
+
+                <TextView
+                    style="@style/carcy_info_jscs_left"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|left"
+                    android:text="原号牌号码" />
+
+                <TextView
+                    android:id="@+id/tv_yhphm"
+                    style="@style/cy_et_style1"
+                    android:layout_width="0dp"
+                    android:layout_height="28dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:ellipsize="marquee"
+                    android:text="新A 123587"
+                    android:textSize="14dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_hphs"
+                android:layout_width="match_parent"
+                android:layout_height="44dp">
+
+                <TextView
+                    style="@style/carcy_info_jscs_left"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|left"
+                    android:text="回收原号牌" />
+
+                <RadioGroup
+                    android:id="@+id/rb_hphs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rb_yes"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="是" />
+
+                    <RadioButton
+                        android:id="@+id/rb_no"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="否" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_xhphm"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/carcy_info_jscs_left"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|left"
                     android:text="新号牌号码" />
+
                 <TextView
                     android:id="@+id/et_cphm"
                     style="@style/cy_et_style1"
@@ -159,19 +245,21 @@
                     android:layout_height="28dp"
                     android:layout_marginStart="12dp"
                     android:layout_weight="1"
-                    android:textSize="14dp"
+                    android:ellipsize="marquee"
                     android:hint="请点击获取"
-                    android:ellipsize="marquee" />
+                    android:textSize="14dp" />
+
                 <Button
                     android:id="@+id/btn_hqhphm"
                     android:layout_width="80dp"
                     android:layout_height="28dp"
                     android:layout_marginBottom="2dp"
                     android:background="@drawable/btn_ewm_state_update"
-                    android:textColor="@color/white"
-                    android:text="获取号牌"/>
+                    android:text="获取号牌"
+                    android:textColor="@color/white" />
             </LinearLayout>
             //所有人信息
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -497,6 +585,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="44dp">
+
                     <LinearLayout
                         android:layout_width="100dp"
                         android:layout_height="44dp">
@@ -606,8 +695,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:background="@null"
-                        android:digits="@string/number_and_letter"
-                         />
+                        android:digits="@string/number_and_letter" />
 
                     <ImageView
                         android:id="@+id/iv_dlr_scan"
@@ -631,9 +719,9 @@
 
                 <EditText
                     android:id="@+id/ed_dlr_xm"
+                    style="@style/carcy_info_jscs_left"
                     android:layout_width="0dp"
                     android:layout_height="28dp"
-                    style="@style/carcy_info_jscs_left"
                     android:layout_marginStart="12dp"
                     android:layout_weight="1"
                     android:background="@drawable/edit_text_bg" />
@@ -835,9 +923,9 @@
 
                             <EditText
                                 android:id="@+id/ed_yj_xm"
+                                style="@style/carcy_info_jscs_left"
                                 android:layout_width="0dp"
                                 android:layout_height="28dp"
-                                style="@style/carcy_info_jscs_left"
                                 android:layout_marginStart="12dp"
                                 android:layout_weight="1"
                                 android:background="@drawable/edit_text_bg" />

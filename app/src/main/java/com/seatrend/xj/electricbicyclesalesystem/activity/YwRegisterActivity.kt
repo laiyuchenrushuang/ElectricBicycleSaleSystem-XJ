@@ -38,7 +38,6 @@ class YwRegisterActivity : BaseActivity(), NormalView {
     override fun netWorkTaskSuccess(commonResponse: CommonResponse) {
         dismissLoadingDialog()
 
-
         if (Constants.SYSTEM_PRODUCT_HPHM.equals(commonResponse.getUrl())) {
             val enity = GsonUtils.gson(commonResponse.responseString, HpHmEnity::class.java)
             if (!ObjectNullUtil.checknull(enity.data)) {
@@ -47,6 +46,7 @@ class YwRegisterActivity : BaseActivity(), NormalView {
             }
             runOnUiThread {
                 et_cphm.text = enity.data
+                btn_hqhphm.visibility = View.GONE
             }
         }
 
@@ -59,7 +59,7 @@ class YwRegisterActivity : BaseActivity(), NormalView {
             intent.putExtra("syr", ed_syr_xm.text.toString())
             intent.putExtra("sfz", ed_syr_sfz.text.toString())
             intent.putExtra("hphm", if (TextUtils.isEmpty(data!!.data.checkData.cph)) et_cphm.text.toString().toUpperCase() else data!!.data.checkData.cph)
-            intent.setClass(this, AutographActivity::class.java)
+            intent.setClass(this, CollectPhotoActivity::class.java)
             startActivity(intent)
             InsuranceActivity.dzpzFlag = rb_zzxsz_ok.isChecked
         }
@@ -103,7 +103,8 @@ class YwRegisterActivity : BaseActivity(), NormalView {
         bt_next.setOnClickListener {
             //进行人脸识别
 
-            getFaceCamera(Constants.FACE)
+            //getFaceCamera(Constants.FACE)
+            postHttpRequest()
         }
 
         btn_hqhphm.setOnClickListener {
@@ -218,7 +219,7 @@ class YwRegisterActivity : BaseActivity(), NormalView {
 
     private fun initData() {
         try {
-            bt_next.text = "人证核验"
+            bt_next.text = "下一步"
             var cphm = data!!.data.checkData.cph
             var cphm1 = data!!.data.fjdcBusiness.cph
 

@@ -115,6 +115,7 @@ class Archive2FileActivity : BaseActivity(), YwGdAdapter.itemOnclickListener, Ba
         map["curPage"] = "" + page
         map["pageSize"] = "10"
         map["gdbm"] = UserInfo.GLBM
+        map["gdzt"] = "2" // 未归档查询
         map["ywlx"] = if (getString(R.string.all).equals(tv_ywlx.text.toString()) || "业务类型".equals(tv_ywlx.text.toString())) "" else tv_ywlx.text.toString().split(":")[0]
         mNormalPresenter!!.doNetworkTask(map, Constants.GD_GET_LIST)
     }

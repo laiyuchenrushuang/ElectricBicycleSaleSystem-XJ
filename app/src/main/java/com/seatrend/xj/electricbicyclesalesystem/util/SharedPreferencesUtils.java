@@ -38,7 +38,7 @@ public class SharedPreferencesUtils{
     }
     public static String getNetworkAddress(){
       return   Objects.requireNonNull(MyApplication.Companion.getMyApplicationContext()).getSharedPreferences(Constants.Companion.getSETTING(), Context.MODE_PRIVATE)
-               .getString(Constants.Companion.getNET_K(),"http://192.168.0.221:8099/ddc");
+               .getString(Constants.Companion.getNET_K(),"http://220.171.43.76:82/ddc");
     }
     public static void setNetworkAddress(String network){
         Objects.requireNonNull(MyApplication.Companion.getMyApplicationContext()).getSharedPreferences(Constants.Companion.getSETTING(), Context.MODE_PRIVATE)

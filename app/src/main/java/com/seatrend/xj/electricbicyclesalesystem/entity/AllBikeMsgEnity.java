@@ -1020,6 +1020,15 @@ public class AllBikeMsgEnity extends BaseEntity implements Serializable {
             private String jyw;
             private String cyrsfzmhm;
             private String czpt;
+            private String hphs; //号牌回收  1回收
+
+            public String getHphs() {
+                return hphs;
+            }
+
+            public void setHphs(String hphs) {
+                this.hphs = hphs;
+            }
 
             public String getSfkyghhp() {
                 return sfkyghhp;

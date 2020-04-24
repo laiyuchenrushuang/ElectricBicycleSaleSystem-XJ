@@ -1,12 +1,16 @@
 package com.seatrend.xj.electricbicyclesalesystem.activity
 
+import android.Manifest
 import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
+import android.support.annotation.RequiresApi
+import android.support.v4.app.ActivityCompat
 import android.support.v4.content.FileProvider
 import android.text.TextUtils
 import android.view.View
@@ -26,7 +30,9 @@ import com.seatrend.xj.electricbicyclesalesystem.util.*
 import com.seatrend.xj.electricbicyclesalesystem.view.CarPhotoView
 import com.seatrend.xj.electricbicyclesalesystem.view.LoginView
 import kotlinx.android.synthetic.main.activity_user_password.*
+import kotlinx.android.synthetic.main.common_title.*
 import java.io.File
+import java.util.ArrayList
 
 class LoginByUserPasswordActivity : BaseActivity(), LoginView, CarPhotoView {
 
@@ -45,10 +51,9 @@ class LoginByUserPasswordActivity : BaseActivity(), LoginView, CarPhotoView {
 
     override fun initView() {
         setPageTitle("用户登录")
-
         et_user.setText(SharedPreferencesUtils.getAdmain())
 
-
+        appPermissionReq()
         if (AppUtils.isApkInDebug(this)) {
             et_user.setText("513822198909298761")
             et_pwd.setText("1q2w3e4r.")
@@ -138,7 +143,7 @@ class LoginByUserPasswordActivity : BaseActivity(), LoginView, CarPhotoView {
             if (imgFile != null && !TextUtils.isEmpty(imgFile!!.path)) {
                 PhotoFileUtils.deleteFile(imgFile!!.path)
             }
-            finish()
+//            finish()
         }
 
         if (Constants.GET_GLBMMC.equals(commonResponse.getUrl())) {
@@ -241,10 +246,13 @@ class LoginByUserPasswordActivity : BaseActivity(), LoginView, CarPhotoView {
     }
 
     private fun bindEvent() {
+        iv_back.visibility = View.GONE
+
         btn_setting.setOnClickListener {
             startActivity(Intent(this, SettingActivity::class.java))
         }
         iv_photo.setOnClickListener {
+
             if (photoTagFace == 0) {
                 getPicFromCamera()
             } else {
@@ -293,6 +301,13 @@ class LoginByUserPasswordActivity : BaseActivity(), LoginView, CarPhotoView {
     }
 
     private fun getPicFromCamera() {
+        if (!appGetPermission()) {
+            appPermissionReq()
+            return
+        }
+
+
+        deleteAllFileImage()
         val tempFile = File(Constants.IMAGE_PATH)//
         val imageUri: Uri
         if (!tempFile.exists()) {
@@ -307,6 +322,11 @@ class LoginByUserPasswordActivity : BaseActivity(), LoginView, CarPhotoView {
         val intent = Intent("android.media.action.IMAGE_CAPTURE")
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
         startActivityForResult(intent, CAMERA_REQUEST_CODE)
+    }
+
+    //删除上次缓存的照片（定时器使用上传的缓存照片）
+    private fun deleteAllFileImage() {
+        PhotoFileUtils.deleteFile(File(Constants.IMAGE_PATH))
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -377,6 +397,7 @@ class LoginByUserPasswordActivity : BaseActivity(), LoginView, CarPhotoView {
         map["url"] = ""
         mLoginPersenter!!.downloadFile(HashMap(), appdownloadurl, f)
     }
+
 
     override fun getLayout(): Int {
         return R.layout.activity_user_password

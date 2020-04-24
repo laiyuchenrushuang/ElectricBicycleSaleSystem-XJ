@@ -6,11 +6,15 @@ import com.seatrend.xj.electricbicyclesalesystem.http.thread.PriorityRunnable;
 import com.seatrend.xj.electricbicyclesalesystem.http.thread.ThreadConstants;
 import com.seatrend.xj.electricbicyclesalesystem.util.CheckPawUtil;
 import com.seatrend.xj.electricbicyclesalesystem.util.CheckUtil;
+import com.seatrend.xj.electricbicyclesalesystem.util.CphmUtils;
 import com.seatrend.xj.electricbicyclesalesystem.util.StringUtils;
 import com.seatrend.xj.electricbicyclesalesystem.http.thread.ThreadPoolManager;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.TimerTask;
 import java.util.concurrent.locks.Lock;
 import java.util.regex.Matcher;
@@ -27,7 +31,7 @@ public class JavaTest {
 
     static int[] ints = {1, 1, 1, 1, 1, 1};
     static int[] intx = {1, 1, 0, 1, 1, 1};
-    static ArrayList<Integer> list = new ArrayList<>();
+    static Collection<String> list = new ArrayList<>();
     static Thread t1, t2, t3;
 
     public static void main(String[] args) {
@@ -196,10 +200,15 @@ public class JavaTest {
 //        }
 //        t1.stop();
 
-        String glbm = "6565651";
+      try {
+          if(1==1){
+              return;
+          }
+      }catch (Exception e){
+          System.out.println("bb");
+      }
 
-        System.out.println(CheckUtil.isYzbmCorrect(glbm));
-
+      System.out.println("aa");
     }
 
     public static boolean isCorrect(String sfz) {
@@ -228,20 +237,20 @@ public class JavaTest {
         System.out.println(matherString + " 匹配：" + matcher.matches());
     }
 
-    private static boolean checkData() {
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println("i = " + i);
-            if (list.get(i) == 0) {
-                list.set(i, 1);
-                System.out.println("Change");
-                break;
-            }
-            if (i == list.size() - 1) {
-                return true;
-            }
-
-        }
-
-        return checkData();
-    }
+//    private static boolean checkData() {
+//        for (int i = 0; i < list.size(); i++) {
+//            System.out.println("i = " + i);
+//            if (list.get(i) == 0) {
+//                list.set(i, 1);
+//                System.out.println("Change");
+//                break;
+//            }
+//            if (i == list.size() - 1) {
+//                return true;
+//            }
+//
+//        }
+//
+//        return checkData();
+//    }
 }

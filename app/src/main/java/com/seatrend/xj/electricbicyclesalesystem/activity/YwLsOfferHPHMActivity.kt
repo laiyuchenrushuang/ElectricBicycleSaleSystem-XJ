@@ -59,14 +59,14 @@ class YwLsOfferHPHMActivity: BaseActivity() {
 
         bt_next.setOnClickListener {
             //            goNfcReadPlugin() //人脸比对
-            startActivity(Intent(this, AutographActivity::class.java))
+            startActivity(Intent(this, CollectPhotoActivity::class.java))
             CollectPhotoActivity.photoEntranceFlag = Constants.CAR_LSHP
             CollectPhotoActivity.dzpzFlag = rb_zzxsz_ok.isChecked
         }
     }
 
     private fun initData() {
-        bt_next.setText("人证核验")
+        bt_next.setText("下一步")
         initShowScrean()
     }
 

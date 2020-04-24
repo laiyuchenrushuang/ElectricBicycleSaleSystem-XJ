@@ -17,6 +17,7 @@ import android.graphics.RectF
 import com.seatrend.xj.electricbicyclesalesystem.http.thread.ThreadPoolManager
 import com.seatrend.xj.electricbicyclesalesystem.util.BitmapUtils
 import android.view.MotionEvent
+import java.io.File
 
 
 class ShowPhotoActivity : BaseActivity(), BaseActivity.DialogListener {
@@ -35,6 +36,9 @@ class ShowPhotoActivity : BaseActivity(), BaseActivity.DialogListener {
             if (null != intent.getStringExtra(Constants.ZPLX) && (Constants.TYPE_ZCBM == intent.getStringExtra(Constants.ZPLX) || (intent.getStringExtra(Constants.ZPLX).length > 2 && Constants.TYPE_ZCBM == intent.getStringExtra(Constants.ZPLX).substring(0, 2))) && !clipped && "0" == intent.getStringExtra(Constants.CLIPP)) {
                 setPageTitle(intent.getStringExtra(Constants.ZPMC) + resources.getString(R.string.clipped))
             }
+            if (null != intent.getStringExtra(Constants.ZPLX) && (Constants.TYPE_TYH == intent.getStringExtra(Constants.ZPLX) || (intent.getStringExtra(Constants.ZPLX).length > 2 && Constants.TYPE_TYH == intent.getStringExtra(Constants.ZPLX).substring(0, 2))) && !clipped && "0" == intent.getStringExtra(Constants.CLIPP)) {
+                setPageTitle(intent.getStringExtra(Constants.ZPMC) + resources.getString(R.string.clipped))
+            }
         } else {
             setPageTitle("图片详情")
         }
@@ -46,20 +50,19 @@ class ShowPhotoActivity : BaseActivity(), BaseActivity.DialogListener {
                 clip_view.visibility = View.VISIBLE
                 iv.visibility = View.VISIBLE
                 clipperView = ClipperView(this)
+                tv_right.text = "确定"
 
                 var b = BitmapFactory.decodeFile(intent.getStringExtra(Constants.PATH))
 
-                if (b.width > b.height) {  //横拍照注意
-                    val matrix = Matrix()
-                    matrix.setRotate(90f)
-                    val nw = b.width
-                    val nh = b.height
-                    b = Bitmap.createBitmap(b, 0, 0, nw, nh, matrix, true)
-                }
+//                if (b.width > b.height) {  //横拍照注意
+//                    val matrix = Matrix()
+//                    matrix.setRotate(90f)
+//                    val nw = b.width
+//                    val nh = b.height
+//                    b = Bitmap.createBitmap(b, 0, 0, nw, nh, matrix, true)
+//                }
                 iv.setImageBitmap(b)
                 clipperView!!.setBitmap(b)
-                bindEvent()
-
             } catch (e: Exception) {
                 showToast(e.message.toString())
             }
@@ -75,8 +78,6 @@ class ShowPhotoActivity : BaseActivity(), BaseActivity.DialogListener {
         super.onWindowFocusChanged(hasFocus)
         if (hasFocus) {
             var r = RectF(ll.left * 1.0f, ll.top * 1.0f, ll.right * 1.0f, ll.bottom * 1.0f)
-
-            showLog("" + ll.left + " " + ll.top + " " + ll.right + " " + ll.bottom)
             if (clipperView != null) {
                 clipperView!!.setParentScaleRect(r)
             }
@@ -86,10 +87,11 @@ class ShowPhotoActivity : BaseActivity(), BaseActivity.DialogListener {
     var nLenStart: Double = 0.0
     private fun bindEvent() {
         iv_back.setOnClickListener {
+            finishActivity()
+        }
+        tv_right.setOnClickListener {
             if (needClipPicture()) {
                 showTipDialog(resources.getString(R.string.tips), resources.getString(R.string.clippview_msg), 0)
-            } else {
-                finishActivity()
             }
         }
     }
@@ -100,16 +102,16 @@ class ShowPhotoActivity : BaseActivity(), BaseActivity.DialogListener {
         if (Constants.TYPE_ZCBM == intent.getStringExtra(Constants.ZPLX) && clipped) {
             return true
         }
+
+        if (Constants.TYPE_TYH == intent.getStringExtra(Constants.ZPLX) && clipped) {
+            return true
+        }
         return false
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (needClipPicture()) {
-                showTipDialog(resources.getString(R.string.tips), resources.getString(R.string.clippview_msg), 0)
-            } else {
-                finishActivity()
-            }
+            finishActivity()
             return true
         }
         return super.onKeyDown(keyCode, event)
@@ -119,17 +121,24 @@ class ShowPhotoActivity : BaseActivity(), BaseActivity.DialogListener {
         showLoadingDialog()
         ThreadPoolManager.instance.execute(Runnable {
             val path = intent.getStringExtra(Constants.PATH)
-            BitmapUtils.saveBitmapToFile(ClipperView.getBitmap(), path)  //处理图片
+            val file = File(path)
+            val pPath = file.parentFile.path + "/" + System.currentTimeMillis() + ".jpg"
+            BitmapUtils.saveBitmapToFile(ClipperView.getBitmap(), pPath)  //处理图片
+            showLog("  ShowPhotoActivity $pPath")
+            showLog("  ShowPhotoActivity $path")
+            if (file.isFile) {  // 原图片要清除掉
+                file.delete()
+            }
             dismissLoadingDialog()
             intent.putExtra(Constants.CLIPP, "1")
-            intent.putExtra(Constants.CLIPP_PICTURE_PATH, path)
+            intent.putExtra(Constants.CLIPP_PICTURE_PATH, pPath)
             setResult(Activity.RESULT_OK, intent)
             finishActivity()
         })
     }
 
     override fun tipDialogNOListener(flag: Int) {
-        finishActivity()
+//        finishActivity()
     }
 
     private fun finishActivity() {

@@ -18,6 +18,7 @@ import com.seatrend.xj.electricbicyclesalesystem.common.Constants
 import com.seatrend.xj.electricbicyclesalesystem.database.CodeTableSQLiteUtils
 import com.seatrend.xj.electricbicyclesalesystem.entity.AllBikeMsgEnity
 import com.seatrend.xj.electricbicyclesalesystem.entity.CommonResponse
+import com.seatrend.xj.electricbicyclesalesystem.entity.UserInfo
 import com.seatrend.xj.electricbicyclesalesystem.persenter.NormalPresenter
 import com.seatrend.xj.electricbicyclesalesystem.util.*
 import com.seatrend.xj.electricbicyclesalesystem.view.NormalView
@@ -98,7 +99,12 @@ class YWEntranceActivity : BaseActivity(), NormalView {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 var spString = sp_yw.selectedItem.toString().split(":")[1]
                 if (getString(R.string.zcdj).equals(spString)) {
-                    ViewShowUtils.showVisibleView(ll_cphm, ll_zcbm)
+                    ViewShowUtils.showVisibleView(ll_zcbm)
+                    if("1" == UserInfo.GlobalParameter.DPBJ){
+                        ViewShowUtils.showVisibleView(ll_cphm)
+                    }else{
+                        ViewShowUtils.showGoneView(ll_cphm)
+                    }
                 } else if (getString(R.string.lshp).equals(spString)) {
                     ViewShowUtils.showGoneView(ll_cphm, ll_zcbm)
                 } else {
@@ -134,18 +140,24 @@ class YWEntranceActivity : BaseActivity(), NormalView {
 
         bt_next.setOnClickListener {
             if (sp_yw.selectedItem != null && "A".equals(sp_yw.selectedItem.toString().split(":")[0])) {  //注册登记
-                showLoadingDialog()
+
                 if (!ObjectNullUtil.checknull(et_yw_cphm.text.toString()) && !ObjectNullUtil.checknull(et_yw_hgzbh.text.toString())) {
                     showToast("整车编码为空或者车牌号为空")
                     return@setOnClickListener
                 }
                 val map = HashMap<String, String?>()
                 if (ObjectNullUtil.checknull(et_yw_hgzbh.text.toString())) {
+                    showLoadingDialog()
                     showToast("整车编码查询")
-                    map.put("zcbm", et_yw_hgzbh.text.toString())
+                    map.put("zcbm", et_yw_hgzbh.text.toString().toUpperCase())
                     map.put("ywlx", sp_yw.selectedItem.toString().split(":")[0])
                     mNormalPresenter!!.doNetworkTask(map, Constants.YW_GET_ALL_BIKE_DATA)
                 } else {
+                    if (TextUtils.isEmpty(et_yw_cphm.text.toString()) || !CphmUtils.checkXjValueCphm(et_yw_cphm.text.toString().toUpperCase())) {
+                        showToast("请正确输入车牌号")
+                        return@setOnClickListener
+                    }
+                    showLoadingDialog()
                     showToast("号牌号码查询")
                     map.put("hphm", et_yw_cphm.text.toString().toUpperCase())
                     map.put("ywlx", sp_yw.selectedItem.toString().split(":")[0])
@@ -153,8 +165,8 @@ class YWEntranceActivity : BaseActivity(), NormalView {
                 }
 
             } else {
-                if (!ObjectNullUtil.checknull(et_yw_cphm.text.toString())) {
-                    showToast("号牌号码为空")
+                if (TextUtils.isEmpty(et_yw_cphm.text.toString()) || !CphmUtils.checkXjValueCphm(et_yw_cphm.text.toString().toUpperCase())) {
+                    showToast("请正确输入车牌号")
                     return@setOnClickListener
                 }
                 showLoadingDialog()
@@ -167,6 +179,8 @@ class YWEntranceActivity : BaseActivity(), NormalView {
         }
         et_yw_cphm.transformationMethod = CarHphmUtils.TransInformation()
         et_yw_cphm.filters = arrayOf(inputFilter)
+        et_yw_hgzbh.transformationMethod = CarHphmUtils.TransInformation()
+        et_yw_hgzbh.filters = arrayOf(inputFilter)
     }
 
     /**

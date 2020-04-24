@@ -29,7 +29,8 @@ class NormalModule : BaseModule {
                 Constants.TB_COMMIT.equals(url) ||// 退办提交
                 Constants.GD_COMMIT.equals(url) || //归档提交
                 Constants.FORBIDDEN_COMMIT.equals(url) || //黑名单
-                Constants.USER_PSW_UPDATE.equals(url) //修改密码
+                Constants.USER_PSW_UPDATE.equals(url)  || //修改密码
+                Constants.SAVE_CY_PD.equals(url) //判定项目
         ) {
             HttpService.getInstance().getDataFromServer(map, url, Constants.POST, this)
         } else {

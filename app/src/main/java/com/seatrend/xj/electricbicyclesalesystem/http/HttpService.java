@@ -56,12 +56,12 @@ public class HttpService {
     private final int FAILED_CODE = 3;
     private final int PREGRESS_CODE = 4;
 
-    private final int TIME_OUT = 60 * 1000;
+    private final int TIME_OUT = 60 * 1000; //1分钟请求超时 读写
 
     private OkHttpClient mOkHttpClient = new OkHttpClient.Builder()
             .readTimeout(TIME_OUT, TimeUnit.MILLISECONDS)
             .writeTimeout(TIME_OUT, TimeUnit.MILLISECONDS)
-            .connectTimeout(20 * 1000, TimeUnit.MILLISECONDS)
+            .connectTimeout(20 * 1000, TimeUnit.MILLISECONDS)  //超时连接20秒
             .build();
 
 
@@ -148,7 +148,7 @@ public class HttpService {
                             .build();
                 }
 
-                Log.i("HttpService", finalUrl + parameter);
+                Log.i("httpService", finalUrl + parameter);
             } else {
 
                 FormBody.Builder builder = new FormBody.Builder();
@@ -165,7 +165,7 @@ public class HttpService {
                         .post(requestBody)
                         .addHeader(Constants.Companion.getQAUTH(), UserInfo.TOKEN)
                         .build();
-                Log.i("HttpService", finalUrl);
+                Log.i("httpService", finalUrl);
             }
         } catch (Exception e) {
             Message message = Message.obtain();
@@ -262,7 +262,7 @@ public class HttpService {
                     .post(vehicleTemp)
                     .addHeader(Constants.Companion.getQAUTH(), UserInfo.TOKEN)
                     .build();
-            Log.i("HttpService", finalUrl);
+            Log.i("httpService", finalUrl);
         } catch (Exception e) {
             Message message = Message.obtain();
             message.what = FAILED_CODE;
@@ -347,7 +347,12 @@ public class HttpService {
                 StringBuffer buffer = new StringBuffer();
                 buffer.append("?");
                 for (Map.Entry<String, String> entry : map.entrySet()) {
-                    buffer.append(entry.getKey().trim() + "=" + entry.getValue().trim() + "&");
+//                    buffer.append(entry.getKey().trim() + "=" + entry.getValue().trim() + "&");
+                    if (Constants.Companion.getAES_ENABLE()){
+                        buffer.append(entry.getKey().trim() + "=" + AESUtils.encrypt(entry.getValue().trim()) + "&");
+                    }else {
+                        buffer.append(entry.getKey().trim() + "=" + entry.getValue().trim() + "&");
+                    }
                 }
                 String s = buffer.toString();
                 String parameter = s.substring(0, s.length() - 1);
@@ -356,11 +361,15 @@ public class HttpService {
                         .get()
                         // .addHeader(Constants.QAUTH,User.TOKEN)
                         .build();
-                Log.i("HttpService", url + parameter);
+                Log.i("httpService", url + parameter);
             } else {
                 FormBody.Builder builder = new FormBody.Builder();
                 for (Map.Entry<String, String> entry : map.entrySet()) {
-                    builder.add(entry.getKey().toString(), entry.getValue().trim());
+                    if (Constants.Companion.getAES_ENABLE()){
+                        builder.add(entry.getKey().trim(), AESUtils.encrypt(entry.getValue().trim()));
+                    }else {
+                        builder.add(entry.getKey().trim(), entry.getValue().trim());
+                    }
                 }
                 request = new Request.Builder()
                         .url(url)
@@ -402,15 +411,15 @@ public class HttpService {
 
                 try {
                     long totalLength = body.contentLength();
-                   /* if(totalLength<=0){
-                        message.what=FAILED_CODE;
-                        CommonResponse commonResponse=new CommonResponse();
-                        commonResponse.setUrl(url);
-                        commonResponse.setResponseString("下载出错，无法下载该文件");
-                        message.obj=commonResponse;
-                        mHandler.sendMessage(message);
-                        return;
-                    }*/
+//                    if(totalLength<0){
+//                        message.what=FAILED_CODE;
+//                        CommonResponse commonResponse=new CommonResponse();
+//                        commonResponse.setUrl(url);
+//                        commonResponse.setResponseString("下载出错，无法下载该文件");
+//                        message.obj=commonResponse;
+//                        mHandler.sendMessage(message);
+//                        return;
+//                    }
                     inputStream = body.byteStream();
                     fileOutputStream = new FileOutputStream(file);
                     byte[] buffer = new byte[2048];
@@ -549,7 +558,7 @@ public class HttpService {
             mHandler.sendMessage(message);
             return;
         }
-        Log.i("HttpService", finalUrl);
+        Log.i("httpService", finalUrl);
         mOkHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -567,11 +576,11 @@ public class HttpService {
                 Message message = Message.obtain();
 
                 String resp = response.body().string();
-                Log.i("HttpService", "result1 解码前【文件】 = " + resp);
+                Log.i("httpService", "result1 解码前【文件】 = " + resp);
                 if (Constants.Companion.getAES_ENABLE()){
                     resp=AESUtils.decrypt(resp);
                 }
-                Log.i("HttpService", "result2 解码后 【文件】 = " + resp);
+                Log.i("httpService", "result2 解码后 【文件】 = " + resp);
                 if (TextUtils.isEmpty(resp)) {
                     message.what = FAILED_CODE;
                     CommonResponse commonResponse = new CommonResponse();

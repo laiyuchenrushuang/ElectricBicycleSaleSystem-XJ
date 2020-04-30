@@ -46,7 +46,6 @@ class YwCancelActivity : BaseActivity(), NormalView {
                 CollectPhotoActivity.mLsh = enity.data.lsh
                 CollectPhotoActivity.mXh = enity.data.xh
             }
-
         }
         intent.putExtra("syr", data!!.data.fjdcBusiness.syrmc)
         intent.putExtra("sfz", data!!.data.fjdcBusiness.sfzmhm)

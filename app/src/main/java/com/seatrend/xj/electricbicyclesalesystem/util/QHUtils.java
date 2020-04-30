@@ -108,7 +108,8 @@ public class QHUtils {
 
         //台湾 (710000) 香港 (810000) 澳门 (820000)
 
-        newRex = "[" + header1 + "]" + "[" + header2 + "]" + "\\d{1}[1-9]" + "[" + footer1 + "]" + "[" + footer2 + "]";
+//        newRex = "[" + header1 + "]" + "[" + header2 + "]" + "\\d{1}[0-9]" + "[" + footer1 + "]" + "[" + footer2 + "]";  //654000 伊犁[0-9]
+        newRex = "[" + header1 + "]" + "[" + header2 + "]" + "\\d{2}" + "[" + footer1 + "]" + "[" + footer2 + "]";  //654000 伊犁 第四位[0-9]
 
         if ("1".equals(header1) && "1".equals(header2)) {
             newRex = "[1][1]" + "[0][1-2]" + "\\d{1}[1-9]";
@@ -123,25 +124,64 @@ public class QHUtils {
             newRex = "[5][0]" + "[0][1-2]" + "\\d{1}[1-9]";
         }
 
+        //香港 台湾 澳门 特殊处理 返回原来的省区划
         if ("7".equals(header1) && "1".equals(header2)) {
             newRex = "[7][1][0][0][0][0]";
+            for (CodeEntity.DataBean db : list) {
+                Pattern p = Pattern.compile(newRex);
+                Matcher m = p.matcher(db.getDmz());
+                if (m.matches()) {
+                    allCitys.add(db);
+                }
+            }
+            return allCitys;
         }
         if ("8".equals(header1) && "1".equals(header2)) {
             newRex = "[8][1][0][0][0][0]";
+            for (CodeEntity.DataBean db : list) {
+                Pattern p = Pattern.compile(newRex);
+                Matcher m = p.matcher(db.getDmz());
+                if (m.matches()) {
+                    allCitys.add(db);
+                }
+            }
+            return allCitys;
         }
         if ("8".equals(header1) && "2".equals(header2)) {
             newRex = "[8][2][0][0][0][0]";
+            for (CodeEntity.DataBean db : list) {
+                Pattern p = Pattern.compile(newRex);
+                Matcher m = p.matcher(db.getDmz());
+                if (m.matches()) {
+                    allCitys.add(db);
+                }
+            }
+            return allCitys;
         }
 
-        Log.d("lylog", "---- " + newRex);
         //去找四川的 代号51 00 00 (前两位是省，中间两位是城市，后两位是城市下的区县)
         for (CodeEntity.DataBean db : list) {
             Pattern p = Pattern.compile(newRex);
             Matcher m = p.matcher(db.getDmz());
             if (m.matches()) {
-                allCitys.add(db);
+                if (!(header1 + header2 + "00").equals(db.getDmz().substring(0, 4))) { // 查询条件h1+h2+2个数字+f1+f2  可能包含了省 例如新疆650000  去除6500的省区划
+                    allCitys.add(db);
+                }
+            }
+            //新疆特定
+            if ("65".equals(header1+header2) && "6590".equals(db.getDmz().substring(0, 4))) {  //新疆{"dmlb":"0033","dmsm1":"自治区直辖县级行政区划","dmz":"659000"}  新疆{"dmlb":"0033","dmsm1":"石河子市","dmz":"659001"}  新疆{"dmlb":"0033","dmsm1":"阿拉尔市","dmz":"659002"} 新疆{"dmlb":"0033","dmsm1":"图木舒克市","dmz":"659003"} 新疆{"dmlb":"0033","dmsm1":"五家渠市","dmz":"659004"}
+                Pattern p_1 = Pattern.compile("[6][5][9][0]" + "[0]" + "[1-9]");
+                Matcher m_2 = p_1.matcher(db.getDmz());
+                if (m_2.matches()) {
+                    allCitys.add(db);
+                }
+//                Log.d("lylog", "----  新疆" + GsonUtils.toJson(db));
             }
         }
+
+//        Log.d("lylog", "----  正则表达式" + newRex);
+//        Log.d("lylog", "----  城市列表" + GsonUtils.toJson(allCitys));
+//        Log.d("lylog", "---- 根据0033查询城市数据 " + GsonUtils.toJson(list));
         return allCitys;
     }
 

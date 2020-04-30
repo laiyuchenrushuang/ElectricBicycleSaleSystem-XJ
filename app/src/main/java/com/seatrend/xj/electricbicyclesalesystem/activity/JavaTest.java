@@ -201,14 +201,12 @@ public class JavaTest {
 //        t1.stop();
 
       try {
-          if(1==1){
-              return;
-          }
+          HashMap<String,String> map = new HashMap<>();
+          map.put("lai",null);
       }catch (Exception e){
-          System.out.println("bb");
+//          System.out.println(e.getMessage().toString());
       }
 
-      System.out.println("aa");
     }
 
     public static boolean isCorrect(String sfz) {

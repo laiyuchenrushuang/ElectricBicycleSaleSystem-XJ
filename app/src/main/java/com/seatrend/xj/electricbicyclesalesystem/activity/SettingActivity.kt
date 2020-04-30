@@ -17,6 +17,8 @@ import com.seatrend.xj.electricbicyclesalesystem.persenter.SettingPersenter
 import com.seatrend.xj.electricbicyclesalesystem.util.*
 import com.seatrend.xj.electricbicyclesalesystem.view.SettingView
 import kotlinx.android.synthetic.main.activity_setting.*
+import java.util.concurrent.locks.ReentrantLock
+
 
 class SettingActivity : BaseActivity(), SettingView {
 
@@ -31,10 +33,11 @@ class SettingActivity : BaseActivity(), SettingView {
         try {
             if (commonResponse.getUrl().equals(Constants.GET_ALL_CODE)) {
                 codeAllEntity = GsonUtils.gson(commonResponse.getResponseString(), CodeEntity::class.java)
-
+                showLog(commonResponse.responseString)
             }
             if (Constants.QH_SHENG.equals(commonResponse.getUrl())) {
                 codeShengEntity = GsonUtils.gson(commonResponse.getResponseString(), CodeEntity::class.java)
+                showLog(commonResponse.responseString)
 
             }
 //            if (Constants.GET_USER_PERMMISION.equals(commonResponse.getUrl())) {
@@ -43,28 +46,42 @@ class SettingActivity : BaseActivity(), SettingView {
 //            }
 
             if (null != codeShengEntity && null != codeAllEntity) {
-                ThreadPoolManager.instance.execute(Runnable {
-                    try {
-                        Looper.prepare()
-                        CodeTableSQLiteUtils.deleteAll(CodeTableSQLiteOpenHelper.TABLE_NAME)
-                        CodeTableSQLiteUtils.insertQhToDB(codeShengEntity!!.data)
-                        CodeTableSQLiteUtils.insert(codeAllEntity!!.data)
-//                CodeTableSQLiteUtils.insertPermmisionToDB(codePermissionEntity!!.data)
-                        SharedPreferencesUtils.setIsFirst(false)
-                        val msg = Message.obtain()
-                        msg.what = SUCCESS
-                        mHandler.sendMessage(msg)
-                        Looper.loop()
-                    } catch (e: Exception) {
-                        showToast(e.message.toString())
-                    }
-                })
+                showLog("写数据库1")
+                //不开UI线程 程序卡
+                writeToSqlte(codeShengEntity!!, codeAllEntity!!)
             }
         } catch (e: Exception) {
             showToast("同步失败")
             e.printStackTrace()
             dismissLoadingDialog()
         }
+    }
+
+    @Synchronized
+    private fun writeToSqlte(codeSheng: CodeEntity, codeAll: CodeEntity) {
+        ThreadPoolManager.instance.execute(Runnable {
+            try {
+                if (Looper.myLooper() == null) {
+                    Looper.prepare()
+                }
+                showLog("写数据库-ready")
+                showLog("删除数据库-")
+                CodeTableSQLiteUtils.deleteAll(CodeTableSQLiteOpenHelper.TABLE_NAME)
+                showLog("写区划数据库-")
+                CodeTableSQLiteUtils.insertQhToDB(codeSheng.data)
+                showLog("写其他数据库-")
+                CodeTableSQLiteUtils.insert(codeAll.data)
+                SharedPreferencesUtils.setIsFirst(false)
+                showToast("同步成功")
+                showLog("同步成功")
+//                showLog(CodeTableSQLiteUtils.queryCodeTableCount())
+                dismissLoadingDialog()
+                Looper.loop()
+            } catch (e: Exception) {
+                dismissLoadingDialog()
+                showToast("  " + e.message.toString())
+            }
+        })
     }
 
     override fun netWorkTaskfailed(commonResponse: CommonResponse) {
@@ -85,13 +102,14 @@ class SettingActivity : BaseActivity(), SettingView {
                 REQUEST -> {
 //                    Thread {
 //                        Looper.prepare()
-                        getAllCode()
+                    getAllCode()
 //                        Looper.loop()
 //                    }.start()
                 }
                 SUCCESS -> {
                     dismissLoadingDialog()
                     showToast("同步成功")
+                    showLog("同步成功")
                     tv_update_time.text = Constants.UPDATA_TIME
                 }
             }
@@ -100,7 +118,7 @@ class SettingActivity : BaseActivity(), SettingView {
 
     override fun initView() {
         setPageTitle(getString(R.string.setting))
-        tv_update_time.text = SharedPreferencesUtils.getVesionTime();
+        tv_update_time.text = SharedPreferencesUtils.getVesionTime()
         mSettingPersenter = SettingPersenter(this)
         btn_server_setting.setOnClickListener {
             startActivity(Intent(this, ServiceSettingActivity::class.java))
@@ -108,14 +126,21 @@ class SettingActivity : BaseActivity(), SettingView {
 
         btn_code_syn.setOnClickListener {
             showLoadingDialog()
+            btn_code_syn.text = "代码同步"
             codeShengEntity = null
             codeAllEntity = null
+            SharedPreferencesUtils.setIsFirst(true)
+
             var msg = Message.obtain()
             msg.what = REQUEST
             mHandler.sendMessage(msg)
         }
+        btn_code_syn.setOnLongClickListener {
+            btn_code_syn.text = resources.getString(R.string.dmtb, "" + CodeTableSQLiteUtils.queryCodeTableCount())
+            true
+        }
         btn_video.setOnClickListener {
-//            startActivity(Intent(this, PDFActivity::class.java))
+            //            startActivity(Intent(this, PDFActivity::class.java))
         }
     }
 
@@ -125,7 +150,9 @@ class SettingActivity : BaseActivity(), SettingView {
 //        mSettingPersenter!!.doNetworkTask(HashMap(), Constants.GET_USER_PERMMISION)  //权限
     }
 
+
     override fun onDestroy() {
+        dismissLoadingDialog()
         super.onDestroy()
     }
 

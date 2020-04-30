@@ -448,12 +448,13 @@ class YwReplaceActivity : BaseActivity(), NormalView {
                 return
             }
             val ywyy = StringBuffer()
-            if (cb_xsz_huan.isChecked) {
-                ywyy.append(cb_xsz_huan.text.toString() + "," + sp_bh_xsz.selectedItem.toString())
-            }
-            if (cb_xsz_bu.isChecked) {
-                ywyy.append(cb_xsz_bu.text.toString() + "," + sp_bh_xsz.selectedItem.toString())
-            }
+            //不要补换行驶证的信息
+//            if (cb_xsz_huan.isChecked) {
+//                ywyy.append(cb_xsz_huan.text.toString() + "," + sp_bh_xsz.selectedItem.toString())
+//            }
+//            if (cb_xsz_bu.isChecked) {
+//                ywyy.append(cb_xsz_bu.text.toString() + "," + sp_bh_xsz.selectedItem.toString())
+//            }
 
             if (cb_hp_huan.isChecked) {
                 if (cb_xsz_huan.isChecked || cb_xsz_bu.isChecked) {

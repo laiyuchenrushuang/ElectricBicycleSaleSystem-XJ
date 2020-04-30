@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
+import android.util.Log;
 
 
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants;
@@ -52,9 +53,36 @@ public class CodeTableSQLiteUtils {
             cv.put("zt", StringUtils.isNull(dataBean.getZt()));
             cv.put("dmsm4", StringUtils.isNull(dataBean.getDmsm4()));
             db.insert(CodeTableSQLiteOpenHelper.TABLE_NAME, null, cv);
+//            insertOrUpdate(CodeTableSQLiteOpenHelper.TABLE_NAME, cv, db);
         }
 
         db.close();
+    }
+
+    //是插入还是替换原来的值
+    private static void insertOrUpdate(String tableName, ContentValues cv, SQLiteDatabase db) {
+        if (queryDMZHas(tableName, db, cv)) {
+            db.update(tableName, cv, "xtlb=? and dmlb=? and dmz=? ", new String[]{cv.getAsString("xtlb"), cv.getAsString("dmlb"), cv.getAsString("dmz")});
+        } else {
+            db.insert(tableName, null, cv);
+        }
+    }
+
+    /**
+     * 查询代码值是否存在
+     *
+     * @param tableName
+     * @param db
+     * @param cv
+     * @return
+     */
+    private static boolean queryDMZHas(String tableName, SQLiteDatabase db, ContentValues cv) {
+        Cursor query = db.query(tableName, null, "dmlb=? and dmz=? and xtlb=?", new String[]{cv.getAsString("dmlb"), cv.getAsString("dmz"), cv.getAsString("xtlb")}, null, null, null, null);
+        while (query.moveToNext()) {
+            Log.d("lylog", " query dmz = " + query.getString(query.getColumnIndex("dmz")));
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -223,11 +251,27 @@ public class CodeTableSQLiteUtils {
         ContentValues cv = new ContentValues();
         for (CodeEntity.DataBean dataBean : data) {
             cv.clear();
-            cv.put("dmlb", StringUtils.isNull(Constants.Companion.getMY_QH_SHENG_DMLB()));  //0219
+            cv.put("dmlb", StringUtils.isNull(Constants.Companion.getMY_QH_SHENG_DMLB()));  //0219 自定义的类型  方便子区划的查询
             cv.put("dmz", StringUtils.isNull(dataBean.getDmz()));
             cv.put("dmsm1", StringUtils.isNull(dataBean.getDmsm1()));
+//            cv.put("xtlb", StringUtils.isNull(dataBean.getXtlb()));   //自定义的 不用弄系统类别 防止数据错乱
             db.insert(CodeTableSQLiteOpenHelper.TABLE_NAME, null, cv);
+//            insertOrUpdate(CodeTableSQLiteOpenHelper.TABLE_NAME, cv, db);
         }
+        db.close();
+    }
+
+    //查询代码表数据的条数
+    public static long queryCodeTableCount(){
+        CodeTableSQLiteOpenHelper dbHelper = CodeTableSQLiteOpenHelper.getInstance();
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        String sql = "select count(*) from "+CodeTableSQLiteOpenHelper.TABLE_NAME;
+        Cursor cursor = db.rawQuery(sql, null);
+        cursor.moveToFirst();
+        long count = cursor.getLong(0);
+        cursor.close();
+        db.close();
+        return count;
     }
 
     //增加权限代码code
@@ -257,7 +301,7 @@ public class CodeTableSQLiteUtils {
 
 
         // 数据库已经存在 该车辆类型的照片 执行更新，不存在执行 插入
-        if(checkIsYgPicture(zpzl)){ // 员工备案的照片用sfz做标记
+        if (checkIsYgPicture(zpzl)) { // 员工备案的照片用sfz做标记
             if (!TextUtils.isEmpty(sfz)) {
                 List<PhotoEntity> list = queryBySfzAndDmzRList(sfz, zpzl);
                 if (list.size() > 0) {
@@ -266,7 +310,7 @@ public class CodeTableSQLiteUtils {
                     insert(entity);
                 }
             }
-        }else {// 查验业务的照片用lsh做标记
+        } else {// 查验业务的照片用lsh做标记
             if (!TextUtils.isEmpty(lsh)) {
                 List<PhotoEntity> list = queryByLshAndDmzRList(lsh, zpzl);
                 if (list.size() > 0) {
@@ -394,7 +438,7 @@ public class CodeTableSQLiteUtils {
      * @param sfz  流水号
      * @param zplx 照片类型
      */
-    public static void updateBySfzAndDmz(String sfz, String zplx,String id) {
+    public static void updateBySfzAndDmz(String sfz, String zplx, String id) {
         CodeTableSQLiteOpenHelper dbHelper = CodeTableSQLiteOpenHelper.getInstance();
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -521,6 +565,7 @@ public class CodeTableSQLiteUtils {
         }
         return list;
     }
+
     /**
      * 查询元素 根据身份证和zplx (员工备案照片)
      */
@@ -559,11 +604,12 @@ public class CodeTableSQLiteUtils {
 
     /**
      * 返回数据库对应的照片路径(业务查验)
+     *
      * @param lsh
      * @param dmz
      * @return
      */
-    public static String queryLshAndDmz(String lsh,String dmz){
+    public static String queryLshAndDmz(String lsh, String dmz) {
 
         CodeTableSQLiteOpenHelper dbHelper = CodeTableSQLiteOpenHelper.getInstance();
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -574,7 +620,7 @@ public class CodeTableSQLiteUtils {
             String lsfz = query.getString(query.getColumnIndex(Constants.Companion.getLSH()));
             String zpzl = query.getString(query.getColumnIndex(Constants.Companion.getS_ZPZL()));
             if (lsh.equals(lsfz) && dmz.equals(zpzl)) {
-                 zpPath = query.getString(query.getColumnIndex(Constants.Companion.getS_ZPPATH()));
+                zpPath = query.getString(query.getColumnIndex(Constants.Companion.getS_ZPPATH()));
             }
         }
         return zpPath;
@@ -582,11 +628,12 @@ public class CodeTableSQLiteUtils {
 
     /**
      * 返回数据库对应的照片路径（员工）
+     *
      * @param sfz
      * @param dmz
      * @return
      */
-    public static String querySfzAndDmz(String sfz,String dmz){
+    public static String querySfzAndDmz(String sfz, String dmz) {
 
         CodeTableSQLiteOpenHelper dbHelper = CodeTableSQLiteOpenHelper.getInstance();
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -596,8 +643,8 @@ public class CodeTableSQLiteUtils {
         while (query.moveToNext()) {
             String sfzz = query.getString(query.getColumnIndex(Constants.Companion.getS_SFZ()));
             String zpzl = query.getString(query.getColumnIndex(Constants.Companion.getS_ZPZL()));
-            if (sfz != null && dmz!= null && sfz.equals(sfzz) && dmz.equals(zpzl)) {
-                 zpPath = query.getString(query.getColumnIndex(Constants.Companion.getS_ZPPATH()));
+            if (sfz != null && dmz != null && sfz.equals(sfzz) && dmz.equals(zpzl)) {
+                zpPath = query.getString(query.getColumnIndex(Constants.Companion.getS_ZPPATH()));
             }
         }
         return zpPath;

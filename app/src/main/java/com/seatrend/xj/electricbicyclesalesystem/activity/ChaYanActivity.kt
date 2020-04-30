@@ -88,7 +88,7 @@ class ChaYanActivity : BaseActivity(), NormalView {
     private fun getData() {
 
         if (!(data3c?.data != null && data3c!!.data.threeCertificates != null && data3c!!.data.threeCertificates.data != null)) {
-            showToast("获取技术参数失败")
+            showToast("获取技术参数为空")
             return
         }
         et_c.setText(data3c!!.data.threeCertificates.data.length)

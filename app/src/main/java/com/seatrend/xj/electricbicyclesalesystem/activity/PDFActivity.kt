@@ -78,7 +78,7 @@ class PDFActivity : BaseActivity(), LoginView {
         Glide.with(this).load(LoadUrlUtils.loadPdfUrl(lsh, url)).listener(object : RequestListener<String, GlideDrawable> {
             override fun onException(e: Exception?, model: String?, target: Target<GlideDrawable>?, isFirstResource: Boolean): Boolean {
                 dismissLoadingDialog()
-                showToast("加载失败,后台表格制作中...请稍等重试")
+                showToast("后台表格制作中...请稍等重试")
                 return false
             }
 

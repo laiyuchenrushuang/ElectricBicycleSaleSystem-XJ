@@ -75,7 +75,7 @@ class CarCYxxFragment : BaseFragment() {
                         ViewShowUtils.showGoneView(ll_cyxx)
                         ViewShowUtils.showVisibleView(tv_cyxx)
                     } else {
-                        showToast("查验信息为空")
+//                        showToast("查验信息为空")
                     }
                     return
                 }
@@ -104,7 +104,7 @@ class CarCYxxFragment : BaseFragment() {
         try {
             enity = activity.intent.getSerializableExtra("all_data") as AllBikeMsgEnity
             if (enity == null || enity!!.data == null || enity!!.data.checkData == null) {
-                showToast("获取查验信息失败")
+                showToast("获取查验信息为空")
                 return
             }
             if ("A".equals(enity!!.data.checkData.ywlx)) {

@@ -169,6 +169,7 @@ public class PhotoUploadService extends Service {
                         map.put(Constants.Companion.getS_ZPSM(), entity.getZpsm());
                         map.put(Constants.Companion.getS_CFFS(), entity.getCffs());
 //                        map.put(Constants.Companion.getS_ZPPATH(), entity.getZpPath());
+                        Log.i(PUS_TAG, "  map  post = "+GsonUtils.toJson(map));
                         mUploadModule.uploadPhoto(map, Constants.Companion.getPHOTO_MSG_SAVE()); // YW &  CY
                     }
                 }

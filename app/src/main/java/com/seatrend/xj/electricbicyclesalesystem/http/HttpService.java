@@ -92,7 +92,7 @@ public class HttpService {
                     break;
                 case PREGRESS_CODE:
                     CommonProgress commonProgress = (CommonProgress) msg.obj;
-                    ((ProgressModule)mBaseModule).downloadProgress(commonProgress);
+                    ((ProgressModule) mBaseModule).downloadProgress(commonProgress);
                     break;
             }
         }
@@ -113,6 +113,8 @@ public class HttpService {
         String baseUrl = SharedPreferencesUtils.getNetworkAddress();
 
         final String finalUrl = baseUrl + url;
+        String key = "";  //map 空指针 验证
+        String value = ""; //map 空指针 验证
         Request request;
         try {
 
@@ -120,12 +122,13 @@ public class HttpService {
                 StringBuffer buffer = new StringBuffer();
                 buffer.append("?");
                 for (Map.Entry<String, String> entry : map.entrySet()) {
-                    if (Constants.Companion.getAES_ENABLE()){
+                    key = entry.getKey();
+                    value = entry.getValue();
+                    if (Constants.Companion.getAES_ENABLE()) {
                         buffer.append(entry.getKey().trim() + "=" + AESUtils.encrypt(entry.getValue().trim()) + "&");
-                    }else {
-                          buffer.append(entry.getKey().trim() + "=" + entry.getValue().trim() + "&");
+                    } else {
+                        buffer.append(entry.getKey().trim() + "=" + entry.getValue().trim() + "&");
                     }
-
                 }
                 String s = buffer.toString();
                 String parameter = s.substring(0, s.length() - 1);
@@ -153,10 +156,10 @@ public class HttpService {
 
                 FormBody.Builder builder = new FormBody.Builder();
                 for (Map.Entry<String, String> entry : map.entrySet()) {
-                    if (Constants.Companion.getAES_ENABLE()){
+                    if (Constants.Companion.getAES_ENABLE()) {
                         builder.add(entry.getKey().trim(), AESUtils.encrypt(entry.getValue().trim()));
-                    }else {
-                         builder.add(entry.getKey().trim(), entry.getValue().trim());
+                    } else {
+                        builder.add(entry.getKey().trim(), entry.getValue().trim());
                     }
                 }
                 RequestBody requestBody = builder.build();
@@ -167,6 +170,15 @@ public class HttpService {
                         .build();
                 Log.i("httpService", finalUrl);
             }
+        } catch (NullPointerException e) {
+            Message message = Message.obtain();
+            message.what = FAILED_CODE;
+            CommonResponse commonResponse = new CommonResponse();
+            commonResponse.setUrl(url);
+            commonResponse.setResponseString(e.getMessage() + " key = " + key + "  value = " + value);
+            message.obj = commonResponse;
+            mHandler.sendMessage(message);
+            return;
         } catch (Exception e) {
             Message message = Message.obtain();
             message.what = FAILED_CODE;
@@ -194,11 +206,11 @@ public class HttpService {
             public void onResponse(Call call, Response response) throws IOException {
                 Message message = Message.obtain();
                 String resp = response.body().string();
-                Log.d("httpservice ", url+" result1 = " + resp);
-                if (Constants.Companion.getAES_ENABLE()){
-                    resp=AESUtils.decrypt(resp);
+                Log.d("httpservice ", url + " result1 = " + resp);
+                if (Constants.Companion.getAES_ENABLE()) {
+                    resp = AESUtils.decrypt(resp);
                 }
-                Log.d("httpservice ", url+" result2 = " + resp);
+                Log.d("httpservice ", url + " result2 = " + resp);
                 if (TextUtils.isEmpty(resp)) {
                     message.what = FAILED_CODE;
                     CommonResponse commonResponse = new CommonResponse();
@@ -249,8 +261,8 @@ public class HttpService {
         this.mBaseModule = module;
         String baseUrl = SharedPreferencesUtils.getNetworkAddress();
         final String finalUrl = baseUrl + url;
-        if (Constants.Companion.getAES_ENABLE()){
-            json=AESUtils.encrypt(json);
+        if (Constants.Companion.getAES_ENABLE()) {
+            json = AESUtils.encrypt(json);
         }
         Request request;
         try {
@@ -290,8 +302,8 @@ public class HttpService {
             public void onResponse(Call call, Response response) throws IOException {
                 Message message = Message.obtain();
                 String resp = response.body().string();
-                if (Constants.Companion.getAES_ENABLE()){
-                    resp=AESUtils.decrypt(resp);
+                if (Constants.Companion.getAES_ENABLE()) {
+                    resp = AESUtils.decrypt(resp);
                 }
                 if (TextUtils.isEmpty(resp)) {
                     message.what = FAILED_CODE;
@@ -348,9 +360,9 @@ public class HttpService {
                 buffer.append("?");
                 for (Map.Entry<String, String> entry : map.entrySet()) {
 //                    buffer.append(entry.getKey().trim() + "=" + entry.getValue().trim() + "&");
-                    if (Constants.Companion.getAES_ENABLE()){
+                    if (Constants.Companion.getAES_ENABLE()) {
                         buffer.append(entry.getKey().trim() + "=" + AESUtils.encrypt(entry.getValue().trim()) + "&");
-                    }else {
+                    } else {
                         buffer.append(entry.getKey().trim() + "=" + entry.getValue().trim() + "&");
                     }
                 }
@@ -365,9 +377,9 @@ public class HttpService {
             } else {
                 FormBody.Builder builder = new FormBody.Builder();
                 for (Map.Entry<String, String> entry : map.entrySet()) {
-                    if (Constants.Companion.getAES_ENABLE()){
+                    if (Constants.Companion.getAES_ENABLE()) {
                         builder.add(entry.getKey().trim(), AESUtils.encrypt(entry.getValue().trim()));
-                    }else {
+                    } else {
                         builder.add(entry.getKey().trim(), entry.getValue().trim());
                     }
                 }
@@ -429,14 +441,14 @@ public class HttpService {
                     while ((len = inputStream.read(buffer)) != -1) {
                         num += len;
                         fileOutputStream.write(buffer, 0, len);
-                        double d =  (double)num / (double) totalLength;
-                        String format = df.format(d*100);
+                        double d = (double) num / (double) totalLength;
+                        String format = df.format(d * 100);
                         Message progressMsg = Message.obtain();
-                        CommonProgress commonProgress=new CommonProgress();
+                        CommonProgress commonProgress = new CommonProgress();
                         commonProgress.setProgress(format);
                         commonProgress.setUrl(url);
-                        progressMsg.what=PREGRESS_CODE;
-                        progressMsg.obj=commonProgress;
+                        progressMsg.what = PREGRESS_CODE;
+                        progressMsg.obj = commonProgress;
                         mHandler.sendMessage(progressMsg);
                     }
 
@@ -577,8 +589,8 @@ public class HttpService {
 
                 String resp = response.body().string();
                 Log.i("httpService", "result1 解码前【文件】 = " + resp);
-                if (Constants.Companion.getAES_ENABLE()){
-                    resp=AESUtils.decrypt(resp);
+                if (Constants.Companion.getAES_ENABLE()) {
+                    resp = AESUtils.decrypt(resp);
                 }
                 Log.i("httpService", "result2 解码后 【文件】 = " + resp);
                 if (TextUtils.isEmpty(resp)) {

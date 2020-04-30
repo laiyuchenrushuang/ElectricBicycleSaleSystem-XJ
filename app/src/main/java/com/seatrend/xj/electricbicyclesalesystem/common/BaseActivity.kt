@@ -42,7 +42,7 @@ import com.seatrend.xj.electricbicyclesalesystem.util.*
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.File
-import java.util.ArrayList
+import java.util.*
 import java.util.regex.Pattern
 
 /**
@@ -65,7 +65,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
     var tvRight: TextView? = null
     var rlParent: RelativeLayout? = null
     private var noDataView: View? = null
-    val ID_CARD_READ_CODE = 10
+    val ID_CARD_READ_CODE = 10   //为什么没用了，因为很多个身份证采集，这个只是一个id，没法去人所有人代理人邮寄人
     val LIMIT_TIME: Int = 30 * 60 * 1000
     var currentTime: Long = SystemClock.uptimeMillis()
     private var mOcr: OCR? = null
@@ -104,12 +104,14 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
 //            }
 //        }
 
-        //保留“-“ 方便门牌输入
+        //保留“-“ 方便门牌输入 "." "·"
         override fun filter(source: CharSequence, start: Int, end: Int, dest: Spanned, dstart: Int, dend: Int): CharSequence? {
             for (i in start until end) {
                 if (!Character.isLetterOrDigit(source[i])
                         && Character.toString(source[i]) != "_"
-                        && Character.toString(source[i]) != "-") {
+                        && Character.toString(source[i]) != "-"
+                        && Character.toString(source[i]) != "."
+                        && Character.toString(source[i]) != "·") {
                     return ""
                 }
             }
@@ -419,8 +421,8 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
         startActivityForResult(intent, code)
     }
 
-    protected fun showLog(s: String) {
-        Log.d("lylog", s)
+    protected fun showLog(s: Any) {
+        Log.d("lylog", s.toString())
     }
 
     /**
@@ -669,7 +671,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
     }
 
     //get all permissions is  OK ?
-    fun appGetPermission():Boolean{
+    fun appGetPermission(): Boolean {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val permission = ArrayList<String>()
             if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) !== PackageManager.PERMISSION_GRANTED) {

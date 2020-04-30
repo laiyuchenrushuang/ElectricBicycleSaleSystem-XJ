@@ -46,7 +46,8 @@ class EmployeeEditActivity : BaseActivity(), NormalView, SelectorAdapter.CheckSt
 
             enity.data.sortBy { it.xh }
             for (db in enity.data) {
-                if(!"B01".equals(db.jsdh)){
+                //备注 Mr.Zhang  提示00是管理员级别，需要屏蔽管理员
+                if(Constants.BA_GLY != db.jsdh){
                     jsqxList.add(db.jsdh + ":" + db.jsmc)
                 }
 
@@ -183,7 +184,7 @@ class EmployeeEditActivity : BaseActivity(), NormalView, SelectorAdapter.CheckSt
             enity.yhdh = ed_sfz.text.toString()
 
             enity.cjr = UserInfo.XM
-            enity.zhzt = "2"  // 固定 2  待审核
+            enity.zhzt = "0"  // 固定 2  待审核   0 正常
 
             if ("1".equals(intent.getStringExtra("type"))) {
                 enity.glbm = EmployeeDetailActivity.mEmployeeListBean!!.glbm

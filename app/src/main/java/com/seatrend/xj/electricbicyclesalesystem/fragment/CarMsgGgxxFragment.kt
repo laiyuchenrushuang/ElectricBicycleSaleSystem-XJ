@@ -66,7 +66,7 @@ class CarMsgGgxxFragment : BaseFragment() {
         val data1 = activity.intent.getSerializableExtra("all_data") as CYEntranceEnity
 
         if (data1 == null || data1.data == null) {
-            showToast("获取参数失败")
+//            showToast("获取参数为空")
             return
         }
 
@@ -76,7 +76,7 @@ class CarMsgGgxxFragment : BaseFragment() {
         if ("A".equals(activity.intent.getStringExtra("ywlx"))) {
             val data3c = activity.intent.getSerializableExtra("3c_data") as ThreeCEnity
             if (data3c == null || data3c.data == null || data3c.data == null || data3c.data.threeCertificates == null || data3c.data.threeCertificates.data == null) {
-                showToast("获取3C技术参数失败")
+//                showToast("获取3C技术参数为空")
                 return
             }
             ll_zcbm.visibility = View.VISIBLE
@@ -123,7 +123,7 @@ class CarMsgGgxxFragment : BaseFragment() {
         }
 
         if (data1.data.fjdcJscu == null) {
-            showToast("获取基础参数列表失败")
+//            showToast("获取基础参数列表为空")
             return
         }
         carinfo_jscs_scqymc.text = if (TextUtils.isEmpty(data1.data.fjdcJscu.scqymc)) "/" else data1.data.fjdcJscu.scqymc //生产企业名称

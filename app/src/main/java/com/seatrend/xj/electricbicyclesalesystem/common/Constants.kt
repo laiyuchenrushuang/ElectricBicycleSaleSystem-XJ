@@ -16,7 +16,7 @@ class Constants {
         val AES_ENABLE=true //是否开起AES 加密
         val DEBUG: Boolean = true
         val GENGXIN= 66666
-        var UPDATA_TIME = "更新时间: 2019-12-17"
+        var UPDATA_TIME = "更新时间: 2020-04-27"
         var GET = "GET"
         var POST = "POST"///vio/getVioByCar
         var IMAGE_FILE = "BicycleImage"//文件夹
@@ -264,5 +264,6 @@ class Constants {
 
         //判定车身颜色
         val PD_CSYS="C"
+        val BA_GLY = "B00" //备案 管理员屏蔽
     }
 }

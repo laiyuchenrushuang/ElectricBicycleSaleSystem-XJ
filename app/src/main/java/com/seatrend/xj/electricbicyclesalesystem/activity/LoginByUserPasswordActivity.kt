@@ -55,8 +55,10 @@ class LoginByUserPasswordActivity : BaseActivity(), LoginView, CarPhotoView {
 
         appPermissionReq()
         if (AppUtils.isApkInDebug(this)) {
-            et_user.setText("513822198909298761")
-            et_pwd.setText("1q2w3e4r.")
+//            et_user.setText("513822198909298761")
+//            et_pwd.setText("1q2w3e4r.")
+            et_user.setText("623130198903031234")  //xj test
+            et_pwd.setText("Aa123456")
         }
 
         tv_version.text = getString(R.string.cur_version, AppUtils.getVersionName(this))
@@ -114,7 +116,7 @@ class LoginByUserPasswordActivity : BaseActivity(), LoginView, CarPhotoView {
         if (Constants.GLOABAL_PARAMETER.equals(commonResponse.getUrl())) {
             globalEntity = GsonUtils.gson(commonResponse.getResponseString(), GlobalEnity::class.java)
             if (!ObjectNullUtil.checknull(globalEntity!!.data) || globalEntity!!.data.size <= 0) {
-                showToast("全局参数获取失败")
+                showToast("全局参数获取为空")
                 return
             }
             for (db in globalEntity!!.data) {

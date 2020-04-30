@@ -32,6 +32,7 @@ class LoginLoadingActivity : BaseActivity() {
         val handler = Handler()
         handler.postDelayed({
             startActivity(Intent(this@LoginLoadingActivity, LoginByUserPasswordActivity::class.java))
+//            startActivity(Intent(this@LoginLoadingActivity, LoginActivity::class.java))
             finish()
             overridePendingTransition(R.anim.zoomin, R.anim.zoomout)
         }, time)

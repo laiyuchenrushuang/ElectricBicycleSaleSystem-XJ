@@ -1,6 +1,8 @@
 package com.seatrend.xj.electricbicyclesalesystem.activity
 
 import android.content.Intent
+import android.view.KeyEvent
+import android.view.View
 import com.seatrend.xj.electricbicyclesalesystem.R
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
 import com.seatrend.xj.electricbicyclesalesystem.manager.AppManager
@@ -31,11 +33,24 @@ class EmployeeRemindActivity : BaseActivity(){
 
     private fun bindEvent() {
         bt_next.setOnClickListener {
-            val intent = Intent(this, EmployeeActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-            startActivity(intent)
-            finish()
+            comeBack()
         }
+        ivBack!!.visibility = View.GONE
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            comeBack()
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
+    }
+
+    private fun comeBack() {
+        val intent = Intent(this, EmployeeActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        startActivity(intent)
+        finish()
     }
 
     override fun getLayout(): Int {

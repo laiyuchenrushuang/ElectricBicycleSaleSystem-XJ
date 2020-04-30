@@ -1,6 +1,7 @@
 package com.seatrend.xj.electricbicyclesalesystem.activity
 
 import android.content.Intent
+import android.view.KeyEvent
 import android.view.View
 import com.seatrend.xj.electricbicyclesalesystem.R
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
@@ -19,11 +20,7 @@ class RemindHPBFActivity : BaseActivity() {
 
     private fun bindEvent() {
         btn_back_home.setOnClickListener {
-            //            PhotoFileUtils.deleteCaptruePhotoFile()
-            val intent = Intent(this, MainOtherActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-            startActivity(intent)
-            finish()
+            comeBack()
         }
 
 //        bt_pdf.visibility = View.GONE
@@ -32,6 +29,23 @@ class RemindHPBFActivity : BaseActivity() {
             intent.setClass(this, PDFActivity::class.java)
             startActivity(intent)
         }
+        ivBack!!.visibility = View.GONE
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            comeBack()
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
+    }
+
+    private fun comeBack() {
+        //            PhotoFileUtils.deleteCaptruePhotoFile()
+        val intent = Intent(this, MainOtherActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        startActivity(intent)
+        finish()
     }
 
     override fun getLayout(): Int {

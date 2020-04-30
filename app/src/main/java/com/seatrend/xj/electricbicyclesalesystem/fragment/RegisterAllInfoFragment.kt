@@ -57,7 +57,7 @@ class RegisterAllInfoFragment : BaseFragment(), View.OnTouchListener {
             enity = activity.intent.getSerializableExtra("all_data") as AllBikeMsgEnity
             try {
                 if(!ObjectNullUtil.checknull(enity) || !ObjectNullUtil.checknull(enity!!.data) || null == enity!!.data.fjdcBusiness || null == enity!!.data.fjdcBusiness.ywlx || TextUtils.isEmpty(enity!!.data.fjdcBusiness.ywlx)){
-                    showToast("登记信息获取为空")
+//                    showToast("登记信息获取为空")
                     return
                 }
 

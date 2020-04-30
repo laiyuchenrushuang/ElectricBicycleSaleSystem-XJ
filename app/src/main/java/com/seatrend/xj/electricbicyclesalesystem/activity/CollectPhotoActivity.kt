@@ -167,7 +167,7 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
             }
         }
         btn_commit.setOnClickListener {
-//            showLog("  result list = " + GsonUtils.toJson(allPhoto))
+            //            showLog("  result list = " + GsonUtils.toJson(allPhoto))
 //            return@setOnClickListener
             resetNumbers()
             if (checkPhoto(allPhoto)) {
@@ -426,10 +426,12 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
     }
 
     private fun savePhoto() { //其他业务类
-        if (Constants.CAR_ZC.equals(photoEntranceFlag) || Constants.CAR_BG.equals(photoEntranceFlag) || Constants.CAR_ZY.equals(photoEntranceFlag)) {
+        if (Constants.CAR_ZC == photoEntranceFlag || Constants.CAR_BG == photoEntranceFlag || Constants.CAR_ZY == photoEntranceFlag) {
             val enity = intent.getSerializableExtra("all_data") as AllBikeMsgEnity
-            mLsh = enity.data.checkData.lsh
-            mXh = enity.data.checkData.xh
+            if (!TextUtils.isEmpty(enity.data.checkData.lsh) && !TextUtils.isEmpty(enity.data.checkData.xh)) {
+                mLsh = enity.data.checkData.lsh
+                mXh = enity.data.checkData.xh
+            }
         }
 
         //保存图片
@@ -491,10 +493,10 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
 
 
             if (Constants.TYPE_ZCBM == allPhoto[photoPosition].zplx) {
-                showToast(resources.getString(R.string.clippview_tips,allPhoto[photoPosition].zmmc))
+                showToast(resources.getString(R.string.clippview_tips, allPhoto[photoPosition].zmmc))
             }
             if (Constants.TYPE_TYH == allPhoto[photoPosition].zplx) {
-                showToast(resources.getString(R.string.clippview_tips,allPhoto[photoPosition].zmmc))
+                showToast(resources.getString(R.string.clippview_tips, allPhoto[photoPosition].zmmc))
             }
 
         }
@@ -543,15 +545,19 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
     }
 
     private fun sendActivityEventAddState() {
-        showLoadingDialog()
-        val map = HashMap<String, String?>()
-        map["lsh"] = mLsh
-        map["xh"] = mXh
-        map["glbm "] = UserInfo.GLBM
-        map["zt"] = "2" //流程状态 0-查验未通过，1-已查验，2-已登记，3-已制证，E-已归档，Q-已退办
-        map["cyrsfzmhm"] = UserInfo.SFZMHM//查验人身份证明号码
-        map["czpt"] = Constants.CZPT //查验平台
-        mCarPhotoPersenter!!.doNetworkTask(map, Constants.UPDATA_LS_ZT)
+        try {
+            showLoadingDialog()
+            val map = HashMap<String, String?>()
+            map["lsh"] = mLsh
+            map["xh"] = mXh
+            map["glbm "] = UserInfo.GLBM
+            map["zt"] = "2" //流程状态 0-查验未通过，1-已查验，2-已登记，3-已制证，E-已归档，Q-已退办
+            map["cyrsfzmhm"] = UserInfo.SFZMHM//查验人身份证明号码
+            map["czpt"] = Constants.CZPT //查验平台
+            mCarPhotoPersenter!!.doNetworkTask(map, Constants.UPDATA_LS_ZT)
+        } catch (e: Exception) {
+            showToast(e.message.toString())
+        }
     }
 
     override fun netWorkTaskfailed(commonResponse: CommonResponse) {
@@ -589,7 +595,7 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
     }
 
     private fun getClipperView(position: Int): Boolean {
-        showLog(""+allPhoto[position].zplx)
+        showLog("" + allPhoto[position].zplx)
         //适配整车编码类型的图片
         if (Constants.TYPE_ZCBM == allPhoto[position].zplx) {
             return true

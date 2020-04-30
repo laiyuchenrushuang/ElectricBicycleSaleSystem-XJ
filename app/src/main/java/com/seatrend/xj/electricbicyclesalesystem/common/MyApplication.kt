@@ -53,9 +53,6 @@ class MyApplication : Application(), Application.ActivityLifecycleCallbacks {
     }
 
     companion object {
-
-
         var myApplicationContext: MyApplication? = null
-
     }
 }

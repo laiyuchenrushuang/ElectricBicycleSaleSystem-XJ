@@ -39,7 +39,7 @@ class CYActualMsgFragment : BaseFragment(), NormalView {
         if (Constants.SYSTEM_PRODUCT_HPHM.equals(commonResponse.getUrl())) {
             val enity = GsonUtils.gson(commonResponse.responseString, HpHmEnity::class.java)
             if (!ObjectNullUtil.checknull(enity.data)) {
-                showToast("号牌号码获取为空！")
+//                showToast("号牌号码获取为空！")
                 return
             }
             activity.runOnUiThread {
@@ -91,11 +91,11 @@ class CYActualMsgFragment : BaseFragment(), NormalView {
 
 
             if (!(data3c?.data != null && data3c!!.data.threeCertificates != null && data3c!!.data.threeCertificates.data != null)) {
-                showToast("获取ccc参数失败")
+//                showToast("获取ccc参数为空")
                 return
             }
 //            if (!(data1?.data != null && data1!!.data.fjdcJscu != null && data3c!!.data.threeCertificates.data != null)) {
-//                showToast("获取技术参数参数失败")
+//                showToast("获取技术参数参数为空")
 //                return
 //            }
             et_c.setText(data3c!!.data.threeCertificates.data.length)
@@ -108,8 +108,9 @@ class CYActualMsgFragment : BaseFragment(), NormalView {
             et_ddjbh.setText(if (data1 == null || data1!!.data == null || data1!!.data.fjdcJscu == null) "" else data1!!.data.fjdcJscu.ddjbm)  //电动机编号
 
             if (!TextUtils.isEmpty(data3c!!.data.threeCertificates.data.vehicleManufacturer)) {
-                et_zzc.setText(data3c!!.data.threeCertificates.data.vehicleManufacturer)
+                et_zzc.setText(data3c!!.data.threeCertificates.data.vehicleManufacturer)  //3c获取到
                 et_zzc.isFocusable = false
+                tv_zzc.setTextColor(R.color.gray)
             } else {
                 et_zzc.isFocusable = true
             }
@@ -201,8 +202,8 @@ class CYActualMsgFragment : BaseFragment(), NormalView {
             return null!!
         }
         var map = HashMap<String, String>()
-        map["ddjbh"] = et_ddjbh.text.toString().toUpperCase()
-        map["zcbm"] = et_zcbm.text.toString().toUpperCase()
+        map["ddjbh"] = et_ddjbh.text.toString().trim().toUpperCase()
+        map["zcbm"] = et_zcbm.text.toString().trim().toUpperCase()
         map["lsh"] = data1!!.data.lsh
         map["xh"] = data1!!.data.xh
         map["cyr"] = UserInfo.XM

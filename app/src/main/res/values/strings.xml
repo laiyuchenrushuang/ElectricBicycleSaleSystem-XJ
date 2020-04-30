@@ -158,5 +158,6 @@
 
     <string name="take_many_patterns">多拍模式</string>
     <string name="pdf_title">%1$s表详情</string>
+    <string name="dmtb">代码同步 （总数目 ：%1$s）</string>
 
 </resources>

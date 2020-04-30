@@ -51,7 +51,7 @@ class CarMsgJscsFragment : BaseFragment() {
                     var data3c = activity.intent.getSerializableExtra("3c_data") as ThreeCEnity //注册登记专用
                     //注册登记3c走互联网获取的3c信息
                     if (data3c == null || data3c.data == null || data3c.data.threeCertificates == null) {
-                        showToast("获取3C技术参数失败")
+//                        showToast("获取3C技术参数为空")
                         return
                     }
 
@@ -78,7 +78,7 @@ class CarMsgJscsFragment : BaseFragment() {
                     //其他的登记 走服务器上存储的3c信息
                     var data1 = activity.intent.getSerializableExtra("all_data") as CYEntranceEnity
                     if (data1 == null || data1.data == null || data1.data.threeCertificates == null) {
-                        showToast("获取3C技术参数失败")
+//                        showToast("获取3C技术参数为空")
                         return
                     }
                     carinfo_jscs_zcbm.text = data1.data.threeCertificates.zcbm
@@ -107,7 +107,7 @@ class CarMsgJscsFragment : BaseFragment() {
                     cydata = activity.intent.getSerializableExtra("cy_data") as CarMsgEnity
 
                     if (cydata == null || cydata!!.data == null || cydata!!.data.jscs == null || cydata!!.data.jscs.cphgzbh == null || cydata!!.data.cccdata == null) {
-                        showToast("获取技术参数失败")
+//                        showToast("获取技术参数为空")
                         return
                     }
                     carinfo_jscs_zcbm.text = cydata!!.data.jscs.cphgzbh //zcbm
@@ -133,7 +133,7 @@ class CarMsgJscsFragment : BaseFragment() {
                 } else { //原来的逻辑不变
                     enity = activity.intent.getSerializableExtra("all_data") as AllBikeMsgEnity
                     if (enity == null || enity!!.data == null || enity!!.data.cccData == null) {
-                        showToast("获取技术参数失败")
+//                        showToast("获取技术参数为空")
                         return
                     }
                     carinfo_jscs_zcbm.text = if (null == enity!!.data.checkData || TextUtils.isEmpty(enity!!.data.checkData.zcbm)) enity!!.data.fjdcBusiness.zcbm else enity!!.data.checkData.zcbm //zcbm

@@ -1,5 +1,6 @@
 package com.seatrend.xj.electricbicyclesalesystem.activity
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.text.TextUtils
@@ -162,6 +163,13 @@ class YwTBSearchActivity : BaseActivity(), NormalView {
         }
         ll_back.setOnClickListener {
             finish()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == Activity.RESULT_OK){
+            ll_item.visibility = View.GONE
         }
     }
 

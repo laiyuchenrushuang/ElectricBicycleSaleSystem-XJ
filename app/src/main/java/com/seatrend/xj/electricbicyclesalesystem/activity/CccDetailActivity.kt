@@ -28,7 +28,7 @@ class CccDetailActivity : BaseActivity(), NormalView {
     private fun showData(entity: ThreeCEnity?) {
         try {
             if (entity == null || entity.data == null || entity.data.threeCertificates == null || entity.data.threeCertificates.data == null) {
-                showToast("获取3C技术参数失败")
+                showToast("获取3C技术参数为空")
                 return
             }
             carinfo_jscs_zcbmwz.text = StringUtils.isNull(entity.data.threeCertificates.data.codeOnFrame.trim()) //车架上整车编码的位置

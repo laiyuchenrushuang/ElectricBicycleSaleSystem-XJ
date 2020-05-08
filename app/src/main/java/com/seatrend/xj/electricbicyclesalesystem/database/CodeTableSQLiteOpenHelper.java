@@ -28,7 +28,7 @@ public class CodeTableSQLiteOpenHelper extends SQLiteOpenHelper{
             ",dmsm1 varchar(100),mlmc varchar(100),dmsm2 varchar(100),dmsm3 varchar(100),zt varchar(10),dmsm4 varchar(100))";
     private static String CAREATE_TABLE =String.format(CREATE_TABLE_SQL,TABLE_NAME);
 
-    private static String CREATE_PHOTO_TABLE_SQL="create table %s(id integer primary key autoincrement,lsh varchar(100),xh varchar(100),zpzl varchar(100),zpdz varchar(100),zpsm varchar(100),cffs varchar(100),lrr varchar(10),lrbm varchar(10),zpPath varchar(100),sfzmhm varchar(100))";
+    private static String CREATE_PHOTO_TABLE_SQL="create table %s(id integer primary key autoincrement,lsh varchar(100),xh varchar(100),zpzl varchar(100),zpdz varchar(100),zpsm varchar(100),cffs varchar(100),lrr varchar(10),lrbm varchar(10),zpPath varchar(100),sfzmhm varchar(100),zplx varchar(100))";
 
     public static String PHOTO_TABLE_NAME="PHOTO_TABLE";
     private static String CAREATE_PHOTO =String.format(CREATE_PHOTO_TABLE_SQL,PHOTO_TABLE_NAME);

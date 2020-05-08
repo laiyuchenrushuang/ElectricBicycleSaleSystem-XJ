@@ -27,6 +27,8 @@ import kotlinx.android.synthetic.main.common_title.*
 import kotlinx.android.synthetic.main.recyclerview.*
 import java.io.File
 import java.text.DecimalFormat
+import android.os.Parcelable
+
 
 /**
  * Created by ly on 2019/9/27 10:34
@@ -44,6 +46,10 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
         var mLsh: String? = null //业务流水号
         var mXh: String? = null //业务序号
         var ywlx: String? = null //业务类型
+
+        var allPhoto = ArrayList<PhotoTypeEntity.DataBean.ConfigBean>() //所有照片类型信息（服务器）  初次进来的所有照片类型
+
+        var addPhoto = ArrayList<PhotoTypeEntity.DataBean.ConfigBean>() //多拍模式 添加的照片类型（缓存初始zplx）
     }
 
     private var requested: Boolean = false
@@ -59,9 +65,7 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
     private var uploadPhotoSuccessNumber = 0//成功总数
     private val VIN_CODE = 30
     private var mCheckDataPhotoAdapter: CheckDataPhotoAdapter? = null
-    var allPhoto = ArrayList<PhotoTypeEntity.DataBean.ConfigBean>() //所有照片类型信息（服务器）  初次进来的所有照片类型
 
-    var addPhoto = ArrayList<PhotoTypeEntity.DataBean.ConfigBean>() //多拍模式 添加的照片类型（缓存初始zplx）
 
     private var progressBar: ProgressBar? = null
     private var tvPro: TextView? = null
@@ -87,68 +91,70 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
 
         tv_right.text = resources.getString(R.string.take_many_patterns)
         initData()
-        showLog(GsonUtils.toJson(addPhoto))
+        showLog("图片数据h -----" + GsonUtils.toJson(addPhoto))
     }
 
     private fun initData() {
-        rb_cy_ok.isChecked = true
-        //查验结论的逻辑 查验才有
-        if (Constants.CAR_CY.equals(photoEntranceFlag)) {
-            mDataZcbm = intent.getSerializableExtra("all_data") as CYEntranceEnity
-            ll_cyjl.visibility = View.VISIBLE
-            if (!jtxsFlag) {
-                rb_cy_ok.isEnabled = false
-                rb_cy_no.isClickable = false
-                rb_cy_no.isChecked = true
-            }
-            val list = CodeTableSQLiteUtils.queryByDMLB(Constants.CYZP)
-            allPhoto.clear()
-            addPhoto.clear()
-            for (db in list) {
-                var enity = PhotoTypeEntity.DataBean.ConfigBean()
-                enity.zmmc = db.dmsm1
-                enity.zplx = db.dmz
-                allPhoto.add(enity)
-                addPhoto.add(enity)
-            }
-            mCheckDataPhotoAdapter!!.setPhotoType(allPhoto)
-        } else if (Constants.YGBA.equals(photoEntranceFlag)) {
-            //员工备案的图片收集
-            ll_cyjl.visibility = View.GONE
-            val list = CodeTableSQLiteUtils.queryByDMLB(Constants.YGZP)
-            allPhoto.clear()
-            addPhoto.clear()
-            for (db in list) {
-                var enity = PhotoTypeEntity.DataBean.ConfigBean()
-                enity.zmmc = db.dmsm1
-                enity.zplx = db.dmz
-                allPhoto.add(enity)
-                addPhoto.add(enity)
-            }
-            mCheckDataPhotoAdapter!!.setPhotoType(allPhoto)
-        } else {
-            ll_cyjl.visibility = View.GONE
-            val list = CodeTableSQLiteUtils.queryByDMLB(Constants.DJZP)
-            allPhoto.clear()
-            addPhoto.clear()
-            var flagE: PhotoTypeEntity.DataBean.ConfigBean? = null
-            for (db in list) {
-                var enity = PhotoTypeEntity.DataBean.ConfigBean()
-                enity.zmmc = db.dmsm1
-                enity.zplx = db.dmz
-                if (Constants.TYPE_QT == db.dmz) {
+        try {
+            rb_cy_ok.isChecked = true
+            //查验结论的逻辑 查验才有
+            if (Constants.CAR_CY == photoEntranceFlag) {
+                mDataZcbm = intent.getSerializableExtra("all_data") as CYEntranceEnity
+                ll_cyjl.visibility = View.VISIBLE
+                if (!jtxsFlag) {
+                    rb_cy_ok.isEnabled = false
+                    rb_cy_no.isClickable = false
+                    rb_cy_no.isChecked = true
+                }
+                var enity = intent.getParcelableExtra<Parcelable>("photo_list") as ServicePhotoCamebackEnity
 
-                    flagE = enity
-                } else {
+                allPhoto.clear()
+                addPhoto.clear()
+                if (enity.data != null && enity.data.size > 0) {
+                    for (db in enity.data) {
+                        var photoEnity = PhotoTypeEntity.DataBean.ConfigBean()
+                        photoEnity.zmmc = db.dmsm
+                        photoEnity.zplx = db.dmz
+                        addPhoto.add(photoEnity)
+                        allPhoto.add(photoEnity)
+                    }
+                }
+
+                mCheckDataPhotoAdapter!!.setPhotoType(allPhoto)
+            } else if (Constants.YGBA == photoEntranceFlag) {
+                //员工备案的图片收集
+                ll_cyjl.visibility = View.GONE
+                val list = CodeTableSQLiteUtils.queryByDMLB(Constants.YGZP)
+                allPhoto.clear()
+                addPhoto.clear()
+                for (db in list) {
+                    var enity = PhotoTypeEntity.DataBean.ConfigBean()
+                    enity.zmmc = db.dmsm1
+                    enity.zplx = db.dmz
                     allPhoto.add(enity)
                     addPhoto.add(enity)
                 }
+                mCheckDataPhotoAdapter!!.setPhotoType(allPhoto)
+            } else {
+                //登记方面
+                ll_cyjl.visibility = View.GONE
+                var enity = intent.getParcelableExtra<Parcelable>("photo_list") as DjLshEnity
+                allPhoto.clear()
+                addPhoto.clear()
+                if (enity.data.photo != null && enity.data.photo.size > 0) {
+
+                    for (db in enity.data.photo) {
+                        var photoEnity = PhotoTypeEntity.DataBean.ConfigBean()
+                        photoEnity.zmmc = db.dmsm
+                        photoEnity.zplx = db.dmz
+                        addPhoto.add(photoEnity)
+                        allPhoto.add(photoEnity)
+                    }
+                }
+                mCheckDataPhotoAdapter!!.setPhotoType(allPhoto)
             }
-            if (flagE != null) {  //目的排序
-                allPhoto.add(flagE)
-                addPhoto.add(flagE)
-            }
-            mCheckDataPhotoAdapter!!.setPhotoType(allPhoto)
+        } catch (e: Exception) {
+            showToast(e.message.toString())
         }
     }
 
@@ -174,7 +180,7 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
                 when (photoEntranceFlag) {
                     Constants.CAR_CY -> {
                         try {
-                            if ("A" == intent.getStringExtra("ywlx")) {
+                            if (Constants.A == intent.getStringExtra("ywlx")) {
                                 mData3C = intent.getSerializableExtra("3c_data") as ThreeCEnity
                                 val map = HashMap<String, String?>()
                                 map["zcbm"] = intent.getStringExtra("zcbm")
@@ -275,9 +281,7 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
                                 //为什么放这里，要保证数据库保存完毕
                                 showLoadingDialog()
                                 mCarPhotoPersenter!!.doNetworkTask(map, Constants.SAVE_CY_MSG)
-
                             }
-
                         } catch (e: Exception) {
                             showToast(e.message.toString())
                         }
@@ -394,6 +398,7 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
                 enity.cffs = UserInfo.GlobalParameter.CFBJ
                 enity.lrr = UserInfo.XM
                 enity.lrbm = UserInfo.GLBM
+                enity.zplx = "1"////照片类型(1查验照片，2登记照片)
                 CodeTableSQLiteUtils.addPhoto(enity)
             }
             Constants.CAR_YW -> { //业务照片存储
@@ -407,6 +412,7 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
                 enity.cffs = UserInfo.GlobalParameter.CFBJ
                 enity.lrr = UserInfo.XM
                 enity.lrbm = UserInfo.GLBM
+                enity.zplx = "2"////照片类型(1查验照片，2登记照片)
                 CodeTableSQLiteUtils.addPhoto(enity)
             }
             Constants.YGBA -> {//员工照片存储

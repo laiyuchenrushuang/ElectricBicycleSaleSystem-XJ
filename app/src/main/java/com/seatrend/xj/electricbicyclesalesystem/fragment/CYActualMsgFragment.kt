@@ -111,6 +111,7 @@ class CYActualMsgFragment : BaseFragment(), NormalView {
                 et_zzc.setText(data3c!!.data.threeCertificates.data.vehicleManufacturer)  //3c获取到
                 et_zzc.isFocusable = false
                 tv_zzc.setTextColor(R.color.gray)
+                et_zzc.setTextColor(R.color.gray)
             } else {
                 et_zzc.isFocusable = true
             }
@@ -198,7 +199,7 @@ class CYActualMsgFragment : BaseFragment(), NormalView {
         }
 
         if (!CheckEditTxetUtils.checkEditextValuable(et_c, et_k, et_g, et_zczl, et_zgss, et_qhlzxj, et_zzc)) {
-            showToast("请填完所有信息再提交")
+            showToast("请填完所有实测信息再提交")
             return null!!
         }
         var map = HashMap<String, String>()

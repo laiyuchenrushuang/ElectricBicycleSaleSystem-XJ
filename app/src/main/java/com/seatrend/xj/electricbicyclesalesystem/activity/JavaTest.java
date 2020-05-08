@@ -200,13 +200,8 @@ public class JavaTest {
 //        }
 //        t1.stop();
 
-      try {
-          HashMap<String,String> map = new HashMap<>();
-          map.put("lai",null);
-      }catch (Exception e){
-//          System.out.println(e.getMessage().toString());
-      }
 
+        System.out.println(StringUtils.insertCharToString("ABCDEFG","*"));
     }
 
     public static boolean isCorrect(String sfz) {

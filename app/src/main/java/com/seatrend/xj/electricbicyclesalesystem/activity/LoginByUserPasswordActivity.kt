@@ -55,10 +55,10 @@ class LoginByUserPasswordActivity : BaseActivity(), LoginView, CarPhotoView {
 
         appPermissionReq()
         if (AppUtils.isApkInDebug(this)) {
-//            et_user.setText("513822198909298761")
-//            et_pwd.setText("1q2w3e4r.")
-            et_user.setText("623130198903031234")  //xj test
-            et_pwd.setText("Aa123456")
+            et_user.setText("513822198909298761")
+            et_pwd.setText("1q2w3e4r.")
+//            et_user.setText("623130198903031234")  //xj test
+//            et_pwd.setText("Aa123456")
         }
 
         tv_version.text = getString(R.string.cur_version, AppUtils.getVersionName(this))

@@ -29,15 +29,52 @@
                     android:textSize="14sp" />
 
                 <View
+                    android:id="@+id/space"
                     android:layout_width="0dp"
                     android:layout_height="1dp"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:visibility="visible"/>
+
+                <LinearLayout
+                    android:id="@+id/ll_sp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+                    <Spinner
+                        android:id="@+id/sp_csys_a"
+                        android:layout_width="0dp"
+                        android:layout_height="28dp"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/sp_bg"
+                        android:spinnerMode="dialog" />
+
+                    <Spinner
+                        android:id="@+id/sp_csys_b"
+                        android:layout_width="0dp"
+                        android:layout_height="28dp"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/sp_bg"
+                        android:spinnerMode="dialog" />
+
+                    <Spinner
+                        android:id="@+id/sp_csys_c"
+                        android:layout_width="0dp"
+                        android:layout_height="28dp"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/sp_bg"
+                        android:spinnerMode="dialog" />
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/tv_csys"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
+                    android:layout_gravity="center_vertical|end"
                     android:text="红/白"
                     android:textColor="@color/black"
                     android:textSize="14sp"
@@ -74,6 +111,7 @@
                         android:text="不合格"
                         android:textSize="14sp" />
                 </LinearLayout>
+
             </LinearLayout>
 
         </LinearLayout>

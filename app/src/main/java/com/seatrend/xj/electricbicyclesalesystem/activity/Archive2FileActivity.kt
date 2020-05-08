@@ -163,7 +163,7 @@ class Archive2FileActivity : BaseActivity(), YwGdAdapter.itemOnclickListener, Ba
         for (db in ywList) {
             val dmz = db.dmz
             val dmsm1 = db.dmsm1
-            if ("A".equals(dmz) || "B".equals(dmz) || "D".equals(dmz) || "G".equals(dmz) || "K".equals(dmz)) {
+            if (Constants.A.equals(dmz) || Constants.B.equals(dmz) || Constants.D.equals(dmz) || Constants.G.equals(dmz) || Constants.K.equals(dmz) || Constants.I.equals(dmz)) {
                 listData.add(dmz + ":" + dmsm1)
             }
         }

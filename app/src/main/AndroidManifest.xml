@@ -65,7 +65,6 @@
         <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.YWEntranceActivity"/>
         <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.ChaYanEntranceActivity"/>
         <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.CarInfoActivity"/>
-        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.ChaYanActivity"/>
         <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.CollectPhotoActivity"/>
         <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.RemindDZPZactivity"/>
         <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.RemindHPBFActivity"/>
@@ -124,6 +123,7 @@
         <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.CccCheckActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.CccDetailActivity" />
+        <activity android:name="com.seatrend.xj.electricbicyclesalesystem.activity.YwSwitchedActivity" />
         <service android:name="com.seatrend.xj.electricbicyclesalesystem.service.PhotoUploadService"/>
     </application>
 </manifest>

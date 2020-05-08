@@ -51,11 +51,12 @@ class ChaYanEntranceActivity : BaseActivity(), NormalView {
                 }
 
                 intent.putExtra("ywlx", sp_cy.selectedItem.toString().split(":")[0]) // 业务类型
-                intent.putExtra("ywyy", if (null == sp_ywyy.selectedItem) "" else sp_ywyy.selectedItem.toString().split(":")[0]) // 业务原因
+                //注册业务没业务原因
+                intent.putExtra("ywyy", if (null == sp_ywyy.selectedItem || Constants.A == sp_cy.selectedItem.toString().split(":")[0]) "" else sp_ywyy.selectedItem.toString().split(":")[0]) // 业务原因
                 intent.putExtra("lsh", cYEntranceEnity!!.data.lsh) // 流水
                 intent.putExtra("xh", cYEntranceEnity!!.data.xh) // 序号
                 intent.putExtra("zcbm", et_cy_zcbm.text.toString()) // 整车编码
-                if (!"A".equals(sp_cy.selectedItem.toString().split(":")[0])) {
+                if (Constants.A != sp_cy.selectedItem.toString().split(":")[0]) {
                     intent.putExtra("hphm", et_cy_cphm.text.toString().toUpperCase()) // 号牌号码
                 }
                 intent.putExtra("all_data", cYEntranceEnity)
@@ -87,6 +88,7 @@ class ChaYanEntranceActivity : BaseActivity(), NormalView {
         showErrorDialog(commonResponse.getResponseString())
     }
 
+    @SuppressLint("SetTextI18n")
     override fun initView() {
         setPageTitle("车辆查验")
         if (AppUtils.isApkInDebug(this)) {
@@ -108,32 +110,17 @@ class ChaYanEntranceActivity : BaseActivity(), NormalView {
             try {
                 var flag = sp_cy.selectedItem.toString().split(":")[0]
                 when (flag) {
-                    "A" -> {   // 注册登记    Only 整车编码
+                    Constants.A -> {   // 注册登记    Only 整车编码
                         if (!ParseQcodeUtil.isZcbmString(et_cy_zcbm.text.toString())) {
                             showToast("整车编码是否是15位数字?")
                             return@setOnClickListener
                         }
                         showLoadingDialog()
                         val map1 = HashMap<String, String?>()
-                        map1["clsbdh"] = et_cy_zcbm.text.toString()
+                        map1["clsbdh"] = et_cy_zcbm.text.toString().trim().toUpperCase()
                         mNormalPresenter!!.doNetworkTask(map1, Constants.CY_ENTRANCE_3C)
                     }
-                    "B" -> {   // 转移登记  only 车牌号
-                        et_cy_zcbm.setText("")
-                        showLog("   "+et_cy_cphm.text.toString())
-                        showLog("   "+CphmUtils.checkXjValueCphm(et_cy_cphm.text.toString()))
-                        if (TextUtils.isEmpty(et_cy_cphm.text.toString()) || !CphmUtils.checkXjValueCphm(et_cy_cphm.text.toString().toUpperCase())) {
-                            showToast("请正确输入车牌号")
-                            return@setOnClickListener
-                        }
-                        showLoadingDialog()
-                        val map = HashMap<String, String?>()
-                        map["hphm"] = et_cy_cphm.text.toString().toUpperCase()
-                        map["glbm"] = UserInfo.GLBM
-                        map["ywlx"] = sp_cy.selectedItem.toString().split(":")[0]
-                        mNormalPresenter!!.doNetworkTask(map, Constants.CY_ENTRANCE)
-                    }
-                    "D" -> {   // 变更登记  only 车牌号
+                    Constants.B -> {   // 转移登记  only 车牌号
                         et_cy_zcbm.setText("")
                         if (TextUtils.isEmpty(et_cy_cphm.text.toString()) || !CphmUtils.checkXjValueCphm(et_cy_cphm.text.toString().toUpperCase())) {
                             showToast("请正确输入车牌号")
@@ -141,12 +128,40 @@ class ChaYanEntranceActivity : BaseActivity(), NormalView {
                         }
                         showLoadingDialog()
                         val map = HashMap<String, String?>()
-                        map["hphm"] = et_cy_cphm.text.toString().toUpperCase()
+                        map["hphm"] = et_cy_cphm.text.toString().trim().toUpperCase()
                         map["glbm"] = UserInfo.GLBM
                         map["ywlx"] = sp_cy.selectedItem.toString().split(":")[0]
                         mNormalPresenter!!.doNetworkTask(map, Constants.CY_ENTRANCE)
                     }
-                    "J" -> {   // 旧车登记  only 车牌号
+                    Constants.D -> {   // 变更登记  only 车牌号
+                        et_cy_zcbm.setText("")
+                        if (TextUtils.isEmpty(et_cy_cphm.text.toString()) || !CphmUtils.checkXjValueCphm(et_cy_cphm.text.toString().toUpperCase())) {
+                            showToast("请正确输入车牌号")
+                            return@setOnClickListener
+                        }
+                        showLoadingDialog()
+                        val map = HashMap<String, String?>()
+                        map["hphm"] = et_cy_cphm.text.toString().trim().toUpperCase()
+                        map["glbm"] = UserInfo.GLBM
+                        map["ywlx"] = sp_cy.selectedItem.toString().split(":")[0]
+                        mNormalPresenter!!.doNetworkTask(map, Constants.CY_ENTRANCE)
+                    }
+
+                    Constants.I -> {   // 转入登记  only 车牌号
+                        et_cy_zcbm.setText("")
+                        if (TextUtils.isEmpty(et_cy_cphm.text.toString()) || !CphmUtils.checkXjValueCphm(et_cy_cphm.text.toString().toUpperCase())) {
+                            showToast("请正确输入车牌号")
+                            return@setOnClickListener
+                        }
+                        showLoadingDialog()
+                        val map = HashMap<String, String?>()
+                        map["hphm"] = et_cy_cphm.text.toString().trim().toUpperCase()
+                        map["glbm"] = UserInfo.GLBM
+                        map["ywlx"] = sp_cy.selectedItem.toString().split(":")[0]
+                        mNormalPresenter!!.doNetworkTask(map, Constants.CY_ENTRANCE)
+                    }
+
+                    Constants.J -> {   // 旧车登记  only 车牌号
                         et_cy_zcbm.setText("")
                         if (TextUtils.isEmpty(et_cy_cphm.text.toString()) || !CphmUtils.checkXjValueCphm(et_cy_cphm.text.toString().toUpperCase())) {
                             showToast("请正确输入车牌号")
@@ -169,19 +184,15 @@ class ChaYanEntranceActivity : BaseActivity(), NormalView {
             }
 
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
-                var ywString = sp_cy.selectedItem.toString().split(":")[0]
-                if ("D".equals(ywString) || "B".equals(ywString)) {
+                val ywString = sp_cy.selectedItem.toString().split(":")[0]
+                if (Constants.D == ywString || Constants.B == ywString || Constants.I == ywString) {
                     ll_cphm.visibility = View.VISIBLE
                     ll_zcbm.visibility = View.GONE
                     ll_ywyy.visibility = View.VISIBLE
-                    if ("D".equals(ywString)) {
-                        setSpinnerAdapter(sp_ywyy)
-                    } else if ("B".equals(ywString)) {
-                        setSpinnerAdapter(sp_ywyy)
-                    }
+                    setSpinnerAdapter(sp_ywyy)
                 } else {
                     ll_ywyy.visibility = View.GONE
-                    if ("J".equals(ywString)) {
+                    if (Constants.J == ywString) {
                         ll_cphm.visibility = View.VISIBLE
                         ll_zcbm.visibility = View.GONE
                     } else {
@@ -256,7 +267,7 @@ class ChaYanEntranceActivity : BaseActivity(), NormalView {
                 for (db in ywList) {
                     val dmz = db.dmz
                     val dmsm1 = db.dmsm1
-                    if ("A" == dmz || "B" == dmz || "D" == dmz) {  // 查验支持四大业务 注册 变更 转移
+                    if (Constants.A == dmz || Constants.B == dmz || Constants.D == dmz || Constants.I == dmz) {  // 查验支持四大业务 注册 变更 转移 转入
                         adapter.add("$dmz:$dmsm1")
                     }
                 }
@@ -264,22 +275,34 @@ class ChaYanEntranceActivity : BaseActivity(), NormalView {
             }
             R.id.sp_ywyy -> {
                 adapter.clear()
-                if ("D" == sp_cy.selectedItem.toString().split(":")[0]) {
-                    val bgyyList = CodeTableSQLiteUtils.queryByDMLB(Constants.BG_YY)
-                    for (db in bgyyList) {
-                        val dmz = db.dmz.trim()
-                        val dmsm1 = db.dmsm1.trim()
-                        adapter.addAll("$dmz:$dmsm1")
+                when {
+                    Constants.D == sp_cy.selectedItem.toString().split(":")[0] -> {
+                        val list = CodeTableSQLiteUtils.queryByDMLB(Constants.BG_YY)
+                        for (db in list) {
+                            val dmz = db.dmz.trim()
+                            val dmsm1 = db.dmsm1.trim()
+                            adapter.addAll("$dmz:$dmsm1")
+                        }
+                        spinner.adapter = adapter
                     }
-                    spinner.adapter = adapter
-                } else {
-                    val zyyyList = CodeTableSQLiteUtils.queryByDMLB(Constants.ZY_YY)
-                    for (db in zyyyList) {
-                        val dmz = db.dmz.trim()
-                        val dmsm1 = db.dmsm1.trim()
-                        adapter.addAll(dmz + ":" + dmsm1)
+                    Constants.B == sp_cy.selectedItem.toString().split(":")[0] -> {
+                        val list = CodeTableSQLiteUtils.queryByDMLB(Constants.ZY_YY)
+                        for (db in list) {
+                            val dmz = db.dmz.trim()
+                            val dmsm1 = db.dmsm1.trim()
+                            adapter.addAll("$dmz:$dmsm1")
+                        }
+                        spinner.adapter = adapter
                     }
-                    spinner.adapter = adapter
+                    Constants.I == sp_cy.selectedItem.toString().split(":")[0] -> {
+                        val list = CodeTableSQLiteUtils.queryByDMLB(Constants.ZR_YY)
+                        for (db in list) {
+                            val dmz = db.dmz.trim()
+                            val dmsm1 = db.dmsm1.trim()
+                            adapter.addAll("$dmz:$dmsm1")
+                        }
+                        spinner.adapter = adapter
+                    }
                 }
             }
         }

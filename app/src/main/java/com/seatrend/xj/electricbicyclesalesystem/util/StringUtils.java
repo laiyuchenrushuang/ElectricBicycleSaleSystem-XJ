@@ -35,7 +35,7 @@ public class StringUtils {
      * @return
      */
     public static String longToStringData(long date) {
-        if(0 == date){
+        if (0 == date) {
             return null;
         }
         try {
@@ -47,7 +47,7 @@ public class StringUtils {
     }
 
     public static String longToStringDataNoHour(long date) {
-        if(0 == date){
+        if (0 == date) {
             return null;
         }
         try {
@@ -256,6 +256,51 @@ public class StringUtils {
                 .addHeader("zplx", zplx)
                 .build());*/
         return photoUrl;
+    }
+
+    /**
+     * 判断字符串是否包含重复字符
+     *
+     * @return true 有重复的  false  没得
+     * @paramstr
+     */
+    public static boolean containRepeatChar(String str) {
+        if (str == null || str.isEmpty()) {
+            return false;
+        }
+        char[] elements = str.toCharArray();
+        for (char e : elements) {
+            if (str.indexOf(e) != str.lastIndexOf(e)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 给字符串中间加“字符”  例如“ABCDEFG” ->“A,B,C,D,E,F,G”
+     *
+     * @param originalStr 原本字符串
+     * @param insertStr   插入啥
+     * @return 返回新字符串
+     */
+
+    public static String insertCharToString(String originalStr, String insertStr) {
+
+        if (originalStr.equals("")) {
+            return "";
+        }
+        StringBuilder sb = new StringBuilder();
+        char[] array = originalStr.toCharArray();
+
+        for (char c : array) {
+            if (c != array[array.length - 1]) {
+                sb.append(c).append(insertStr);
+                continue;
+            }
+            sb.append(c);
+        }
+        return sb.toString();
     }
 
 }

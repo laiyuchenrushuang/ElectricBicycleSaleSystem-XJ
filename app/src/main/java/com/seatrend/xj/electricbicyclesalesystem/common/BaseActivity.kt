@@ -32,7 +32,6 @@ import android.widget.*
 import com.joyusing.ocr.OCR
 import com.joyusing.ocr.OcrResult
 import com.seatrend.xj.electricbicyclesalesystem.R
-import com.seatrend.xj.electricbicyclesalesystem.activity.LoginActivity
 import com.seatrend.xj.electricbicyclesalesystem.activity.LoginByUserPasswordActivity
 import com.seatrend.xj.electricbicyclesalesystem.database.CodeTableSQLiteUtils
 import com.seatrend.xj.electricbicyclesalesystem.entity.MessageEntity
@@ -618,6 +617,34 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
             view.isChecked = default
         }
     }
+
+    //设置不可编辑和点击
+    @SuppressLint("ResourceAsColor")
+    fun setNoEdit(vararg viewList: View) {
+        for (view in viewList) {
+            view.isFocusable = false
+            view.isEnabled = false
+            view.isClickable = false
+            if (view is EditText) {
+                view.setTextColor(R.color.gray)
+            }
+
+            if (view is TextView) {
+                view.setTextColor(R.color.gray)
+            }
+
+            if (view is Spinner) {
+                view.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                    override fun onNothingSelected(p0: AdapterView<*>?) {}
+                    override fun onItemSelected(p0: AdapterView<*>?, view: View?, p2: Int, p3: Long) {
+                        var txtvwSpinner: TextView = view!!.findViewById(R.id.text1)
+                        txtvwSpinner.setTextColor(R.color.gray)
+                    }
+                }
+            }
+        }
+    }
+
 
     @SuppressLint("RestrictedApi")
     override fun startActivityForResult(intent: Intent?, requestCode: Int, options: Bundle?) {

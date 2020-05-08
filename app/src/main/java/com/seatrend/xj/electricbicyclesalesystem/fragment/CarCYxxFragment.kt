@@ -54,9 +54,10 @@ class CarCYxxFragment : BaseFragment() {
         }
 
         if (activity is CarInfoByCyActivity) {
-            if ("A".equals(activity.intent.getStringExtra("ywlx")) ||
-                    "B".equals(activity.intent.getStringExtra("ywlx")) ||
-                    "D".equals(activity.intent.getStringExtra("ywlx"))) { //A注册 D变更 B转移 7旧车换牌
+            if (Constants.A == activity.intent.getStringExtra("ywlx") ||
+                    Constants.B == activity.intent.getStringExtra("ywlx") ||
+                    Constants.D == activity.intent.getStringExtra("ywlx") ||
+                    Constants.I == activity.intent.getStringExtra("ywlx")) { //A注册 D变更 B转移 I 转入 7旧车换牌
                 getData()
             } else {
                 ViewShowUtils.showGoneView(ll_cyxx)
@@ -71,7 +72,7 @@ class CarCYxxFragment : BaseFragment() {
 
                 if (null == enity || null == enity!!.data || null == enity!!.data.checkData) {
                     //可能是无需查验的登记,补换注销登记
-                    if (null != enity && enity!!.data != null && enity!!.data.fjdcBusiness != null && "A" != enity!!.data.fjdcBusiness.ywlx && "B" != enity!!.data.fjdcBusiness.ywlx && "D" != enity!!.data.fjdcBusiness.ywlx) {
+                    if (null != enity && enity!!.data != null && enity!!.data.fjdcBusiness != null && Constants.A != enity!!.data.fjdcBusiness.ywlx && Constants.B != enity!!.data.fjdcBusiness.ywlx && Constants.D != enity!!.data.fjdcBusiness.ywlx) {
                         ViewShowUtils.showGoneView(ll_cyxx)
                         ViewShowUtils.showVisibleView(tv_cyxx)
                     } else {
@@ -80,9 +81,10 @@ class CarCYxxFragment : BaseFragment() {
                     return
                 }
 
-                if ("A".equals(enity!!.data.checkData.ywlx) ||
-                        "B".equals(enity!!.data.checkData.ywlx) ||
-                        "D".equals(enity!!.data.checkData.ywlx)) { //A注册 D变更 B转移 7旧车换牌
+                if (Constants.A.equals(enity!!.data.checkData.ywlx) ||
+                        Constants.B.equals(enity!!.data.checkData.ywlx) ||
+                        Constants.D.equals(enity!!.data.checkData.ywlx) ||
+                        Constants.I == activity.intent.getStringExtra("ywlx")) { //A注册 D变更 B转移 I 转入 7旧车换牌
                     getData()
                 } else {
                     ViewShowUtils.showGoneView(ll_cyxx)
@@ -107,7 +109,7 @@ class CarCYxxFragment : BaseFragment() {
                 showToast("获取查验信息为空")
                 return
             }
-            if ("A".equals(enity!!.data.checkData.ywlx)) {
+            if (Constants.A.equals(enity!!.data.checkData.ywlx)) {
                 ll_item_cyxx.visibility = View.VISIBLE
                 tv_csys.text = CsysUtils.getCsysMc(enity!!.data.checkData.csys)
                 tv_ckg.text = enity!!.data.checkData.scc + "*" + enity!!.data.checkData.sck + "*" + enity!!.data.checkData.scg
@@ -127,25 +129,21 @@ class CarCYxxFragment : BaseFragment() {
 //        tv_glbm.text = enity!!.data.checkData.cybm
             tv_glbm.text = UserInfo.NewUserInfo.BMMC
             tv_zxj.text = enity!!.data.checkData.scqhlzxj
-            val cyList = CodeTableSQLiteUtils.queryByDMLB(Constants.CYZP)
             //只获取查验的照片
-
             if (enity!!.data.photoList.size == 0) {
                 showToast("获取查验图片信息为空")
                 return
             }
             photoList.clear()
             for (db in enity!!.data.photoList) {
-                for (enity in cyList) {
-                    if (db.zpzl.equals(enity.dmz)) {
-                        var data = AllBikeMsgEnity.Data.PhotoList()
-                        data.zpzl = db.zpzl
-                        data.zpsm = db.zpsm
-                        data.zpdz = db.zpdz
-                        photoList.add(data)
-                        break
-                    }
+                if ("1" == db.zplx) {
+                    var data = AllBikeMsgEnity.Data.PhotoList()
+                    data.zpzl = db.zpzl
+                    data.zpsm = db.zpsm
+                    data.zpdz = db.zpdz
+                    photoList.add(data)
                 }
+
             }
         } catch (e: Exception) {
             showToast(e.message.toString())
@@ -176,23 +174,16 @@ class CarCYxxFragment : BaseFragment() {
 //        tv_glbm.text = cydata!!.data.checkData.cybm
             tv_glbm.text = UserInfo.NewUserInfo.BMMC
             tv_zxj.text = cydata!!.data.checkData.scqhlzxj
-            val cyList = CodeTableSQLiteUtils.queryByDMLB(Constants.CYZP)
             //只获取查验的照片
             photoList.clear()
 
             for (db in cydata!!.data.syrzpxx) {
-                for (enity in cyList) {
-                    if (db.zpzl.equals(enity.dmz)) {
-                        var data = AllBikeMsgEnity.Data.PhotoList()
-                        data.zpzl = db.zpzl
-                        data.zpsm = db.zpsm
-                        data.zpdz = db.zpdz
-                        photoList.add(data)
-                        break
-                    }
-                }
+                var data = AllBikeMsgEnity.Data.PhotoList()
+                data.zpzl = db.zpzl
+                data.zpsm = db.zpsm
+                data.zpdz = db.zpdz
+                photoList.add(data)
             }
-
         } catch (e: Exception) {
             showToast(e.message.toString())
         }

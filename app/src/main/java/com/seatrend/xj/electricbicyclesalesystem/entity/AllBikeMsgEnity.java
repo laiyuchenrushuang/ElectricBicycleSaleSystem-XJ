@@ -851,6 +851,16 @@ public class AllBikeMsgEnity extends BaseEntity implements Serializable {
             private String lrsj;
             private String zpsm;
             private String zpzt;
+            private String zplx;//1是查验 2 是登记
+
+            public String getZplx() {
+                return zplx;
+            }
+
+            public void setZplx(String zplx) {
+                this.zplx = zplx;
+            }
+
             public void setLsh(String lsh) {
                 this.lsh = lsh;
             }

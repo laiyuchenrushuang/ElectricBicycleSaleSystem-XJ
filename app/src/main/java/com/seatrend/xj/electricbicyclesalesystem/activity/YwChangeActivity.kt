@@ -4,15 +4,15 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.os.Bundle
 import android.os.Handler
 import android.os.Message
+import android.provider.SyncStateContract
+import android.support.v4.content.ContextCompat
 import android.text.Editable
 import android.text.TextUtils
 import android.view.View
-import android.widget.AdapterView
-import android.widget.CompoundButton
-import android.widget.RadioGroup
-import android.widget.Spinner
+import android.widget.*
 import com.seatrend.xj.electricbicyclesalesystem.R
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants
@@ -44,6 +44,12 @@ class YwChangeActivity : BaseActivity(), NormalView {
             if (enity.data != null) {
                 CollectPhotoActivity.mLsh = enity.data.lsh
                 CollectPhotoActivity.mXh = enity.data.xh
+            }
+
+            if(enity.data.photo!=null && enity.data.photo.size >0){
+                val bundle = Bundle()
+                bundle.putParcelable("photo_list", enity)
+                intent.putExtras(bundle)
             }
             intent.putExtra("syr", ed_syr_xm.text.toString())
             intent.putExtra("sfz", ed_syr_sfz.text.toString())
@@ -117,8 +123,15 @@ class YwChangeActivity : BaseActivity(), NormalView {
         sp_syr_qh1.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {}
 
+            @SuppressLint("ResourceAsColor")
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
                 var provinceDmz = sp_syr_qh1.selectedItem.toString()
+                if(Constants.BG_DC == data!!.data.checkData.ywyy){
+                    //变更颜色的  这个字段Textview  灰色
+                    var txtvwSpinner: TextView = p1!!.findViewById(R.id.text1)
+                    txtvwSpinner.setTextColor(R.color.gray)
+                    sp_syr_qh1.isEnabled = false
+                }
                 startThreadUpdateSp(provinceDmz, sp_syr_qh2)
             }
         }
@@ -133,8 +146,15 @@ class YwChangeActivity : BaseActivity(), NormalView {
         sp_syr_yj_qh1.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {}
 
+            @SuppressLint("ResourceAsColor")
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
                 var provinceDmz = sp_syr_yj_qh1.selectedItem.toString()
+                if(Constants.BG_DC == data!!.data.checkData.ywyy){
+                    //变更颜色的  这个字段Textview  灰色
+                    var txtvwSpinner: TextView = p1!!.findViewById(R.id.text1)
+                    txtvwSpinner.setTextColor(R.color.gray)
+                    sp_syr_yj_qh1.isEnabled = false
+                }
                 startThreadUpdateSp(provinceDmz, sp_syr_yj_qh2)
             }
         }
@@ -170,8 +190,8 @@ class YwChangeActivity : BaseActivity(), NormalView {
     private fun initData() {
         bt_next.text = "下一步"
         try {
-            initShowScrean()
             initSpData()
+            initShowScrean()
             getData()
         } catch (e: Exception) {
             showToast(e.message.toString())
@@ -209,6 +229,43 @@ class YwChangeActivity : BaseActivity(), NormalView {
             et_yj_lxdh.setText(enity.sjrlxdh)
             et_yj_yzbm.setText(enity.yzbm)
             tv_yhphm.setText(enity.cph)
+
+            //变更颜色 数据的回填
+            if (Constants.BG_DC == data!!.data.checkData.ywyy) {
+
+                //登记有信息 用登记的
+                if (enity.csys != null) {
+                    if ( enity.csys.contains(",")) {
+                        var str = enity.csys.split(",")
+                        if (str.size == 2) {
+                            OtherUtils.setSpinnerToDmz(str[0], sp_csys_a)
+                            OtherUtils.setSpinnerToDmz(str[1], sp_csys_b)
+                        } else if (str.size == 3) {
+                            OtherUtils.setSpinnerToDmz(str[0], sp_csys_a)
+                            OtherUtils.setSpinnerToDmz(str[1], sp_csys_b)
+                            OtherUtils.setSpinnerToDmz(str[2], sp_csys_c)
+                        }
+                    } else { //只有一个数据
+                        OtherUtils.setSpinnerToDmz(enity.csys, sp_csys_a)
+                    }
+                } else {  //没有就查验的ccc的
+                    if (data!!.data.cccData.csys != null && data!!.data.cccData.csys.contains(",")) {
+                        var str = data!!.data.cccData.csys.split(",")
+                        if (str.size == 2) {
+                            OtherUtils.setSpinnerToDmz(str[0], sp_csys_a)
+                            OtherUtils.setSpinnerToDmz(str[1], sp_csys_b)
+                        } else if (str.size == 3) {
+                            OtherUtils.setSpinnerToDmz(str[0], sp_csys_a)
+                            OtherUtils.setSpinnerToDmz(str[1], sp_csys_b)
+                            OtherUtils.setSpinnerToDmz(str[2], sp_csys_c)
+
+                        }
+                    } else { //只有一个数据
+                        OtherUtils.setSpinnerToDmz(data!!.data.cccData.csys, sp_csys_a)
+                    }
+                }
+            }
+
         } catch (e: Exception) {
             showToast(e.message.toString())
         }
@@ -234,22 +291,55 @@ class YwChangeActivity : BaseActivity(), NormalView {
 
     private fun initShowScrean() {
         if (Constants.BG_DB == data!!.data.checkData.ywyy) {
-            ViewShowUtils.showGoneView(ll_zrd, ll_yhphm, ll_hphs,ll_hphm)
+            ViewShowUtils.showGoneView(ll_zrd, ll_yhphm, ll_hphs, ll_hphm)
             ViewShowUtils.showVisibleView(ll_yjxx)
             tv_ywyy.text = "变更所有人"
-            if ("0".equals(data!!.data.fjdcBusiness.sfkyghhp)) {
+            if ("0" == data!!.data.fjdcBusiness.sfkyghhp) {
                 ViewShowUtils.showGoneView(btn_hqhphm)
             }
         } else if (Constants.BG_DA == data!!.data.checkData.ywyy) {
             ViewShowUtils.showVisibleView(ll_zrd, ll_yhphm, ll_hphs)
-            ViewShowUtils.showGoneView(ll_yjxx,ll_hphm)
+            ViewShowUtils.showGoneView(ll_yjxx, ll_hphm)
             tv_ywyy.text = "变更迁出"
             rb_yes.isChecked = true
+
+            //所有人信息不能更改
+            setNoEdit(sp_syr_sfz,ed_syr_xm, ed_syr_sfz, et_syr_lxdh, et_syr_xxdz, et_syr_yj_xxdz, et_syr_yj_yzbm, et_syr_yxdz, sp_syr_qh2, sp_syr_yj_qh2)
+        } else if (Constants.BG_DC == data!!.data.checkData.ywyy) {
+            setSpinner()
+            tv_ywyy.text = "变更车身颜色"
+            ViewShowUtils.showGoneView(ll_clyt,ll_syxz,ll_zrd, ll_yhphm, ll_hphs)
+            ViewShowUtils.showVisibleView(ll_csys)
+            setNoEdit(sp_syr_sfz,ed_syr_xm, ed_syr_sfz, et_syr_lxdh, et_syr_xxdz, et_syr_yj_xxdz, et_syr_yj_yzbm, et_syr_yxdz, sp_syr_qh2, sp_syr_yj_qh2)
         }
-        if ("0".equals(UserInfo.GlobalParameter.LQBJ)) {
+        if ("0" == UserInfo.GlobalParameter.LQBJ) {
             ll_yjxx.visibility = View.GONE
         } else {
             ll_yjxx.visibility = View.VISIBLE
+        }
+    }
+
+    private fun setSpinner() {
+        setSpinnerAdapter(sp_csys_a)
+        setSpinnerAdapter(sp_csys_b)
+        setSpinnerAdapter(sp_csys_c)
+    }
+
+    private fun setSpinnerAdapter(spinner: Spinner) {
+        val adapter = ArrayAdapter<String>(this, R.layout.my_simple_spinner_item)
+        adapter.setDropDownViewResource(R.layout.item_spinner__down_common)
+        when (spinner.id) {
+            R.id.sp_csys_a, R.id.sp_csys_b, R.id.sp_csys_c -> {
+                adapter.clear()
+                adapter.add("")
+                val sfzmmcList = CodeTableSQLiteUtils.queryByDMLB(Constants.CSYS)
+                for (db in sfzmmcList) {
+                    val dmz = db.dmz
+                    val dmsm1 = db.dmsm1
+                    adapter.add("$dmz:$dmsm1")
+                }
+                spinner.adapter = adapter
+            }
         }
     }
 
@@ -408,6 +498,11 @@ class YwChangeActivity : BaseActivity(), NormalView {
                 showToast("请正确填写邮政编码")
                 return
             }
+
+            if (Constants.BG_DC == data!!.data.checkData.ywyy && !CsysCompareSameUtils.compare3(sp_csys_a, sp_csys_b, sp_csys_c)) {
+                showToast("请正确输入车身颜色，不能两两选择相同颜色")
+                return
+            }
             val enity = data!!.data.fjdcBusiness
 
             val lsh = data!!.data.checkData.lsh
@@ -455,6 +550,10 @@ class YwChangeActivity : BaseActivity(), NormalView {
                 } else {
                     enity.hphs = "0"
                 }
+            }
+
+            if (Constants.BG_DC == data!!.data.checkData.ywyy) {
+                enity.csys = CsysUtils.getSpCommitString(sp_csys_a, sp_csys_b, sp_csys_c)
             }
             //3
             if (ObjectNullUtil.checknull(ed_dlr_sfz.text.toString(), ed_dlr_xm.text.toString(), et_dlr_lxdh.text.toString())) {

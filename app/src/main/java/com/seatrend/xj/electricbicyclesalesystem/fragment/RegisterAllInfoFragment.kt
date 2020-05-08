@@ -32,10 +32,10 @@ class RegisterAllInfoFragment : BaseFragment(), View.OnTouchListener {
     var enity: AllBikeMsgEnity? = null
     private var mCyxxPhotoAdapter: CyxxPhotoAdapter? = null
     var photoList = ArrayList<AllBikeMsgEnity.Data.PhotoList>()
-    private var cydata :CarMsgEnity?=null
+    private var cydata: CarMsgEnity? = null
 
     override fun getLayoutView(inflater: LayoutInflater?, container: ViewGroup?): View {
-         return inflater!!.inflate(R.layout.fragment_register_all_info, container, false)
+        return inflater!!.inflate(R.layout.fragment_register_all_info, container, false)
     }
 
     override fun initView() {
@@ -56,19 +56,19 @@ class RegisterAllInfoFragment : BaseFragment(), View.OnTouchListener {
         } else {
             enity = activity.intent.getSerializableExtra("all_data") as AllBikeMsgEnity
             try {
-                if(!ObjectNullUtil.checknull(enity) || !ObjectNullUtil.checknull(enity!!.data) || null == enity!!.data.fjdcBusiness || null == enity!!.data.fjdcBusiness.ywlx || TextUtils.isEmpty(enity!!.data.fjdcBusiness.ywlx)){
+                if (!ObjectNullUtil.checknull(enity) || !ObjectNullUtil.checknull(enity!!.data) || null == enity!!.data.fjdcBusiness || null == enity!!.data.fjdcBusiness.ywlx || TextUtils.isEmpty(enity!!.data.fjdcBusiness.ywlx)) {
 //                    showToast("登记信息获取为空")
                     return
                 }
 
                 //可以根据登记信息里面的ywlx字段
                 tv_ywlx.text = DMZUtils.getDMSM(Constants.YWLX, enity!!.data.fjdcBusiness.ywlx)
-                showLog("sssssss = "+ tv_ywlx.text.toString())
+                showLog("sssssss = " + tv_ywlx.text.toString())
                 when (enity!!.data.fjdcBusiness.ywlx) {
 
 
                     //注册登记
-                    "A" -> {
+                    Constants.A -> {
 
                         ll_zc_ywxx.visibility = View.VISIBLE
                         tv_cllx.text = CllxUtils.getCllxDMSM(enity!!.data.fjdcBusiness.cllx)
@@ -86,7 +86,7 @@ class RegisterAllInfoFragment : BaseFragment(), View.OnTouchListener {
                         getPhotodata()
                     }
                     //变更
-                    "D" -> {
+                    Constants.D -> {
                         ll_bg_ywxx.visibility = View.VISIBLE
                         if (Constants.BG_DA.equals(enity!!.data.fjdcBusiness.ywyy)) {
                             ll_bg_cphm.visibility = View.GONE
@@ -108,7 +108,7 @@ class RegisterAllInfoFragment : BaseFragment(), View.OnTouchListener {
                         getPhotodata()
                     }
                     //转移
-                    "B" -> {
+                    Constants.B -> {
                         ll_zy_ywxx.visibility = View.VISIBLE
                         tv_zy_clyt.text = DMZUtils.getDMSM(Constants.CLYT, enity!!.data.fjdcBusiness.clyt)
                         tv_zy_syxz.text = DMZUtils.getDMSM(Constants.SYXZ, enity!!.data.fjdcBusiness.syxz)
@@ -136,7 +136,7 @@ class RegisterAllInfoFragment : BaseFragment(), View.OnTouchListener {
                         getPhotodata()
                     }
                     //注销
-                    "G" -> {
+                    Constants.G -> {
                         ll_zx_ywxx.visibility = View.VISIBLE
                         tv_zx_ywyy.text = enity!!.data.fjdcBusiness.ywyy
                         initSyrXX()
@@ -145,13 +145,29 @@ class RegisterAllInfoFragment : BaseFragment(), View.OnTouchListener {
                         getPhotodata()
                     }
                     //补换
-                    "K" -> {
+                    Constants.K -> {
                         ll_bh_ywxx.visibility = View.VISIBLE
                         tv_bh_ywyy.text = enity!!.data.fjdcBusiness.ywyy
                         tv_bh_ywyy!!.movementMethod = ScrollingMovementMethod.getInstance()
                         tv_bh_ywyy!!.setHorizontallyScrolling(true)
                         tv_bh_ywyy!!.setOnTouchListener(onTouchListener)
                         tv_bh_cph.text = if ("".equals(enity!!.data.fjdcBusiness.cph)) "/" else enity!!.data.fjdcBusiness.cph
+                        initSyrXX()
+                        initDlrXX()
+                        initYjXX()
+                        getPhotodata()
+                    }
+                    //转入
+                    Constants.I->{
+                        ll_zr_ywxx.visibility = View.VISIBLE
+                        tv_zr_hphm.text = enity!!.data.fjdcBusiness.cph
+                        if (Constants.ZR_IA == enity!!.data.fjdcBusiness.ywyy) {
+                            tv_zr_ywyy.text = "转移出辖区"
+                        } else {
+                            tv_zr_ywyy.text = "变更转入"
+                        }
+                        tv_zr_clyt.text = DMZUtils.getDMSM(Constants.CLYT, enity!!.data.fjdcBusiness.clyt)
+                        tv_zr_syxz.text = DMZUtils.getDMSM(Constants.SYXZ, enity!!.data.fjdcBusiness.syxz)
                         initSyrXX()
                         initDlrXX()
                         initYjXX()
@@ -254,7 +270,7 @@ class RegisterAllInfoFragment : BaseFragment(), View.OnTouchListener {
             tv_syr_yj_xxdz.text = cydata!!.data.syrjbxx.lxxxdz
             tv_syr_yj_yzbm.text = cydata!!.data.syrjbxx.yzbm
 
-            tv_syr_yxdz.text = if(TextUtils.isEmpty(cydata!!.data.syrjbxx.dzyx)) "/" else cydata!!.data.syrjbxx.dzyx
+            tv_syr_yxdz.text = if (TextUtils.isEmpty(cydata!!.data.syrjbxx.dzyx)) "/" else cydata!!.data.syrjbxx.dzyx
         } else {
             tv_syr_sfzmc.text = DMZUtils.getDMSM(Constants.SFZMMC, enity!!.data.fjdcBusiness.sfzmmc)
             tv_syr_sfz.text = enity!!.data.fjdcBusiness.sfzmhm
@@ -266,34 +282,24 @@ class RegisterAllInfoFragment : BaseFragment(), View.OnTouchListener {
             tv_syr_yj_xzqh.text = DMZUtils.getDMSM(Constants.XSQY, enity!!.data.fjdcBusiness.lxdzxzqh)
             tv_syr_yj_xxdz.text = enity!!.data.fjdcBusiness.lxxxdz
             tv_syr_yj_yzbm.text = enity!!.data.fjdcBusiness.yzbm
-            tv_syr_yxdz.text = if(TextUtils.isEmpty(enity!!.data.fjdcBusiness.dzyx)) "/" else enity!!.data.fjdcBusiness.dzyx
+            tv_syr_yxdz.text = if (TextUtils.isEmpty(enity!!.data.fjdcBusiness.dzyx)) "/" else enity!!.data.fjdcBusiness.dzyx
         }
     }
 
     private fun getPhotodata() {
         LoadingDialog.getInstance().showLoadDialog(context)
-        if (activity is Yw3CzActivity && "3" == activity.intent.getStringExtra(Constants.UI_TYPE)) { //证明是车辆查询来的
+        if (activity is Yw3CzActivity && "3" == activity.intent.getStringExtra(Constants.UI_TYPE)) { //证明是车辆查询来的(只做了查验)
             try {
-                val cyList = CodeTableSQLiteUtils.queryByDMLB(Constants.CYZP)
                 photoList.clear()
-                //只获取查验的照片 排除法  这里不太好，因为登记照片越来越多怎么办？
+
                 for (db in cydata!!.data.syrzpxx) {
-                    var flag = false
-                    for (enity in cyList) {
-                        if (null != db.zpzl && db.zpzl == enity.dmz) {
-                            flag = false
-                            break
-                        }
-                        flag = true
-                    }
-                    if (flag) {
-                        var data = com.seatrend.xj.electricbicyclesalesystem.entity.AllBikeMsgEnity.Data.PhotoList()
-                        data.zpzl = db.zpzl
-                        data.zpsm = db.zpsm
-                        data.zpdz = db.zpdz
-                        if (data.zpdz != null) {
-                            photoList.add(data)
-                        }
+
+                    var data = AllBikeMsgEnity.Data.PhotoList()
+                    data.zpzl = db.zpzl
+                    data.zpsm = db.zpsm
+                    data.zpdz = db.zpdz
+                    if (data.zpdz != null) {
+                        photoList.add(data)
                     }
                 }
             } catch (e: Exception) {
@@ -301,20 +307,12 @@ class RegisterAllInfoFragment : BaseFragment(), View.OnTouchListener {
             }
         } else {
             try {
-                val cyList = CodeTableSQLiteUtils.queryByDMLB(Constants.CYZP)
                 photoList.clear()
-                //只获取查验的照片 排除法  这里不太好，因为登记照片越来越多怎么办？
+
                 for (db in enity!!.data.photoList) {
-                    var flag = false
-                    for (enity in cyList) {
-                        if (null != db.zpzl && db.zpzl == enity.dmz) {
-                            flag = false
-                            break
-                        }
-                        flag = true
-                    }
-                    if (flag) {
-                        var data = com.seatrend.xj.electricbicyclesalesystem.entity.AllBikeMsgEnity.Data.PhotoList()
+
+                    if (db.zplx == "2") {
+                        var data = AllBikeMsgEnity.Data.PhotoList()
                         data.zpzl = db.zpzl
                         data.zpsm = db.zpsm
                         data.zpdz = db.zpdz

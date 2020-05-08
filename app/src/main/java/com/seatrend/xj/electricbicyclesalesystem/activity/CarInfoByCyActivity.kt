@@ -36,7 +36,8 @@ class CarInfoByCyActivity : BaseActivity(), NormalView {
         var entranceFlag: String = "-1"  //0是VIN，1是查验，2注册，3变更 ，4转移， 5补换，6注销，7旧车换牌， 8临时号牌申请 9车辆归档，-1是defult
 
     }
-    var mAllBikeMsgEnity: AllBikeMsgEnity?=null  //所有的data
+
+    var mAllBikeMsgEnity: AllBikeMsgEnity? = null  //所有的data
     private var mRegisterInfoFragment: RegisterInfoFragment? = null
     private var mCarMsgJscsFG: CarMsgJscsFragment? = null
     private var mCarCYxxFG: CarCYxxFragment? = null
@@ -59,9 +60,8 @@ class CarInfoByCyActivity : BaseActivity(), NormalView {
         mCarCYxxFG = CarCYxxFragment()
         mNormalPresenter = NormalPresenter(this)
         bindEvent()
-        showLog(" CarInfoByCyActivity oncreate isTbDetals = "+isTbDetals)
         if (Constants.YWTB.equals(entranceFlag)) {
-            if(!isTbDetals){
+            if (!isTbDetals) {
                 ViewShowUtils.showVisibleView(bt_next)
                 bt_next.text = "退办"
             }
@@ -104,8 +104,14 @@ class CarInfoByCyActivity : BaseActivity(), NormalView {
                     intent.setClass(this, YwTransferActivity::class.java)
                     startActivity(intent)
                 }
+
                 Constants.CAR_ZX -> {
                     intent.setClass(this, YwCancelActivity::class.java)
+                    startActivity(intent)
+                }
+
+                Constants.CAR_ZR -> {
+                    intent.setClass(this, YwSwitchedActivity::class.java)
                     startActivity(intent)
                 }
                 Constants.CAR_BH -> {
@@ -120,7 +126,7 @@ class CarInfoByCyActivity : BaseActivity(), NormalView {
                 Constants.YWTB -> { //查验流水需要退办的  only 查验
                     showLog(" 查验流水需要退办的")
                     intent.setClass(this, YwTbEditActivity::class.java)
-                    startActivityForResult(intent,1)
+                    startActivityForResult(intent, 1)
                 }
             }
         }
@@ -135,11 +141,11 @@ class CarInfoByCyActivity : BaseActivity(), NormalView {
     }
 
     private fun changeColor(which: RadioButton) {
-        rb_jscs!!.setTextColor(ContextCompat.getColor(this,R.color.black))
-        rb_ggxx!!.setTextColor(ContextCompat.getColor(this,R.color.black))
-        rb_cyxx!!.setTextColor(ContextCompat.getColor(this,R.color.black))
+        rb_jscs!!.setTextColor(ContextCompat.getColor(this, R.color.black))
+        rb_ggxx!!.setTextColor(ContextCompat.getColor(this, R.color.black))
+        rb_cyxx!!.setTextColor(ContextCompat.getColor(this, R.color.black))
         carmsg_rg.check(which.id)
-        which.setTextColor(ContextCompat.getColor(this,R.color.theme_color))
+        which.setTextColor(ContextCompat.getColor(this, R.color.theme_color))
     }
 
     private var lastFragment: Fragment? = null

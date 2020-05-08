@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.text.Editable
@@ -11,6 +12,7 @@ import android.text.TextUtils
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Spinner
+import android.widget.TextView
 import com.seatrend.xj.electricbicyclesalesystem.R
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants
@@ -44,6 +46,11 @@ class YwTransferActivity : BaseActivity(), NormalView {
             if (enity.data != null) {
                 CollectPhotoActivity.mLsh = enity.data.lsh
                 CollectPhotoActivity.mXh = enity.data.xh
+            }
+            if(enity.data.photo!=null && enity.data.photo.size >0){
+                val bundle = Bundle()
+                bundle.putParcelable("photo_list", enity)
+                intent.putExtras(bundle)
             }
             intent.putExtra("syr", ed_syr_xm.text.toString())
             intent.putExtra("sfz", ed_syr_sfz.text.toString())
@@ -119,8 +126,12 @@ class YwTransferActivity : BaseActivity(), NormalView {
         sp_syr_qh1.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {}
 
+            @SuppressLint("ResourceAsColor")
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
                 var provinceDmz = sp_syr_qh1.selectedItem.toString()
+//                var txtvwSpinner: TextView = p1!!.findViewById(R.id.text1)
+//                txtvwSpinner.setTextColor(R.color.gray)
+//                sp_syr_qh1.isEnabled = false
                 startThreadUpdateSp(provinceDmz, sp_syr_qh2)
             }
         }
@@ -135,8 +146,12 @@ class YwTransferActivity : BaseActivity(), NormalView {
         sp_syr_yj_qh1.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {}
 
+            @SuppressLint("ResourceAsColor")
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
                 var provinceDmz = sp_syr_yj_qh1.selectedItem.toString()
+//                var txtvwSpinner: TextView = p1!!.findViewById(R.id.text1)
+//                txtvwSpinner.setTextColor(R.color.gray)
+//                sp_syr_yj_qh1.isEnabled = false
                 startThreadUpdateSp(provinceDmz, sp_syr_yj_qh2)
             }
         }
@@ -283,6 +298,9 @@ class YwTransferActivity : BaseActivity(), NormalView {
     }
 
     private fun initShowScrean() {
+
+//        setNoEdit(sp_syr_sfz,ed_syr_xm, ed_syr_sfz, et_syr_lxdh, et_syr_xxdz, et_syr_yj_xxdz, et_syr_yj_yzbm, et_syr_yxdz, sp_syr_qh2, sp_syr_yj_qh2)
+
         if (Constants.ZY_BA.equals(data!!.data.checkData.ywyy)) {
             tv_ywyy.text = "辖区内转移不换号"
             ll_zrd.visibility = View.GONE

@@ -17,6 +17,16 @@ public class PhotoEntity {
 
     private String sfz; // 方便员工备案 增加身份识别标记
 
+    private String zplx;//照片类型(1查验照片，2登记照片)
+
+    public String getZplx() {
+        return zplx;
+    }
+
+    public void setZplx(String zplx) {
+        this.zplx = zplx;
+    }
+
 
     public String getSfz() {
         return sfz;

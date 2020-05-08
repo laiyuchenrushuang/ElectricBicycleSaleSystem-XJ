@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.text.Editable
@@ -53,6 +54,12 @@ class YwReplaceActivity : BaseActivity(), NormalView {
                 CollectPhotoActivity.mLsh = enity.data.lsh
                 CollectPhotoActivity.mXh = enity.data.xh
             }
+            if(enity.data.photo!=null && enity.data.photo.size >0){
+                val bundle = Bundle()
+                bundle.putParcelable("photo_list", enity)
+                intent.putExtras(bundle)
+            }
+
             intent.putExtra("syr", ed_syr_xm.text.toString())
             intent.putExtra("sfz", ed_syr_sfz.text.toString())
             intent.putExtra("hphm", if (cb_hp_huan.isChecked || cb_hp_bu.isChecked) et_cphm.text.toString().toUpperCase() else data!!.data.checkData.cph)

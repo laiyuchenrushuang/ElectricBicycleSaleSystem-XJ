@@ -177,6 +177,7 @@ class Constants {
         // 业务原因
         var BG_YY = "1021"  //变更
         var ZY_YY = "1020"  //转移
+        var ZR_YY = "1022"  //转入
 
         //判定项目
         var PD_LIST = "1023"  //判定项目
@@ -189,9 +190,9 @@ class Constants {
         var ZPLX = "zplx"  //这个是照片名称
         var ZPMC = "zpmc" // 这个是代码值
         var TYPE = "type"
-        var TYPE_ZCBM = "A1"  //整车编码类型 zplx
-        var TYPE_TYH = "A5"  //拓印号 zplx
-        var TYPE_QT = "B4"  //拓印号 zplx
+        var TYPE_ZCBM = "HB"  //整车编码类型 zplx
+        var TYPE_TYH = "HA"  //拓印号 zplx
+        var TYPE_QT = "99"  //其他 zplx
         var REQUEST_ZCBM = 219 // 请求request id
         var CLIPP = "clipped" // 是否裁剪   最好写死在拍照采集界面 控制 已裁剪名称
         var CLIPP_PICTURE_PATH = "clipped_path" // 是否裁剪
@@ -218,9 +219,10 @@ class Constants {
         val CAR_ZY: String = "4" //车辆转移
         val CAR_BH: String = "5" //车辆补换
         val CAR_ZX: String = "6" //车辆注销
-        val CAR_GD: String = "9" //车辆档案归档
+
         val CAR_JCHP: String = "7" //旧车换牌
         val CAR_LSHP: String = "8" //临时号牌
+        val CAR_ZR: String = "9" //车辆转入
         val YGBA: String = "10" //员工备案
 
         val YWTB: String = "11" //业务退办
@@ -245,6 +247,7 @@ class Constants {
         val S_LRBM: String? = "lrbm" // 部门
         val S_ZPPATH: String? = "zpPath" //照片加载路径
         val S_SFZ: String? = "sfzmhm" //身份证
+        val S_ZPLX: String? = "zplx" //照片类型(1查验照片，2登记照片)
         var PTOTO_UPLOAD_ACTION = "photo_upload_action"
         var DATA = "data"
 
@@ -255,12 +258,17 @@ class Constants {
         val ZY_BC = "BC"  //辖区外转移
         val BG_DA ="DA" //变更迁出
         val BG_DB = "DB" //变更所有人
+        val BG_DC = "DC" //变更车身颜色
+        val ZR_IA = "IA" //转入辖区
+        val ZR_IB = "IB" //转入变更
 
         val A = "A" //注册登记
         val B = "B" //转移登记
         val D = "D" //变更登记
+        val I = "I" //转入登记
         val G = "G" //注销登记
         val K = "K" //补换登记
+        val J = "J" //旧车换牌登记
 
         //判定车身颜色
         val PD_CSYS="C"

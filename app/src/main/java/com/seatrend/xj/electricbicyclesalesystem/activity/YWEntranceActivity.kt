@@ -134,6 +134,9 @@ class YWEntranceActivity : BaseActivity(), NormalView {
                     getString(R.string.lshp) -> {
                         CarInfoByCyActivity.entranceFlag = Constants.CAR_LSHP
                     }
+                    getString(R.string.zryw) -> {
+                        CarInfoByCyActivity.entranceFlag = Constants.CAR_ZR
+                    }
                 }
             }
         }
@@ -231,7 +234,7 @@ class YWEntranceActivity : BaseActivity(), NormalView {
                 for (db in ywList) {
                     val dmz = db.dmz
                     val dmsm1 = db.dmsm1
-                    if ("A".equals(dmz) || "B".equals(dmz) || "D".equals(dmz) || "G".equals(dmz) || "K".equals(dmz)) {
+                    if (Constants.A.equals(dmz) || Constants.B.equals(dmz) || Constants.D.equals(dmz) || Constants.G.equals(dmz) || Constants.K.equals(dmz) || Constants.I.equals(dmz)) {
                         adapter.add(dmz + ":" + dmsm1)
                     }
                 }

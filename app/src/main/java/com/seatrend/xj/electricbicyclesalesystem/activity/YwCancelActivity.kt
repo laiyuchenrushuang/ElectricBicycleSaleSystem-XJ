@@ -3,6 +3,7 @@ package com.seatrend.xj.electricbicyclesalesystem.activity
 import android.app.Activity
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.widget.ArrayAdapter
@@ -46,7 +47,14 @@ class YwCancelActivity : BaseActivity(), NormalView {
                 CollectPhotoActivity.mLsh = enity.data.lsh
                 CollectPhotoActivity.mXh = enity.data.xh
             }
+            if(enity.data.photo!=null && enity.data.photo.size >0){
+                val bundle = Bundle()
+                bundle.putParcelable("photo_list", enity)
+                intent.putExtras(bundle)
+            }
         }
+
+
         intent.putExtra("syr", data!!.data.fjdcBusiness.syrmc)
         intent.putExtra("sfz", data!!.data.fjdcBusiness.sfzmhm)
         intent.putExtra("hphm", data!!.data.fjdcBusiness.cph)
@@ -101,8 +109,10 @@ class YwCancelActivity : BaseActivity(), NormalView {
         when (spinner.id) {
             R.id.sp_zx_ywyy -> {
                 var listData = ArrayList<String>()
-                listData.add("自行报废")
-                listData.add("灭失")
+                listData.add("GA:报废")
+                listData.add("GB:灭失")
+                listData.add("GD:撤销登记")
+                listData.add("GF:退车")
                 adapter.addAll(listData)
                 spinner.adapter = adapter
             }
@@ -179,7 +189,7 @@ class YwCancelActivity : BaseActivity(), NormalView {
 
             enity.ywlx = intent.getStringExtra("ywlx") //业务类型
             enity.glbm = UserInfo.GLBM //管理部门
-            enity.ywyy = sp_zx_ywyy.selectedItem.toString()//业务原因
+            enity.ywyy = sp_zx_ywyy.selectedItem.toString().trim().split(":")[0]//业务原因
             enity.fzjg = if (TextUtils.isEmpty(UserInfo.FZJG)) "" else UserInfo.FZJG
             enity.blr = UserInfo.XM
             enity.cyrsfzmhm = UserInfo.SFZMHM//查验人身份证明号码

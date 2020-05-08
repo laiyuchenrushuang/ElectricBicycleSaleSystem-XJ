@@ -156,6 +156,8 @@ public class HttpService {
 
                 FormBody.Builder builder = new FormBody.Builder();
                 for (Map.Entry<String, String> entry : map.entrySet()) {
+                    key = entry.getKey();
+                    value = entry.getValue();
                     if (Constants.Companion.getAES_ENABLE()) {
                         builder.add(entry.getKey().trim(), AESUtils.encrypt(entry.getValue().trim()));
                     } else {

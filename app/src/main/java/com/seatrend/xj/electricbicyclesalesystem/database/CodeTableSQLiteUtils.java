@@ -348,6 +348,7 @@ public class CodeTableSQLiteUtils {
         cv.put(Constants.Companion.getS_ZPSM(), entity.getZpsm());
         cv.put(Constants.Companion.getS_CFFS(), entity.getCffs());
         cv.put(Constants.Companion.getS_SFZ(), entity.getSfz());
+        cv.put(Constants.Companion.getZPLX(), entity.getZplx());
         db.insert(CodeTableSQLiteOpenHelper.PHOTO_TABLE_NAME, null, cv);
         db.close();
     }
@@ -370,6 +371,7 @@ public class CodeTableSQLiteUtils {
             String lrbm = query.getString(query.getColumnIndex(Constants.Companion.getS_LRBM()));
             String zpPath = query.getString(query.getColumnIndex(Constants.Companion.getS_ZPPATH()));
             String sfz = query.getString(query.getColumnIndex(Constants.Companion.getS_SFZ()));
+            String zplx = query.getString(query.getColumnIndex(Constants.Companion.getZPLX()));
 
             PhotoEntity photoEntity = new PhotoEntity();
             photoEntity.setLsh(lsh);
@@ -382,6 +384,7 @@ public class CodeTableSQLiteUtils {
             photoEntity.setLrbm(lrbm);
             photoEntity.setZpPath(zpPath);
             photoEntity.setSfz(sfz);
+            photoEntity.setZplx(zplx);
             list.add(photoEntity);
         }
         return list;
@@ -465,6 +468,7 @@ public class CodeTableSQLiteUtils {
         cv.put(Constants.Companion.getS_LRBM(), entity.getLrbm());
         cv.put(Constants.Companion.getS_ZPSM(), entity.getZpsm());
         cv.put(Constants.Companion.getS_CFFS(), entity.getCffs());
+        cv.put(Constants.Companion.getZPLX(), entity.getZplx());
         db.update(CodeTableSQLiteOpenHelper.PHOTO_TABLE_NAME, cv, "lsh=? and zpzl=?", new String[]{entity.getLsh(), entity.getZpzl()});
         db.close();
     }

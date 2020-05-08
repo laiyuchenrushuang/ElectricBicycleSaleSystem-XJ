@@ -62,13 +62,9 @@ class CarInfoActivity : BaseActivity(), NormalView {
 
         bt_next!!.setOnClickListener {
             if (Constants.A.equals(intent.getStringExtra("ywlx"))) {
-//                intent.setClass(this, ChaYanActivity::class.java)
                 intent.setClass(this, CarInspectionActivity::class.java)
                 startActivity(intent)
             } else {
-//
-//                CollectPhotoActivity.photoEntranceFlag = Constants.CAR_CY
-//                startActivity(intent.setClass(this, CollectPhotoActivity::class.java))
                 intent.setClass(this,CYProjectJudgeActivity::class.java)
                 startActivity(intent)
             }

@@ -1,19 +1,15 @@
 package com.seatrend.xj.electricbicyclesalesystem.fragment
 
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Spinner
 import com.seatrend.xj.electricbicyclesalesystem.R
-import com.seatrend.xj.electricbicyclesalesystem.activity.CarInspectionActivity
 import com.seatrend.xj.electricbicyclesalesystem.adpater.CheckDataCYAdapter
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseFragment
-import com.seatrend.xj.electricbicyclesalesystem.common.Constants
-import com.seatrend.xj.electricbicyclesalesystem.database.CodeTableSQLiteUtils
 import com.seatrend.xj.electricbicyclesalesystem.entity.CYEntranceEnity
 import com.seatrend.xj.electricbicyclesalesystem.entity.JudgeProjectEnity
-import com.seatrend.xj.electricbicyclesalesystem.util.CheckBoxUtils
 import com.seatrend.xj.electricbicyclesalesystem.util.GsonUtils
 import kotlinx.android.synthetic.main.fragment_cy_project_judge.*
 
@@ -21,6 +17,7 @@ import kotlinx.android.synthetic.main.fragment_cy_project_judge.*
  * Created by ly on 2020/4/3 10:52
  */
 class CYProjectJudgeFragment : BaseFragment(), CheckDataCYAdapter.DataChange {
+
 
     private var mCheckDataAdapter: CheckDataCYAdapter? = null
     var data1: CYEntranceEnity? = null
@@ -37,12 +34,16 @@ class CYProjectJudgeFragment : BaseFragment(), CheckDataCYAdapter.DataChange {
     private fun initRecycleView() {
         m_recycler_view!!.layoutManager = LinearLayoutManager(context)
         mCheckDataAdapter = CheckDataCYAdapter(context, list)
-        mCheckDataAdapter!!.setListener(this)
+        mCheckDataAdapter!!.setListener(this, false)
         m_recycler_view.adapter = mCheckDataAdapter
     }
 
     fun getSendData(): HashMap<String, String> {
         var map = HashMap<String, String>()
+
+
+        map["ywlx"] = activity.intent.getStringExtra("ywlx") // 业务类型
+        map["ywyy"] = activity.intent.getStringExtra("ywyy")//业务原因   ----  查询照片类型的回调
 
         map["lsh"] = data1!!.data.lsh
         map["xh"] = data1!!.data.xh
@@ -98,5 +99,8 @@ class CYProjectJudgeFragment : BaseFragment(), CheckDataCYAdapter.DataChange {
 
     override fun DataChangeListener(data: ArrayList<JudgeProjectEnity>) {
         this.list = data
+    }
+
+    override fun getCsysData(sp_csys_a: Spinner, sp_csys_b: Spinner, sp_csys_c: Spinner) {
     }
 }

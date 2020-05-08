@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.text.Editable
@@ -24,7 +25,6 @@ import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.bottom_button.*
 
 
-
 class YwRegisterActivity : BaseActivity(), NormalView {
 
     private var headPhoto: ByteArray? = null//头像照片
@@ -33,7 +33,7 @@ class YwRegisterActivity : BaseActivity(), NormalView {
     private var changed1 = false
     private var changed2 = false
     private var changed3 = false
-    private var data : AllBikeMsgEnity?=null
+    private var data: AllBikeMsgEnity? = null
 
     override fun netWorkTaskSuccess(commonResponse: CommonResponse) {
         dismissLoadingDialog()
@@ -56,6 +56,13 @@ class YwRegisterActivity : BaseActivity(), NormalView {
                 CollectPhotoActivity.mLsh = enity.data.lsh
                 CollectPhotoActivity.mXh = enity.data.xh
             }
+
+            if(enity.data.photo!=null && enity.data.photo.size >0){
+                val bundle = Bundle()
+                bundle.putParcelable("photo_list", enity)
+                intent.putExtras(bundle)
+            }
+
             intent.putExtra("syr", ed_syr_xm.text.toString())
             intent.putExtra("sfz", ed_syr_sfz.text.toString())
             intent.putExtra("hphm", if (TextUtils.isEmpty(data!!.data.checkData.cph)) et_cphm.text.toString().toUpperCase() else data!!.data.checkData.cph)
@@ -194,21 +201,21 @@ class YwRegisterActivity : BaseActivity(), NormalView {
         val enity = data!!.data.fjdcBusiness
         when (obj) {
             sp_syr_qh2 -> {
-                if (null == enity.djxzqh  || changed1) {
+                if (null == enity.djxzqh || changed1) {
                     return
                 }
                 OtherUtils.setSpinner2Dmsm(CodeTableSQLiteUtils.queryByDmlbAndDmzGetDmsm(Constants.XSQY, enity.djxzqh), sp_syr_qh2)
                 changed1 = true
             }
             sp_syr_yj_qh2 -> {
-                if (null == enity.lxdzxzqh  || changed2) {
+                if (null == enity.lxdzxzqh || changed2) {
                     return
                 }
                 OtherUtils.setSpinner2Dmsm(CodeTableSQLiteUtils.queryByDmlbAndDmzGetDmsm(Constants.XSQY, enity.lxdzxzqh), sp_syr_yj_qh2)
                 changed2 = true
             }
             sp_yj_qh2 -> {
-                if (null == enity.sjryjxzqh  || changed3) {
+                if (null == enity.sjryjxzqh || changed3) {
                     return
                 }
                 OtherUtils.setSpinner2Dmsm(CodeTableSQLiteUtils.queryByDmlbAndDmzGetDmsm(Constants.XSQY, enity.sjryjxzqh), sp_yj_qh2)
@@ -295,9 +302,9 @@ class YwRegisterActivity : BaseActivity(), NormalView {
         SpinnerUtil.setPinnerData(this, Constants.CLYT, sp_syyt)
 
         //省的设置
-        SpinnerUtil.setPinnerDataQh(this, Constants.MY_QH_SHENG_DMLB, sp_syr_qh1, if(null == data!!.data.fjdcBusiness.djxzqh || TextUtils.isEmpty(data!!.data.fjdcBusiness.djxzqh)) null else data!!.data.fjdcBusiness.djxzqh.substring(0, 2) + "0000")
-        SpinnerUtil.setPinnerDataQh(this, Constants.MY_QH_SHENG_DMLB, sp_yj_qh1, if(null == data!!.data.fjdcBusiness.sjryjxzqh || TextUtils.isEmpty(data!!.data.fjdcBusiness.sjryjxzqh)) null else data!!.data.fjdcBusiness.sjryjxzqh.substring(0, 2) + "0000")
-        SpinnerUtil.setPinnerDataQh(this, Constants.MY_QH_SHENG_DMLB, sp_syr_yj_qh1, if(null == data!!.data.fjdcBusiness.lxdzxzqh || TextUtils.isEmpty(data!!.data.fjdcBusiness.lxdzxzqh)) null else data!!.data.fjdcBusiness.lxdzxzqh.substring(0, 2) + "0000")
+        SpinnerUtil.setPinnerDataQh(this, Constants.MY_QH_SHENG_DMLB, sp_syr_qh1, if (null == data!!.data.fjdcBusiness.djxzqh || TextUtils.isEmpty(data!!.data.fjdcBusiness.djxzqh)) null else data!!.data.fjdcBusiness.djxzqh.substring(0, 2) + "0000")
+        SpinnerUtil.setPinnerDataQh(this, Constants.MY_QH_SHENG_DMLB, sp_yj_qh1, if (null == data!!.data.fjdcBusiness.sjryjxzqh || TextUtils.isEmpty(data!!.data.fjdcBusiness.sjryjxzqh)) null else data!!.data.fjdcBusiness.sjryjxzqh.substring(0, 2) + "0000")
+        SpinnerUtil.setPinnerDataQh(this, Constants.MY_QH_SHENG_DMLB, sp_syr_yj_qh1, if (null == data!!.data.fjdcBusiness.lxdzxzqh || TextUtils.isEmpty(data!!.data.fjdcBusiness.lxdzxzqh)) null else data!!.data.fjdcBusiness.lxdzxzqh.substring(0, 2) + "0000")
 
         SpinnerUtil.setPinnerData(this, Constants.SFZMMC, sp_syr_sfz)
         SpinnerUtil.setPinnerData(this, Constants.SFZMMC, sp_dlr_sfz)
@@ -404,7 +411,7 @@ class YwRegisterActivity : BaseActivity(), NormalView {
                 showToast("请正确填写手机信息")
                 return
             }
-            if(!CheckUtil.isYzbmCorrect(et_syr_yj_yzbm.text.toString())){
+            if (!CheckUtil.isYzbmCorrect(et_syr_yj_yzbm.text.toString())) {
                 showToast("请正确填写邮政编码")
                 return
             }

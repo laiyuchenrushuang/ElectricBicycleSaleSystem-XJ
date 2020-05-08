@@ -796,6 +796,124 @@
                 <include layout="@layout/my_view3" />
             </LinearLayout>
         </LinearLayout>
+
+        //转入业务信息
+        <LinearLayout
+            android:id="@+id/ll_zr_ywxx"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
+
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:text="业务原因" />
+
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/tv_zr_ywyy"
+                        style="@style/carcy_info_jscs_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:text="/" />
+                </LinearLayout>
+
+                <include layout="@layout/my_view3" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
+
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="使用性质" />
+
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/tv_zr_syxz"
+                        style="@style/carcy_info_jscs_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:text="/" />
+                </LinearLayout>
+
+                <include layout="@layout/my_view3" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
+
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="车辆用途" />
+
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/tv_zr_clyt"
+                        style="@style/carcy_info_jscs_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:text="/" />
+                </LinearLayout>
+
+                <include layout="@layout/my_view3" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
+
+                    <TextView
+                        style="@style/carcy_info_jscs_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="号牌号码" />
+
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/tv_zr_hphm"
+                        style="@style/carcy_info_jscs_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:text="/" />
+                </LinearLayout>
+
+                <include layout="@layout/my_view3" />
+            </LinearLayout>
+        </LinearLayout>
+
         //所有人信息
 
         <LinearLayout

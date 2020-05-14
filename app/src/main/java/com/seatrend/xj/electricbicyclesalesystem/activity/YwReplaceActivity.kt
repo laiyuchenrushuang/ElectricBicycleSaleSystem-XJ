@@ -517,8 +517,9 @@ class YwReplaceActivity : BaseActivity(), NormalView {
             } else {
                 enity.hphs = "0"
             }
-            //3
-            if (ObjectNullUtil.checknull(ed_dlr_sfz.text.toString(), ed_dlr_xm.text.toString(), et_dlr_lxdh.text.toString())) {
+            //3 代理人
+            if(ObjectNullUtil.checknull(ed_dlr_sfz.text.toString()) || ObjectNullUtil.checknull(ed_dlr_xm.text.toString())||ObjectNullUtil.checknull(et_dlr_lxdh.text.toString())){
+
                 if ("A" == sp_dlr_sfz.selectedItem.toString().split(":")[0] && !SFZCheckUtil.isCorrect(ed_dlr_sfz.text.toString())) {
                     showToast("请正确填写代理人身份证信息")
                     return
@@ -527,11 +528,26 @@ class YwReplaceActivity : BaseActivity(), NormalView {
                     showToast("代理人和所有人的身份证信息是一样")
                     return
                 }
+                //只要不是全写了的 就提示写全
+                if (!ObjectNullUtil.checknull( ed_dlr_xm.text.toString())){
+                    showToast("请完善代理人姓名")
+                    return
+                }
+                if (!ObjectNullUtil.checknull(et_dlr_lxdh.text.toString()) || !StringUtils.isPhoneNumber(et_dlr_lxdh.text.toString())){
+                    showToast("请正确输入代理人联系电话")
+                    return
+                }
+
                 enity.dlrsfzmlx = sp_dlr_sfz.selectedItem.toString().split(":")[0]
                 enity.dlrsfzmhm = ed_dlr_sfz.text.toString()
                 enity.dlrxm = ed_dlr_xm.text.toString()
                 enity.dlrlxdh = et_dlr_lxdh.text.toString()
                 enity.sqfs = "1"//申请方式  0所有人 1 代理人
+            }else{
+                enity.dlrsfzmlx = ""
+                enity.dlrsfzmhm = ""
+                enity.dlrxm = ""
+                enity.dlrlxdh = ""
             }
             //4
             if (!"0".equals(UserInfo.GlobalParameter.LQBJ)) {
@@ -559,9 +575,10 @@ class YwReplaceActivity : BaseActivity(), NormalView {
                     enity.sjryzbm = et_yj_yzbm.text.toString()
                 }
             }
-            showLog("[BH] result = " + GsonUtils.toJson(enity))
             showLoadingDialog()
-            mNormalPresenter!!.doJsonPost(GsonUtils.toJson(enity), Constants.YW_ADD_REGISTER_DATA)
+            val jsonstr = GsonUtils.toJson(enity)
+            showLog("result [BH] = " + jsonstr)
+            mNormalPresenter!!.doJsonPost(jsonstr, Constants.YW_ADD_REGISTER_DATA)
         } catch (e: Exception) {
             showToast(e.message.toString())
         }

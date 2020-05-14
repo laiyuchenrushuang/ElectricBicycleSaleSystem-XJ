@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import com.seatrend.xj.electricbicyclesalesystem.database.CodeTableSQLiteOpenHelper
 import com.seatrend.xj.electricbicyclesalesystem.database.CodeTableSQLiteUtils
+import com.seatrend.xj.electricbicyclesalesystem.holder.DataHolder
 import com.seatrend.xj.electricbicyclesalesystem.service.PhotoUploadService
 import com.seatrend.xj.electricbicyclesalesystem.util.CrashHandler
 
@@ -22,6 +23,7 @@ class MyApplication : Application(), Application.ActivityLifecycleCallbacks {
 //        CrashHandler.getInstance().init(this)
 //        CodeTableSQLiteUtils.deleteAll(CodeTableSQLiteOpenHelper.PHOTO_TABLE_NAME)
         startService(Intent(this, PhotoUploadService::class.java))
+        DataHolder.instance.save("isSyning",false)
     }
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle) {

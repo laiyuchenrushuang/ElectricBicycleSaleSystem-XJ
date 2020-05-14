@@ -207,7 +207,8 @@ class YwSwitchedActivity : BaseActivity(), NormalView {
             enity.yzbm = et_syr_yj_yzbm.text.toString()
             enity.dzyx = et_syr_yxdz.text.toString()
             //3 代理人
-            if (ObjectNullUtil.checknull(ed_dlr_sfz.text.toString(), ed_dlr_xm.text.toString(), et_dlr_lxdh.text.toString())) {
+            if(ObjectNullUtil.checknull(ed_dlr_sfz.text.toString()) || ObjectNullUtil.checknull(ed_dlr_xm.text.toString())||ObjectNullUtil.checknull(et_dlr_lxdh.text.toString())){
+
                 if ("A" == sp_dlr_sfz.selectedItem.toString().split(":")[0] && !SFZCheckUtil.isCorrect(ed_dlr_sfz.text.toString())) {
                     showToast("请正确填写代理人身份证信息")
                     return
@@ -216,11 +217,26 @@ class YwSwitchedActivity : BaseActivity(), NormalView {
                     showToast("代理人和所有人的身份证信息是一样")
                     return
                 }
+                //只要不是全写了的 就提示写全
+                if (!ObjectNullUtil.checknull( ed_dlr_xm.text.toString())){
+                    showToast("请完善代理人姓名")
+                    return
+                }
+                if (!ObjectNullUtil.checknull(et_dlr_lxdh.text.toString()) || !StringUtils.isPhoneNumber(et_dlr_lxdh.text.toString())){
+                    showToast("请正确输入代理人联系电话")
+                    return
+                }
+
                 enity.dlrsfzmlx = sp_dlr_sfz.selectedItem.toString().split(":")[0]
                 enity.dlrsfzmhm = ed_dlr_sfz.text.toString()
                 enity.dlrxm = ed_dlr_xm.text.toString()
                 enity.dlrlxdh = et_dlr_lxdh.text.toString()
                 enity.sqfs = "1"//申请方式  0所有人 1 代理人
+            }else{
+                enity.dlrsfzmlx = ""
+                enity.dlrsfzmhm = ""
+                enity.dlrxm = ""
+                enity.dlrlxdh = ""
             }
 
             //4
@@ -252,9 +268,10 @@ class YwSwitchedActivity : BaseActivity(), NormalView {
                 }
             }
 
-            showLog("result [ZR] = " + GsonUtils.toJson(enity))
             showLoadingDialog()
-            mNormalPresenter!!.doJsonPost(GsonUtils.toJson(enity), Constants.YW_ADD_REGISTER_DATA)
+            val jsonstr = GsonUtils.toJson(enity)
+            showLog("result [ZR] = " + jsonstr)
+            mNormalPresenter!!.doJsonPost(jsonstr, Constants.YW_ADD_REGISTER_DATA)
         } catch (e: Exception) {
             e.printStackTrace()
             showToast(e.message.toString())
@@ -339,7 +356,7 @@ class YwSwitchedActivity : BaseActivity(), NormalView {
             tv_cph.text = data!!.data.fjdcBusiness.cph
 
             tv_zcbm.text = data!!.data.fjdcBusiness.zcbm
-            tv_djrq.text = StringUtils.longToStringData(data!!.data.fjdcBusiness.djrq.toLong())
+            tv_djrq.text = StringUtils.longToStringDataNoHour(data!!.data.fjdcBusiness.djrq.toLong())
             tv_djjg.text = data!!.data.fjdcBusiness.fzjg
             OtherUtils.setSpinnerToDmz(data!!.data.fjdcBusiness.syxz, sp_syxz)
             OtherUtils.setSpinnerToDmz(data!!.data.fjdcBusiness.clyt, sp_syyt)

@@ -106,7 +106,7 @@ public class StringUtils {
     public static String isNulls(String obj) {
         String content = "--";
         if (obj != null && !obj.equals("") && !obj.equals("null"))
-            content = obj.toString();
+            content = obj;
         return content;
     }
 
@@ -282,10 +282,11 @@ public class StringUtils {
      *
      * @param originalStr 原本字符串
      * @param insertStr   插入啥
+     * @param dis         插入的间隔
      * @return 返回新字符串
      */
 
-    public static String insertCharToString(String originalStr, String insertStr) {
+    public static String insertCharToString(String originalStr, String insertStr, int dis) {
 
         if (originalStr.equals("")) {
             return "";
@@ -293,12 +294,13 @@ public class StringUtils {
         StringBuilder sb = new StringBuilder();
         char[] array = originalStr.toCharArray();
 
-        for (char c : array) {
-            if (c != array[array.length - 1]) {
-                sb.append(c).append(insertStr);
+        for (int i = 0; i < array.length; i += dis) {
+
+            if (i < array.length - dis) {
+                sb.append(originalStr, i, i + dis).append(insertStr);
                 continue;
             }
-            sb.append(c);
+            sb.append(originalStr, i, array.length);
         }
         return sb.toString();
     }

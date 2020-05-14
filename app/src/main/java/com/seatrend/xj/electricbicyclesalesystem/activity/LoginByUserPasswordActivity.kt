@@ -23,6 +23,7 @@ import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants
 import com.seatrend.xj.electricbicyclesalesystem.createview.ClipperView
 import com.seatrend.xj.electricbicyclesalesystem.entity.*
+import com.seatrend.xj.electricbicyclesalesystem.holder.DataHolder
 import com.seatrend.xj.electricbicyclesalesystem.http.thread.ThreadPoolManager
 import com.seatrend.xj.electricbicyclesalesystem.persenter.CarPhotoPersenter
 import com.seatrend.xj.electricbicyclesalesystem.persenter.LoginPersenter
@@ -261,7 +262,7 @@ class LoginByUserPasswordActivity : BaseActivity(), LoginView, CarPhotoView {
                 val intent = Intent(this, ShowPhotoActivity::class.java)
                 intent.putExtra(Constants.PATH, imgFile!!.path)
                 intent.putExtra(Constants.ZPMC, "现场照片")
-//                intent.putExtra(Constants.ZPLX, "A1")  //测试 要删除
+//                intent.putExtra(Constants.ZPLX, Constants.TYPE_ZCBM)  //测试 要删除
 //                intent.putExtra(Constants.CLIPP, "1") //测试 要删除
                 startActivity(intent)
                 startRotateAlphaAcaleAnimation()

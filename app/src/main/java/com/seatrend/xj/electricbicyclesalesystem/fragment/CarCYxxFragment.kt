@@ -72,7 +72,7 @@ class CarCYxxFragment : BaseFragment() {
 
                 if (null == enity || null == enity!!.data || null == enity!!.data.checkData) {
                     //可能是无需查验的登记,补换注销登记
-                    if (null != enity && enity!!.data != null && enity!!.data.fjdcBusiness != null && Constants.A != enity!!.data.fjdcBusiness.ywlx && Constants.B != enity!!.data.fjdcBusiness.ywlx && Constants.D != enity!!.data.fjdcBusiness.ywlx) {
+                    if (null != enity && enity!!.data != null && enity!!.data.fjdcBusiness != null && Constants.A != enity!!.data.fjdcBusiness.ywlx && Constants.B != enity!!.data.fjdcBusiness.ywlx && Constants.D != enity!!.data.fjdcBusiness.ywlx && Constants.I != enity!!.data.fjdcBusiness.ywlx) {
                         ViewShowUtils.showGoneView(ll_cyxx)
                         ViewShowUtils.showVisibleView(tv_cyxx)
                     } else {
@@ -84,7 +84,7 @@ class CarCYxxFragment : BaseFragment() {
                 if (Constants.A.equals(enity!!.data.checkData.ywlx) ||
                         Constants.B.equals(enity!!.data.checkData.ywlx) ||
                         Constants.D.equals(enity!!.data.checkData.ywlx) ||
-                        Constants.I == activity.intent.getStringExtra("ywlx")) { //A注册 D变更 B转移 I 转入 7旧车换牌
+                        Constants.I.equals(enity!!.data.checkData.ywlx)) { //A注册 D变更 B转移 I 转入 7旧车换牌
                     getData()
                 } else {
                     ViewShowUtils.showGoneView(ll_cyxx)

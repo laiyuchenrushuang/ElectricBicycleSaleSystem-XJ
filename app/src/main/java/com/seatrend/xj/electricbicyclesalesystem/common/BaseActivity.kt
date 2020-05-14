@@ -48,6 +48,7 @@ import java.util.regex.Pattern
  * Created by seatrend on 2018/8/20.
  */
 
+@Suppress("DEPRECATED_IDENTITY_EQUALS")
 abstract class BaseActivity : AppCompatActivity(), BaseView {
 
     protected var mDialogListenr: DialogListener? = null
@@ -184,7 +185,6 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
         if (checkSelfPermission(Manifest.permission.NFC) !== PackageManager.PERMISSION_GRANTED) {
             permission.add(Manifest.permission.NFC)
         }
-
         if (permission.size > 0) {
             ActivityCompat.requestPermissions(this@BaseActivity, permission.toTypedArray(), 1)
         }

@@ -12,16 +12,19 @@ import com.seatrend.xj.electricbicyclesalesystem.database.CodeTableSQLiteOpenHel
 import com.seatrend.xj.electricbicyclesalesystem.database.CodeTableSQLiteUtils
 import com.seatrend.xj.electricbicyclesalesystem.entity.CodeEntity
 import com.seatrend.xj.electricbicyclesalesystem.entity.CommonResponse
+import com.seatrend.xj.electricbicyclesalesystem.holder.DataHolder
 import com.seatrend.xj.electricbicyclesalesystem.http.thread.ThreadPoolManager
 import com.seatrend.xj.electricbicyclesalesystem.persenter.SettingPersenter
 import com.seatrend.xj.electricbicyclesalesystem.util.*
 import com.seatrend.xj.electricbicyclesalesystem.view.SettingView
 import kotlinx.android.synthetic.main.activity_setting.*
 import java.util.concurrent.locks.ReentrantLock
+import kotlin.concurrent.thread
 
 
 class SettingActivity : BaseActivity(), SettingView {
 
+    private val FAILED: Int = 3
     private val SUCCESS: Int = 2
     private val REQUEST: Int = 1
     private var codeShengEntity: CodeEntity? = null  //省区划信息  单独拿出来去获取，整体获取
@@ -32,13 +35,15 @@ class SettingActivity : BaseActivity(), SettingView {
     override fun netWorkTaskSuccess(commonResponse: CommonResponse) {
         try {
             if (commonResponse.getUrl().equals(Constants.GET_ALL_CODE)) {
-                codeAllEntity = GsonUtils.gson(commonResponse.getResponseString(), CodeEntity::class.java)
-                showLog(commonResponse.responseString)
+                if (codeAllEntity == null) {
+                    codeAllEntity = GsonUtils.gson(commonResponse.getResponseString(), CodeEntity::class.java)
+                }
+
             }
             if (Constants.QH_SHENG.equals(commonResponse.getUrl())) {
-                codeShengEntity = GsonUtils.gson(commonResponse.getResponseString(), CodeEntity::class.java)
-                showLog(commonResponse.responseString)
-
+                if (codeShengEntity == null) {
+                    codeShengEntity = GsonUtils.gson(commonResponse.getResponseString(), CodeEntity::class.java)
+                }
             }
 //            if (Constants.GET_USER_PERMMISION.equals(commonResponse.getUrl())) {
 //                codePermissionEntity = GsonUtils.gson(commonResponse.getResponseString(), PermissionEnity::class.java)
@@ -48,6 +53,8 @@ class SettingActivity : BaseActivity(), SettingView {
             if (null != codeShengEntity && null != codeAllEntity) {
                 showLog("写数据库1")
                 //不开UI线程 程序卡
+//                mLoadCodeTask = LoadCodeTask(codeShengEntity!!, codeAllEntity!!)
+//                Thread(mLoadCodeTask).start()
                 writeToSqlte(codeShengEntity!!, codeAllEntity!!)
             }
         } catch (e: Exception) {
@@ -74,12 +81,15 @@ class SettingActivity : BaseActivity(), SettingView {
                 SharedPreferencesUtils.setIsFirst(false)
                 showToast("同步成功")
                 showLog("同步成功")
-//                showLog(CodeTableSQLiteUtils.queryCodeTableCount())
                 dismissLoadingDialog()
+                DataHolder.instance.save("isSyning", false)
+                initCodeData()
                 Looper.loop()
             } catch (e: Exception) {
                 dismissLoadingDialog()
                 showToast("  " + e.message.toString())
+                DataHolder.instance.save("isSyning", false)
+                initCodeData()
             }
         })
     }
@@ -90,8 +100,7 @@ class SettingActivity : BaseActivity(), SettingView {
         if (Constants.QH_SHENG.equals(commonResponse.getUrl()) || commonResponse.getUrl().equals(Constants.GET_ALL_CODE)) {
             CodeTableSQLiteUtils.deleteAll(CodeTableSQLiteOpenHelper.TABLE_NAME)
             SharedPreferencesUtils.setIsFirst(true)  // 避免请求失败 二次进入数据为空的情况
-            codeAllEntity = null
-            codeShengEntity = null
+            initCodeData()
         }
     }
 
@@ -108,9 +117,16 @@ class SettingActivity : BaseActivity(), SettingView {
                 }
                 SUCCESS -> {
                     dismissLoadingDialog()
+                    SharedPreferencesUtils.setIsFirst(false)
                     showToast("同步成功")
                     showLog("同步成功")
                     tv_update_time.text = Constants.UPDATA_TIME
+                }
+                FAILED -> {
+                    dismissLoadingDialog()
+                    SharedPreferencesUtils.setIsFirst(true)
+                    showToast("同步失败")
+                    showLog("同步失败")
                 }
             }
         }
@@ -125,15 +141,19 @@ class SettingActivity : BaseActivity(), SettingView {
         }
 
         btn_code_syn.setOnClickListener {
-            showLoadingDialog()
-            btn_code_syn.text = "代码同步"
-            codeShengEntity = null
-            codeAllEntity = null
-            SharedPreferencesUtils.setIsFirst(true)
+            if (!(DataHolder.instance.retrieve("isSyning") as Boolean)) {
+                showLoadingDialog()
+                DataHolder.instance.save("isSyning", true)
+                btn_code_syn.text = "代码同步"
+                initCodeData()
+                SharedPreferencesUtils.setIsFirst(true)
 
-            var msg = Message.obtain()
-            msg.what = REQUEST
-            mHandler.sendMessage(msg)
+                var msg = Message.obtain()
+                msg.what = REQUEST
+                mHandler.sendMessage(msg)
+            } else {
+                showToast("代码努力同步中...")
+            }
         }
         btn_code_syn.setOnLongClickListener {
             btn_code_syn.text = resources.getString(R.string.dmtb, "" + CodeTableSQLiteUtils.queryCodeTableCount())
@@ -142,6 +162,11 @@ class SettingActivity : BaseActivity(), SettingView {
         btn_video.setOnClickListener {
             //            startActivity(Intent(this, PDFActivity::class.java))
         }
+    }
+
+    private fun initCodeData() {
+        codeShengEntity = null
+        codeAllEntity = null
     }
 
     private fun getAllCode() {
@@ -159,4 +184,5 @@ class SettingActivity : BaseActivity(), SettingView {
     override fun getLayout(): Int {
         return R.layout.activity_setting
     }
+
 }

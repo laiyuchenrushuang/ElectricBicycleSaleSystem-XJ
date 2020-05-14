@@ -33,12 +33,12 @@ import kotlinx.android.synthetic.main.bottom_button.*
  * co., LTD. The code is only for learning and sharing.
  * It is forbidden to make profits by spreading the code.
  */
-class YwOldCarReplaceHPHMActivity : BaseActivity(),NormalView{
+class YwOldCarReplaceHPHMActivity : BaseActivity(), NormalView {
 
     private var headPhoto: ByteArray? = null//头像照片
     private var FACE_COMPARE_CODE: Int = 11
     private var mNormalPresenter: NormalPresenter? = null
-    private var data : AllBikeMsgEnity?=null
+    private var data: AllBikeMsgEnity? = null
     private var changed1 = false
     private var changed2 = false
     private var changed3 = false
@@ -49,6 +49,7 @@ class YwOldCarReplaceHPHMActivity : BaseActivity(),NormalView{
         initData()
         bindEvent()
     }
+
     override fun netWorkTaskSuccess(commonResponse: CommonResponse) {
         dismissLoadingDialog()
 
@@ -80,7 +81,6 @@ class YwOldCarReplaceHPHMActivity : BaseActivity(),NormalView{
     }
 
 
-
     private fun bindEvent() {
         rb_zzxsz_ok.isChecked = true
         rb_lqfs_ok.isChecked = true
@@ -104,7 +104,7 @@ class YwOldCarReplaceHPHMActivity : BaseActivity(),NormalView{
 
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
                 var provinceDmz = sp_syr_qh1.selectedItem.toString().split(":")[0]
-                startThreadUpdateSp(provinceDmz,sp_syr_qh2)
+                startThreadUpdateSp(provinceDmz, sp_syr_qh2)
             }
         }
         sp_yj_qh1.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -112,7 +112,7 @@ class YwOldCarReplaceHPHMActivity : BaseActivity(),NormalView{
 
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
                 var provinceDmz = sp_yj_qh1.selectedItem.toString().split(":")[0]
-                startThreadUpdateSp(provinceDmz,sp_yj_qh2)
+                startThreadUpdateSp(provinceDmz, sp_yj_qh2)
             }
         }
         sp_syr_yj_qh1.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -120,7 +120,7 @@ class YwOldCarReplaceHPHMActivity : BaseActivity(),NormalView{
 
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
                 var provinceDmz = sp_syr_yj_qh1.selectedItem.toString().split(":")[0]
-                startThreadUpdateSp(provinceDmz,sp_syr_yj_qh2)
+                startThreadUpdateSp(provinceDmz, sp_syr_yj_qh2)
             }
         }
 
@@ -186,21 +186,21 @@ class YwOldCarReplaceHPHMActivity : BaseActivity(),NormalView{
         val enity = data!!.data.fjdcBusiness
         when (obj) {
             sp_syr_qh2 -> {
-                if (null == enity.djxzqh  || changed1) {
+                if (null == enity.djxzqh || changed1) {
                     return
                 }
                 OtherUtils.setSpinner2Dmsm(CodeTableSQLiteUtils.queryByDmlbAndDmzGetDmsm(Constants.XSQY, enity.djxzqh), sp_syr_qh2)
                 changed1 = true
             }
             sp_syr_yj_qh2 -> {
-                if (null == enity.lxdzxzqh  || changed2) {
+                if (null == enity.lxdzxzqh || changed2) {
                     return
                 }
                 OtherUtils.setSpinner2Dmsm(CodeTableSQLiteUtils.queryByDmlbAndDmzGetDmsm(Constants.XSQY, enity.lxdzxzqh), sp_syr_yj_qh2)
                 changed2 = true
             }
             sp_yj_qh2 -> {
-                if (null == enity.sjryjxzqh  || changed3) {
+                if (null == enity.sjryjxzqh || changed3) {
                     return
                 }
                 OtherUtils.setSpinner2Dmsm(CodeTableSQLiteUtils.queryByDmlbAndDmzGetDmsm(Constants.XSQY, enity.sjryjxzqh), sp_yj_qh2)
@@ -219,9 +219,9 @@ class YwOldCarReplaceHPHMActivity : BaseActivity(),NormalView{
 
     private fun initSpData() {
         //省的设置
-        SpinnerUtil.setPinnerDataQh(this, Constants.MY_QH_SHENG_DMLB, sp_syr_qh1, if(null == data!!.data.fjdcBusiness.djxzqh || TextUtils.isEmpty(data!!.data.fjdcBusiness.djxzqh)) null else data!!.data.fjdcBusiness.djxzqh.substring(0, 2) + "0000")
-        SpinnerUtil.setPinnerDataQh(this, Constants.MY_QH_SHENG_DMLB, sp_yj_qh1, if(null == data!!.data.fjdcBusiness.sjryjxzqh || TextUtils.isEmpty(data!!.data.fjdcBusiness.sjryjxzqh)) null else data!!.data.fjdcBusiness.sjryjxzqh.substring(0, 2) + "0000")
-        SpinnerUtil.setPinnerDataQh(this, Constants.MY_QH_SHENG_DMLB, sp_syr_yj_qh1, if(null == data!!.data.fjdcBusiness.lxdzxzqh || TextUtils.isEmpty(data!!.data.fjdcBusiness.lxdzxzqh)) null else data!!.data.fjdcBusiness.lxdzxzqh.substring(0, 2) + "0000")
+        SpinnerUtil.setPinnerDataQh(this, Constants.MY_QH_SHENG_DMLB, sp_syr_qh1, if (null == data!!.data.fjdcBusiness.djxzqh || TextUtils.isEmpty(data!!.data.fjdcBusiness.djxzqh)) null else data!!.data.fjdcBusiness.djxzqh.substring(0, 2) + "0000")
+        SpinnerUtil.setPinnerDataQh(this, Constants.MY_QH_SHENG_DMLB, sp_yj_qh1, if (null == data!!.data.fjdcBusiness.sjryjxzqh || TextUtils.isEmpty(data!!.data.fjdcBusiness.sjryjxzqh)) null else data!!.data.fjdcBusiness.sjryjxzqh.substring(0, 2) + "0000")
+        SpinnerUtil.setPinnerDataQh(this, Constants.MY_QH_SHENG_DMLB, sp_syr_yj_qh1, if (null == data!!.data.fjdcBusiness.lxdzxzqh || TextUtils.isEmpty(data!!.data.fjdcBusiness.lxdzxzqh)) null else data!!.data.fjdcBusiness.lxdzxzqh.substring(0, 2) + "0000")
 
         SpinnerUtil.setPinnerData(this, Constants.SFZMMC, sp_syr_sfz)
         SpinnerUtil.setPinnerData(this, Constants.SFZMMC, sp_dlr_sfz)
@@ -295,100 +295,117 @@ class YwOldCarReplaceHPHMActivity : BaseActivity(),NormalView{
     }
 
     private fun postHttpRequest() {
-            if (!SpinnerUtil.checkSpinnerValuable( sp_syr_sfz, sp_syr_qh1)) {
-                showToast("网络同步信息失败，请先设置界面同步代码")
+        if (!SpinnerUtil.checkSpinnerValuable(sp_syr_sfz, sp_syr_qh1)) {
+            showToast("网络同步信息失败，请先设置界面同步代码")
+            return
+        }
+
+        if (!CheckEditTxetUtils.checkEditextValuable(et_cphm)) {
+            showToast("请获取号牌号码")
+            return
+        }
+        if (!CheckEditTxetUtils.checkEditextValuable(ed_syr_sfz, ed_syr_xm, et_syr_lxdh, et_syr_xxdz, et_syr_yj_xxdz, et_syr_yj_yzbm)) {
+            showToast("请填写完成所有人信息")
+            return
+        }
+        val enity = data!!.data.fjdcBusiness
+
+        val lsh = data!!.data.checkData.lsh
+        val zcbm = data!!.data.checkData.zcbm
+        val cph = if (TextUtils.isEmpty(data!!.data.checkData.cph)) et_cphm.text.toString() else data!!.data.checkData.cph
+        val ywlx = data!!.data.checkData.ywlx
+        val xh = data!!.data.checkData.xh
+
+        enity.lsh = lsh
+        enity.xh = xh
+        enity.zcbm = zcbm
+        if (TextUtils.isEmpty(enity.cph)) {
+            enity.cph = cph  //不为空 我都不想传
+        }
+        enity.blr = UserInfo.XM
+        enity.ywlx = ywlx //业务类型
+        enity.glbm = UserInfo.GLBM //管理部门
+        enity.fzjg = if (TextUtils.isEmpty(UserInfo.FZJG)) "" else UserInfo.FZJG//发证机关
+        enity.cyrsfzmhm = UserInfo.SFZMHM//查验人身份证明号码
+        enity.czpt = Constants.CZPT //查验平台
+        enity.sqfs = "0"//申请方式  0所有人 1 代理人
+        //2
+        enity.sfzmmc = sp_syr_sfz.selectedItem.toString().split(":")[0]
+        enity.sfzmhm = ed_syr_sfz.text.toString()
+        enity.syrmc = ed_syr_xm.text.toString()
+        enity.lxdh = et_syr_lxdh.text.toString()
+        enity.djxzqh = CodeTableSQLiteUtils.queryByDmlbAndDmsm(Constants.XSQY, sp_syr_qh2.selectedItem.toString())
+        enity.djxxdz = et_syr_xxdz.text.toString()
+        enity.lxdzxzqh = CodeTableSQLiteUtils.queryByDmlbAndDmsm(Constants.XSQY, sp_syr_yj_qh2.selectedItem.toString())
+        enity.lxxxdz = et_syr_yj_xxdz.text.toString()
+        enity.yzbm = et_syr_yj_yzbm.text.toString()
+        enity.dzyx = et_syr_yxdz.text.toString()
+        //3 代理人
+        if (ObjectNullUtil.checknull(ed_dlr_sfz.text.toString()) || ObjectNullUtil.checknull(ed_dlr_xm.text.toString()) || ObjectNullUtil.checknull(et_dlr_lxdh.text.toString())) {
+
+            if ("A" == sp_dlr_sfz.selectedItem.toString().split(":")[0] && !SFZCheckUtil.isCorrect(ed_dlr_sfz.text.toString())) {
+                showToast("请正确填写代理人身份证信息")
+                return
+            }
+            if (ed_syr_sfz.text.toString() == ed_dlr_sfz.text.toString()) {
+                showToast("代理人和所有人的身份证信息是一样")
+                return
+            }
+            //只要不是全写了的 就提示写全
+            if (!ObjectNullUtil.checknull(ed_dlr_xm.text.toString())) {
+                showToast("请完善代理人姓名")
+                return
+            }
+            if (!ObjectNullUtil.checknull(et_dlr_lxdh.text.toString()) || !StringUtils.isPhoneNumber(et_dlr_lxdh.text.toString())) {
+                showToast("请正确输入代理人联系电话")
                 return
             }
 
-            if (!CheckEditTxetUtils.checkEditextValuable(et_cphm)) {
-                showToast("请获取号牌号码")
-                return
-            }
-            if (!CheckEditTxetUtils.checkEditextValuable(ed_syr_sfz, ed_syr_xm, et_syr_lxdh, et_syr_xxdz, et_syr_yj_xxdz, et_syr_yj_yzbm)) {
-                showToast("请填写完成所有人信息")
-                return
-            }
-            val enity = data!!.data.fjdcBusiness
+            enity.dlrsfzmlx = sp_dlr_sfz.selectedItem.toString().split(":")[0]
+            enity.dlrsfzmhm = ed_dlr_sfz.text.toString()
+            enity.dlrxm = ed_dlr_xm.text.toString()
+            enity.dlrlxdh = et_dlr_lxdh.text.toString()
+            enity.sqfs = "1"//申请方式  0所有人 1 代理人
+        } else {
+            enity.dlrsfzmlx = ""
+            enity.dlrsfzmhm = ""
+            enity.dlrxm = ""
+            enity.dlrlxdh = ""
+        }
 
-            val lsh = data!!.data.checkData.lsh
-            val zcbm = data!!.data.checkData.zcbm
-            val cph = if (TextUtils.isEmpty(data!!.data.checkData.cph)) et_cphm.text.toString() else data!!.data.checkData.cph
-            val ywlx = data!!.data.checkData.ywlx
-            val xh = data!!.data.checkData.xh
+        //4
 
-            enity.lsh = lsh
-            enity.xh = xh
-            enity.zcbm = zcbm
-            if (TextUtils.isEmpty(enity.cph)) {
-                enity.cph = cph  //不为空 我都不想传
-            }
-            enity.blr = UserInfo.XM
-            enity.ywlx = ywlx //业务类型
-            enity.glbm = UserInfo.GLBM //管理部门
-            enity.fzjg = if (TextUtils.isEmpty(UserInfo.FZJG)) "" else UserInfo.FZJG//发证机关
-            enity.cyrsfzmhm = UserInfo.SFZMHM//查验人身份证明号码
-            enity.czpt = Constants.CZPT //查验平台
-            enity.sqfs = "0"//申请方式  0所有人 1 代理人
-            //2
-            enity.sfzmmc = sp_syr_sfz.selectedItem.toString().split(":")[0]
-            enity.sfzmhm = ed_syr_sfz.text.toString()
-            enity.syrmc = ed_syr_xm.text.toString()
-            enity.lxdh = et_syr_lxdh.text.toString()
-            enity.djxzqh = CodeTableSQLiteUtils.queryByDmlbAndDmsm(Constants.XSQY, sp_syr_qh2.selectedItem.toString())
-            enity.djxxdz = et_syr_xxdz.text.toString()
-            enity.lxdzxzqh = CodeTableSQLiteUtils.queryByDmlbAndDmsm(Constants.XSQY, sp_syr_yj_qh2.selectedItem.toString())
-            enity.lxxxdz = et_syr_yj_xxdz.text.toString()
-            enity.yzbm = et_syr_yj_yzbm.text.toString()
-            enity.dzyx = et_syr_yxdz.text.toString()
-            //3 代理人
-            if (ObjectNullUtil.checknull(ed_dlr_sfz.text.toString(), ed_dlr_xm.text.toString(), et_dlr_lxdh.text.toString())) {
-                if ("A" == sp_dlr_sfz.selectedItem.toString().split(":")[0] && !SFZCheckUtil.isCorrect(ed_dlr_sfz.text.toString())) {
-                    showToast("请正确填写代理人身份证信息")
+        if (!"0".equals(UserInfo.GlobalParameter.LQBJ)) {
+            enity.zzxsz = if (rb_zzxsz_ok.isChecked) "1" else "2" // 纸质行驶证 1-需要，2-不需要
+            enity.lqfs = if (rb_lqfs_ok.isChecked) "1" else "2" // 领取 1-现场，2-不邮寄
+            if (rb_zzxsz_ok.isChecked && !rb_lqfs_ok.isChecked) {  // 邮寄领取
+                if (!CheckEditTxetUtils.checkEditextValuable(ed_yj_sfz, ed_yj_xm, et_yj_lxdh, et_yj_xxdz, et_yj_yzbm)) {
+                    showToast("请填写完成邮寄信息")
                     return
                 }
-                if (ed_syr_sfz.text.toString() == ed_dlr_sfz.text.toString()) {
-                    showToast("代理人和所有人的身份证信息是一样")
+
+                if ("A" == sp_yj_sfz.selectedItem.toString().split(":")[0] && !SFZCheckUtil.isCorrect(ed_yj_sfz.text.toString())) {
+                    showToast("请正确填写邮寄身份证信息")
                     return
                 }
-                enity.dlrsfzmlx = sp_dlr_sfz.selectedItem.toString().split(":")[0]
-                enity.dlrsfzmhm = ed_dlr_sfz.text.toString()
-                enity.dlrxm = ed_dlr_xm.text.toString()
-                enity.dlrlxdh = et_dlr_lxdh.text.toString()
-                enity.sqfs = "1"//申请方式  0所有人 1 代理人
-            }
-
-            //4
-
-            if (!"0".equals(UserInfo.GlobalParameter.LQBJ)) {
-                enity.zzxsz = if (rb_zzxsz_ok.isChecked) "1" else "2" // 纸质行驶证 1-需要，2-不需要
-                enity.lqfs = if (rb_lqfs_ok.isChecked) "1" else "2" // 领取 1-现场，2-不邮寄
-                if (rb_zzxsz_ok.isChecked && !rb_lqfs_ok.isChecked) {  // 邮寄领取
-                    if (!CheckEditTxetUtils.checkEditextValuable(ed_yj_sfz, ed_yj_xm, et_yj_lxdh, et_yj_xxdz, et_yj_yzbm)) {
-                        showToast("请填写完成邮寄信息")
-                        return
-                    }
-
-                    if ("A" == sp_yj_sfz.selectedItem.toString().split(":")[0] && !SFZCheckUtil.isCorrect(ed_yj_sfz.text.toString())) {
-                        showToast("请正确填写邮寄身份证信息")
-                        return
-                    }
-                    if (!StringUtils.isPhoneNumber(et_yj_lxdh.text.toString())) {
-                        showToast("请正确填写邮寄手机信息")
-                        return
-                    }
-                    enity.sjrsfzmlx = sp_yj_sfz.selectedItem.toString().split(":")[0]
-                    enity.sjrsfzmhm = ed_yj_sfz.text.toString()
-                    enity.sjrxm = ed_yj_xm.text.toString()
-                    enity.sjrlxdh = et_yj_lxdh.text.toString()
-                    enity.sjryjxzqh = CodeTableSQLiteUtils.queryByDmlbAndDmsm(Constants.XSQY, sp_yj_qh2.selectedItem.toString())
-                    enity.sjryjxxdz = et_yj_xxdz.text.toString()
-                    enity.sjryzbm = et_yj_yzbm.text.toString()
+                if (!StringUtils.isPhoneNumber(et_yj_lxdh.text.toString())) {
+                    showToast("请正确填写邮寄手机信息")
+                    return
                 }
+                enity.sjrsfzmlx = sp_yj_sfz.selectedItem.toString().split(":")[0]
+                enity.sjrsfzmhm = ed_yj_sfz.text.toString()
+                enity.sjrxm = ed_yj_xm.text.toString()
+                enity.sjrlxdh = et_yj_lxdh.text.toString()
+                enity.sjryjxzqh = CodeTableSQLiteUtils.queryByDmlbAndDmsm(Constants.XSQY, sp_yj_qh2.selectedItem.toString())
+                enity.sjryjxxdz = et_yj_xxdz.text.toString()
+                enity.sjryzbm = et_yj_yzbm.text.toString()
             }
+        }
 
-            showLog("result [JCHP] = " + GsonUtils.toJson(enity))
-            showLoadingDialog()
-            mNormalPresenter!!.doJsonPost(GsonUtils.toJson(enity), Constants.YW_ADD_REGISTER_DATA)
+        showLoadingDialog()
+        val jsonstr = GsonUtils.toJson(enity)
+        showLog("result [JCHP] = " + jsonstr)
+        mNormalPresenter!!.doJsonPost(jsonstr, Constants.YW_ADD_REGISTER_DATA)
     }
 
     override fun getLayout(): Int {

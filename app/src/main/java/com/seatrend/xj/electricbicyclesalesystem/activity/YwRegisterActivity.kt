@@ -57,7 +57,7 @@ class YwRegisterActivity : BaseActivity(), NormalView {
                 CollectPhotoActivity.mXh = enity.data.xh
             }
 
-            if(enity.data.photo!=null && enity.data.photo.size >0){
+            if (enity.data.photo != null && enity.data.photo.size > 0) {
                 val bundle = Bundle()
                 bundle.putParcelable("photo_list", enity)
                 intent.putExtras(bundle)
@@ -454,8 +454,9 @@ class YwRegisterActivity : BaseActivity(), NormalView {
             enity.lxxxdz = et_syr_yj_xxdz.text.toString()
             enity.yzbm = et_syr_yj_yzbm.text.toString()
             enity.dzyx = et_syr_yxdz.text.toString()
-            //3 代理人
-            if (ObjectNullUtil.checknull(ed_dlr_sfz.text.toString(), ed_dlr_xm.text.toString(), et_dlr_lxdh.text.toString())) {
+            //3 代理人(只要填写 就要填写完全)
+            if (ObjectNullUtil.checknull(ed_dlr_sfz.text.toString()) || ObjectNullUtil.checknull(ed_dlr_xm.text.toString()) || ObjectNullUtil.checknull(et_dlr_lxdh.text.toString())) {
+
                 if ("A" == sp_dlr_sfz.selectedItem.toString().split(":")[0] && !SFZCheckUtil.isCorrect(ed_dlr_sfz.text.toString())) {
                     showToast("请正确填写代理人身份证信息")
                     return
@@ -464,15 +465,28 @@ class YwRegisterActivity : BaseActivity(), NormalView {
                     showToast("代理人和所有人的身份证信息是一样")
                     return
                 }
+                //只要不是全写了的 就提示写全
+                if (!ObjectNullUtil.checknull(ed_dlr_xm.text.toString())) {
+                    showToast("请完善代理人姓名")
+                    return
+                }
+                if (!ObjectNullUtil.checknull(et_dlr_lxdh.text.toString()) || !StringUtils.isPhoneNumber(et_dlr_lxdh.text.toString())) {
+                    showToast("请正确输入代理人联系电话")
+                    return
+                }
+
                 enity.dlrsfzmlx = sp_dlr_sfz.selectedItem.toString().split(":")[0]
                 enity.dlrsfzmhm = ed_dlr_sfz.text.toString()
                 enity.dlrxm = ed_dlr_xm.text.toString()
                 enity.dlrlxdh = et_dlr_lxdh.text.toString()
                 enity.sqfs = "1"//申请方式  0所有人 1 代理人
+            } else {
+                enity.dlrsfzmlx = ""
+                enity.dlrsfzmhm = ""
+                enity.dlrxm = ""
+                enity.dlrlxdh = ""
             }
-
-            //4
-
+            //4 寄递信息相关
             if (!"0".equals(UserInfo.GlobalParameter.LQBJ)) {
                 enity.zzxsz = if (rb_zzxsz_ok.isChecked) "1" else "2" // 纸质行驶证 1-需要，2-不需要
                 enity.lqfs = if (rb_lqfs_ok.isChecked) "1" else "2" // 领取 1-现场，2-不邮寄
@@ -500,9 +514,10 @@ class YwRegisterActivity : BaseActivity(), NormalView {
                 }
             }
 
-            showLog("result [ZC] = " + GsonUtils.toJson(enity))
             showLoadingDialog()
-            mNormalPresenter!!.doJsonPost(GsonUtils.toJson(enity), Constants.YW_ADD_REGISTER_DATA)
+            val jsonstr = GsonUtils.toJson(enity)
+            showLog("result [ZC] = " + jsonstr)
+            mNormalPresenter!!.doJsonPost(jsonstr, Constants.YW_ADD_REGISTER_DATA)
         } catch (e: Exception) {
             e.printStackTrace()
             showToast(e.message.toString())

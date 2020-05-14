@@ -44,9 +44,9 @@ public class LoadingDialog {
         mDialog.setContentView(view);
         mDialog.setCanceledOnTouchOutside(false);
         //设置界面必须代码同步成功，返回键不会让dialog消失?  数据库错乱的排查
-        if(context instanceof SettingActivity){
-            mDialog.setCancelable(false);
-        }
+//        if(context instanceof SettingActivity){
+//            mDialog.setCancelable(false);
+//        }
         mDialog.show();
         mDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override

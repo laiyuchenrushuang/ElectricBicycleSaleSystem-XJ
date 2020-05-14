@@ -38,7 +38,7 @@ public class ClipperView extends View {
 
     float vfocusX, vfocusY; //中心点
 
-    int defaultDis = 30;  //这个目的是为了可以缩小放大，要有间隔才行
+    float defaultDis = 30;  //这个目的是为了可以缩小放大，要有间隔才行
 
     float mHWDis = 0;  //这个目的是为了适配图片是在父控件的间隙，间隙要么宽间隙，要么高间隙
 
@@ -173,7 +173,8 @@ public class ClipperView extends View {
         showLog(" " + (judgeAdapterHOrW() ? "以高度适配" : "以宽度适配"));
         showLog(" mHWDis = " + mHWDis);
         showLog(" roat = " + bh / bw);
-//        Log.d("lylog", "onMeasure mViewW = " + mViewW + "  mViewH = " + mViewH);
+        Log.d("lylog", "onMeasure mViewW = " + mViewW + "  mViewH = " + mViewH);
+        Log.d("lylog", "onMeasure bw = " + bw + "  bh = " + bh);
 //        Log.d("lylog", "onMeasure mSwidth = " + mSwidth + "  mSheight = " + mSheight);
     }
 
@@ -377,7 +378,7 @@ public class ClipperView extends View {
 //            showLog("defaultDis = "+defaultDis);
 //            showLog("mHWDis = "+mHWDis);
 //            showLog("top = "+top);
-            if ((int)bottom != (int)(mViewH - defaultDis - mHWDis)) {
+            if ((int) bottom != (int) (mViewH - defaultDis - mHWDis)) {  //这里强转int 点睛之笔啊
                 if (top > defaultDis + mHWDis) {
                     top = (int) (y - dt);
                     if (top < defaultDis + mHWDis) {
@@ -417,13 +418,21 @@ public class ClipperView extends View {
 
     private void setLeftAndRight(float x) {
         if (judgeAdapterHOrW()) {  // 以高度为标准  考虑间隙问题
-            if (right != mViewW - defaultDis - mHWDis) {
-                if (left > defaultDis) {
+
+            showLog("mViewW = " + mViewW);
+            showLog("mViewH = " + mViewH);
+            showLog("defaultDis = " + defaultDis);
+            showLog("mHWDis = " + mHWDis);
+            showLog("right = " + right);
+            showLog("left = " + left);
+
+            if ((int)right != (int)(mViewW - defaultDis - mHWDis)) {  ////这里强转int 点睛之笔啊
+                if (left > defaultDis + mHWDis) {
                     left = (int) (x - dl);
                     if (left < defaultDis + mHWDis) {
                         left = defaultDis + mHWDis;
                     }
-                } else if (left == defaultDis) {
+                } else if (left == defaultDis + mHWDis) {
                     if (x - dl > defaultDis + mHWDis) {
                         left = (int) (x - dl);
                     }
@@ -432,6 +441,24 @@ public class ClipperView extends View {
                     }
                 } else {
                     left = defaultDis + mHWDis;
+                }
+            }
+
+            if (left != defaultDis + mHWDis) {
+                if (right < mViewW - defaultDis - mHWDis) {
+                    right = (int) (x + dr);
+                    if (right > mViewW - defaultDis - mHWDis) {
+                        right = mViewW - defaultDis - mHWDis;
+                    }
+                } else if (right == (int) (mViewW - defaultDis - mHWDis)) {
+                    if (x + dr < (int) (mViewW - defaultDis - mHWDis)) {
+                        right = (int) (x + dr);
+                    }
+                    if (right > mViewW - defaultDis - mHWDis) {
+                        right = mViewW - defaultDis - mHWDis;
+                    }
+                } else {
+                    right = (int) (mViewW - defaultDis - mHWDis);
                 }
             }
 
@@ -492,7 +519,7 @@ public class ClipperView extends View {
 
 
     boolean judgeAdapterHOrW() {
-        return mViewH / mViewW < bmp.getHeight() / bmp.getWidth();
+        return (mViewH / mViewW) < ((float) bmp.getHeight() / bmp.getWidth());
     }
 
     // 触摸点是否在框内

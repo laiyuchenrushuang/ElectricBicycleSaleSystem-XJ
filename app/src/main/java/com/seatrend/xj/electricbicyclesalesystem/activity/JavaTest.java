@@ -201,7 +201,9 @@ public class JavaTest {
 //        t1.stop();
 
 
-        System.out.println(StringUtils.insertCharToString("ABCDEFG","*"));
+//        System.out.println(StringUtils.insertCharToString("ABCDEFG","  ",9));
+        System.out.println(1132.0/720.0  );
+        System.out.println(1344.0/756  );
     }
 
     public static boolean isCorrect(String sfz) {

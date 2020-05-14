@@ -19,11 +19,17 @@ public class ParseQcodeUtil {
      * @return
      */
     public static String getZcbmString(String url) {
-        String regEx = "vinCode=([0-9]{15})";
-        Pattern p = Pattern.compile(regEx);
-        Matcher m = p.matcher(url);
-        if (m.find()) {
-            return m.group(1);
+        String regEx1 = "vinCode=([0-9]{15})";
+        String regEx2 = "cert_ins_id=([0-9]{15})"; //新增适配
+        Pattern p1 = Pattern.compile(regEx1);
+        Pattern p2 = Pattern.compile(regEx2);
+        Matcher m1 = p1.matcher(url);
+        Matcher m2 = p2.matcher(url);
+        if (m1.find()) {
+            return m1.group(1);
+        }
+        if (m2.find()) {
+            return m2.group(1);
         }
         return null;
     }

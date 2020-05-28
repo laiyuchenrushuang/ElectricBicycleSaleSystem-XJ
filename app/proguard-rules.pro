@@ -41,3 +41,6 @@
 -keep public class  android.device.** {*;}
 
 
+
+#电动车 特质
+-keep public class  com.seatrend.xj.electricbicyclesalesystem.manager.MyGlideModule

@@ -75,6 +75,17 @@ public class CarMsgEnity extends BaseEntity implements Serializable {
             private long lrsj;
             private String zpsm;
             private String zpzt;
+
+            private String zplx;  //照片類型
+
+            public String getZplx() {
+                return zplx;
+            }
+
+            public void setZplx(String zplx) {
+                this.zplx = zplx;
+            }
+
             public void setLsh(String lsh) {
                 this.lsh = lsh;
             }

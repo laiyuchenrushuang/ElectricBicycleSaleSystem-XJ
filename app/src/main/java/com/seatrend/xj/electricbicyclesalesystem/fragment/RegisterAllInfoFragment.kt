@@ -158,7 +158,7 @@ class RegisterAllInfoFragment : BaseFragment(), View.OnTouchListener {
                         getPhotodata()
                     }
                     //转入
-                    Constants.I->{
+                    Constants.I -> {
                         ll_zr_ywxx.visibility = View.VISIBLE
                         tv_zr_hphm.text = enity!!.data.fjdcBusiness.cph
                         if (Constants.ZR_IA == enity!!.data.fjdcBusiness.ywyy) {
@@ -293,14 +293,16 @@ class RegisterAllInfoFragment : BaseFragment(), View.OnTouchListener {
                 photoList.clear()
 
                 for (db in cydata!!.data.syrzpxx) {
-
-                    var data = AllBikeMsgEnity.Data.PhotoList()
-                    data.zpzl = db.zpzl
-                    data.zpsm = db.zpsm
-                    data.zpdz = db.zpdz
-                    if (data.zpdz != null) {
-                        photoList.add(data)
+                    if (db.zplx == "2") {
+                        var data = AllBikeMsgEnity.Data.PhotoList()
+                        data.zpzl = db.zpzl
+                        data.zpsm = db.zpsm
+                        data.zpdz = db.zpdz
+                        if (data.zpdz != null) {
+                            photoList.add(data)
+                        }
                     }
+
                 }
             } catch (e: Exception) {
                 showToast(e.message.toString())

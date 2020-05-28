@@ -2,6 +2,7 @@ package com.seatrend.xj.electricbicyclesalesystem.common
 
 import android.app.Activity
 import android.app.Application
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.seatrend.xj.electricbicyclesalesystem.database.CodeTableSQLiteOpenHelper
@@ -9,6 +10,9 @@ import com.seatrend.xj.electricbicyclesalesystem.database.CodeTableSQLiteUtils
 import com.seatrend.xj.electricbicyclesalesystem.holder.DataHolder
 import com.seatrend.xj.electricbicyclesalesystem.service.PhotoUploadService
 import com.seatrend.xj.electricbicyclesalesystem.util.CrashHandler
+import android.support.multidex.MultiDex
+
+
 
 
 /**
@@ -52,6 +56,11 @@ class MyApplication : Application(), Application.ActivityLifecycleCallbacks {
 
     override fun onActivityDestroyed(activity: Activity) {
 
+    }
+
+    override fun attachBaseContext(base: Context) {
+        super.attachBaseContext(base)
+        MultiDex.install(base)
     }
 
     companion object {

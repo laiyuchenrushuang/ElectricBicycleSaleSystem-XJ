@@ -12,6 +12,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.seatrend.xj.electricbicyclesalesystem.R
+import com.seatrend.xj.electricbicyclesalesystem.activity.CollectPhotoActivity
 import com.seatrend.xj.electricbicyclesalesystem.activity.ShowPhotoActivity
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants
@@ -102,7 +103,11 @@ class CheckDataPhotoAdapter(private var mContext: Context? = null) : RecyclerVie
             if (Constants.TYPE_QT == bean.zplx || (bean.zplx.length > 2 && Constants.TYPE_QT == bean.zplx.substring(0, 2))) { //其他 不是必拍项  [多拍模式取其他照片]
                 tvType!!.setTextColor(Color.BLACK)
             } else {
-                tvType!!.setTextColor(Color.RED)
+                if(Constants.YWBP == CollectPhotoActivity.photoEntranceFlag){
+                    tvType!!.setTextColor(Color.BLACK)
+                }else{
+                    tvType!!.setTextColor(Color.RED)
+                }
             }
             if (bean.zpPath != null && bean.zpPath.isNotEmpty()) {
                 Glide.with(mContext).load(bean.zpPath).centerCrop().error(R.drawable.error_image).into(ivPhoto)

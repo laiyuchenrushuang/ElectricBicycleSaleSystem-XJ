@@ -16,7 +16,7 @@ class Constants {
         val AES_ENABLE=true //是否开起AES 加密
         val DEBUG: Boolean = true
         val GENGXIN= 66666
-        var UPDATA_TIME = "更新时间: 2020-04-27"
+        var UPDATA_TIME = "更新时间: 2020-05-27"
         var GET = "GET"
         var POST = "POST"///vio/getVioByCar
         var IMAGE_FILE = "BicycleImage"//文件夹
@@ -24,6 +24,7 @@ class Constants {
         var STUDY_FILE = "StudyBicycleFile"//文件夹
         var IMAGE_PATH = Environment.getExternalStorageDirectory().path + "/" + IMAGE_FILE//照片的路径
         var FILE_PATH = Environment.getExternalStorageDirectory().path + "/" + USE_FILE//保存文件的路径
+//        var FILE_PATH = USE_FILE//保存文件的路径
         var STUDY_PATH = Environment.getExternalStorageDirectory().path + "/" + STUDY_FILE//保存文件的路径
 
         //码表
@@ -41,6 +42,7 @@ class Constants {
         var PMS_BA = "980203" //备案
         var PMS_CX = "980204" //查询
         var PMS_HY = "PMS_HY" //CCC核验
+        var PMS_BP = "PMS_BP" //照片补拍
 
 
         //登录
@@ -140,6 +142,7 @@ class Constants {
         var POST_DAGD = "/businessHandling/filing"
         var PDF_GET_CY = "/file/getbikeCheckPdfBylsh"//PDF 查验
         var PDF_GET_DJ = "/file/getbikeRegisterPdfBylsh"//PDF 登记
+        var URL_ZPBP = "/businessHandling/getRecoverPhoto"//PDF 登记
 
 
         //相关的key值
@@ -226,6 +229,7 @@ class Constants {
         val YGBA: String = "10" //员工备案
 
         val YWTB: String = "11" //业务退办
+        val YWBP: String = "12" //照片补拍
 
         val SFZ_SYR: Int = 0x101 //所有人身份证
         val SFZ_DLR: Int = 0x102 //代理人身份证

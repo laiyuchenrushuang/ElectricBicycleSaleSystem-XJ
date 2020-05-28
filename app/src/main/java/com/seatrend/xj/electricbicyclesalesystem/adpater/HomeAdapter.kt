@@ -93,6 +93,10 @@ class HomeAdapter(val mContext: Context,val mData:ArrayList<String>) : RecyclerV
                     home_item_tv!!.text = mContext.resources.getText(R.string.home_ccchy)
                     home_item_iv!!.setImageResource(R.drawable.cx_icon)
                 }
+                Constants.PMS_BP->{
+                    home_item_tv!!.text = mContext.resources.getText(R.string.home_zpbp)
+                    home_item_iv!!.setImageResource(R.drawable.zpbp)
+                }
             }
 
 

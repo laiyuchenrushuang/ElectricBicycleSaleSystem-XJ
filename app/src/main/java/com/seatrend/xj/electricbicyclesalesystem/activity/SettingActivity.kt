@@ -73,7 +73,7 @@ class SettingActivity : BaseActivity(), SettingView {
                 }
                 showLog("写数据库-ready")
                 showLog("删除数据库-")
-                CodeTableSQLiteUtils.deleteAll(CodeTableSQLiteOpenHelper.TABLE_NAME)
+                CodeTableSQLiteUtils.deleteAll(CodeTableSQLiteOpenHelper.CODE_TABLE_NAME)
                 showLog("写区划数据库-")
                 CodeTableSQLiteUtils.insertQhToDB(codeSheng.data)
                 showLog("写其他数据库-")
@@ -98,8 +98,9 @@ class SettingActivity : BaseActivity(), SettingView {
         dismissLoadingDialog()
         showErrorDialog(commonResponse.getResponseString())
         if (Constants.QH_SHENG.equals(commonResponse.getUrl()) || commonResponse.getUrl().equals(Constants.GET_ALL_CODE)) {
-            CodeTableSQLiteUtils.deleteAll(CodeTableSQLiteOpenHelper.TABLE_NAME)
+            CodeTableSQLiteUtils.deleteAll(CodeTableSQLiteOpenHelper.CODE_TABLE_NAME)
             SharedPreferencesUtils.setIsFirst(true)  // 避免请求失败 二次进入数据为空的情况
+            DataHolder.instance.save("isSyning", false)
             initCodeData()
         }
     }

@@ -7,6 +7,7 @@ import com.seatrend.xj.electricbicyclesalesystem.http.thread.ThreadConstants;
 import com.seatrend.xj.electricbicyclesalesystem.util.CheckPawUtil;
 import com.seatrend.xj.electricbicyclesalesystem.util.CheckUtil;
 import com.seatrend.xj.electricbicyclesalesystem.util.CphmUtils;
+import com.seatrend.xj.electricbicyclesalesystem.util.GsonUtils;
 import com.seatrend.xj.electricbicyclesalesystem.util.StringUtils;
 import com.seatrend.xj.electricbicyclesalesystem.http.thread.ThreadPoolManager;
 
@@ -202,8 +203,36 @@ public class JavaTest {
 
 
 //        System.out.println(StringUtils.insertCharToString("ABCDEFG","  ",9));
-        System.out.println(1132.0/720.0  );
-        System.out.println(1344.0/756  );
+//        System.out.println(1132.0/720.0  );
+//        System.out.println(1344.0/756  );
+//        ArrayList<String> l = new ArrayList<>();
+//        l.add("1");
+//        l.add("2");
+//        l.add("3");
+//        l.add("4");
+//        l.add("5");
+//        ArrayList<String> r = new ArrayList<>();
+//
+//        r.add("6");
+//        r.add("7");
+//        for (int j = 0; j < r.size(); j++) {
+//            for (int i = 0; i < l.size(); i++) {
+//                if (l.get(i).equals(r.get(j))) {
+//                    break;
+//                }
+//                if (i == l.size() - 1) {
+//                    l.add(r.get(j));
+//                }
+//            }
+//        }
+//        System.out.println(GsonUtils.toJson(l));
+
+        String s = StringUtils.insertXingLxdh("17610071263");
+        String s1 = StringUtils.insertXingLxdh("02882539674");
+        String s2 = StringUtils.insertXingLxdh("08308351873");
+        System.out.println(s);
+        System.out.println(s1);
+        System.out.println(s2);
     }
 
     public static boolean isCorrect(String sfz) {

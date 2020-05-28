@@ -201,7 +201,7 @@ class Yw3CzActivity : BaseActivity(), NormalView {
 
     private var lastFragment: Fragment? = null
     fun switchFrament(from: Fragment?, to: Fragment?) {
-        if (from !== to) {
+        if (from != to) {
             lastFragment = to
             val fm = supportFragmentManager
             val ft = fm.beginTransaction()

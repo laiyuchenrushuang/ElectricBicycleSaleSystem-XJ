@@ -81,6 +81,10 @@ class HomeFragment : BaseFragment() , HomeAdapter.ItemOnclickListener {
                     }
                 }
             }
+
+            if(!mData.contains(Constants.PMS_BP)) {
+                mData.add(Constants.PMS_BP)
+            }
         }
     }
 
@@ -125,6 +129,9 @@ class HomeFragment : BaseFragment() , HomeAdapter.ItemOnclickListener {
             //车辆 查询
             Constants.PMS_CX->{
                 startActivity(Intent(context, YwCarCheckActivity::class.java))
+            }
+            Constants.PMS_BP->{
+                startActivity(Intent(context, ZPBPActivity::class.java))
             }
         }
     }

@@ -33,6 +33,7 @@ import com.joyusing.ocr.OCR
 import com.joyusing.ocr.OcrResult
 import com.seatrend.xj.electricbicyclesalesystem.R
 import com.seatrend.xj.electricbicyclesalesystem.activity.LoginByUserPasswordActivity
+import com.seatrend.xj.electricbicyclesalesystem.activity.MainOtherActivity
 import com.seatrend.xj.electricbicyclesalesystem.database.CodeTableSQLiteUtils
 import com.seatrend.xj.electricbicyclesalesystem.entity.MessageEntity
 import com.seatrend.xj.electricbicyclesalesystem.manager.AppManager
@@ -154,11 +155,19 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
     //service 保护
     private fun serviceOnLine() {
         showLog("PhotoUploadService coming services online")
+//        LogUtil.getInstance().correctLogMsg(Constants.FILE_PATH,"logtest.txt",localClassName,Thread.currentThread() .stackTrace[1].methodName,"PhotoUploadService coming services online",true)
         if (!ServiceUtils.isRunService(this, "com.seatrend.xj.electricbicyclesalesystem.service.PhotoUploadService")) {
             showLog("PhotoUploadService is not run")
+//            LogUtil.getInstance().correctLogMsg(Constants.FILE_PATH,"logtest.txt",localClassName,Thread.currentThread() .stackTrace[1].methodName,"PhotoUploadService is not run",true)
             if (CodeTableSQLiteUtils.queryAll().size > 0) { //只有有数据才去重启服务
                 showLog("PhotoUploadService restart")
-                startService(Intent(this, PhotoUploadService::class.java))
+//                LogUtil.getInstance().correctLogMsg(Constants.FILE_PATH,"logtest.txt",localClassName,Thread.currentThread() .stackTrace[1].methodName,"PhotoUploadService restart",true)
+//                //Android O 启动service
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                    startForegroundService(Intent(this, PhotoUploadService::class.java))
+//                } else {
+                    startService(Intent(this, PhotoUploadService::class.java))
+//                }
             }
         }
     }
@@ -169,20 +178,20 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
     protected fun appRequestPermissions() {
 
         val permission = ArrayList<String>()
-        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) !== PackageManager.PERMISSION_GRANTED) {
+        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             permission.add(Manifest.permission.READ_EXTERNAL_STORAGE)
         }
         if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             permission.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
         }
-        if (checkSelfPermission(Manifest.permission.CAMERA) !== PackageManager.PERMISSION_GRANTED) {
+        if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             permission.add(Manifest.permission.CAMERA)
         }
 
-        if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE) !== PackageManager.PERMISSION_GRANTED) {
+        if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
             permission.add(Manifest.permission.READ_PHONE_STATE)
         }
-        if (checkSelfPermission(Manifest.permission.NFC) !== PackageManager.PERMISSION_GRANTED) {
+        if (checkSelfPermission(Manifest.permission.NFC) != PackageManager.PERMISSION_GRANTED) {
             permission.add(Manifest.permission.NFC)
         }
         if (permission.size > 0) {
@@ -701,20 +710,20 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
     fun appGetPermission(): Boolean {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val permission = ArrayList<String>()
-            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) !== PackageManager.PERMISSION_GRANTED) {
+            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 permission.add(Manifest.permission.READ_EXTERNAL_STORAGE)
             }
             if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 permission.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
             }
-            if (checkSelfPermission(Manifest.permission.CAMERA) !== PackageManager.PERMISSION_GRANTED) {
+            if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                 permission.add(Manifest.permission.CAMERA)
             }
 
-            if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE) !== PackageManager.PERMISSION_GRANTED) {
+            if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
                 permission.add(Manifest.permission.READ_PHONE_STATE)
             }
-            if (checkSelfPermission(Manifest.permission.NFC) !== PackageManager.PERMISSION_GRANTED) {
+            if (checkSelfPermission(Manifest.permission.NFC) != PackageManager.PERMISSION_GRANTED) {
                 permission.add(Manifest.permission.NFC)
             }
 
@@ -723,6 +732,12 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
             }
         }
         return true
+    }
+
+    fun sendToTopActivity(activity: Class<*>){
+        val intent = Intent(this, activity)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        startActivity(intent)
     }
 
     interface DialogListener {

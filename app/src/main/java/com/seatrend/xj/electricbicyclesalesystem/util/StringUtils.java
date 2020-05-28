@@ -305,4 +305,16 @@ public class StringUtils {
         return sb.toString();
     }
 
+    public  static String insertXingLxdh(String originalStr){
+
+        if(originalStr == null){
+            return "";
+        }
+        if(originalStr.length() == 11){
+            return originalStr.substring(0,3)+"****"+originalStr.substring(7,11);
+        }
+
+        return "";
+    }
+
 }

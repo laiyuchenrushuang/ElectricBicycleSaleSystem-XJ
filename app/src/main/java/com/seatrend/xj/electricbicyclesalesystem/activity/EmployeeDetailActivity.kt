@@ -21,6 +21,7 @@ import com.seatrend.xj.electricbicyclesalesystem.entity.CommonResponse
 import com.seatrend.xj.electricbicyclesalesystem.entity.EmployeeBean
 import com.seatrend.xj.electricbicyclesalesystem.persenter.NormalPresenter
 import com.seatrend.xj.electricbicyclesalesystem.util.*
+import com.seatrend.xj.electricbicyclesalesystem.util.StringUtils.insertXingLxdh
 import com.seatrend.xj.electricbicyclesalesystem.view.NormalView
 import kotlinx.android.synthetic.main.activty_employee_detail.*
 import kotlinx.android.synthetic.main.recyclerview.*
@@ -130,7 +131,7 @@ class EmployeeDetailActivity : BaseActivity(), NormalView, BaseActivity.DialogLi
             tv_xm.text = mEmployeeListBean!!.xm
             tv_zt.text = mEmployeeListBean!!.zhzt
             tv_sfz.text = mEmployeeListBean!!.sfzmhm
-            tv_lxdh.text = mEmployeeListBean!!.lxdh
+            tv_lxdh.text = insertXingLxdh(mEmployeeListBean!!.lxdh)
             tv_jslx.text = JslxUtils.getJslxMc(mEmployeeListBean!!.jslx)
             tv_glbm.text = StringUtils.isNull(mEmployeeListBean!!.sjbmmc)
 

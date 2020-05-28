@@ -60,7 +60,7 @@ class CccCheckActivity : BaseActivity() {
                 return@setOnClickListener
             }
             intent.setClass(this,CccDetailActivity::class.java)
-            intent.putExtra("ccc_check_zcbm",et_ccc_zcbm.text.toString())
+            intent.putExtra("ccc_check_zcbm",et_ccc_zcbm.text.toString().toUpperCase())
             startActivity(intent)
         }
         et_ccc_zcbm.transformationMethod = CarHphmUtils.TransInformation()
@@ -96,6 +96,11 @@ class CccCheckActivity : BaseActivity() {
                 et_ccc_zcbm.setText(data.getStringExtra("result_zcbm"))
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mDeviceScanUtils!!.releaseDeviceScan()
     }
 
     override fun getLayout(): Int {

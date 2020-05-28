@@ -39,7 +39,7 @@ import android.os.Parcelable
  */
 class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter.itemOnClickListener, CheckDataPhotoAdapter.itemDeleteClickListener {
     companion object {
-        var photoEntranceFlag: String? = "-1" // 0是VIN，1是查验，2注册，3变更 ，4转移， 5补换，6注销，7旧车换牌， 8临时号牌申请 9车辆归档，10 员工备案 ,11 退办 -1是defult
+        var photoEntranceFlag: String? = "-1" // 0是VIN，1是查验，2注册，3变更 ，4转移， 5补换，6注销，7旧车换牌， 8临时号牌申请 9车辆归档，10 员工备案 ,11 退办 ,12 补拍 -1是defult
         var dzpzFlag: Boolean = true //true 是需要电子凭证 false 不需要
         var jtxsFlag: Boolean = true //true 合格  false 不合格 （不合格原因： 无脚踏行驶，整车质量>55，最高速度 >25）
 
@@ -122,6 +122,7 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
 
                 mCheckDataPhotoAdapter!!.setPhotoType(allPhoto)
             } else if (Constants.YGBA == photoEntranceFlag) {
+
                 //员工备案的图片收集
                 ll_cyjl.visibility = View.GONE
                 val list = CodeTableSQLiteUtils.queryByDMLB(Constants.YGZP)
@@ -134,6 +135,24 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
                     allPhoto.add(enity)
                     addPhoto.add(enity)
                 }
+                mCheckDataPhotoAdapter!!.setPhotoType(allPhoto)
+            } else if (Constants.YWBP == photoEntranceFlag) {
+                //照片补拍
+                ll_cyjl.visibility = View.GONE
+                var enity = intent.getParcelableExtra<Parcelable>("photo_list") as ZpbpEntity
+
+                allPhoto.clear()
+                addPhoto.clear()
+                if (enity.data != null && enity.data.photo.size > 0) {
+                    for (db in enity.data.photo) {
+                        var photoEnity = PhotoTypeEntity.DataBean.ConfigBean()
+                        photoEnity.zmmc = db.dmsm
+                        photoEnity.zplx = db.dmz
+                        addPhoto.add(photoEnity)
+                        allPhoto.add(photoEnity)
+                    }
+                }
+
                 mCheckDataPhotoAdapter!!.setPhotoType(allPhoto)
             } else {
                 //登记方面
@@ -310,8 +329,21 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
                             showToast(e.message.toString())
                         }
                     }
+
+                    Constants.YWBP -> {
+                        var bpCount = 0
+                        for (db in allPhoto) {
+                            if (db.zpPath != null && !TextUtils.isEmpty(db.zpPath)) {
+                                savePhotoDataToSql(db, Constants.YWBP)
+                                bpCount++
+                            }
+                        }
+                        showToast("" + bpCount + "张照片加入上传队列成功")
+                        sendToTopActivity(MainOtherActivity::class.java)
+                        finish()
+                    }
                     else -> {
-                        savePhoto()
+                        savePhoto()//注册 变更 转移 补换 注销 转入 号牌回收
                     }
                 }
             }
@@ -427,6 +459,21 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
                 enity.lrbm = UserInfo.GLBM
                 CodeTableSQLiteUtils.addPhoto(enity)
             }
+
+            Constants.YWBP -> {//照片补拍
+                var enity = PhotoEntity()
+                enity.lsh = mLsh
+                enity.xh = mXh
+                enity.zpzl = db.zplx
+                enity.zpPath = db.zpPath
+                enity.zpdz = db.zplj
+                enity.zpsm = db.zmmc
+                enity.cffs = UserInfo.GlobalParameter.CFBJ
+                enity.lrr = UserInfo.XM
+                enity.lrbm = UserInfo.GLBM
+                enity.zplx = intent.getStringExtra("zplx")
+                CodeTableSQLiteUtils.addPhoto(enity)
+            }
         }
 
     }
@@ -523,6 +570,11 @@ class CollectPhotoActivity : BaseActivity(), CarPhotoView, CheckDataPhotoAdapter
     }
 
     private fun checkPhoto(data: ArrayList<PhotoTypeEntity.DataBean.ConfigBean>): Boolean {
+
+        //如果是补拍照片就不用check数据了 直接下一步
+        if (Constants.YWBP == photoEntranceFlag) {
+            return true
+        }
         for (cb in data) {
             if ("0" == cb.takeMode) {  // 只关注必拍模式的图片类型（0 是必拍照片类型）
                 if ((cb.zpPath == null || cb.zpPath.isEmpty()) && Constants.TYPE_QT != cb.zplx) {

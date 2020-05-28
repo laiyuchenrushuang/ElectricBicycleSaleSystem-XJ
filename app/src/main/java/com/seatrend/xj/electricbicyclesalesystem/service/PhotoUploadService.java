@@ -21,6 +21,7 @@ import com.seatrend.xj.electricbicyclesalesystem.entity.PhotoSaveEmployeeEntity;
 import com.seatrend.xj.electricbicyclesalesystem.entity.PhotoSaveEntity;
 import com.seatrend.xj.electricbicyclesalesystem.http.HttpService;
 import com.seatrend.xj.electricbicyclesalesystem.util.GsonUtils;
+import com.seatrend.xj.electricbicyclesalesystem.util.LogUtil;
 import com.seatrend.xj.electricbicyclesalesystem.util.ObjectNullUtil;
 import com.seatrend.xj.electricbicyclesalesystem.util.PhotoFileUtils;
 
@@ -96,13 +97,15 @@ public class PhotoUploadService extends Service {
     private void checkUpload() {
         List<PhotoEntity> list = CodeTableSQLiteUtils.queryAll();
         if (list.size() == 0) {
+//            LogUtil.getInstance().correctLogMsg(Constants.Companion.getFILE_PATH(),"logtest.txt", this.getClass().getName(),Thread.currentThread() .getStackTrace()[1].getMethodName(),"数据库无照片" + GsonUtils.toJson(list),true);
             Log.i(PUS_TAG, "数据库无照片");
             stopSelf();
             return;
         }
+//        LogUtil.getInstance().correctLogMsg(Constants.Companion.getFILE_PATH(),"logtest.txt", this.getClass().getName(),Thread.currentThread() .getStackTrace()[1].getMethodName(),"数据库有照片 长度 =" + list.size(),true);
         Log.i(PUS_TAG, "数据库有照片 长度 =" + list.size());
         Log.i(PUS_TAG, "数据库有照片 内容 =" + GsonUtils.toJson(list));
-
+//        LogUtil.getInstance().correctLogMsg(Constants.Companion.getFILE_PATH(),"logtest.txt", this.getClass().getName(),Thread.currentThread() .getStackTrace()[1].getMethodName(),"数据库有照片 内容 =" + GsonUtils.toJson(list),true);
         for (PhotoEntity entity : list) {
 
             String path = entity.getZpPath();
@@ -207,6 +210,7 @@ public class PhotoUploadService extends Service {
         @Override
         public void doWorkResults(CommonResponse commonResponse, boolean isSuccess) {
             Log.i(PUS_TAG, "uploadResult " + isSuccess + "    "+" URL = "+commonResponse.getUrl()+ "    result = " + commonResponse.getResponseString());
+//            LogUtil.getInstance().correctLogMsg(Constants.Companion.getFILE_PATH(),"logtest.txt", this.getClass().getName(),Thread.currentThread() .getStackTrace()[1].getMethodName(),"uploadResult " + isSuccess + "    "+" URL = "+commonResponse.getUrl()+ "    result = " + commonResponse.getResponseString(),true);
             if (isSuccess)
                 try {
 

@@ -178,11 +178,14 @@ class CarCYxxFragment : BaseFragment() {
             photoList.clear()
 
             for (db in cydata!!.data.syrzpxx) {
-                var data = AllBikeMsgEnity.Data.PhotoList()
-                data.zpzl = db.zpzl
-                data.zpsm = db.zpsm
-                data.zpdz = db.zpdz
-                photoList.add(data)
+                if (db.zplx == "1") {
+                    var data = AllBikeMsgEnity.Data.PhotoList()
+                    data.zpzl = db.zpzl
+                    data.zpsm = db.zpsm
+                    data.zpdz = db.zpdz
+                    photoList.add(data)
+                }
+
             }
         } catch (e: Exception) {
             showToast(e.message.toString())

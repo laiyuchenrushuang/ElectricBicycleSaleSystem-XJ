@@ -52,8 +52,8 @@ public class CodeTableSQLiteUtils {
             cv.put("dmsm3", StringUtils.isNull(dataBean.getDmsm3()));
             cv.put("zt", StringUtils.isNull(dataBean.getZt()));
             cv.put("dmsm4", StringUtils.isNull(dataBean.getDmsm4()));
-            db.insert(CodeTableSQLiteOpenHelper.TABLE_NAME, null, cv);
-//            insertOrUpdate(CodeTableSQLiteOpenHelper.TABLE_NAME, cv, db);
+            db.insert(CodeTableSQLiteOpenHelper.CODE_TABLE_NAME, null, cv);
+//            insertOrUpdate(CodeTableSQLiteOpenHelper.CODE_TABLE_NAME, cv, db);
         }
 
         db.close();
@@ -105,8 +105,8 @@ public class CodeTableSQLiteUtils {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         List<CodeEntity.DataBean> list = new ArrayList<>();
 
-        //db.insert(CodeTableSQLiteOpenHelper.TABLE_NAME,null,cv);//"dmlb="+DMLB
-        Cursor query = db.query(CodeTableSQLiteOpenHelper.TABLE_NAME, null, "dmlb=?", new String[]{DMLB}, null, null, null, null);
+        //db.insert(CodeTableSQLiteOpenHelper.CODE_TABLE_NAME,null,cv);//"dmlb="+DMLB
+        Cursor query = db.query(CodeTableSQLiteOpenHelper.CODE_TABLE_NAME, null, "dmlb=?", new String[]{DMLB}, null, null, null, null);
         while (query.moveToNext()) {
 
             String dmlb = query.getString(query.getColumnIndex("dmlb"));
@@ -129,7 +129,7 @@ public class CodeTableSQLiteUtils {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         List<CodeEntity.DataBean> list = new ArrayList<>();
 
-        Cursor query = db.query(CodeTableSQLiteOpenHelper.TABLE_NAME, new String[]{}, "dmlb=? and dmz=?", new String[]{DMLB, Dmz}, null, null, null, null);
+        Cursor query = db.query(CodeTableSQLiteOpenHelper.CODE_TABLE_NAME, new String[]{}, "dmlb=? and dmz=?", new String[]{DMLB, Dmz}, null, null, null, null);
         while (query.moveToNext()) {
             String dmlb = query.getString(query.getColumnIndex("dmlb"));
             String dmz = query.getString(query.getColumnIndex("dmz"));
@@ -151,7 +151,7 @@ public class CodeTableSQLiteUtils {
         CodeTableSQLiteOpenHelper dbHelper = CodeTableSQLiteOpenHelper.getInstance();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        Cursor query = db.query(CodeTableSQLiteOpenHelper.TABLE_NAME, new String[]{}, "dmlb=? and dmsm1=?", new String[]{DMLB, dmsm1}, null, null, null, null);
+        Cursor query = db.query(CodeTableSQLiteOpenHelper.CODE_TABLE_NAME, new String[]{}, "dmlb=? and dmsm1=?", new String[]{DMLB, dmsm1}, null, null, null, null);
         while (query.moveToNext()) {
             String dmz = query.getString(query.getColumnIndex("dmz"));
             if (!TextUtils.isEmpty(dmz)) {
@@ -166,7 +166,7 @@ public class CodeTableSQLiteUtils {
         CodeTableSQLiteOpenHelper dbHelper = CodeTableSQLiteOpenHelper.getInstance();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        Cursor query = db.query(CodeTableSQLiteOpenHelper.TABLE_NAME, new String[]{}, "dmlb=? and dmz=?", new String[]{DMLB, dmz}, null, null, null, null);
+        Cursor query = db.query(CodeTableSQLiteOpenHelper.CODE_TABLE_NAME, new String[]{}, "dmlb=? and dmz=?", new String[]{DMLB, dmz}, null, null, null, null);
         while (query.moveToNext()) {
             String dmsm1 = query.getString(query.getColumnIndex("dmsm1"));
             if (!TextUtils.isEmpty(dmsm1)) {
@@ -181,7 +181,7 @@ public class CodeTableSQLiteUtils {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         List<CodeEntity.DataBean> list = new ArrayList<>();
 
-        Cursor query = db.query(CodeTableSQLiteOpenHelper.TABLE_NAME, new String[]{}, null, null, null, null, null, null);
+        Cursor query = db.query(CodeTableSQLiteOpenHelper.CODE_TABLE_NAME, new String[]{}, null, null, null, null, null, null);
         while (query.moveToNext()) {
             String dmlb = query.getString(query.getColumnIndex("dmlb"));
             String dmz = query.getString(query.getColumnIndex("dmz"));
@@ -204,8 +204,8 @@ public class CodeTableSQLiteUtils {
     public static boolean isExist(Context context, String text) {
         CodeTableSQLiteOpenHelper dbHelper = CodeTableSQLiteOpenHelper.getInstance();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        //db.insert(CodeTableSQLiteOpenHelper.TABLE_NAME,null,cv);
-        Cursor query = db.query(CodeTableSQLiteOpenHelper.TABLE_NAME, null, null, null, null, null, null, null);
+        //db.insert(CodeTableSQLiteOpenHelper.CODE_TABLE_NAME,null,cv);
+        Cursor query = db.query(CodeTableSQLiteOpenHelper.CODE_TABLE_NAME, null, null, null, null, null, null, null);
         if (query.moveToFirst()) {
             String exist = query.getString(query.getColumnIndex("text"));
             if (exist.equals(text)) {
@@ -240,7 +240,7 @@ public class CodeTableSQLiteUtils {
             cv.put("dmlb", StringUtils.isNull(Constants.Companion.getLLZM()));
             cv.put("dmz", StringUtils.isNull(dataBean.getZplx()));
             cv.put("dmsm1", StringUtils.isNull(dataBean.getZmmc()));
-            db.insert(CodeTableSQLiteOpenHelper.TABLE_NAME, null, cv);
+            db.insert(CodeTableSQLiteOpenHelper.CODE_TABLE_NAME, null, cv);
         }
     }
 
@@ -255,8 +255,8 @@ public class CodeTableSQLiteUtils {
             cv.put("dmz", StringUtils.isNull(dataBean.getDmz()));
             cv.put("dmsm1", StringUtils.isNull(dataBean.getDmsm1()));
 //            cv.put("xtlb", StringUtils.isNull(dataBean.getXtlb()));   //自定义的 不用弄系统类别 防止数据错乱
-            db.insert(CodeTableSQLiteOpenHelper.TABLE_NAME, null, cv);
-//            insertOrUpdate(CodeTableSQLiteOpenHelper.TABLE_NAME, cv, db);
+            db.insert(CodeTableSQLiteOpenHelper.CODE_TABLE_NAME, null, cv);
+//            insertOrUpdate(CodeTableSQLiteOpenHelper.CODE_TABLE_NAME, cv, db);
         }
         db.close();
     }
@@ -265,7 +265,7 @@ public class CodeTableSQLiteUtils {
     public static long queryCodeTableCount(){
         CodeTableSQLiteOpenHelper dbHelper = CodeTableSQLiteOpenHelper.getInstance();
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        String sql = "select count(*) from "+CodeTableSQLiteOpenHelper.TABLE_NAME;
+        String sql = "select count(*) from "+CodeTableSQLiteOpenHelper.CODE_TABLE_NAME;
         Cursor cursor = db.rawQuery(sql, null);
         cursor.moveToFirst();
         long count = cursor.getLong(0);
@@ -285,7 +285,7 @@ public class CodeTableSQLiteUtils {
                 cv.put("dmlb", StringUtils.isNull(Constants.Companion.getUSER_PMS()));  //98
                 cv.put("dmz", StringUtils.isNull(dataBean.getQxdm()));
                 cv.put("dmsm1", StringUtils.isNull(dataBean.getQxmc()));
-                db.insert(CodeTableSQLiteOpenHelper.TABLE_NAME, null, cv);
+                db.insert(CodeTableSQLiteOpenHelper.CODE_TABLE_NAME, null, cv);
             }
         }
     }

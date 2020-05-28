@@ -106,27 +106,27 @@ class CarMsgJscsFragment : BaseFragment() {
 
                     cydata = activity.intent.getSerializableExtra("cy_data") as CarMsgEnity
 
-                    if (cydata == null || cydata!!.data == null || cydata!!.data.jscs == null || cydata!!.data.jscs.cphgzbh == null || cydata!!.data.cccdata == null) {
+                    if (cydata == null || cydata!!.data == null || cydata!!.data.cccdata == null || cydata!!.data.cccdata.cphgzbh == null || cydata!!.data.cccdata == null) {
 //                        showToast("获取技术参数为空")
                         return
                     }
-                    carinfo_jscs_zcbm.text = cydata!!.data.jscs.cphgzbh //zcbm
-                    carinfo_jscs_cjszcbmdwz.text = cydata!!.data.jscs.cjszcbhwz.trim() //wz
-                    carinfo_jscs_clzwsb.text = cydata!!.data.jscs.clzwsb //
-                    carinfo_jscs_cpxh.text = cydata!!.data.jscs.cpxh //
-                    carinfo_jscs_mpgdwz.text = cydata!!.data.jscs.mpgdwz //
-                    carinfo_jscs_cphgzbh.text = cydata!!.data.jscs.cphgzbh //
-                    carinfo_jscs_ccczsbh.text = cydata!!.data.jscs.cccbh //
+                    carinfo_jscs_zcbm.text = cydata!!.data.cccdata.cphgzbh //zcbm
+                    carinfo_jscs_cjszcbmdwz.text = cydata!!.data.cccdata.cjszcbmwz //wz
+                    carinfo_jscs_clzwsb.text = cydata!!.data.cccdata.clzwsb //
+                    carinfo_jscs_cpxh.text = cydata!!.data.cccdata.cpxh //
+                    carinfo_jscs_mpgdwz.text = cydata!!.data.cccdata.mpgdwz //
+                    carinfo_jscs_cphgzbh.text = cydata!!.data.cccdata.cphgzbh //
+                    carinfo_jscs_ccczsbh.text = cydata!!.data.cccdata.cccbh //
                     carinfo_jscs_ccczsfzrq.text = cydata!!.data.cccdata.cccyxq
                     carinfo_jscs_csys.text = cydata!!.data.cccdata.csys
-                    carinfo_jscs_c.text = cydata!!.data.jscs.cwkc
-                    carinfo_jscs_k.text = cydata!!.data.jscs.cwkk
-                    carinfo_jscs_g.text = cydata!!.data.jscs.cwkg
+                    carinfo_jscs_c.text = cydata!!.data.cccdata.cwkc
+                    carinfo_jscs_k.text = cydata!!.data.cccdata.cwkk
+                    carinfo_jscs_g.text = cydata!!.data.cccdata.cwkg
 //                carinfo_jscs_qhlzxj.text = enity!!.data.checkData.scqhlzxj  //前后中心距
                     carinfo_jscs_zbzl.text = cydata!!.data.cccdata.zbzl
-                    carinfo_jscs_zgsjcs.text = cydata!!.data.jscs.zgcs
+                    carinfo_jscs_zgsjcs.text = cydata!!.data.cccdata.zgcs
                     //        carinfo_jscs_ddjxh.text = enity.data.cccData.ddjxs // 电动机序号
-                    carinfo_jscs_clzzs.text = cydata!!.data.jscs.clzzs//车辆制造商
+                    carinfo_jscs_clzzs.text = cydata!!.data.cccdata.clzzs//车辆制造商
                     carinfo_jscs_xhlc.text = cydata!!.data.cccdata.xhlc //续航里程  张月说不展示
                     carinfo_jscs_zzrq.text = cydata!!.data.cccdata.zzrq//制造日期
                     carinfo_jscs_ccczszt.text =cydata!!.data.cccdata.ccczt//ccc状态

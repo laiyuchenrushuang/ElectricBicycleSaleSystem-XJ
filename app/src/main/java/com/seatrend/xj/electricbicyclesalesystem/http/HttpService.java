@@ -456,7 +456,7 @@ public class HttpService {
 
                     Message progressMsg = Message.obtain();
                     CommonProgress commonProgress = new CommonProgress();
-                    commonProgress.setProgress("100");
+                    commonProgress.setProgress("100.0");
                     commonProgress.setUrl(url);
                     progressMsg.what = PREGRESS_CODE;
                     progressMsg.obj = commonProgress;

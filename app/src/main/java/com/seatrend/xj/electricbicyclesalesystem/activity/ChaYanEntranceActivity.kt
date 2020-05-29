@@ -208,6 +208,7 @@ class ChaYanEntranceActivity : BaseActivity(), NormalView {
         et_cy_cphm.filters = arrayOf(inputFilter)
         et_cy_cphm.transformationMethod = CarHphmUtils.TransInformation()
         et_cy_zcbm.transformationMethod = CarHphmUtils.TransInformation()
+        setSelection(et_cy_cphm)
     }
 
     /**

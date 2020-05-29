@@ -211,6 +211,7 @@ class Constants {
         var TASK = "task"
         var LX = "getInfoLX"  // 接口类型 1  外网(业务类型只有注册登记)， 2  业务内网（均有）
         var VEISION_TIME = "vtime" //同步代码的版本时间
+        var VEISION = "veision" //同步代码的版本
 
         // 0是VIN，1是查验，2注册，3变更 ，4转移， 5补换，6注销，7旧车换牌， 8临时号牌申请 9车辆归档
 

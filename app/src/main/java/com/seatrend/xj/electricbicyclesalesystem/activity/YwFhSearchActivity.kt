@@ -140,7 +140,7 @@ class YwFhSearchActivity : BaseActivity(), NormalView {
 //        })
         searchview.transformationMethod = CarHphmUtils.TransInformation()
         searchview.filters = arrayOf(inputFilter)
-
+        setSelection(searchview)
         iv_btn_search.setOnClickListener {
             var searchString: String? = searchview.text.toString()
 

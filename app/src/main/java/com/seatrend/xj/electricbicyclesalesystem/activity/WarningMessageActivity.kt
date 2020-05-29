@@ -23,6 +23,7 @@ import com.seatrend.xj.electricbicyclesalesystem.util.LoadingDialog
 import com.seatrend.xj.electricbicyclesalesystem.util.ParseQcodeUtil
 import com.seatrend.xj.electricbicyclesalesystem.view.WarningMessageView
 import kotlinx.android.synthetic.main.activity_warning.*
+import kotlinx.android.synthetic.main.activty_zpbp.*
 import kotlinx.android.synthetic.main.common_no_data.*
 import kotlinx.android.synthetic.main.recyclerview.*
 
@@ -89,7 +90,7 @@ class WarningMessageActivity : BaseActivity(), WarningMessageView {
 
         searchview.transformationMethod = CarHphmUtils.TransInformation()
         searchview.filters = arrayOf(inputFilter)
-
+        setSelection(searchview)
         iv_btn_search.setOnClickListener {
             var searchString: String? = searchview.text.toString()
             pageNum = 1

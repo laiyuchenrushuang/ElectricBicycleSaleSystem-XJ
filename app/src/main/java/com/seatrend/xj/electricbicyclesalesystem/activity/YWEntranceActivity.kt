@@ -23,7 +23,11 @@ import com.seatrend.xj.electricbicyclesalesystem.persenter.NormalPresenter
 import com.seatrend.xj.electricbicyclesalesystem.util.*
 import com.seatrend.xj.electricbicyclesalesystem.view.NormalView
 import com.seatrend.xj.electricbicyclesalesystem.zxing.activity.CaptureActivity
+import kotlinx.android.synthetic.main.activity_chayan_entrance.*
 import kotlinx.android.synthetic.main.activity_yw.*
+import kotlinx.android.synthetic.main.activity_yw.iv_scan
+import kotlinx.android.synthetic.main.activity_yw.ll_cphm
+import kotlinx.android.synthetic.main.activity_yw.ll_zcbm
 import java.util.*
 
 class YWEntranceActivity : BaseActivity(), NormalView {
@@ -184,6 +188,7 @@ class YWEntranceActivity : BaseActivity(), NormalView {
         et_yw_cphm.filters = arrayOf(inputFilter)
         et_yw_hgzbh.transformationMethod = CarHphmUtils.TransInformation()
         et_yw_hgzbh.filters = arrayOf(inputFilter)
+        setSelection(et_yw_cphm)
     }
 
     /**

@@ -22,6 +22,7 @@ import com.seatrend.xj.electricbicyclesalesystem.R
 import com.seatrend.xj.electricbicyclesalesystem.common.BaseActivity
 import com.seatrend.xj.electricbicyclesalesystem.common.Constants
 import com.seatrend.xj.electricbicyclesalesystem.createview.ClipperView
+import com.seatrend.xj.electricbicyclesalesystem.database.CodeTableSQLiteUtils
 import com.seatrend.xj.electricbicyclesalesystem.entity.*
 import com.seatrend.xj.electricbicyclesalesystem.holder.DataHolder
 import com.seatrend.xj.electricbicyclesalesystem.http.thread.ThreadPoolManager
@@ -58,8 +59,8 @@ class LoginByUserPasswordActivity : BaseActivity(), LoginView, CarPhotoView {
         if (AppUtils.isApkInDebug(this)) {
 //            et_user.setText("513822198909298761")
 //            et_pwd.setText("1q2w3e4r.")
-        et_user.setText("623130198903031234")  //xj test
-        et_pwd.setText("Aa123456")
+            et_user.setText("623130198903031234")  //xj test
+            et_pwd.setText("Aa123456")
         }
 
         tv_version.text = getString(R.string.cur_version, AppUtils.getVersionName(this))
@@ -189,6 +190,10 @@ class LoginByUserPasswordActivity : BaseActivity(), LoginView, CarPhotoView {
                     if (Constants.GENGXIN == urlenity!!.code) {
                         showTipsDialog(urlenity.data.updatemessage)
                         appdownloadurl = urlenity.data.downloadurl
+                        //当前更新版本不一致 就代码更新
+                        if (!SharedPreferencesUtils.getVesion(this).equals(urlenity.data.appversion)) {
+                            SharedPreferencesUtils.setIsFirst(true)
+                        }
                         return
                     }
                 } catch (e: Exception) {
@@ -289,7 +294,7 @@ class LoginByUserPasswordActivity : BaseActivity(), LoginView, CarPhotoView {
                 showToast("请拍摄图片")
                 return@setOnClickListener
             }
-            if (SharedPreferencesUtils.getIsFirst()) {
+            if (SharedPreferencesUtils.getIsFirst() || CodeTableSQLiteUtils.queryCodeTableCount() == 0L) {
                 showToast("请先同步代码")
                 return@setOnClickListener
             }
@@ -324,7 +329,8 @@ class LoginByUserPasswordActivity : BaseActivity(), LoginView, CarPhotoView {
         } else {
             imageUri = Uri.fromFile(imgFile)
         }
-        val intent = Intent("android.media.action.IMAGE_CAPTURE")
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+//        intent.putExtra("android.intent.extras.CAMERA_FACING", 1);//调用前置摄像头 //打开前置摄像头
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
         startActivityForResult(intent, CAMERA_REQUEST_CODE)
     }

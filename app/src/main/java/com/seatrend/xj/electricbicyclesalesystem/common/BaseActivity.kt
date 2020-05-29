@@ -166,7 +166,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
 //                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 //                    startForegroundService(Intent(this, PhotoUploadService::class.java))
 //                } else {
-                    startService(Intent(this, PhotoUploadService::class.java))
+                startService(Intent(this, PhotoUploadService::class.java))
 //                }
             }
         }
@@ -734,10 +734,19 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
         return true
     }
 
-    fun sendToTopActivity(activity: Class<*>){
+    fun sendToTopActivity(activity: Class<*>) {
         val intent = Intent(this, activity)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         startActivity(intent)
+    }
+
+    /**
+     * 设置光标的位置（text有值）
+     */
+    fun setSelection(edit: EditText) {
+        if (edit.text != null && edit.text.toString() != null) {
+            edit.setSelection(edit.text.toString().length)
+        }
     }
 
     interface DialogListener {

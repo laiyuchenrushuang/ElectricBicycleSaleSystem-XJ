@@ -4,7 +4,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import com.seatrend.xj.electricbicyclesalesystem.common.MyApplication;
+import com.seatrend.xj.electricbicyclesalesystem.util.AppUtils;
 import com.seatrend.xj.electricbicyclesalesystem.util.SharedPreferencesUtils;
+import com.seatrend.xj.electricbicyclesalesystem.util.StringUtils;
 
 
 /**
@@ -22,7 +25,11 @@ public class BootReceiver extends BroadcastReceiver {
         if (intent.getAction().equals("android.intent.action.PACKAGE_REMOVED")) {
             String packageName = intent.getDataString();
             System.out.println("卸载了:" + packageName + "包名的程序");
-            SharedPreferencesUtils.setIsFirst(true);
+//            System.out.println("卸载了:" + (AppUtils.getPackageInfo(MyApplication.Companion.getMyApplicationContext()).packageName + "包名的程序"));
+            if(packageName != null && packageName.contains(AppUtils.getPackageInfo(MyApplication.Companion.getMyApplicationContext()).packageName)){
+                System.out.println("卸载重置");
+                SharedPreferencesUtils.setIsFirst(true);
+            }
         }
     }
 }

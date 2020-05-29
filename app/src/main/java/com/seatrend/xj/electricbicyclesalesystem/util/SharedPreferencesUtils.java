@@ -97,4 +97,14 @@ public class SharedPreferencesUtils{
         return MyApplication.Companion.getMyApplicationContext().getSharedPreferences(Constants.Companion.getSETTING(), Context.MODE_PRIVATE)
                 .getString(Constants.Companion.getVEISION_TIME(),Constants.Companion.getUPDATA_TIME());
     }
+
+    public static void  setVesion(String version){
+        MyApplication.Companion.getMyApplicationContext().getSharedPreferences(Constants.Companion.getSETTING(), Context.MODE_PRIVATE)
+                .edit().putString(Constants.Companion.getVEISION(),version).apply();
+    }
+
+    public static String getVesion(Context context){
+        return MyApplication.Companion.getMyApplicationContext().getSharedPreferences(Constants.Companion.getSETTING(), Context.MODE_PRIVATE)
+                .getString(Constants.Companion.getVEISION(),AppUtils.getVersionName(context));
+    }
 }

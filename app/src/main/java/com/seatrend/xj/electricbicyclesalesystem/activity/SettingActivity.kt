@@ -59,6 +59,7 @@ class SettingActivity : BaseActivity(), SettingView {
             }
         } catch (e: Exception) {
             showToast("同步失败")
+            SharedPreferencesUtils.setIsFirst(true)
             e.printStackTrace()
             dismissLoadingDialog()
         }
@@ -79,16 +80,16 @@ class SettingActivity : BaseActivity(), SettingView {
                 showLog("写其他数据库-")
                 CodeTableSQLiteUtils.insert(codeAll.data)
                 SharedPreferencesUtils.setIsFirst(false)
+                SharedPreferencesUtils.setVesion(AppUtils.getVersionName(this))
                 showToast("同步成功")
                 showLog("同步成功")
                 dismissLoadingDialog()
-                DataHolder.instance.save("isSyning", false)
                 initCodeData()
                 Looper.loop()
             } catch (e: Exception) {
                 dismissLoadingDialog()
                 showToast("  " + e.message.toString())
-                DataHolder.instance.save("isSyning", false)
+                SharedPreferencesUtils.setIsFirst(true)
                 initCodeData()
             }
         })
@@ -100,7 +101,6 @@ class SettingActivity : BaseActivity(), SettingView {
         if (Constants.QH_SHENG.equals(commonResponse.getUrl()) || commonResponse.getUrl().equals(Constants.GET_ALL_CODE)) {
             CodeTableSQLiteUtils.deleteAll(CodeTableSQLiteOpenHelper.CODE_TABLE_NAME)
             SharedPreferencesUtils.setIsFirst(true)  // 避免请求失败 二次进入数据为空的情况
-            DataHolder.instance.save("isSyning", false)
             initCodeData()
         }
     }
@@ -142,19 +142,13 @@ class SettingActivity : BaseActivity(), SettingView {
         }
 
         btn_code_syn.setOnClickListener {
-            if (!(DataHolder.instance.retrieve("isSyning") as Boolean)) {
                 showLoadingDialog()
-                DataHolder.instance.save("isSyning", true)
                 btn_code_syn.text = "代码同步"
                 initCodeData()
                 SharedPreferencesUtils.setIsFirst(true)
-
                 var msg = Message.obtain()
                 msg.what = REQUEST
                 mHandler.sendMessage(msg)
-            } else {
-                showToast("代码努力同步中...")
-            }
         }
         btn_code_syn.setOnLongClickListener {
             btn_code_syn.text = resources.getString(R.string.dmtb, "" + CodeTableSQLiteUtils.queryCodeTableCount())

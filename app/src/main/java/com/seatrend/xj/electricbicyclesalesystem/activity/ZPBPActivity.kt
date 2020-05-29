@@ -116,6 +116,7 @@ class ZPBPActivity : BaseActivity(),NormalView{
         et_hphm.filters = arrayOf(inputFilter)
         et_ccc_zcbm.transformationMethod = CarHphmUtils.TransInformation()
         et_hphm.transformationMethod = CarHphmUtils.TransInformation()
+        setSelection(et_hphm)
     }
 
     @SuppressLint("HandlerLeak")
